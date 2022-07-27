@@ -1,4 +1,5 @@
 ﻿using MOCA.Core.Entities.BaseEntities;
+using MOCA.Core.Entities.LocationManagment;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -20,8 +21,9 @@ namespace MOCA.Core.Entities.SSO
         [Required]
         public string Email { get; set; }
 
-                                    [Required]
-                                    public string CountryCode { get; set; }
+        [Required]
+        public long CountryId { get; set; }
+        public Country Country { get; set; }
 
         [Required]
         public string MobileNumber { get; set; }
