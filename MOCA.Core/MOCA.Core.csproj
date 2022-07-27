@@ -12,7 +12,6 @@
     <Folder Include="DTOs\SSO\" />
     <Folder Include="Entities\LocationManagment\" />
     <Folder Include="Entities\MocaSettings\" />
-    <Folder Include="Entities\SSO\" />
     <Folder Include="Enums\MocaSettings\" />
     <Folder Include="Enums\LocationManagment\" />
     <Folder Include="Interfaces\LocationManagment\" />
