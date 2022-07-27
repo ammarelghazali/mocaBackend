@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MOCA.Core.BaseEntity;
+using MOCA.Core.Entities.BaseEntities;
 using MOCA.Core.Interfaces.Shared.Services;
 using System;
 using System.Collections.Generic;
