@@ -1,6 +1,6 @@
 ﻿namespace MOCA.Core.Enums.LocationManagment
 {
-    public enum LocationPaymentMethods
+    public enum PaymentMethods
     {
         Cheques = 1,
         DepositCheques = 2,
