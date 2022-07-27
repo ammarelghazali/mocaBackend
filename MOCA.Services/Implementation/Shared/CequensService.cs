@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Copolitan.Shared.Services
+namespace MOCA.Services.Implementation.Shared
 {
     public class CequensService
     {

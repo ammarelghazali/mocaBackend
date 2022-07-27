@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Copolitan.Shared.Services
+namespace MOCA.Core.Services.ThirdParty.Winfi
 {
     public class WinfiService : IWinfiService
     {
