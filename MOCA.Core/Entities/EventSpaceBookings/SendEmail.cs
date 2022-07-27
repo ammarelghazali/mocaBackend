@@ -5,7 +5,6 @@ namespace MOCA.Core.Entities.EventSpaceBookings
 {
     public class SendEmail : BaseEntity
     {
-        public long Id { get; set; }
         public string? CC { get; set; }
         public string FromUser { get; set; }
         public string Subject { get; set; }
@@ -14,8 +13,6 @@ namespace MOCA.Core.Entities.EventSpaceBookings
         public long? BookATour_ID { get; set; }
         public long? EventsOpportunities_ID { get; set; }
         public long? EmailTemplate_ID { get; set; }
-        public DateTime? CreatedAt { get; set; }
-        public bool IsDeleted { get; set; }
 
         [ForeignKey("EventsOpportunities_ID")]
         public EventSpaceBooking EventSpace_Booking { get; set; }
