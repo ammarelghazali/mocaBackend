@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MOCA.Core.BaseEntity
+namespace MOCA.Core.Entities.BaseEntities
 {
     public abstract class BaseEntity
     {
