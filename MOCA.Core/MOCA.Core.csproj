@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="DTOs\LocationManagment\" />
+    <Folder Include="DTOs\MocaSettings\" />
+    <Folder Include="DTOs\SSO\" />
+    <Folder Include="Entities\LocationManagment\" />
+    <Folder Include="Entities\MocaSettings\" />
+    <Folder Include="Entities\SSO\" />
+    <Folder Include="Enums\MocaSettings\" />
+    <Folder Include="Enums\LocationManagment\" />
+    <Folder Include="Interfaces\LocationManagment\" />
+    <Folder Include="Interfaces\LocationManagment\Repositories\" />
+    <Folder Include="Interfaces\LocationManagment\Services\" />
+    <Folder Include="Interfaces\MocaSettings\Repositories\" />
+    <Folder Include="Interfaces\MocaSettings\Services\" />
+    <Folder Include="Interfaces\SSO\Repositories\" />
+    <Folder Include="Interfaces\SSO\Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.7" />
+  </ItemGroup>
+
+</Project>
