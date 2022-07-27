@@ -19,7 +19,6 @@
     <Folder Include="Entities\LocationManagment\" />
     <Folder Include="Entities\SSO\" />
     <Folder Include="Enums\MocaSettings\" />
-    <Folder Include="Enums\LocationManagment\" />
     <Folder Include="Interfaces\LocationManagment\" />
     <Folder Include="Interfaces\LocationManagment\Repositories\" />
     <Folder Include="Interfaces\LocationManagment\Services\" />
