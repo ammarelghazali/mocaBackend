@@ -7,11 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Entities\MocaSettings\**" />
+    <EmbeddedResource Remove="Entities\MocaSettings\**" />
+    <None Remove="Entities\MocaSettings\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="DTOs\LocationManagment\" />
     <Folder Include="DTOs\MocaSettings\" />
     <Folder Include="DTOs\SSO\" />
     <Folder Include="Entities\LocationManagment\" />
-    <Folder Include="Entities\MocaSettings\" />
     <Folder Include="Entities\SSO\" />
     <Folder Include="Enums\MocaSettings\" />
     <Folder Include="Enums\LocationManagment\" />

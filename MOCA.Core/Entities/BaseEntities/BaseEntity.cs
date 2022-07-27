@@ -11,7 +11,7 @@ namespace MOCA.Core.Entities.BaseEntities
         [Required]
         public DateTime CreatedAt { get; set; }
         public string? LastModifiedBy { get; set; }
-        public DateTime? LastModifiedAt { get; set; }
+        public virtual DateTime? LastModifiedAt { get; set; }
         public bool IsDeleted { get; set; }
     }
 }
