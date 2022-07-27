@@ -6,7 +6,7 @@ namespace MOCA.Core.Entities.EventSpaceBookings
 {
     public class ContactDetails : BaseEntity
     {
-        public long? BookATour_ID { get; set; }
+        public long? BookATourId { get; set; }
 
         [MaxLength(450)]
         public string Name { get; set; }
@@ -16,11 +16,11 @@ namespace MOCA.Core.Entities.EventSpaceBookings
 
         [MaxLength(450)]
         public string? MobileNumber { get; set; }
-        public long? EventsOpportunities_ID { get; set; }
+        public long? EventSpaceBookingId { get; set; }
 
         public ICollection<SendEmail> SendEmails { get; set; }
 
-        [ForeignKey("EventsOpportunities_ID")]
-        public EventSpaceBooking EventSpace_Booking { get; set; }
+        [ForeignKey("EventSpaceBookingId")]
+        public EventSpaceBooking EventSpaceBooking { get; set; }
     }
 }
