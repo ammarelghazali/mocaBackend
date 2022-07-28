@@ -43,13 +43,13 @@ namespace MOCA.Core.Entities.LocationManagment
         public decimal? EstimatedAnnualizedAmount { get; set; }
         public decimal? EstimatedContractAmount { get; set; }
         public decimal? AnnualIncrease { get; set; }
-        [ForeignKey("MainCurrency")]
-        public int MainCurrency { get; set; }
+        [ForeignKey("MainCurrencyID")]
+        public long MainCurrencyID { get; set; }
         public virtual Currency Currency { get; set; }
         public string Phone { get; set; }
-        [Required]
-        [Range(1, 3)]
-        public int LocationType { get; set; }
+        [ForeignKey("LocationTypeID")]
+        public long LocationTypeID { get; set; }
+        public virtual LocationType LocationType { get; set; }
         [Required]
         public string LandlordLegalName { get; set; }
         public string UploadContract { get; set; }
@@ -57,18 +57,9 @@ namespace MOCA.Core.Entities.LocationManagment
         public string TaxIdFile { get; set; }
         [Required]
         public string CommercialName { get; set; }
-        public string LandlordBankAccountName { get; set; }
-        public long? LandlordBankAccountNumber { get; set; }
-        public string LandlordBankAccountSwift { get; set; }
-        public string LandlordBankAccountIBAN { get; set; }
-        public string MocaBankAccountName { get; set; }
-        public long? MocaBankAccountNumber { get; set; }
-        public string MocaBankAccountSwift { get; set; }
-        public string MocaBankAccountIBAN { get; set; }
-        public string SharedBankAccountName { get; set; }
-        public long? SharedBankAccountNumber { get; set; }
-        public string SharedBankAccountSwift { get; set; }
-        public string SharedBankAccountIBAN { get; set; }
+        [ForeignKey("LocationBankAccountID")]
+        public long? LocationBankAccountID { get; set; }
+        public virtual LocationBankAccount LocationBankAccount { get; set; }
         public decimal? ServiceFeesPriceSqm { get; set; }
         public decimal? ServiceFeesTotalFees { get; set; }
         public decimal? ServiceFeesAnnualIncrease { get; set; }
