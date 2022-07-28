@@ -88,5 +88,6 @@ namespace MOCA.Core.Entities.LocationManagment
         public bool IsPublish { get; set; }
         public ICollection<EventSpaceBooking> EventSpaceBookings { get; set; }
         public ICollection<IssueReport> IssueReports { get; set; }
+        public ICollection<Building> Buildings { get; set; }
     }
 }
