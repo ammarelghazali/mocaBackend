@@ -1,5 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MOCA.Core.Entities.BaseEntities;
+using MOCA.Core.Entities.SSO;
+using MOCA.Core.Entities.SSO.Identity;
 using MOCA.Core.Interfaces.Shared.Services;
 using System;
 using System.Collections.Generic;
@@ -10,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace MOCA.Presistence.Contexts
 {
-    public class ApplicationDbContext : DbContext, IApplicationDbContext
+    public class ApplicationDbContext : IdentityDbContext<Admin, AdminRole, string, AdminUserClaim, IdentityUserRole<string>, IdentityUserLogin<string>, AdminRoleClaim, IdentityUserToken<string>>, IApplicationDbContext
     {
         private readonly IDateTimeService _dateTime;
         private readonly IAuthenticatedUserService _authenticatedUser;
@@ -55,6 +59,7 @@ namespace MOCA.Presistence.Contexts
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+
             //All Decimals will have 18,3 Range
             foreach (var property in builder.Model.GetEntityTypes()
             .SelectMany(t => t.GetProperties())
@@ -63,6 +68,40 @@ namespace MOCA.Presistence.Contexts
                 property.SetColumnType("decimal(18,3)");
             }
             base.OnModelCreating(builder);
+
+            builder.Entity<Admin>().ToTable("Admin");
+            builder.Entity<BasicUser>().ToTable("BasicUser");
+
+            builder.Entity<AdminRole>(entity =>
+            {
+                entity.ToTable(name: "Role");
+            });
+
+            builder.Entity<IdentityUserRole<string>>(entity =>
+            {
+                entity.ToTable("UserRoles");
+            });
+
+            builder.Entity<AdminUserClaim>(entity =>
+            {
+                entity.ToTable("UserClaims");
+            });
+
+            builder.Entity<IdentityUserLogin<string>>(entity =>
+            {
+                entity.ToTable("UserLogins");
+            });
+
+            builder.Entity<AdminRoleClaim>(entity =>
+            {
+                entity.ToTable("RoleClaims");
+
+            });
+
+            builder.Entity<IdentityUserToken<string>>(entity =>
+            {
+                entity.ToTable("UserTokens");
+            });
 
             #region Register Moca Settings
 
