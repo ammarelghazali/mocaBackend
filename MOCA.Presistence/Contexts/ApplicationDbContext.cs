@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MOCA.Core.Entities.BaseEntities;
+using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Entities.SSO;
 using MOCA.Core.Entities.SSO.Identity;
 using MOCA.Core.Interfaces.Shared.Services;
@@ -29,11 +30,33 @@ namespace MOCA.Presistence.Contexts
         public IDbConnection Connection => Database.GetDbConnection();
 
         #region Moca Settings
-            
+
+        #endregion
+
+        #region LocationManagment
+        public DbSet<City> Citys { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Currency> Currencies { get; set; }
+        public DbSet<District> Districts { get; set; }
+        public DbSet<Feature> Features { get; set; }
+        public DbSet<Inclusion> Inclusions { get; set; }
+        public DbSet<Industry> Industries { get; set; }
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<LocationBankAccount> LocationBankAccounts { get; set; }
+        public DbSet<LocationContact> LocationContacts { get; set; }
+        public DbSet<LocationCurrency> LocationCurrencies { get; set; }
+        public DbSet<LocationFeature> LocationFeatures { get; set; }
+        public DbSet<LocationFile> LocationFiles { get; set; }
+        public DbSet<LocationImage> LocationImages { get; set; }
+        public DbSet<LocationInclusion> LocationInclusions { get; set; }
+        public DbSet<LocationIndustry> LocationIndustries { get; set; }
+        public DbSet<LocationType> LocationTypes { get; set; }
+        public DbSet<LocationWorkingHour> LocationWorkingHours { get; set; }
+        public DbSet<ServiceFeePaymentsDueDate> ServiceFeePaymentsDueDates { get; set; }
         #endregion
 
         #region SSO
-            public DbSet<Admin> Admins { get; set; }
+        public DbSet<Admin> Admins { get; set; }
             public DbSet<BasicUser> BasicUsers { get; set; }
             public DbSet<ClientDevice> ClientDevices { get; set; }
 
