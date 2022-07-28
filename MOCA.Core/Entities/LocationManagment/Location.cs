@@ -12,50 +12,66 @@ namespace MOCA.Core.Entities.LocationManagment
     public class Location : BaseEntity
     {
         [Required]
-        public string LocationName { get; set; }
-        [ForeignKey("LocationDistrictID")]
-        public long LocationDistrictID { get; set; }
+        public string Name { get; set; }
+        [ForeignKey("DistrictID")]
+        public long DistrictID { get; set; }
         public virtual District District { get; set; }
         [Required]
-        public string LocationAddress { get; set; }
-        public int? LocationBuildYear { get; set; }
+        public string Address { get; set; }
+        public int? BuildYear { get; set; }
         [Required]
-        public decimal LocationGrossArea { get; set; }
-        [Required]//as8ar mn gross
-        public decimal LocationNetArea { get; set; }
-        [Required]//Link
-        public string LocationMapAddress { get; set; }
-        public int? LocationContractLength { get; set; }
-        public DateTime? LocationContractStartDate { get; set; }
-        public DateTime? LocationContractEndDate { get; set; }
+        public decimal GrossArea { get; set; }
+        [Required]
+        public decimal NetArea { get; set; }
+        [Required]
+        public string MapAddress { get; set; }
+        [Required]
+        public int ContractLength { get; set; }
+        [Required]
+        public DateTime ContractStartDate { get; set; }
+        [Required]
+        public DateTime ContractEndDate { get; set; }
         [Range(1,5)]
-        public int? LocationPaymentMethods { get; set; }
-        public int? LocationPartentershipType { get; set; }
-        public int? PartnershipTypeLandlord { get; set; }
-        public int? PartnershipTypePercentage { get; set; }
-        public decimal LocationMonthlyRentAmount { get; set; }
-        public int? LocationPaymentMethod { get; set; }
-        public decimal? LocationEstimatedAnnualizedAmount { get; set; }
-        public decimal? LocationEstimatedContractAmount { get; set; }
-        public decimal? LocationAnnualIncrease { get; set; }
+        public int? PaymentMethod { get; set; }
+        [Range(1, 4)]
+        public int? PaymentTerm { get; set; }
         [Required]
-        public int LocationMainCurrency { get; set; }
+        public int PartentershipType { get; set; }
+        public decimal? LandlordShares { get; set; }
+        public decimal? CopolitanShares { get; set; }
+        public decimal? MonthlyRentAmount { get; set; }
+        public decimal? EstimatedAnnualizedAmount { get; set; }
+        public decimal? EstimatedContractAmount { get; set; }
+        public decimal? AnnualIncrease { get; set; }
+        [ForeignKey("MainCurrency")]
+        public int MainCurrency { get; set; }
+        public virtual Currency Currency { get; set; }
         public string Phone { get; set; }
         [Required]
         [Range(1, 3)]
         public int LocationType { get; set; }
+        [Required]
         public string LandlordLegalName { get; set; }
         public string UploadContract { get; set; }
-        public string CommercialRegister { get; set; }
-        public string TaxId { get; set; }
+        public string CommercialRegisterFile { get; set; }
+        public string TaxIdFile { get; set; }
+        [Required]
         public string CommercialName { get; set; }
-        public string BankAccountName { get; set; }
-        public long? BankAccountNumber { get; set; }
-        public string BankAccountSwift { get; set; }
-        public string BankAccountIBAN { get; set; }
-        public double? ServiceFeesPriceSqm { get; set; }
-        public double? ServiceFeesTotalFee { get; set; }
-        public int? ServiceFeesAnnualIncrease { get; set; }
+        public string LandlordBankAccountName { get; set; }
+        public long? LandlordBankAccountNumber { get; set; }
+        public string LandlordBankAccountSwift { get; set; }
+        public string LandlordBankAccountIBAN { get; set; }
+        public string MocaBankAccountName { get; set; }
+        public long? MocaBankAccountNumber { get; set; }
+        public string MocaBankAccountSwift { get; set; }
+        public string MocaBankAccountIBAN { get; set; }
+        public string SharedBankAccountName { get; set; }
+        public long? SharedBankAccountNumber { get; set; }
+        public string SharedBankAccountSwift { get; set; }
+        public string SharedBankAccountIBAN { get; set; }
+        public decimal? ServiceFeesPriceSqm { get; set; }
+        public decimal? ServiceFeesTotalFees { get; set; }
+        public decimal? ServiceFeesAnnualIncrease { get; set; }
         public string Url360Tour { set; get; }
         public string VenuesBrochureURL { set; get; }
         public string WorkspaceContract { get; set; }
@@ -70,7 +86,7 @@ namespace MOCA.Core.Entities.LocationManagment
         public decimal? GracePeriod { get; set; }
         public decimal? RampUpPeriod { get; set; }
         public decimal? EstimatedRamp { get; set; }
-        public decimal? FullOccupancy { get; set; }
+        public decimal? FullOccupancyMonthlyPayment { get; set; }
         public decimal? MinPaymentPerMonth { get; set; }
         public decimal? MinPaymentPercentage { get; set; }
         public decimal? MonthlyRevenue { get; set; }
@@ -78,9 +94,9 @@ namespace MOCA.Core.Entities.LocationManagment
         public decimal? Overhead { get; set; }
         public decimal? TotalAfterDeductions { get; set; }
         public decimal? UtilizationPeriod { get; set; }
-        public decimal? PricePerMeter { get; set; }
+        public decimal? ServiceFeesPricePerMeter { get; set; }
         public string TaxIdNumber { get; set; }
-        public string CrNumber { get; set; }
+        public string CommercialRegisterNumber { get; set; }
         public bool IsPublish { get; set; }
     }
 }
