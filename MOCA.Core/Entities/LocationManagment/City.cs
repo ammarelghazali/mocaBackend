@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using MOCA.Core.Entities.BaseEntities;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MOCA.Core.Entities.LocationManagment
 {
-    public class City
+    public class City : BaseEntity
     {
         [ForeignKey("CountryId")]
         public long CountryId { get; set; }
