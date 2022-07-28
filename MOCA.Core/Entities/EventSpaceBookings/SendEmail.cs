@@ -21,7 +21,7 @@ namespace MOCA.Core.Entities.EventSpaceBookings
         public long ContactDetailId { get; set; }
         public long? BookATourId { get; set; }
         public long? EventSpaceBookingId { get; set; }
-        public long? EmailTemplateId { get; set; }
+        public long? EmailTemplateId { get; set; } // TODO: Add its relation
 
         [ForeignKey("EventSpaceBookingId")]
         public EventSpaceBooking EventSpaceBooking { get; set; }

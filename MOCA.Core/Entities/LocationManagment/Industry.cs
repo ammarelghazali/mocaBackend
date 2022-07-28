@@ -1,10 +1,6 @@
 ﻿using MOCA.Core.Entities.BaseEntities;
-using System;
-using System.Collections.Generic;
+using MOCA.Core.Entities.EventSpaceBookings;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MOCA.Core.Entities.LocationManagment
 {
@@ -12,5 +8,7 @@ namespace MOCA.Core.Entities.LocationManagment
     {
         [Required]
         public string Name { get; set; }
+        public IList<EventSpaceBooking> EventSpaceBookings { get; set; }
+
     }
 }
