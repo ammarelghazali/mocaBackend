@@ -8,14 +8,17 @@ namespace MOCA.Core.Entities.EventSpaceBookings
     {
         public long? BookATourId { get; set; }
 
+        [Required]
         [MaxLength(450)]
         public string Name { get; set; }
 
+        [Required]
         [MaxLength(450)]
         public string? Email { get; set; }
 
         [MaxLength(450)]
         public string? MobileNumber { get; set; }
+
         public long? EventSpaceBookingId { get; set; }
 
         public ICollection<SendEmail> SendEmails { get; set; }
