@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MOCA.Core.Entities.BaseEntities;
 using MOCA.Core.Entities.EventSpaceBookings;
 using MOCA.Core.Entities.LocationManagment;
+using MOCA.Core.Entities.MocaSetting;
 using MOCA.Core.Entities.SSO;
 using MOCA.Core.Entities.SSO.Identity;
 using MOCA.Core.Interfaces.Shared.Services;
@@ -33,7 +34,21 @@ namespace MOCA.Presistence.Contexts
         #region Moca Settings
 
         #endregion
-
+        public DbSet<CaseType> CaseTypes { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Faq> Faqs { get; set; }
+        public DbSet<IssueCaseStage> IssueCaseStages { get; set; }
+        public DbSet<IssueReport> IssueReports { get; set; }
+        public DbSet<Plan> Plans { get; set; }
+        public DbSet<PlanType> PlanTypes{ get; set; }
+        public DbSet<Policy> Policies { get; set; }
+        public DbSet<PolicyType> PolicyTypes { get; set; }
+        public DbSet<Priority> Priorities { get; set; }
+        public DbSet<Severity> Severities { get; set; }
+        public DbSet<Status> Statuses { get; set; }
+        public DbSet<TopUp> TopUps { get; set; }
+        public DbSet<TopUpType> TopUpTypes { get; set; }
+        public DbSet<Wifi> Wifis { get; set; }
         #region LocationManagment
         public DbSet<City> Citys { get; set; }
         public DbSet<Country> Countries { get; set; }
