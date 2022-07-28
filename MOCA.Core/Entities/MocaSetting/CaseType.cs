@@ -6,7 +6,7 @@ namespace MOCA.Core.Entities.MocaSetting
 {
     public class CaseType : BaseEntity
     {
-        [Required]
+        [Required, MaxLength(150)]
         public string Name { get; set; }
     }
 }
