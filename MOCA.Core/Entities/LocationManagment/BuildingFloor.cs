@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace MOCA.Core.Entities.LocationManagment
 {
-    public class Building : BaseEntity
+    public class BuildingFloor : BaseEntity
     {
-        [ForeignKey("LocationtID")]
-        public long LocationtID { get; set; }
-        public virtual Location Location { get; set; }
-        public string Name { get; set; }
+        public string Number { get; set; }
+        [ForeignKey("BuildingID")]
+        public long BuildingID { get; set; }
+        public virtual Building Building { get; set; }
         public decimal GrossArea { get; set; }
         public decimal NetArea { get; set; }
         public int MaleRestroomCount { get; set; }
