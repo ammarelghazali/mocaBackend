@@ -189,6 +189,18 @@ namespace MOCA.Presistence.Contexts
 
             builder.Entity<IssueCaseStage>()
                 .HasKey(p => new { p.Id, p.LastModifiedAt });
+
+            foreach (var entityType in builder.Model.GetEntityTypes())
+            {
+                // equivalent of modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+                entityType.SetTableName(entityType.DisplayName());
+
+                // equivalent of modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+                entityType.GetForeignKeys()
+                    .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade)
+                    .ToList()
+                    .ForEach(fk => fk.DeleteBehavior = DeleteBehavior.Restrict);
+            }
             #endregion
         }
     }

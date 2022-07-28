@@ -25,7 +25,7 @@ namespace MOCA.Core.Entities.MocaSetting
         [Range(1, int.MaxValue, ErrorMessage = "FAQ Display Order Cannot Be 0")]
         public int DisplayOrder { get; set; }
 
-        public long? LobSpaceTypeId { get; set; }
+        public long LobSpaceTypeId { get; set; }
         [ForeignKey("LobSpaceTypeId")]
         public LocationType LobSpaceType { get; set; }
 

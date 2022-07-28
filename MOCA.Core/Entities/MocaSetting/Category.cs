@@ -18,7 +18,7 @@ namespace MOCA.Core.Entities.MocaSetting
 
         public List<Faq> Faqs { get; set; }
 
-        public long? LobSpaceTypeId { get; set; }
+        public long LobSpaceTypeId { get; set; }
         [ForeignKey("LobSpaceTypeId")]
         public LocationType LobSpaceType { get; set; }
     }
