@@ -77,6 +77,9 @@ namespace MOCA.Core.Entities.EventSpaceBookings
         public int? EventOpportunityStatusId { get; set; }
         public int? LobLocationTypeId { get; set; }
 
+        [ForeignKey("LobLocationTypeId")]
+        public LocationType LocationType { get; set; }
+
         [ForeignKey("IndustryNameId")]
         public Industry Industry { get; set; }
 

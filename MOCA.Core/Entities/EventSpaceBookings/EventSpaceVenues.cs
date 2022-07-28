@@ -10,6 +10,7 @@ namespace MOCA.Core.Entities.EventSpaceBookings
         public long EventSpaceBookingId { get; set; }
 
         [MaxLength(450)]
+        [Required]
         public string VenueName { get; set; }
 
         [ForeignKey("EventSpaceBookingId")]
