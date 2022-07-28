@@ -1,4 +1,5 @@
 ﻿using MOCA.Core.Entities.BaseEntities;
+using MOCA.Core.Entities.MocaSetting;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -89,5 +90,8 @@ namespace MOCA.Core.Entities.LocationManagment
         public string TaxIdNumber { get; set; }
         public string CommercialRegisterNumber { get; set; }
         public bool IsPublish { get; set; }
+
+
+        public ICollection<IssueReport> IssueReports { get; set; }
     }
 }
