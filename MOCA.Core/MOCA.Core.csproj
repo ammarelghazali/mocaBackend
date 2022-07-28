@@ -16,7 +16,6 @@
     <Folder Include="DTOs\LocationManagment\" />
     <Folder Include="DTOs\MocaSettings\" />
     <Folder Include="DTOs\SSO\" />
-    <Folder Include="Entities\MocaSettings\" />
     <Folder Include="Enums\MocaSettings\" />
     <Folder Include="Interfaces\LocationManagment\" />
     <Folder Include="Interfaces\LocationManagment\Repositories\" />
@@ -32,7 +31,8 @@
     <PackageReference Include="Microsoft.AspNet.Identity.EntityFramework" Version="2.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.7" />
-    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.7" />
+	<PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+	<PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.7" />
   </ItemGroup>
 
 </Project>

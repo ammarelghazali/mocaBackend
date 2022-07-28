@@ -1,5 +1,6 @@
 ﻿using MOCA.Core.Entities.BaseEntities;
 using MOCA.Core.Entities.EventSpaceBookings;
+using MOCA.Core.Entities.MocaSetting;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -86,5 +87,6 @@ namespace MOCA.Core.Entities.LocationManagment
         public string CommercialRegisterNumber { get; set; }
         public bool IsPublish { get; set; }
         public IList<EventSpaceBooking> EventSpaceBookings { get; set; }
+        public ICollection<IssueReport> IssueReports { get; set; }
     }
 }
