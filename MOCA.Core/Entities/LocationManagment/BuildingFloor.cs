@@ -12,6 +12,7 @@ namespace MOCA.Core.Entities.LocationManagment
     {
         public string Number { get; set; }
         public long BuildingId { get; set; }
+        [ForeignKey("BuildingId")]
         public virtual Building Building { get; set; }
         public decimal GrossArea { get; set; }
         public decimal NetArea { get; set; }

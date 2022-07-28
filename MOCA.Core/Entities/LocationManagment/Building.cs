@@ -11,6 +11,7 @@ namespace MOCA.Core.Entities.LocationManagment
     public class Building : BaseEntity
     {
         public long LocationId { get; set; }
+        [ForeignKey("LocationId")]
         public virtual Location Location { get; set; }
         public string Name { get; set; }
         public decimal GrossArea { get; set; }

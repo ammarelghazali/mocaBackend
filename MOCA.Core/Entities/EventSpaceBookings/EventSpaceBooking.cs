@@ -12,7 +12,7 @@ namespace MOCA.Core.Entities.EventSpaceBookings
 
         [MaxLength(800)]
         public string? CompanyCommericalName { get; set; }
-        public int? IndustryNameId { get; set; }
+        public long? IndustryNameId { get; set; }
 
         [MaxLength(800)]
         public string? OtherIndustryName { get; set; }
@@ -74,8 +74,8 @@ namespace MOCA.Core.Entities.EventSpaceBookings
         public long? OpportunityStageId { get; set; }
         public long? Revenue { get; set; }
         public DateTime? SubmissionDate { get; set; }
-        public int? EventOpportunityStatusId { get; set; }
-        public int? LobLocationTypeId { get; set; }
+        public long? EventOpportunityStatusId { get; set; }
+        public long? LobLocationTypeId { get; set; }
 
         [ForeignKey("LobLocationTypeId")]
         public LocationType LocationType { get; set; }

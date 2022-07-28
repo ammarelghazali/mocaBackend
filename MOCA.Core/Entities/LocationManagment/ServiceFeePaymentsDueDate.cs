@@ -13,6 +13,7 @@ namespace MOCA.Core.Entities.LocationManagment
         public DateTime DueDate { get; set; }
         public decimal Amount { get; set; }
         public long LocationId { get; set; }
+        [ForeignKey("LocationId")]
         public virtual Location Location { get; set; }
     }
 }

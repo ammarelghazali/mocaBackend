@@ -75,6 +75,8 @@ namespace MOCA.Core.Entities.SSO
         //public string Gender { get; set; }
 
         public long? UserDeviceId { get; set; }
+
+        [ForeignKey("UserDeviceId")]
         public ClientDevice UserDevice { get; set; }
     }
 }

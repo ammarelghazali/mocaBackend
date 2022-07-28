@@ -11,6 +11,7 @@ namespace MOCA.Core.Entities.LocationManagment
         [Required]
         public string Name { get; set; }
         public long DistrictId { get; set; }
+        [ForeignKey("DistrictId")]
         public virtual District District { get; set; }
         [Required]
         public string Address { get; set; }
@@ -40,9 +41,11 @@ namespace MOCA.Core.Entities.LocationManagment
         public decimal? EstimatedContractAmount { get; set; }
         public decimal? AnnualIncrease { get; set; }
         public long CurrencyId { get; set; }
+        [ForeignKey("CurrencyId")]
         public virtual Currency Currency { get; set; }
         public string Phone { get; set; }
         public long LocationTypeId { get; set; }
+        [ForeignKey("LocationTypeId")]
         public virtual LocationType LocationType { get; set; }
         [Required]
         public string LandlordLegalName { get; set; }
@@ -51,7 +54,9 @@ namespace MOCA.Core.Entities.LocationManagment
         public string TaxIdFile { get; set; }
         [Required]
         public string CommercialName { get; set; }
+
         public long? LocationBankAccountId { get; set; }
+        [ForeignKey("LocationBankAccountId")]
         public virtual LocationBankAccount LocationBankAccount { get; set; }
         public decimal? ServiceFeesPriceSqm { get; set; }
         public decimal? ServiceFeesTotalFees { get; set; }

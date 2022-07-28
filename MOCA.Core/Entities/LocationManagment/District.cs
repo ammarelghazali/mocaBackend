@@ -11,6 +11,7 @@ namespace MOCA.Core.Entities.LocationManagment
     public class District : BaseEntity
     {
         public long CityId { get; set; }
+        [ForeignKey("CityId")]
         public virtual City City { get; set; }
         public string DistrictName { get; set; }
     }

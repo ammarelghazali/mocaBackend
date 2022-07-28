@@ -15,6 +15,7 @@ namespace MOCA.Core.Entities.LocationManagment
         public string DayFrom { get; set; }
         public string DayTo { get; set; }
         public long LocationId { get; set; }
+        [ForeignKey("LocationId")]
         public virtual Location Location { get; set; }
     }
 }

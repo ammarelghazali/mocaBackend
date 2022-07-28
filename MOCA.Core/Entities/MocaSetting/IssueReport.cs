@@ -24,7 +24,7 @@ namespace MOCA.Core.Entities.MocaSetting
         public Admin ReportedBy { get; set; }
 
         [Required]
-        public Guid OwnerId { get; set; }
+        public string OwnerId { get; set; }
         [ForeignKey("OwnerId")]
         public Admin Owner { get; set; }
         
