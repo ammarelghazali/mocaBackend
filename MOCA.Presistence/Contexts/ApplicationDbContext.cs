@@ -62,6 +62,7 @@ namespace MOCA.Presistence.Contexts
         public DbSet<EventAttendance> EventAttendances { get; set; }
         public DbSet<EventCategory> EventCategories { get; set; }
         public DbSet<EventOpportunityStatus> EventOpportunityStatuses { get; set; }
+        public DbSet<EventRequester> EventRequesters { get; set; }
         public DbSet<EventReccurance> EventReccurances { get; set; }
         public DbSet<EventSpaceBooking> EventSpaceBookings { get; set; }
         public DbSet<EventSpaceTime> EventSpaceTimes { get; set; }
