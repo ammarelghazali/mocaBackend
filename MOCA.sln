@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32516.85
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MocaSettings.API", "MOCA\MocaSettings.API.csproj", "{E4AC7BD6-EB11-4C2D-A271-7683C8EDE1A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MocaSettings.API", "MOCA\MocaSettings.API.csproj", "{E4AC7BD6-EB11-4C2D-A271-7683C8EDE1A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MOCA.Core", "MOCA.Core\MOCA.Core.csproj", "{4C20CE89-2451-42CC-AE89-38BA24D703FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MOCA.Core", "MOCA.Core\MOCA.Core.csproj", "{4C20CE89-2451-42CC-AE89-38BA24D703FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MOCA.Services", "MOCA.Services\MOCA.Services.csproj", "{5E84E442-6972-44E0-89D6-BA80EC3E6421}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MOCA.Services", "MOCA.Services\MOCA.Services.csproj", "{5E84E442-6972-44E0-89D6-BA80EC3E6421}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MOCA.Presistence", "MOCA.Presistence\MOCA.Presistence.csproj", "{82692139-FBF9-4D8C-9037-4772397FE5C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MOCA.Presistence", "MOCA.Presistence\MOCA.Presistence.csproj", "{82692139-FBF9-4D8C-9037-4772397FE5C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

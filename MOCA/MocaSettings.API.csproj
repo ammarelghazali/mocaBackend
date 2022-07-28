@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MOCA.Presistence\MOCA.Presistence.csproj" />
     <ProjectReference Include="..\MOCA.Services\MOCA.Services.csproj" />
   </ItemGroup>
 
