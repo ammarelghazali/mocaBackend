@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MOCA.Core.Entities.BaseEntities;
+using MOCA.Core.Entities.EventSpaceBookings;
 using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Entities.SSO;
 using MOCA.Core.Entities.SSO.Identity;
@@ -34,13 +35,11 @@ namespace MOCA.Presistence.Contexts
         #endregion
 
         #region LocationManagment
-        public DbSet<Building> Buildings { get; set; }
         public DbSet<City> Citys { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<District> Districts { get; set; }
         public DbSet<Feature> Features { get; set; }
-        public DbSet<BuildingFloor> BuildingFloors { get; set; }
         public DbSet<Inclusion> Inclusions { get; set; }
         public DbSet<Industry> Industries { get; set; }
         public DbSet<Location> Locations { get; set; }
@@ -55,6 +54,23 @@ namespace MOCA.Presistence.Contexts
         public DbSet<LocationType> LocationTypes { get; set; }
         public DbSet<LocationWorkingHour> LocationWorkingHours { get; set; }
         public DbSet<ServiceFeePaymentsDueDate> ServiceFeePaymentsDueDates { get; set; }
+        #endregion
+
+
+        #region EventSpaceBookings
+        public DbSet<ContactDetails> ContactDetails { get; set; }
+        public DbSet<EventAttendance> EventAttendances { get; set; }
+        public DbSet<EventCategory> EventCategories { get; set; }
+        public DbSet<EventOpportunityStatus> EventOpportunityStatuses { get; set; }
+        public DbSet<EventReccurance> EventReccurances { get; set; }
+        public DbSet<EventSpaceBooking> EventSpaceBookings { get; set; }
+        public DbSet<EventSpaceTime> EventSpaceTimes { get; set; }
+        public DbSet<EventSpaceVenues> EventSpaceVenues { get; set; }
+        public DbSet<EventType> EventTypes { get; set; }
+        public DbSet<Initiated> Initiateds { get; set; }
+        public DbSet<OpportunityStage> OpportunityStages { get; set; }
+        public DbSet<OpportunityStageReport> OpportunityStageReports { get; set; }
+        public DbSet<SendEmail> SendEmails { get; set; }
         #endregion
 
         #region SSO

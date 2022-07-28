@@ -1,10 +1,12 @@
 ﻿using MOCA.Core.Entities.BaseEntities;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MOCA.Core.Entities.EventSpaceBookings
 {
     public class EventSpaceTime : BaseEntity
     {
+        [Required]
         public long EventSpaceBookingId { get; set; }
         public DateTime? RecurrenceStartDate { get; set; }
         public DateTime? RecurrenceEndDate { get; set; }
@@ -14,6 +16,5 @@ namespace MOCA.Core.Entities.EventSpaceBookings
 
         [ForeignKey("EventSpaceBookingId")]
         public EventSpaceBooking EventSpaceBooking { get; set; }
-
     }
 }
