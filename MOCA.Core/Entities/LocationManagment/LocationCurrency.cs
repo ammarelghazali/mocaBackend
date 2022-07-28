@@ -9,11 +9,11 @@ namespace MOCA.Core.Entities.LocationManagment
 {
     public class LocationCurrency
     {
-        [ForeignKey("LocationID")]
         public long LocationID { get; set; }
+        [ForeignKey("LocationID")]
         public virtual Location Location { get; set; }
-        [ForeignKey("LocationCurrencyID")]
         public long LocationCurrencyID { get; set; }
+        [ForeignKey("LocationCurrencyID")]
         public virtual Currency Currency { get; set; }
     }
 }

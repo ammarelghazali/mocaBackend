@@ -10,8 +10,8 @@ namespace MOCA.Core.Entities.LocationManagment
 {
     public class LocationImage : BaseEntity
     {
-        [ForeignKey("LocationID")]
         public long LocationID { get; set; }
+        [ForeignKey("LocationID")]
         public virtual Location Location { get; set; }
         public string LocationImageFilePath { get; set; }
     }

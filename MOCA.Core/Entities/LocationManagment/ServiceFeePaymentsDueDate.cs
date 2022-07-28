@@ -12,8 +12,8 @@ namespace MOCA.Core.Entities.LocationManagment
     {
         public DateTime DueDate { get; set; }
         public decimal Amount { get; set; }
-        [ForeignKey("LocationID")]
         public long LocationID { get; set; }
+        [ForeignKey("LocationID")]
         public virtual Location Location { get; set; }
     }
 }
