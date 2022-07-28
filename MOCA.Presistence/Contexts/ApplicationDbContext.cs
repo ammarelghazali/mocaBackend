@@ -29,7 +29,7 @@ namespace MOCA.Presistence.Contexts
         public IDbConnection Connection => Database.GetDbConnection();
 
         #region Moca Settings
-
+            
         #endregion
 
         #region SSO
@@ -78,7 +78,7 @@ namespace MOCA.Presistence.Contexts
             {
                 property.SetColumnType("decimal(18,3)");
             }
-            base.OnModelCreating(builder);
+            base.OnModelCreating(builder); // test
 
             builder.Entity<Admin>().ToTable("Admin");
             builder.Entity<BasicUser>().ToTable("BasicUser");
