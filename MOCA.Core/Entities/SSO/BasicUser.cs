@@ -38,10 +38,10 @@ namespace MOCA.Core.Entities.SSO
 
 
         public long? MembershipCategoryId { get; set; }
-        public MemberShip_Categories MembershipCategory { get; set; }
+        public MemberShipCategories MembershipCategory { get; set; }
 
         public long? MembershipTypeId { get; set; }
-        public MemberShip_Types MemberShipTypes { get; set; }
+        public MemberShipTypes MemberShipTypes { get; set; }
 
         public bool? IsQRVerifiedByAdmin { get; set; }
 
@@ -65,7 +65,7 @@ namespace MOCA.Core.Entities.SSO
 
         public string MemberID { get; set; }
 
-        public DateTime? Membership_Activation_Date { get; set; }
+        public DateTime? MembershipActivationDate { get; set; }
 
         [Required]
         public string Status { get; set; }
@@ -75,6 +75,6 @@ namespace MOCA.Core.Entities.SSO
         //public string Gender { get; set; }
 
         public long? UserDeviceId { get; set; }
-        public Client_Device UserDevice { get; set; }
+        public ClientDevice UserDevice { get; set; }
     }
 }

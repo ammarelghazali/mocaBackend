@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MOCA.Core.Entities.SSO
 {
-    public class Client_Device
+    public class ClientDevice
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

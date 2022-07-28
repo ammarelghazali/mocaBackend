@@ -32,6 +32,17 @@ namespace MOCA.Presistence.Contexts
 
         #endregion
 
+        #region SSO
+            public DbSet<Admin> Admins { get; set; }
+            public DbSet<BasicUser> BasicUsers { get; set; }
+            public DbSet<ClientDevice> ClientDevices { get; set; }
+
+            public DbSet<MemberShipMainCategories> MemberShipMainCategories { get; set; }
+            public DbSet<MemberShipBenefitsTypes> MemberShipBenefitsTypes { get; set; }
+            public DbSet<MemberShipTypes> MemberShipTypes { get; set; }
+            public DbSet<MemberShipCategories> MemberShipCategories { get; set; }
+        #endregion
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             foreach (var entry in ChangeTracker.Entries<BaseEntity>())
