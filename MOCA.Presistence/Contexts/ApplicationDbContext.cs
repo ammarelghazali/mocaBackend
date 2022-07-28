@@ -50,6 +50,8 @@ namespace MOCA.Presistence.Contexts
         #endregion
 
         #region LocationManagment
+        public DbSet<Building> Buildings { get; set; }
+        public DbSet<BuildingFloor> BuildingFloors { get; set; }
         public DbSet<City> Citys { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Currency> Currencies { get; set; }
