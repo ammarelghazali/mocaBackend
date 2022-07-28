@@ -34,11 +34,13 @@ namespace MOCA.Presistence.Contexts
         #endregion
 
         #region LocationManagment
+        public DbSet<Building> Buildings { get; set; }
         public DbSet<City> Citys { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<District> Districts { get; set; }
         public DbSet<Feature> Features { get; set; }
+        public DbSet<BuildingFloor> BuildingFloors { get; set; }
         public DbSet<Inclusion> Inclusions { get; set; }
         public DbSet<Industry> Industries { get; set; }
         public DbSet<Location> Locations { get; set; }

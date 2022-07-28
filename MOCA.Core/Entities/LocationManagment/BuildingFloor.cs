@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MOCA.Core.Entities.LocationManagment
 {
-    public class FloorBuilding : BaseEntity
+    public class BuildingFloor : BaseEntity
     {
         public string Number { get; set; }
         [ForeignKey("BuildingID")]
