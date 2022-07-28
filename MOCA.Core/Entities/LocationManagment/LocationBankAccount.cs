@@ -10,8 +10,7 @@ namespace MOCA.Core.Entities.LocationManagment
 {
     public class LocationBankAccount : BaseEntity
     {
-        public long LocationID { get; set; }
-        [ForeignKey("LocationID")]
+        public long LocationId { get; set; }
         public virtual Location Location { get; set; }
         public string LandlordBankAccountName { get; set; }
         public long? LandlordBankAccountNumber { get; set; }

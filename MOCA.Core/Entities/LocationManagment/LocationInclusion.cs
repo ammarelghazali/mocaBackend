@@ -10,11 +10,9 @@ namespace MOCA.Core.Entities.LocationManagment
 {
     public class LocationInclusion : BaseEntity
     {
-        public long LocationID { get; set; }
-        [ForeignKey("LocationID")]
+        public long LocationId { get; set; }
         public virtual Location Location { get; set; }
-        public long InclusionID { get; set; }
-        [ForeignKey("InclusionID")]
+        public long InclusionId { get; set; }
         public virtual Inclusion Inclusion { get; set; }
     }
 }

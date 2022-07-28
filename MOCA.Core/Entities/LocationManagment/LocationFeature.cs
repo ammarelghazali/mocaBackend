@@ -10,11 +10,9 @@ namespace MOCA.Core.Entities.LocationManagment
 {
     public class LocationFeature : BaseEntity
     {
-        public long LocationID { get; set; }
-        [ForeignKey("LocationID")]
+        public long LocationId { get; set; }
         public virtual Location Location { get; set; }
-        public long FeatureID { get; set; }
-        [ForeignKey("FeatureID")]
+        public long FeatureId { get; set; }
         public virtual Feature Feature { get; set; }
     }
 }

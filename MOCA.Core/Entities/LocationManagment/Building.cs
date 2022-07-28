@@ -10,8 +10,7 @@ namespace MOCA.Core.Entities.LocationManagment
 {
     public class Building : BaseEntity
     {
-        [ForeignKey("LocationtID")]
-        public long LocationtID { get; set; }
+        public long LocationtId { get; set; }
         public virtual Location Location { get; set; }
         public string Name { get; set; }
         public decimal GrossArea { get; set; }

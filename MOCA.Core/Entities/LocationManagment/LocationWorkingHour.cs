@@ -14,8 +14,7 @@ namespace MOCA.Core.Entities.LocationManagment
         public TimeSpan EndWorkingHour { get; set; }
         public string DayFrom { get; set; }
         public string DayTo { get; set; }
-        public long LocationID { get; set; }
-        [ForeignKey("LocationID")]
+        public long LocationId { get; set; }
         public virtual Location Location { get; set; }
     }
 }

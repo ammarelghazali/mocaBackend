@@ -10,11 +10,9 @@ namespace MOCA.Core.Entities.LocationManagment
 {
     public class LocationIndustry : BaseEntity
     {
-        public long LocationtID { get; set; }
-        [ForeignKey("LocationtID")]
+        public long LocationtId { get; set; }
         public virtual Location Location { get; set; }
-        public long? SubIndustryID { get; set; }
-        [ForeignKey("SubIndustryID")]
+        public long? SubIndustryId { get; set; }
         public virtual Industry Industry { get; set; }
     }
 }
