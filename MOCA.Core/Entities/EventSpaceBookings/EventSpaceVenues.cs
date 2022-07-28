@@ -5,11 +5,11 @@ namespace MOCA.Core.Entities.EventSpaceBookings
 {
     public class EventSpaceVenues : BaseEntity
     {
-        public long BookEventSpace_ID { get; set; }
+        public long EventSpaceBookingId { get; set; }
         public string VenueName { get; set; }
 
-        [ForeignKey("BookEventSpace_ID")]
-        public EventSpaceBooking EventSpace_Booking { get; set; }
+        [ForeignKey("EventSpaceBookingId")]
+        public EventSpaceBooking EventSpaceBooking { get; set; }
 
     }
 }

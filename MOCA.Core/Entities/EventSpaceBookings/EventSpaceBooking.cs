@@ -5,11 +5,11 @@ namespace MOCA.Core.Entities.EventSpaceBookings
 {
     public class EventSpaceBooking : BaseEntity
     {
-        public long? LocationName_ID { get; set; }
-        public long? EventRequester_ID { get; set; }
+        public long? LocationNameId { get; set; }
+        public long? EventRequesterId { get; set; }
         public string? CompanyCommericalName { get; set; }
-        public int? IndustryName_ID { get; set; }
-        public string? Other_IndustryName { get; set; }
+        public int? IndustryNameId { get; set; }
+        public string? OtherIndustryName { get; set; }
         public string? CompanyWebsite { get; set; }
         public string? CompanyFacebook { get; set; }
         public string? CompanyLinkedin { get; set; }
@@ -21,51 +21,51 @@ namespace MOCA.Core.Entities.EventSpaceBookings
         public string? ContactMobile2 { get; set; }
         public string? ContactEmail2 { get; set; }
         public string? EventName { get; set; }
-        public long? EventCategory_ID { get; set; }
+        public long? EventCategoryId { get; set; }
         public string? EventDescription { get; set; }
-        public long? EventReccurance_ID { get; set; }
+        public long? EventReccuranceId { get; set; }
         public int? ExpectedNoAttend { get; set; }
-        public long? EventType_ID { get; set; }
-        public long? EventAttendance_ID { get; set; }
+        public long? EventTypeId { get; set; }
+        public long? EventAttendanceId { get; set; }
         public bool? DoesYourEventSupportStartup { get; set; }
         public bool? IsThereThirdPartyOrganizer { get; set; }
         public string? OrgnizingCompany { get; set; }
         public bool? NeedConsultancy { get; set; }
         public string? Platform { get; set; }
         public string? OtherEventCategory { get; set; }
-        public long? Initiated_ID { get; set; }
-        public string? IdentityUser_ID { get; set; }
-        public long? OpportunityStage_ID { get; set; }
+        public long? InitiatedId { get; set; }
+        public string? IdentityUserId { get; set; }
+        public long? OpportunityStageId { get; set; }
         public long? Revenue { get; set; }
         public DateTime? SubmissionDate { get; set; }
-        public int? EventOpportunityStatus_ID { get; set; }
-        public int? LocationType_ID { get; set; }
+        public int? EventOpportunityStatusId { get; set; }
+        public int? LocationTypeId { get; set; }
 
-        [ForeignKey("Initiated_ID")]
+        [ForeignKey("InitiatedId")]
         public Initiated Initiated { get; set; }
 
-        [ForeignKey("EventOpportunityStatus_ID")]
+        [ForeignKey("EventOpportunityStatusId")]
         public EventOpportunityStatus EventOpportunityStatus { get; set; }
 
-        [ForeignKey("EventCategory_ID")]
+        [ForeignKey("EventCategoryId")]
         public EventCategory EventCategory { get; set; }
 
-        [ForeignKey("EventAttendance_ID")]
+        [ForeignKey("EventAttendanceId")]
         public EventAttendance EventAttendance { get; set; }
 
-        [ForeignKey("EventReccurance_ID")]
+        [ForeignKey("EventReccuranceId")]
         public EventReccurance EventReccurance { get; set; }
 
-        [ForeignKey("EventRequester_ID")]
+        [ForeignKey("EventRequesterId")]
         public EventRequester EventRequester { get; set; }
 
-        [ForeignKey("OpportunityStage_ID")]
+        [ForeignKey("OpportunityStageId")]
         public OpportunityStage OpportunityStage { get; set; }
 
-        [ForeignKey("EventType_ID")]
+        [ForeignKey("EventTypeId")]
         public EventType EventType { get; set; }
-        public ICollection<EventSpaceTime> EventSpace_Times { get; set; }
-        public ICollection<EventSpaceVenues> EventSpace_Venues { get; set; }
+        public ICollection<EventSpaceTime> EventSpaceTimes { get; set; }
+        public ICollection<EventSpaceVenues> EventSpaceVenues { get; set; }
         public ICollection<SendEmail> SendEmails { get; set; }
     }
 }

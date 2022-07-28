@@ -5,6 +5,6 @@ namespace MOCA.Core.Entities.EventSpaceBookings
     public class EventReccurance : BaseEntity
     {
         public string Name { get; set; }
-        public ICollection<EventSpaceBooking> EventSpace_Bookings { get; set; }
+        public ICollection<EventSpaceBooking> EventSpaceBookings { get; set; }
     }
 }

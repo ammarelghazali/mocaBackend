@@ -6,15 +6,15 @@ namespace MOCA.Core.Entities.EventSpaceBookings
     public class OpportunityStageReport : BaseEntity
     {
         public DateTime Date { get; set; }
-        public long OpportunityStage_ID { get; set; }
+        public long EventSpaceBookingId { get; set; }
         public string? Comment { get; set; }
         public DateTime? Reminder { get; set; }
-        public long Opportunity_ID { get; set; }
+        public long OpportunityId { get; set; }
 
-        [ForeignKey("Opportunity_ID")]
-        public EventSpaceBooking EventSpace_Booking { get; set; }
+        [ForeignKey("EventSpaceBookingId")]
+        public EventSpaceBooking EventSpaceBooking { get; set; }
 
-        [ForeignKey("OpportunityStage_ID")]
+        [ForeignKey("OpportunityStageId")]
         public OpportunityStage OpportunityStage { get; set; }
     }
 }

@@ -9,15 +9,15 @@ namespace MOCA.Core.Entities.EventSpaceBookings
         public string FromUser { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
-        public long ContactDetails_ID { get; set; }
-        public long? BookATour_ID { get; set; }
-        public long? EventsOpportunities_ID { get; set; }
-        public long? EmailTemplate_ID { get; set; }
+        public long ContactDetailId { get; set; }
+        public long? BookATourId { get; set; }
+        public long? EventSpaceBookingId { get; set; }
+        public long? EmailTemplateId { get; set; }
 
-        [ForeignKey("EventsOpportunities_ID")]
-        public EventSpaceBooking EventSpace_Booking { get; set; }
+        [ForeignKey("EventSpaceBookingId")]
+        public EventSpaceBooking EventSpaceBooking { get; set; }
 
-        [ForeignKey("ContactDetails_ID")]
+        [ForeignKey("ContactDetailId")]
         public ContactDetails ContactDetail { get; set; }
     }
 }
