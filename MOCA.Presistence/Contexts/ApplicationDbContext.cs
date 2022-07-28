@@ -32,15 +32,13 @@ namespace MOCA.Presistence.Contexts
         public IDbConnection Connection => Database.GetDbConnection();
 
         #region Moca Settings
-
-        #endregion
         public DbSet<CaseType> CaseTypes { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Faq> Faqs { get; set; }
         public DbSet<IssueCaseStage> IssueCaseStages { get; set; }
         public DbSet<IssueReport> IssueReports { get; set; }
         public DbSet<Plan> Plans { get; set; }
-        public DbSet<PlanType> PlanTypes{ get; set; }
+        public DbSet<PlanType> PlanTypes { get; set; }
         public DbSet<Policy> Policies { get; set; }
         public DbSet<PolicyType> PolicyTypes { get; set; }
         public DbSet<Priority> Priorities { get; set; }
@@ -49,6 +47,8 @@ namespace MOCA.Presistence.Contexts
         public DbSet<TopUp> TopUps { get; set; }
         public DbSet<TopUpType> TopUpTypes { get; set; }
         public DbSet<Wifi> Wifis { get; set; }
+        #endregion
+
         #region LocationManagment
         public DbSet<City> Citys { get; set; }
         public DbSet<Country> Countries { get; set; }
