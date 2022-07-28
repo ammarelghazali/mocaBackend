@@ -2,7 +2,7 @@
 
 namespace MOCA.Core.Entities.SSO
 {
-    public class MemberShip_Main_Categories : BaseEntity
+    public class MemberShipTypes : BaseEntity
     {
         public string Name { get; set; }
     }

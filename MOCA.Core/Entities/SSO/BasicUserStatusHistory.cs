@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MOCA.Core.Entities.SSO
 {
-    public class BasicUser_StatusHistory : BaseEntity
+    public class BasicUserStatusHistory : BaseEntity
     {
 
         [Required]

@@ -29,7 +29,18 @@ namespace MOCA.Presistence.Contexts
         public IDbConnection Connection => Database.GetDbConnection();
 
         #region Moca Settings
+            
+        #endregion
 
+        #region SSO
+            public DbSet<Admin> Admins { get; set; }
+            public DbSet<BasicUser> BasicUsers { get; set; }
+            public DbSet<ClientDevice> ClientDevices { get; set; }
+
+            public DbSet<MemberShipMainCategories> MemberShipMainCategories { get; set; }
+            public DbSet<MemberShipBenefitsTypes> MemberShipBenefitsTypes { get; set; }
+            public DbSet<MemberShipTypes> MemberShipTypes { get; set; }
+            public DbSet<MemberShipCategories> MemberShipCategories { get; set; }
         #endregion
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -67,7 +78,7 @@ namespace MOCA.Presistence.Contexts
             {
                 property.SetColumnType("decimal(18,3)");
             }
-            base.OnModelCreating(builder);
+            base.OnModelCreating(builder); // test
 
             builder.Entity<Admin>().ToTable("Admin");
             builder.Entity<BasicUser>().ToTable("BasicUser");
