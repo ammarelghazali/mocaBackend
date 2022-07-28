@@ -15,6 +15,10 @@ namespace MOCA.Presistence.Contexts
 
         #endregion
 
+        #region LocationManagment
+
+        #endregion
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }
