@@ -86,8 +86,16 @@ namespace MOCA.Core.Entities.LocationManagment
         public string TaxIdNumber { get; set; }
         public string CommercialRegisterNumber { get; set; }
         public bool IsPublish { get; set; }
+
         public ICollection<EventSpaceBooking> EventSpaceBookings { get; set; }
         public ICollection<IssueReport> IssueReports { get; set; }
         public ICollection<Building> Buildings { get; set; }
+        public ICollection<LocationIndustry> LocationIndustries { get; set; }
+        public ICollection<LocationContact> LocationContacts { get; set; }
+        public ICollection<LocationCurrency> LocationCurrencies { get; set; }
+        public ICollection<LocationImage> LocationImages { get; set; }
+        public ICollection<LocationInclusion> LocationInclusions { get; set; }
+        public ICollection<LocationWorkingHour> LocationWorkingHours { get; set; }
+        public ICollection<ServiceFeePaymentsDueDate> ServiceFeePaymentsDueDates { get; set; }
     }
 }

@@ -9,5 +9,6 @@ namespace MOCA.Core.Entities.LocationManagment
         [Required]
         public string Name { get; set; }
         public ICollection<EventSpaceBooking> EventSpaceBookings { get; set; }
+        public ICollection<LocationIndustry> LocationIndustrys { get; set; }
     }
 }
