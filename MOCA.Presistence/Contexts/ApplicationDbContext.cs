@@ -172,7 +172,20 @@ namespace MOCA.Presistence.Contexts
             });
 
             #region Register Moca Settings
+            builder.Entity<Policy>()
+                    .HasIndex(p => p.PolicyTypeId).IsUnique(false);
 
+            builder.Entity<Plan>()
+                        .HasIndex(p => p.LobSpaceTypeId).IsUnique(false);
+
+            builder.Entity<Wifi>()
+                        .HasIndex(w => w.LobSpaceTypeId).IsUnique(false);
+
+            builder.Entity<IssueReport>()
+                .HasKey(p => new { p.Id, p.LastModifiedAt });
+
+            builder.Entity<IssueCaseStage>()
+                .HasKey(p => new { p.Id, p.LastModifiedAt });
             #endregion
         }
     }
