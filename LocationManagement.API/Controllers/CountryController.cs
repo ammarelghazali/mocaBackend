@@ -1,23 +1,26 @@
 ﻿using AutoMapper;
+using Compolitan.Core.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using MOCA.Core.DTOs.LocationManagment;
+using MOCA.Core.DTOs.LocationManagment.Country;
 using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Interfaces.LocationManagment.Repositories;
+using MOCA.Core.Interfaces.LocationManagment.Services;
 
 namespace LocationManagement.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class CountryController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly ICountryRepository _countryRepository;
+        private readonly ICountryService _countryService;
 
-        public CountryController(IMapper mapper, ICountryRepository countryRepository)
+        public CountryController(IMapper mapper, ICountryService countryService)
         {
             _mapper = mapper;
-            _countryRepository = countryRepository;
+            _countryService = countryService;
         }
 
         /// <summary>
@@ -26,24 +29,81 @@ namespace LocationManagement.API.Controllers
         /// <param name="model"></param>
         /// <response code="200">Country added successfully</response>
         /// <response code="400">something goes wrong in backend</response>
-        [HttpPost]
-        public async Task<IActionResult> EventSpaceBooking(CountryModel model)
+        [HttpPost("AddCountry")]
+        public async Task<IActionResult> AddCountry([FromBody] CountryModel model)
         {
-            var response = new Response<long>();
-            try
+            var data = await _countryService.AddCountry(model);
+
+            if (data.Succeeded == false)
             {
-                var data = _countryRepository.Insert(_mapper.Map<Country>(model), "System");
-                await _countryRepository.SaveChanges();
-                response.Succeeded = true;
-                response.Data = data.Id;
-                return Ok(response);
+                return BadRequest(data);
             }
-            catch (Exception ex)
+            return Ok(data);
+        }
+
+        /// <summary>
+        /// Update Country 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <response code="200">Country Updated successfully</response>
+        /// <response code="400">something goes wrong in backend</response>
+        [HttpPut("UpdateCountry")]
+        public async Task<IActionResult> UpdateCountry([FromBody] CountryModel model)
+        {
+            return Ok(await _countryService.UpdateCountry(model));
+        }
+
+        /// <summary>
+        /// Gets Country By ID
+        /// </summary>
+        /// <param name="Id">an object holds the Id of Country</param>
+        /// <response code="200">Returns the Country</response>
+        /// <response code="400">something goes wrong in backend</response>
+        [HttpGet("GetCountryByID")]
+        public async Task<IActionResult> GetCountryByID([FromQuery] long Id)
+        {
+            var response = await _countryService.GetCountryByID(Id);
+
+            if (response.Succeeded == false)
             {
-                response.Succeeded = false;
-                response.Message = ex.Message;
                 return BadRequest(response);
             }
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Gets Paginated Country
+        /// </summary>
+        /// <param name="filter">an object holds the filter data</param>
+        /// <response code="200">Returns the Countries List</response>
+        /// <response code="400">something goes wrong in backend</response>
+        [HttpGet("GetAllCountry")]
+        public async Task<IActionResult> GetAllCountry([FromQuery] RequestParameter filter)
+        {
+            var response = await _countryService.GetAllCountryWithPagination(filter);
+
+            if (response.Succeeded == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Gets Not Paginated Country
+        /// </summary>
+        /// <response code="200">Returns the Countries List</response>
+        /// <response code="400">something goes wrong in backend</response>
+        [HttpGet("GetAllCountryWithoutPagination")]
+        public async Task<IActionResult> GetAllCountryWithoutPagination()
+        {
+            var response = await _countryService.GetAllCountryWithoutPagination();
+
+            if (response.Succeeded == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
         }
     }
 }

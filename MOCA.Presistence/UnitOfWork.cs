@@ -1,8 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MOCA.Core;
+using MOCA.Core.Entities.LocationManagment;
+using MOCA.Core.Interfaces.Base;
 using MOCA.Core.Interfaces.Shared.Services;
 using MOCA.Presistence.Contexts;
+using MOCA.Presistence.Repositories.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +16,8 @@ namespace MOCA.Presistence
 {
     public class UnitOfWork : IDisposable, IUnitOfWork
     {
-        public ApplicationDbContext context { get; }
-        public IConfiguration Configuration { get; }
+        public ApplicationDbContext _context { get; }
+        public IConfiguration _configuration { get; }
         private readonly IAuthenticatedUserService _authenticatedUser;
         private readonly IDateTimeService _dateTimeService;
 
@@ -22,21 +25,35 @@ namespace MOCA.Presistence
         {
             get
             {
-                return context;
+                return _context;
             }
         }
 
-        public UnitOfWork(ApplicationDbContext _context, IConfiguration configuration,
-                          IAuthenticatedUserService authenticatedUser, IDateTimeService dateTimeService)
+        public UnitOfWork(ApplicationDbContext context,
+            IConfiguration configuration,
+            IAuthenticatedUserService authenticatedUser,
+            IDateTimeService dateTimeService)
         {
-            context = _context;
-            Configuration = configuration;
+            _context = context;
+            _configuration = configuration;
             _authenticatedUser = authenticatedUser;
             _dateTimeService = dateTimeService;
         }
 
         #region Moca Settings
 
+        #endregion
+
+        #region Location Managment
+
+        private IRepository<Country> _countryRepo;
+        public IRepository<Country> CountryRepo
+        {
+            get
+            {
+                return _countryRepo = _countryRepo ?? new Repository<Country>(_context);
+            }
+        }
         #endregion
 
         public DateTime ConvertToLocalDate(DateTime dateInEasternTimeZone)
@@ -62,7 +79,7 @@ namespace MOCA.Presistence
             {
                 if (disposing)
                 {
-                    context.Dispose();
+                    _context.Dispose();
                 }
             }
             disposed = true;
@@ -83,7 +100,7 @@ namespace MOCA.Presistence
         {
             try
             {
-                context.SaveChanges();
+                _context.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -95,7 +112,7 @@ namespace MOCA.Presistence
         {
             try
             {
-                return await context.SaveChangesAsync();
+                return await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {

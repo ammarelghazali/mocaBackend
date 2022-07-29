@@ -3,14 +3,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using MOCA.Core;
 using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.Interfaces.Base;
 using MOCA.Core.Interfaces.LocationManagment.Repositories;
+using MOCA.Core.Interfaces.LocationManagment.Services;
 using MOCA.Core.Interfaces.Shared.Services;
+using MOCA.Presistence;
 using MOCA.Presistence.Contexts;
 using MOCA.Presistence.Repositories.Base;
 using MOCA.Presistence.Repositories.LocationManagment;
 using MOCA.Services;
+using MOCA.Services.Implementation.LocationManagment;
 using MOCA.Services.Implementation.Shared;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -33,12 +37,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "LocationManagement.Api", Version = "v1" });
-
-    // Enables Swagger Documentation
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    c.IncludeXmlComments(xmlPath);
-
 });
 builder.Services.AddApiVersioning(config =>
 {
@@ -58,6 +56,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(
                     options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 #region Repositories
 // Generic
@@ -80,7 +80,7 @@ builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>(
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-//builder.Services.AddScoped<IBookEventSpaceService, BookEventSpaceService>();
+builder.Services.AddScoped<ICountryService, CountryService>();
 
 #endregion
 
@@ -149,23 +149,20 @@ builder.Services.AddAuthentication(
 
 var app = builder.Build();
 
+app.UseMiddleware<ErrorHandlerMiddleware>();
 // Configure the HTTP request pipeline.
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "LocationManagement.Api v1"));
 
-
 app.UseHttpsRedirection();
 
 app.UseRouting();
-
 
 app.UseAuthentication();
 
 app.UseCors(c => c.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
 app.UseAuthorization();
-
-app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app.MapControllers();
 

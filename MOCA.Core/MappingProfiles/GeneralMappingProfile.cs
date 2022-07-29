@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MOCA.Core.DTOs.LocationManagment;
+using MOCA.Core.DTOs.LocationManagment.Country;
 using MOCA.Core.Entities.LocationManagment;
 using System;
 using System.Collections.Generic;
