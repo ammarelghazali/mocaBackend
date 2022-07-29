@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MOCA.Core.DTOs.MocaSettings.PlanDtos
+namespace MOCA.Core.DTOs.MocaSettings.PlanDtos.Response
 {
     public class PlanDtoBase
     {
