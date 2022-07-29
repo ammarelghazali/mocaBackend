@@ -132,8 +132,12 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
+app.UseMiddleware<ErrorHandlerMiddleware>();
+
+
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MocaContentBack.Api v1"));
+
 
 app.UseHttpsRedirection();
 
@@ -141,10 +145,11 @@ app.UseRouting();
 
 app.UseCors(c => c.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
+
 app.UseAuthentication();
+
 
 app.UseAuthorization();
 
 app.MapControllers();
-app.UseMiddleware<ErrorHandlerMiddleware>();
 app.Run();

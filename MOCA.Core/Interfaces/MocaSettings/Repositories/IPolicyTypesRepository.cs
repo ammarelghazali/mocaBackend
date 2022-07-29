@@ -1,8 +1,9 @@
 ﻿using MOCA.Core.Entities.MocaSetting;
+using MOCA.Core.Interfaces.Base;
 
 namespace MOCA.Core.Interfaces.MocaSettings.Repositories
 {
-    public interface IPolicyTypesRepository : IBaseRepository<PolicyType>
+    public interface IPolicyTypesRepository : IRepository<PolicyType>
 
     {
         Task<bool> PolicyTypeExistsAsync(long id);

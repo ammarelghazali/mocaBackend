@@ -1,8 +1,9 @@
 ﻿using MOCA.Core.Entities.MocaSetting;
+using MOCA.Core.Interfaces.Base;
 
 namespace MOCA.Core.Interfaces.MocaSettings.Repositories
 {
-    public interface ICategoriesRepository : IBaseRepository<Category>, IBaseAllGetableRepository<Category>
+    public interface ICategoriesRepository : IRepository<Category>, IBaseAllGetableRepository<Category>
     {
         Task<IList<Category>> GetAllCategoriesWithFaqsAsync(long? spaceId);
         Task DeleteCategory(long? spaceId, long categoryId, bool deleteRelatedQuestions, Guid user);
