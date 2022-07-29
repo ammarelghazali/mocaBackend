@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MOCA.Core;
+using MOCA.Core.Interfaces.MocaSettings.Repositories;
 using MOCA.Core.Interfaces.Shared.Services;
 using MOCA.Presistence.Contexts;
+using MOCA.Presistence.Repositories.MocaSettings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +38,121 @@ namespace MOCA.Presistence
         }
 
         #region Moca Settings
+        public ICategoriesRepository Categories
+        {
+            get
+            {
+                return this.Categories ?? new CategoriesRepository(context);
+            }
+        }
 
+        public IFaqsRepository Faqs
+        {
+            get
+            {
+                return this.Faqs ?? new FaqsRepository(context);
+            }
+        }
+
+        public IPlansRepository Plans
+        {
+            get
+            {
+                return this.Plans ?? new PlansRepository(context);
+            }
+        }
+
+        public IPlanTypesRepository PlanTypes
+        {
+            get
+            {
+                return this.PlanTypes ?? new PlanTypesRepository(context);
+            }
+        }
+
+        public ITopUpsRespository TopUps
+        {
+            get
+            {
+                return this.TopUps ?? new TopUpsRepository(context);
+            }
+        }
+
+        public ITopUpTypesRepository TopUpTypes
+        {
+            get
+            {
+                return this.TopUpTypes ?? new TopUpTypesRepository(context);
+            }
+        }
+
+        public IPolicyTypesRepository PolicyTypes
+        {
+            get
+            {
+                return this.PolicyTypes ?? new PolicyTypesRepository(context);
+            }
+        }
+
+        public IPolicyRepository Policies
+        {
+            get
+            {
+                return this.Policies ?? new PolicyRepository(context);
+            }
+        }
+
+        //public ILobSpaceTypesRepository LobSpaceTypes => throw new NotImplementedException();
+
+        public IWifisRepository Wifis
+        {
+            get
+            {
+                return this.Wifis ?? new WifisRepository(context);
+            }
+        }
+
+        public IStatusesRepository Statuses
+        {
+            get
+            {
+                return this.Statuses ?? new StatusesRepository(context);
+            }
+        }
+
+        public ISeveritiesRepository Severities
+        {
+            get
+            {
+                return this.Severities ?? new SeveritiesRepository(context);
+            }
+        }
+
+        public IPrioritiesRepository Priorities
+        {
+            get
+            {
+                return this.Priorities ?? new PrioritiesRepository(context);
+            }
+        }
+
+        public ICaseTypesReository CaseTypes
+        {
+            get
+            {
+                return this.CaseTypes ?? new CaseTypesRepository(context);
+            }
+        }
+
+        public IIssueReportsRepository IssueReports
+        {
+            get
+            {
+                return this.IssueReports ?? new IssueReportsRepository(context);
+            }
+        }
+
+        //public IIdentityUserRepository Users => throw new NotImplementedException();
         #endregion
 
         public DateTime ConvertToLocalDate(DateTime dateInEasternTimeZone)
