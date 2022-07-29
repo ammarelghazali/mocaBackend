@@ -1,4 +1,4 @@
-﻿0namespace MOCA.Core.DTOs.MocaSettings.PoliciesDtos.Response
+﻿namespace MOCA.Core.DTOs.MocaSettings.PoliciesDtos.Response
 {
     public class PolicyExtendedDto : PolicyBaseDto
     {

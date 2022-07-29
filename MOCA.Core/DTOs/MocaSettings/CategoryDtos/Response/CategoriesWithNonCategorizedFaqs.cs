@@ -1,5 +1,5 @@
 ﻿using MMOCA.Core.DTOs.MocaSettings.CategoryDtos.Response;
-using MocaContentBack.Core.Dtos.FaqDtos.ResponsesDtos;
+using MOCA.Core.DTOs.MocaSettings.FaqDtos.Response;
 
 namespace MOCA.Core.DTOs.MocaSettings.CategoryDtos.Response
 {

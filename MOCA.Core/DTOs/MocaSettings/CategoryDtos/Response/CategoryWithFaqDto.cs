@@ -1,4 +1,4 @@
-﻿using MocaContentBack.Core.Dtos.FaqDtos.ResponsesDtos;
+﻿using MOCA.Core.DTOs.MocaSettings.FaqDtos.Response;
 
 namespace MMOCA.Core.DTOs.MocaSettings.CategoryDtos.Response
 {

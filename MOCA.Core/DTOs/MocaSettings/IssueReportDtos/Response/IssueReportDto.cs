@@ -6,7 +6,7 @@
         public long? LobSpaceTypeId { get; set; }
         public string SubmissionDate { get; set; }
         public string ReportedBy { get; set; }
-        public Guid OwnerId { get; set; }
+        public string OwnerId { get; set; }
         public string ClosureDuration { get; set; }
         public string Status { get; set; }
         public string Comment { get; set; }
