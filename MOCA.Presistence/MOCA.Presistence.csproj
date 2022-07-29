@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <Folder Include="Repositories\LocationManagment\" />
-    <Folder Include="Repositories\MocaSettings\" />
     <Folder Include="Repositories\SSO\" />
   </ItemGroup>
 

@@ -9,7 +9,7 @@ namespace MOCA.Core.Interfaces.MocaSettings.Repositories
     {
         Task<long?> GetMaxReportId();
         Task<IList<IssueCaseStage>> GetCaseStages(long IssueReportId);
-        Task<PagedResponse<IssueReport>> GetReportsWithPagination(long? lobSpaceTypeId,
+        Task<PagedResponse<IList<IssueReport>>> GetReportsWithPagination(long? lobSpaceTypeId,
                                                           IssueReportsResourceParameters resourceParameters);
         Task<bool> IssueReportExists(long IssueReportId);
 
