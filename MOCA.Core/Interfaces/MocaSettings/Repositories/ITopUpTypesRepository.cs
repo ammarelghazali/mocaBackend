@@ -1,0 +1,11 @@
+﻿using MOCA.Core.Entities.MocaSetting;
+
+namespace MOCA.Core.Interfaces.MocaSettings.Repositories
+{
+    public interface ITopUpTypesRepository : IBaseRepository<TopUpType>, IBaseAllGetableWithoutPrarmRepository<TopUpType>
+    {
+        Task<TopUpType> GetByName(string name);
+        Task<bool> UpdateRelatedTopUps(long oldId, long newId, Guid user);
+        Task<bool> DeleteRelatedTopUps(long TopUpTypeId);
+    }
+}

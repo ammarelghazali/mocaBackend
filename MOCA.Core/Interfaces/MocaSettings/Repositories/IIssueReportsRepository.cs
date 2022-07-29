@@ -1,0 +1,21 @@
+﻿using MOCA.Core.DTOs.MocaSettings.IssueReportDtos.Request;
+using MOCA.Core.DTOs.Shared.Responses;
+using MOCA.Core.Entities.MocaSetting;
+
+namespace MOCA.Core.Interfaces.MocaSettings.Repositories
+{
+    public interface IIssueReportsRepository : IBaseRepository<IssueReport>
+    {
+        Task<long?> GetMaxReportId();
+        Task<IList<IssueCaseStage>> GetCaseStages(long IssueReportId);
+        Task<PagedResponse<IssueReport>> GetReportsWithPagination(long? lobSpaceTypeId,
+                                                          IssueReportsResourceParameters resourceParameters);
+        Task<bool> IssueReportExists(long IssueReportId);
+
+        Task<IList<IssueReport>> GetAllIssueReporstWithStatusId(long statusId);
+        Task<IList<IssueReport>> GetAllIssueReporstWithSeveritysId(long severityId);
+        Task<IssueReport> GetIssueReportById(long id);
+        Task<IssueCaseStage> AddIssueCaseStage(IssueCaseStage issueCaseStage);
+        Task<IssueReport> GetIssueById(long IssueReportId);
+    }
+}
