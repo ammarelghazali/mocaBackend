@@ -6,7 +6,7 @@ using MOCA.Presistence.Repositories.Base;
 
 namespace MOCA.Presistence.Repositories.MocaSettings
 {
-    public class CaseTypesRepository : Repository<CaseType>, ICaseTypesReository
+    public class CaseTypesRepository : GenericRepository<CaseType>, ICaseTypesReository
     {
         private readonly ApplicationDbContext _context;
         public CaseTypesRepository(ApplicationDbContext context) : base(context)
@@ -24,7 +24,7 @@ namespace MOCA.Presistence.Repositories.MocaSettings
             return await _context.CaseTypes.AnyAsync(c => c.Name == name && c.IsDeleted != true);
         }
 
-        public async Task<IList<CaseType>> GetAllAsync()
+        public async Task<IList<CaseType>> GetAllBaseAsync()
         {
             return await _context.CaseTypes.Where(c => c.IsDeleted != true).ToListAsync();
         }

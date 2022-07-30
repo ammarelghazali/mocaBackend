@@ -6,7 +6,7 @@ using MOCA.Presistence.Repositories.Base;
 
 namespace MOCA.Presistence.Repositories.MocaSettings
 {
-    public class PolicyRepository : Repository<Policy>, IPolicyRepository
+    public class PolicyRepository : GenericRepository<Policy>, IPolicyRepository
     {
         private readonly ApplicationDbContext _context;
 

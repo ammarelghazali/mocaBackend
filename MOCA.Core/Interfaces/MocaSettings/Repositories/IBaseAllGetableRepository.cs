@@ -2,6 +2,6 @@
 {
     public interface IBaseAllGetableRepository<T> where T : class
     {
-        Task<IList<T>> GetAllAsync(long? spaceId);
+        Task<IList<T>> GetAllBaseAsync(long? spaceId);
     }
 }

@@ -15,7 +15,6 @@ namespace MocaSettings.API.Controllers
         {
             _categoryService = categoryService;
         }
-
         /// <summary>
         /// Add Category
         /// </summary>

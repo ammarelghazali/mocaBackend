@@ -82,7 +82,7 @@ namespace MOCA.Services.Implementation.MocaSettings
             //    }
             //}
 
-            var faqs = await _unitOfWork.Faqs.GetAllAsync(getAllFaqsDto.LobSpaceTypeId);
+            var faqs = await _unitOfWork.Faqs.GetAllBaseAsync(getAllFaqsDto.LobSpaceTypeId);
 
             return new Response<IReadOnlyList<FaqDto>>
             {

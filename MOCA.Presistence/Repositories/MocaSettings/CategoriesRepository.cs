@@ -6,7 +6,7 @@ using MOCA.Presistence.Repositories.Base;
 
 namespace MOCA.Presistence.Repositories.MocaSettings
 {
-    public class CategoriesRepository : Repository<Category>, ICategoriesRepository
+    public class CategoriesRepository : GenericRepository<Category>, ICategoriesRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -15,7 +15,7 @@ namespace MOCA.Presistence.Repositories.MocaSettings
             _context = context;
         }
 
-        public async Task<IList<Category>> GetAllAsync(long? spaceId)
+        public async Task<IList<Category>> GetAllBaseAsync(long? spaceId)
         {
             return await _context.Categories.Where(c => c.LobSpaceTypeId == spaceId &&
                                                         c.IsDeleted != true)

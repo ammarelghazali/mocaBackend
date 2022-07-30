@@ -6,7 +6,7 @@ using MOCA.Presistence.Repositories.Base;
 
 namespace MOCA.Presistence.Repositories.MocaSettings
 {
-    public class PlansRepository : Repository<Plan>, IPlansRepository
+    public class PlansRepository : GenericRepository<Plan>, IPlansRepository
     {
         private readonly ApplicationDbContext _context;
         public PlansRepository(ApplicationDbContext context) : base(context)
@@ -15,7 +15,7 @@ namespace MOCA.Presistence.Repositories.MocaSettings
         }
 
 
-        public async Task<IList<Plan>> GetAllAsync(long? lobSpaceTypeId)
+        public async Task<IList<Plan>> GetAllBaseAsync(long? lobSpaceTypeId)
         {
             var plans = await _context.Plans.Where(p => p.LobSpaceTypeId == lobSpaceTypeId)
                 .Where(x => x.IsDeleted == false).Include(x => x.PlanType).ToListAsync();

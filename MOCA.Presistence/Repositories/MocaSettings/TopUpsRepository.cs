@@ -6,7 +6,7 @@ using MOCA.Presistence.Repositories.Base;
 
 namespace MOCA.Presistence.Repositories.MocaSettings
 {
-    public class TopUpsRepository : Repository<TopUp>, ITopUpsRespository
+    public class TopUpsRepository : GenericRepository<TopUp>, ITopUpsRespository
     {
         private readonly ApplicationDbContext _context;
         public TopUpsRepository(ApplicationDbContext context) : base(context)
@@ -14,7 +14,7 @@ namespace MOCA.Presistence.Repositories.MocaSettings
             _context = context;
         }
 
-        public async Task<IList<TopUp>> GetAllAsync()
+        public async Task<IList<TopUp>> GetAllBaseAsync()
         {
             var topUps = await _context.TopUps.Where(x => x.IsDeleted == false)
                                               .Include(x => x.TopUpType)

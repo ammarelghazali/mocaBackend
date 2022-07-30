@@ -6,7 +6,7 @@ using MOCA.Presistence.Repositories.Base;
 
 namespace MOCA.Presistence.Repositories.MocaSettings
 {
-    public class StatusesRepository : Repository<Status>, IStatusesRepository
+    public class StatusesRepository : GenericRepository<Status>, IStatusesRepository
     {
         private readonly ApplicationDbContext _context;
         public StatusesRepository(ApplicationDbContext context) : base(context)
@@ -14,7 +14,7 @@ namespace MOCA.Presistence.Repositories.MocaSettings
             _context = context;
         }
 
-        public async Task<IList<Status>> GetAllAsync()
+        public async Task<IList<Status>> GetAllBaseAsync()
         {
             return await _context.Statuses.Where(x => x.IsDeleted != true).ToListAsync();
         }

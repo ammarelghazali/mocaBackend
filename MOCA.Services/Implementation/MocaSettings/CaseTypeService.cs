@@ -82,7 +82,7 @@ namespace MOCA.Services.Implementation.MocaSettings
 
         public async Task<Response<IReadOnlyList<CaseTypeDto>>> GetAllCaseTypesAsync()
         {
-            var caseTypes = await _unitOfWork.CaseTypes.GetAllAsync();
+            var caseTypes = await _unitOfWork.CaseTypes.GetAllBaseAsync();
 
             return new Response<IReadOnlyList<CaseTypeDto>>
             {

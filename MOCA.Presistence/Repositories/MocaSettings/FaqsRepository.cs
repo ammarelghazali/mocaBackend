@@ -7,7 +7,7 @@ using MOCA.Presistence.Repositories.Base;
 
 namespace MOCA.Presistence.Repositories.MocaSettings
 {
-    public class FaqsRepository : Repository<Faq>, IFaqsRepository
+    public class FaqsRepository : GenericRepository<Faq>, IFaqsRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -16,7 +16,7 @@ namespace MOCA.Presistence.Repositories.MocaSettings
             _context = context;
         }
 
-        public async Task<IList<Faq>> GetAllAsync(long? spaceId)
+        public async Task<IList<Faq>> GetAllBaseAsync(long? spaceId)
         {
             return await _context.Faqs.Where(f => f.LobSpaceTypeId == spaceId &&
                                                  f.IsDeleted != true &&

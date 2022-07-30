@@ -5,7 +5,7 @@ using MOCA.Core.Interfaces.Base;
 
 namespace MOCA.Core.Interfaces.MocaSettings.Repositories
 {
-    public interface IIssueReportsRepository : IRepository<IssueReport>
+    public interface IIssueReportsRepository : IGenericRepository<IssueReport>
     {
         Task<long?> GetMaxReportId();
         Task<IList<IssueCaseStage>> GetCaseStages(long IssueReportId);

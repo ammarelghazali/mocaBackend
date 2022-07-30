@@ -3,7 +3,7 @@ using MOCA.Core.Interfaces.Base;
 
 namespace MOCA.Core.Interfaces.MocaSettings.Repositories
 {
-    public interface ILobSpaceTypesRepository : IRepository<LocationType>
+    public interface ILobSpaceTypesRepository : IGenericRepository<LocationType>
     {
         Task<LocationType> GetByName(string name);
         Task<IList<LocationType>> GetAllTypes();

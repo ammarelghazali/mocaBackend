@@ -126,9 +126,7 @@ namespace MOCA.Services.Implementation.MocaSettings
             // delete all related plans with this type id
             var plans = await _unitOfWork.Plans.GetAllPlansByTypeId(id);
 
-            _unitOfWork.Plans.DeleteRange(plans);
-
-            var num = await _unitOfWork.SaveAsync();
+            var num = await _unitOfWork.Plans.DeleteRangeAsync(plans); ;
             if (num != plans.Count())
                 return new Response<bool> { Message = "Server Error" };
 

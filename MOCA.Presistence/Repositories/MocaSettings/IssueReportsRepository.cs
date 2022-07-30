@@ -8,7 +8,7 @@ using MOCA.Presistence.Repositories.Base;
 
 namespace MOCA.Presistence.Repositories.MocaSettings
 {
-    public class IssueReportsRepository : Repository<IssueReport>, IIssueReportsRepository
+    public class IssueReportsRepository : GenericRepository<IssueReport>, IIssueReportsRepository
     {
         private readonly ApplicationDbContext _context;
         public IssueReportsRepository(ApplicationDbContext context) : base(context)
