@@ -115,7 +115,7 @@ namespace MocaSettings.API.Controllers
         /// <response code="200">Gets all the policies successfully</response>
         /// <response code="400">If the request is not well formatted</response>
         [HttpGet("LobSpaceType/{lobSpaceTypeId?}")]
-        public async Task<IActionResult> GetAllPolicies([FromRoute] long? lobSpaceTypeId = null)
+        public async Task<IActionResult> GetAllPolicies([FromRoute] long lobSpaceTypeId)
         {
             var response = await _policyService.GetAllPoliciesAsync(lobSpaceTypeId);
             if (!response.Succeeded)
