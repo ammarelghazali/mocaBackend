@@ -24,7 +24,6 @@
     <Folder Include="Interfaces\LocationManagment\Services\" />
     <Folder Include="Interfaces\MocaSettings\Repositories\" />
     <Folder Include="Interfaces\MocaSettings\Services\" />
-    <Folder Include="Interfaces\Events\" />
     <Folder Include="Interfaces\SSO\Repositories\" />
     <Folder Include="Interfaces\SSO\Services\" />
   </ItemGroup>
