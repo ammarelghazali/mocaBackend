@@ -3,9 +3,11 @@ using Microsoft.Extensions.Configuration;
 using MOCA.Core;
 using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Interfaces.Base;
+using MOCA.Core.Interfaces.LocationManagment.Repositories;
 using MOCA.Core.Interfaces.Shared.Services;
 using MOCA.Presistence.Contexts;
 using MOCA.Presistence.Repositories.Base;
+using MOCA.Presistence.Repositories.LocationManagment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,6 +56,34 @@ namespace MOCA.Presistence
                 return _countryRepo = _countryRepo ?? new Repository<Country>(_context);
             }
         }
+
+        private ICountryRepository _countryRepoEF;
+        public ICountryRepository CountryRepoEF
+        {
+            get
+            {
+                return _countryRepoEF = _countryRepoEF ?? new CountryRepository(_context);
+            }
+        }
+
+        private IRepository<City> _cityRepo;
+        public IRepository<City> CityRepo
+        {
+            get
+            {
+                return _cityRepo = _cityRepo ?? new Repository<City>(_context);
+            }
+        }
+
+        private ICityRepository _cityRepoEF;
+        public ICityRepository CityRepoEF
+        {
+            get
+            {
+                return _cityRepoEF = _cityRepoEF ?? new CityRepository(_context);
+            }
+        }
+
         #endregion
 
         public DateTime ConvertToLocalDate(DateTime dateInEasternTimeZone)

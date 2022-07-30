@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
+using MOCA.Core.DTOs.LocationManagment.City;
 using MOCA.Core.DTOs.LocationManagment.Country;
 using MOCA.Core.Entities.LocationManagment;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MOCA.Core.MappingProfiles
 {
@@ -18,8 +14,12 @@ namespace MOCA.Core.MappingProfiles
             #endregion
 
             #region Location Managment
+
             CreateMap<CountryModel, Country>();
             CreateMap<Country, CountryModel>();
+
+            CreateMap<CityModel, City>();
+            CreateMap<City, CityModel>();
             #endregion
 
         }
