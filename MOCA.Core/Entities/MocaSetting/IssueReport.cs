@@ -28,8 +28,6 @@ namespace MOCA.Core.Entities.MocaSetting
         [ForeignKey("OwnerId")]
         public Admin Owner { get; set; }
         
-        public int MyProperty { get; set; }
-
         [Required]
         public long LocationId { get; set; }
         [ForeignKey("LocationId")]
@@ -71,7 +69,5 @@ namespace MOCA.Core.Entities.MocaSetting
         [Required]
         [MaxLength(1000)]
         public string CaseDescription { get; set; }
-
-
     }
 }

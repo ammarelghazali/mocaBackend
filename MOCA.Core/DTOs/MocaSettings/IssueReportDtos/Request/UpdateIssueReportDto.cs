@@ -5,10 +5,6 @@ namespace MOCA.Core.DTOs.MocaSettings.IssueReportDtos.Request
     public class UpdateIssueReportDto
     {
         [Required]
-        public string ReportedById { get; set; }
-        [Required]
-        public string OwnerId { get; set; }
-        [Required]
         public long StatusId { get; set; }
         [Required]
         [MaxLength(700)]

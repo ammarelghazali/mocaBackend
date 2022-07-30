@@ -4,14 +4,14 @@ namespace MOCA.Core.DTOs.MocaSettings.IssueReportDtos.Request
 {
     public class IssueReportForCreationDto
     {
+        //[Required]
+        //[Range(1, long.MaxValue, ErrorMessage = "Report Issue Id Cannot Be Zero")]
+        //public long Id { get; set; }
+
         [Required]
-        [Range(1, long.MaxValue, ErrorMessage = "Report Issue Id Cannot Be Zero")]
-        public long Id { get; set; }
-        public long? LobSpaceTypeId { get; set; }
-        [Required]
-        public string ReportedById { get; set; }
-        [Required]
-        public string OwnerId { get; set; }
+        [Range(1, long.MaxValue, ErrorMessage = "Lob Space Type Id cannot be zero or null")]
+        public long LobSpaceTypeId { get; set; }
+
         [Required]
         public long StatusId { get; set; }
         [Required]
