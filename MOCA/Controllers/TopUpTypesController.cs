@@ -57,7 +57,8 @@ namespace MocaSettings.API.Controllers
         /// </summary>
         /// <param name="addTopUpTypeDto">an object that has name and URL of the Top Up Type</param>
         /// <response code="200">Added the Top Up Type Successfully</response>
-        /// <response code="400">the Request is not well formatted, or top Up Type with the same name is already exist</response>        
+        /// <response code="400">the Request is not well formatted, or top Up Type with the same name is already exist</response>
+        [HttpPost]
         public async Task<IActionResult> AddTopUpType(AddTopUpTypeDto addTopUpTypeDto)
         {
             var response = await _topUpTypesService.AddTopUpType(addTopUpTypeDto);
@@ -75,6 +76,7 @@ namespace MocaSettings.API.Controllers
         /// <param name="id">Id of the Top Up Type</param>
         /// <response code="200">Deletes the Top Up Type Successfully</response>
         /// <response code="400">the Request is not well formatted, or top Up Type id is wrong</response>      
+        [HttpDelete]
         public async Task<IActionResult> DeleteTopUpType(long id)
         {
             var response = await _topUpTypesService.DeleteTopUpType(id);
@@ -92,7 +94,8 @@ namespace MocaSettings.API.Controllers
         /// <param name="id">id of the Top Up</param>
         /// <param name="topUpTypeDto">an object that has the Top Up name and URL</param>
         /// <response code="200">Updates the Top Up Type Successfully</response>
-        /// <response code="400">the Request is not well formatted, or top Up Type id is wrong</response>             
+        /// <response code="400">the Request is not well formatted, or top Up Type id is wrong</response> 
+        [HttpPut]
         public async Task<IActionResult> UpdateTopUpType(long id, AddTopUpTypeDto topUpTypeDto)
         {
             var response = await _topUpTypesService.UpdateTopUpType(id, topUpTypeDto);
