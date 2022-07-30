@@ -7,8 +7,8 @@ namespace MOCA.Core.DTOs.MocaSettings.TopUpDtos.Request
         [Required]
         public string TermsOfUse { get; set; }
 
-        public long? LobSpaceTypeId { get; set; }
-
-
+        [Required]
+        [Range(1, long.MaxValue, ErrorMessage = "Lob Space Type Id cannot be zero or null")]
+        public long LobSpaceTypeId { get; set; }
     }
 }

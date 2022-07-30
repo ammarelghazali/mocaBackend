@@ -22,6 +22,14 @@ namespace MOCA.Services.Implementation.MocaSettings
 
         public async Task<Response<TopUpDto>> Add(long topUpTypeId, TopUpCreateionDto topUpCreateionDto)
         {
+            if (await _unitOfWork.LocationTypeRepoEF.GetByIdAsync(topUpCreateionDto.LobSpaceTypeId) is null)
+            {
+                return new Response<TopUpDto>
+                {
+                    Message = "There's no such LOB Space Type"
+                };
+            }
+
             var topUpType = await _unitOfWork.TopUpTypes.GetByIdAsync(topUpTypeId);
 
             if (topUpType == null || topUpType.IsDeleted)
@@ -30,17 +38,8 @@ namespace MOCA.Services.Implementation.MocaSettings
                     Message = "No such A topup type found"
                 };
 
-
-            TopUp topUp;
-            if (topUpCreateionDto.LobSpaceTypeId == null || topUpCreateionDto.LobSpaceTypeId == 0)
-            {
-                topUp = await _unitOfWork.TopUps.GetByTopUpTypeId(topUpTypeId);
-                topUpCreateionDto.LobSpaceTypeId = null;
-            }
-            else
-            {
-                topUp = await _unitOfWork.TopUps.GetByTopUpTypeId(topUpTypeId, (long)topUpCreateionDto.LobSpaceTypeId);
-            }
+          
+            var topUp = await _unitOfWork.TopUps.GetByTopUpTypeId(topUpTypeId, topUpCreateionDto.LobSpaceTypeId);
 
             if (topUp != null)
                 return new Response<TopUpDto>
@@ -68,6 +67,14 @@ namespace MOCA.Services.Implementation.MocaSettings
 
         public async Task<Response<TopUpDto>> GetByTopUpTypeId(long topUpTypeId, TopUpForLobSpaceTypeDto topUpForLobSpaceTypeDto)
         {
+            if (await _unitOfWork.LocationTypeRepoEF.GetByIdAsync(topUpForLobSpaceTypeDto.LobSpaceTypeId) is null)
+            {
+                return new Response<TopUpDto>
+                {
+                    Message = "There's no such LOB Space Type"
+                };
+            }
+
             var topUpType = await _unitOfWork.TopUpTypes.GetByIdAsync(topUpTypeId);
 
             if (topUpType == null || topUpType.IsDeleted)
@@ -77,16 +84,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
 
 
-            TopUp topUp;
-            if (topUpForLobSpaceTypeDto.LobSpaceTypeId == null || topUpForLobSpaceTypeDto.LobSpaceTypeId == 0)
-            {
-                topUp = await _unitOfWork.TopUps.GetByTopUpTypeId(topUpTypeId);
-                topUpForLobSpaceTypeDto.LobSpaceTypeId = null;
-            }
-            else
-            {
-                topUp = await _unitOfWork.TopUps.GetByTopUpTypeId(topUpTypeId, (long)topUpForLobSpaceTypeDto.LobSpaceTypeId);
-            }
+            var topUp = await _unitOfWork.TopUps.GetByTopUpTypeId(topUpTypeId, (long)topUpForLobSpaceTypeDto.LobSpaceTypeId);
 
             if (topUp == null)
                 return new Response<TopUpDto> {  Message = "no such a topUp found" };
@@ -98,6 +96,14 @@ namespace MOCA.Services.Implementation.MocaSettings
 
         public async Task<Response<bool>> Delete(long topUpTypeId, TopUpForLobSpaceTypeDto topUpForLobSpaceTypeDto)
         {
+            if (await _unitOfWork.LocationTypeRepoEF.GetByIdAsync(topUpForLobSpaceTypeDto.LobSpaceTypeId) is null)
+            {
+                return new Response<bool>
+                {
+                    Message = "There's no such LOB Space Type"
+                };
+            }
+
             var topUpType = await _unitOfWork.TopUpTypes.GetByIdAsync(topUpTypeId);
 
             if (topUpType == null || topUpType.IsDeleted)
@@ -106,16 +112,8 @@ namespace MOCA.Services.Implementation.MocaSettings
                     Message = "No such A topup type found"
                 };
 
-
-            TopUp topUp;
-            if (topUpForLobSpaceTypeDto.LobSpaceTypeId == null || topUpForLobSpaceTypeDto.LobSpaceTypeId == 0)
-            {
-                topUp = await _unitOfWork.TopUps.GetByTopUpTypeId(topUpTypeId);
-            }
-            else
-            {
-                topUp = await _unitOfWork.TopUps.GetByTopUpTypeId(topUpTypeId, (long)topUpForLobSpaceTypeDto.LobSpaceTypeId);
-            }
+           
+            var topUp = await _unitOfWork.TopUps.GetByTopUpTypeId(topUpTypeId, topUpForLobSpaceTypeDto.LobSpaceTypeId);
 
             if (topUp == null)
                 return new Response<bool>
@@ -138,6 +136,14 @@ namespace MOCA.Services.Implementation.MocaSettings
 
         public async Task<Response<TopUpDto>> Update(long topUpTypeId, TopUpForLobSpaceTypeDto topUpForLobSpaceTypeDto, UpdateTopUpDto updateTopUpDto)
         {
+            if (await _unitOfWork.LocationTypeRepoEF.GetByIdAsync(topUpForLobSpaceTypeDto.LobSpaceTypeId) is null)
+            {
+                return new Response<TopUpDto>
+                {
+                    Message = "There's no such LOB Space Type"
+                };
+            }
+
             var topUpType = await _unitOfWork.TopUpTypes.GetByIdAsync(topUpTypeId);
 
             if (topUpType == null || topUpType.IsDeleted)
@@ -146,17 +152,9 @@ namespace MOCA.Services.Implementation.MocaSettings
                     Message = "No such A topup type found"
                 };
 
-            TopUp topUp;
-            if (topUpForLobSpaceTypeDto.LobSpaceTypeId == null || topUpForLobSpaceTypeDto.LobSpaceTypeId == 0)
-            {
-                topUp = await _unitOfWork.TopUps.GetByTopUpTypeId(topUpTypeId);
-                topUpForLobSpaceTypeDto.LobSpaceTypeId = null;
-            }
-            else
-            {
-                topUp = await _unitOfWork.TopUps.GetByTopUpTypeId(topUpTypeId,
-                (long)topUpForLobSpaceTypeDto.LobSpaceTypeId);
-            }
+           
+            var topUp = await _unitOfWork.TopUps.GetByTopUpTypeId(topUpTypeId, topUpForLobSpaceTypeDto.LobSpaceTypeId);
+
             if (topUp == null)
                 return new Response<TopUpDto>
                 {
