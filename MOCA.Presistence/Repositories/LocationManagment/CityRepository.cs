@@ -1,8 +1,8 @@
-﻿using MOCA.Core.Entities.LocationManagment;
+﻿using Microsoft.EntityFrameworkCore;
+using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Interfaces.LocationManagment.Repositories;
 using MOCA.Presistence.Contexts;
 using MOCA.Presistence.Repositories.Base;
-using System.Data.Entity;
 
 namespace MOCA.Presistence.Repositories.LocationManagment
 {
