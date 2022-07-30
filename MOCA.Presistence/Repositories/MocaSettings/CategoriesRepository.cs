@@ -42,8 +42,7 @@ namespace MOCA.Presistence.Repositories.MocaSettings
                                             .FirstOrDefaultAsync();
         }
 
-        public async Task DeleteCategory(long? spaceId, long categoryId, bool deleteRelatedQuestions,
-                                         Guid user)
+        public async Task DeleteCategory(long? spaceId, long categoryId, bool deleteRelatedQuestions)
         {
             if (!deleteRelatedQuestions)
             {
@@ -161,7 +160,7 @@ namespace MOCA.Presistence.Repositories.MocaSettings
                                                            c.Name == name);
         }
 
-        public async Task<bool> UpdateRelatedFaqs(long? lobSpaceTypeId, long? oldCategoryId, long newCategoryId, Guid user)
+        public async Task<bool> UpdateRelatedFaqs(long? lobSpaceTypeId, long? oldCategoryId, long newCategoryId)
         {
             var faqs = await _context.Faqs.Where(f => f.IsDeleted != true &&
                                                       f.CategoryId == oldCategoryId &&

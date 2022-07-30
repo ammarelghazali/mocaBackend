@@ -256,8 +256,7 @@ namespace MOCA.Services.Implementation.MocaSettings
 
             var isRelatedFaqsUpdated = await _unitOfWork.Categories
                                       .UpdateRelatedFaqs(categoryForUpdate.LobSpaceTypeId,
-                                                     categoryId, newCategory.Id,
-                                                   new Guid("5bade43f-9b1b-4734-9f98-09d7407a2783"));
+                                                     categoryId, newCategory.Id);
 
 
 
@@ -292,8 +291,7 @@ namespace MOCA.Services.Implementation.MocaSettings
 
             await _unitOfWork.Categories.DeleteCategory(deleteCategoryDto.LobSpaceTypeId,
                                                         categoryId,
-                                                        deleteCategoryDto.DeleteRelatedFaqs,
-                                                     new Guid("5bade43f-9b1b-4734-9f98-09d7407a2783"));
+                                                        deleteCategoryDto.DeleteRelatedFaqs);
 
 
             if (await _unitOfWork.SaveAsync() < 1)
