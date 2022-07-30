@@ -77,7 +77,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             }
 
             var featureEntity = await _unitOfWork.FeatureRepo.GetByIdAsync(request.Id);
-            if (featureEntity == null) { throw new NotFoundException(nameof(City), request.Id); }
+            if (featureEntity == null) { throw new NotFoundException(nameof(Feature), request.Id); }
             feature.CreatedBy = featureEntity.CreatedBy;
             feature.CreatedAt = featureEntity.CreatedAt;
 
