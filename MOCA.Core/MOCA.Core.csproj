@@ -14,8 +14,12 @@
 
   <ItemGroup>
     <Folder Include="DTOs\MocaSettings\" />
+    <Folder Include="DTOs\LocationManagment\" />
     <Folder Include="DTOs\SSO\" />
     <Folder Include="Enums\MocaSettings\" />
+    <Folder Include="Interfaces\LocationManagment\" />
+    <Folder Include="Interfaces\LocationManagment\Repositories\" />
+    <Folder Include="Interfaces\LocationManagment\Services\" />
     <Folder Include="Interfaces\MocaSettings\Repositories\" />
     <Folder Include="Interfaces\MocaSettings\Services\" />
     <Folder Include="Interfaces\SSO\Repositories\" />
