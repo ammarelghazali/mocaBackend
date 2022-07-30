@@ -299,6 +299,24 @@ namespace MOCA.Presistence
             }
         }
 
+        IGenericRepository<Industry> _industryRepo;
+        public IGenericRepository<Industry> IndustryRepo
+        {
+            get
+            {
+                return _industryRepo = _industryRepo ?? new GenericRepository<Industry>(_context);
+            }
+        }
+
+        IIndustryRepository _industryRepoEF;
+        public IIndustryRepository IndustryRepoEF
+        {
+            get
+            {
+                return _industryRepoEF = _industryRepoEF ?? new IndustryRepository(_context);
+            }
+        }
+
         #endregion
 
         public DateTime ConvertToLocalDate(DateTime dateInEasternTimeZone)

@@ -58,6 +58,8 @@ namespace MOCA.Core
         IFeatureRepository FeatureRepoEF { get; }
         IGenericRepository<Inclusion> InclusionRepo { get; }
         IInclusionRepository InclusionRepoEF { get; }
+        IGenericRepository<Industry> IndustryRepo { get; }
+        IIndustryRepository IndustryRepoEF { get; }
         #endregion
 
         void Save();

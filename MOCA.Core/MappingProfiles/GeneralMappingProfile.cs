@@ -32,6 +32,7 @@ using MOCA.Core.DTOs.LocationManagment.LocationType;
 using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.DTOs.LocationManagment.Feature;
 using MOCA.Core.DTOs.LocationManagment.Inclusion;
+using MOCA.Core.DTOs.LocationManagment.Industry;
 
 namespace MOCA.Core.MappingProfiles
 {
@@ -169,6 +170,9 @@ namespace MOCA.Core.MappingProfiles
 
             CreateMap<InclusionModel, Inclusion>();
             CreateMap<Inclusion, InclusionModel>();
+
+            CreateMap<IndustryModel, Industry>();
+            CreateMap<Industry, IndustryModel>();
             #endregion
 
         }
