@@ -42,11 +42,6 @@ namespace MOCA.Presistence.Repositories.MocaSettings
                                             .FirstOrDefaultAsync();
         }
 
-        public void UpdateRange(List<Category> categories)
-        {
-            _context.Categories.UpdateRange(categories);
-        }
-
         public async Task DeleteCategory(long? spaceId, long categoryId, bool deleteRelatedQuestions,
                                          Guid user)
         {

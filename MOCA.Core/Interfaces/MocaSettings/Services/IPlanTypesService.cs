@@ -6,7 +6,7 @@ namespace MOCA.Core.Interfaces.MocaSettings.Services
 {
     public interface IPlanTypesService
     {
-        Task<Response<IReadOnlyList<PlanTypeDto>>> GetAll();
+        Task<Response<IList<PlanTypeDto>>> GetAll();
         Task<Response<PlanTypeManipulationResponse>> Add(PlanTypeForCreationDto planTypeDto);
         Task<Response<bool>> Delete(long id);
         Task<Response<PlanTypeManipulationResponse>> Update(long id, PlanTypeForCreationDto planTypeDto);

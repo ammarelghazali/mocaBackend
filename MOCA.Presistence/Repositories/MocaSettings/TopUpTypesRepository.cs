@@ -28,7 +28,7 @@ namespace MOCA.Presistence.Repositories.MocaSettings
             return topUpType;
         }
 
-        public async Task<bool> UpdateRelatedTopUps(long oldId, long newId, Guid user)
+        public async Task<bool> UpdateRelatedTopUps(long oldId, long newId)
         {
             var topUps = await _context.TopUps.Where(x => x.IsDeleted == false && x.TopUpTypeId == oldId).ToListAsync();
 

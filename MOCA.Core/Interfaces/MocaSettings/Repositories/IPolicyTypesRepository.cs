@@ -13,7 +13,7 @@ namespace MOCA.Core.Interfaces.MocaSettings.Repositories
         Task<PolicyType> GetPolicyTypeByIdWithPolicyAsync(long id);
         Task<IList<PolicyType>> GetAllPolicyTypesWithPolicyDescriptionAsync(long? LobSpaceTypeId);
         Task<IList<PolicyType>> GetAllAsync();
-        Task<bool> UpdateRelatedPolicy(long oldId, long newId, Guid user);
-        Task DeleteRelatedPolicy(long id, Guid user);
+        Task<bool> UpdateRelatedPolicy(long oldId, long newId);
+        Task DeleteRelatedPolicy(long id);
     }
 }

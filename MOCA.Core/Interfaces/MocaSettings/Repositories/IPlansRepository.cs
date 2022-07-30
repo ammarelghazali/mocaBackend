@@ -7,6 +7,6 @@ namespace MOCA.Core.Interfaces.MocaSettings.Repositories
     {
         Task<Plan> GetByType(long lobSpaceTypeId, long typeId);
         Task<Plan> GetByType(long typeId);
-        Task<IList<Plan>> GetAllPlansByTypeId(long planTypeId);
+        Task<List<Plan>> GetAllPlansByTypeId(long planTypeId);
     }
 }

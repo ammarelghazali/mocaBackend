@@ -48,6 +48,8 @@ namespace MOCA.Core.Interfaces.Base
 
         void Delete(TEntity entityToDelete);
 
+        void DeleteRange(IList<TEntity> entities);
+
         int GetCount(Expression<Func<TEntity, bool>> filter);
 
         decimal GetSum(Expression<Func<TEntity, bool>> filter, Expression<Func<TEntity, decimal>> property);

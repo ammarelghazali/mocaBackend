@@ -9,7 +9,7 @@ namespace MOCA.Core.Interfaces.MocaSettings.Services
         Task<Response<PolicyTypeDto>> AddPolicyType(PolicyTypeForCreationDto policyTypeForCreationDto);
         Task<Response<PolicyTypeDto>> UpdatePolicyType(long id, PolicyTypeForCreationDto policyTypeDto);
         Task<Response<bool>> DeletePolicyType(long policyTypeId);
-        Task<Response<IReadOnlyList<PolicyTypeDto>>> GetAllPolicyTypes(bool withRelatedDescription, long? LobSpaceTypeId);
+        Task<Response<object>> GetAllPolicyTypes(bool withRelatedDescription, long? LobSpaceTypeId);
         Task<Response<PolicyTypeWithDescriptionDto>> GetSinglePolicyType(long PolicyTypeId);
     }
 }

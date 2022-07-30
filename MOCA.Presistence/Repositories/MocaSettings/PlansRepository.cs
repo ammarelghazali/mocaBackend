@@ -23,7 +23,7 @@ namespace MOCA.Presistence.Repositories.MocaSettings
         }
 
 
-        public async Task<IList<Plan>> GetAllPlansByTypeId(long planTypeId)
+        public async Task<List<Plan>> GetAllPlansByTypeId(long planTypeId)
         {
             var plans = await _context.Plans.Where(x => x.IsDeleted == false && x.TypeId == planTypeId).ToListAsync();
             return plans;

@@ -10,7 +10,7 @@ namespace MOCA.Core.Interfaces.MocaSettings.Services
         Task<Response<bool>> AddIssueReportAsync(IssueReportForCreationDto issueReportForCreationDto);
         Task<Response<bool>> DeleteIssueReportAsync(long issueReportId);
         Task<Response<IReadOnlyList<IssueCaseStagesDto>>> GetIssueReportCaseStages(long issueReportId);
-        Task<PagedResponse<IReadOnlyList<IssueReportDto>>> GetPaginatedIssueReportsAsync(long? lobSpaceTypeId,
+        Task<PagedResponse<List<IssueReportDto>>> GetPaginatedIssueReportsAsync(long? lobSpaceTypeId,
                                                         IssueReportsResourceParameters resourceParameters);
         Task<Response<IssueReportDto>> GetSingleIssueReportAsync(long issueReportId);
         Task<Response<bool>> UpdateIssueReportAsync(long id, UpdateIssueReportDto updateIssueReportDto);

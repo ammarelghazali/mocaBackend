@@ -5,7 +5,7 @@ namespace MOCA.Core.DTOs.MocaSettings.CategoryDtos.Response
 {
     public class CategoriesWithNonCategorizedFaqs
     {
-        public List<CategoryWithFaqDto> Categories { get; set; }
-        public List<FaqBaseDto> NonCategorizedFaqs { get; set; }
+        public IReadOnlyList<CategoryWithFaqDto> Categories { get; set; }
+        public IReadOnlyList<FaqBaseDto> NonCategorizedFaqs { get; set; }
     }
 }

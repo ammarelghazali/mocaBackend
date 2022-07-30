@@ -207,6 +207,18 @@ namespace MOCA.Presistence.Repositories.Base
             dbSet.Remove(entityToDelete);
         }
 
+        public void DeleteRange(IList<TEntity> entities)
+        {
+            foreach (TEntity entity in entities)
+            {
+                if (context.Entry(entity).State == EntityState.Detached)
+                {
+                    dbSet.Attach(entity);
+                }
+            }
+            dbSet.RemoveRange(entities);
+        }
+
         public IQueryable<TEntity> GetAll()
         {
             IQueryable<TEntity> query = dbSet;
