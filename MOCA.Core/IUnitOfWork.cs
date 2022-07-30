@@ -54,7 +54,8 @@ namespace MOCA.Core
         ICurrencyRepository CurrencyRepoEF { get; }
         IGenericRepository<LocationType> LocationTypeRepo { get; }
         ILocationTypeRepository LocationTypeRepoEF { get; }
-
+        IGenericRepository<Feature> FeatureRepo { get; }
+        IFeatureRepository FeatureRepoEF { get; }
         #endregion
 
         void Save();

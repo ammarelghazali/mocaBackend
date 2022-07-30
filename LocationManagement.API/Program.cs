@@ -80,6 +80,7 @@ builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddScoped<IDistrictService, DistrictService>();
 builder.Services.AddScoped<ICurrencyService, CurrencyService>();
 builder.Services.AddScoped<ILocationTypeService, LocationTypeService>();
+builder.Services.AddScoped<IFeatureService, FeatureService>();
 
 #endregion
 

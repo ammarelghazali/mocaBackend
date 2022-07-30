@@ -263,6 +263,24 @@ namespace MOCA.Presistence
             }
         }
 
+        IGenericRepository<Feature> _featureRepo;
+        public IGenericRepository<Feature> FeatureRepo
+        {
+            get
+            {
+                return _featureRepo = _featureRepo ?? new GenericRepository<Feature>(_context);
+            }
+        }
+
+        IFeatureRepository _featureRepoEF;
+        public IFeatureRepository FeatureRepoEF
+        {
+            get
+            {
+                return _featureRepoEF = _featureRepoEF ?? new FeatureRepository(_context);
+            }
+        }
+
         #endregion
 
         public DateTime ConvertToLocalDate(DateTime dateInEasternTimeZone)
