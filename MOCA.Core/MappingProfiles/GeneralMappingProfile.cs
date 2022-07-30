@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MOCA.Core.DTOs.LocationManagment.City;
 using MOCA.Core.DTOs.LocationManagment.Country;
+using MOCA.Core.DTOs.LocationManagment.District;
 using MOCA.Core.Entities.LocationManagment;
 
 namespace MOCA.Core.MappingProfiles
@@ -20,6 +21,9 @@ namespace MOCA.Core.MappingProfiles
 
             CreateMap<CityModel, City>();
             CreateMap<City, CityModel>();
+
+            CreateMap<DistrictModel, District>();
+            CreateMap<District, DistrictModel>();
             #endregion
 
         }

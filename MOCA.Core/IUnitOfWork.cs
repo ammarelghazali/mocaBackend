@@ -17,6 +17,8 @@ namespace MOCA.Core
         ICountryRepository CountryRepoEF { get; }
         IRepository<City> CityRepo { get; }
         ICityRepository CityRepoEF { get; }
+        IRepository<District> DistrictRepo { get; }
+        IDistrictRepository DistrictRepoEF { get; }
 
         #endregion
 

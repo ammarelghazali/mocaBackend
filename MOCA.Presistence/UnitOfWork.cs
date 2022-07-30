@@ -84,6 +84,24 @@ namespace MOCA.Presistence
             }
         }
 
+        private IRepository<District> _districtRepo;
+        public IRepository<District> DistrictRepo
+        {
+            get
+            {
+                return _districtRepo = _districtRepo ?? new Repository<District>(_context);
+            }
+        }
+
+        private IDistrictRepository _districtRepoEF;
+        public IDistrictRepository DistrictRepoEF
+        {
+            get
+            {
+                return _districtRepoEF = _districtRepoEF ?? new DistrictRepository(_context);
+            }
+        }
+
         #endregion
 
         public DateTime ConvertToLocalDate(DateTime dateInEasternTimeZone)
