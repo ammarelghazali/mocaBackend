@@ -1,11 +1,6 @@
-﻿using Compolitan.Core.DTOs;
-using MOCA.Core.DTOs.LocationManagment.District;
+﻿using MOCA.Core.DTOs.LocationManagment.District;
+using MOCA.Core.DTOs.Shared;
 using MOCA.Core.DTOs.Shared.Responses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MOCA.Core.Interfaces.LocationManagment.Services
 {

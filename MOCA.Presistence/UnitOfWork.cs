@@ -49,7 +49,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return this.Categories ?? new CategoriesRepository(context);
+                return this.Categories ?? new CategoriesRepository(_context);
             }
         }
 
@@ -57,7 +57,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return this.Faqs ?? new FaqsRepository(context);
+                return this.Faqs ?? new FaqsRepository(_context);
             }
         }
 
@@ -65,7 +65,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return this.Plans ?? new PlansRepository(context);
+                return this.Plans ?? new PlansRepository(_context);
             }
         }
 
@@ -73,7 +73,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return this.PlanTypes ?? new PlanTypesRepository(context);
+                return this.PlanTypes ?? new PlanTypesRepository(_context);
             }
         }
 
@@ -81,7 +81,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return this.TopUps ?? new TopUpsRepository(context);
+                return this.TopUps ?? new TopUpsRepository(_context);
             }
         }
 
@@ -89,7 +89,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return this.TopUpTypes ?? new TopUpTypesRepository(context);
+                return this.TopUpTypes ?? new TopUpTypesRepository(_context);
             }
         }
 
@@ -97,7 +97,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return this.PolicyTypes ?? new PolicyTypesRepository(context);
+                return this.PolicyTypes ?? new PolicyTypesRepository(_context);
             }
         }
 
@@ -105,7 +105,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return this.Policies ?? new PolicyRepository(context);
+                return this.Policies ?? new PolicyRepository(_context);
             }
         }
 
@@ -115,7 +115,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return this.Wifis ?? new WifisRepository(context);
+                return this.Wifis ?? new WifisRepository(_context);
             }
         }
 
@@ -123,7 +123,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return this.Statuses ?? new StatusesRepository(context);
+                return this.Statuses ?? new StatusesRepository(_context);
             }
         }
 
@@ -131,7 +131,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return this.Severities ?? new SeveritiesRepository(context);
+                return this.Severities ?? new SeveritiesRepository(_context);
             }
         }
 
@@ -139,7 +139,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return this.Priorities ?? new PrioritiesRepository(context);
+                return this.Priorities ?? new PrioritiesRepository(_context);
             }
         }
 
@@ -147,7 +147,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return this.CaseTypes ?? new CaseTypesRepository(context);
+                return this.CaseTypes ?? new CaseTypesRepository(_context);
             }
         }
 
@@ -155,7 +155,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return this.IssueReports ?? new IssueReportsRepository(context);
+                return this.IssueReports ?? new IssueReportsRepository(_context);
             }
         }
 

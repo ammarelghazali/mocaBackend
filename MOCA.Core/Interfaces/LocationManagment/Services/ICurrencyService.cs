@@ -1,5 +1,5 @@
-﻿using Compolitan.Core.DTOs;
-using MOCA.Core.DTOs.LocationManagment.Currency;
+﻿using MOCA.Core.DTOs.LocationManagment.Currency;
+using MOCA.Core.DTOs.Shared;
 using MOCA.Core.DTOs.Shared.Responses;
 
 namespace MOCA.Core.Interfaces.LocationManagment.Services

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Compolitan.Core.DTOs;
 using MOCA.Core;
 using MOCA.Core.DTOs.LocationManagment.Country;
+using MOCA.Core.DTOs.Shared;
 using MOCA.Core.DTOs.Shared.Exceptions;
 using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.Entities.LocationManagment;
