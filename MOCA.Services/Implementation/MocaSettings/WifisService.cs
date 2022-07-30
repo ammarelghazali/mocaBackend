@@ -20,17 +20,13 @@ namespace MOCA.Services.Implementation.MocaSettings
         }
         public async Task<Response<WifiDto>> AddWifi(long? lobSpaceTypeId, WifiForCreationDto wifiForCreation)
         {
-            //if (lobSpaceTypeId is not null)
-            //{
-            //    if (!await _unitOfWork.LobSpaceTypes.LobSpaceTypeExists((long)lobSpaceTypeId))
-            //    {
-            //        return new ResponseDto
-            //        {
-            //            StatusCode = 400,
-            //            Message = "There's no such Lob Space"
-            //        };
-            //    }
-            //}
+            if (await _unitOfWork.LocationTypeRepoEF.GetByIdAsync(lobSpaceTypeId) is null)
+            {
+                return new Response<WifiDto>
+                {
+                    Message = "There's no such LOB Space Type"
+                };
+            }
 
             var wifi = await _unitOfWork.Wifis.GetWifiByLobSpaceTypeId(lobSpaceTypeId);
             var newWifi = new Wifi();
@@ -64,17 +60,13 @@ namespace MOCA.Services.Implementation.MocaSettings
 
         public async Task<Response<bool>> DeleteWifi(long? lobSpaceTypeId)
         {
-            //if (lobSpaceTypeId is not null)
-            //{
-            //    if (!await _unitOfWork.LobSpaceTypes.LobSpaceTypeExists((long)lobSpaceTypeId))
-            //    {
-            //        return new ResponseDto
-            //        {
-            //            StatusCode = 400,
-            //            Message = "There's no such Lob Space"
-            //        };
-            //    }
-            //}
+            if (await _unitOfWork.LocationTypeRepoEF.GetByIdAsync(lobSpaceTypeId) is null)
+            {
+                return new Response<bool>
+                {
+                    Message = "There's no such LOB Space Type"
+                };
+            }
 
             var wifi = await _unitOfWork.Wifis.GetWifiByLobSpaceTypeId(lobSpaceTypeId);
 
@@ -101,17 +93,13 @@ namespace MOCA.Services.Implementation.MocaSettings
 
         public async Task<Response<WifiDto>> GetWifi(long? lobSpaceTypeId)
         {
-            //if (lobSpaceTypeId is not null)
-            //{
-            //    if (!await _unitOfWork.LobSpaceTypes.LobSpaceTypeExists((long)lobSpaceTypeId))
-            //    {
-            //        return new ResponseDto
-            //        {
-            //            StatusCode = 400,
-            //            Message = "There's no such Lob Space"
-            //        };
-            //    }
-            //}
+            if (await _unitOfWork.LocationTypeRepoEF.GetByIdAsync(lobSpaceTypeId) is null)
+            {
+                return new Response<WifiDto>
+                {
+                    Message = "There's no such LOB Space Type"
+                };
+            }
 
             var wifi = await _unitOfWork.Wifis.GetWifiByLobSpaceTypeId(lobSpaceTypeId);
 

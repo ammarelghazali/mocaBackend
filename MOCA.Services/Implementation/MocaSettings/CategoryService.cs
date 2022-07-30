@@ -22,18 +22,13 @@ namespace MOCA.Services.Implementation.MocaSettings
         }
         public async Task<Response<CategoryDto>> AddCategoryAsync(CategoryForCreationDto categoryForCreation)
         {
-            //if (categoryForCreation.LobSpaceTypeId is not null)
-            //{
-            //    if (!await _unitOfWork.LobSpaceTypes.LobSpaceTypeExists(
-            //                                              (long)categoryForCreation.LobSpaceTypeId))
-            //    {
-            //        return new Response<CategoryDto>
-            //        {
-            //            StatusCode = 400,
-            //            Message = "There's no such Policy Type"
-            //        };
-            //    }
-            //}
+            if (await _unitOfWork.LocationTypeRepoEF.GetByIdAsync(categoryForCreation.LobSpaceTypeId) is null)
+            {
+                return new Response<CategoryDto>
+                {
+                    Message = "There's no such LOB Space Type"
+                };
+            }
 
             if (await _unitOfWork.Categories.CategoryWithSameNameExist(categoryForCreation.LobSpaceTypeId,
                                                                      categoryForCreation.Name))
@@ -64,17 +59,13 @@ namespace MOCA.Services.Implementation.MocaSettings
 
         public async Task<Response<object>> GetAllCategoriesAsync(GetAllCategoriesDto getAllCategoriesDto)
         {
-            //if (getAllCategoriesDto.LobSpaceTypeId is not null)
-            //{
-            //    if (!await _unitOfWork.LobSpaceTypes.LobSpaceTypeExists(
-            //                                              (long)getAllCategoriesDto.LobSpaceTypeId))
-            //    {
-            //        return new Response<IReadOnlyList<CategoryDto>>
-            //        {
-            //            Message = "There's no such Policy Type"
-            //        };
-            //    }
-            //}
+            if (await _unitOfWork.LocationTypeRepoEF.GetByIdAsync(getAllCategoriesDto.LobSpaceTypeId) is null)
+            {
+                return new Response<object>
+                {
+                    Message = "There's no such LOB Space Type"
+                };
+            }
 
             IList<Category> categories;
 
