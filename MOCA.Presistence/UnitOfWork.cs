@@ -120,6 +120,24 @@ namespace MOCA.Presistence
             }
         }
 
+        IRepository<LocationType> _locationTypeRepo;
+        public IRepository<LocationType> LocationTypeRepo
+        {
+            get
+            {
+                return _locationTypeRepo = _locationTypeRepo ?? new Repository<LocationType>(_context);
+            }
+        }
+
+        ILocationTypeRepository _locationTypeRepoEF;
+        public ILocationTypeRepository LocationTypeRepoEF
+        {
+            get
+            {
+                return _locationTypeRepoEF = _locationTypeRepoEF ?? new LocationTypeRepository(_context);
+            }
+        }
+
         #endregion
 
         public DateTime ConvertToLocalDate(DateTime dateInEasternTimeZone)
