@@ -74,7 +74,7 @@ namespace MOCA.Services.Implementation.MocaSettings
 
         public async Task<Response<IReadOnlyList<PriorityDto>>> GetAllPrioritiesAsync()
         {
-            var priority = await _unitOfWork.Priorities.GetAllAsync();
+            var priority = await _unitOfWork.Priorities.GetAllNotDeletedAsync();
 
             return new Response<IReadOnlyList<PriorityDto>>(_mapper.Map<IReadOnlyList<PriorityDto>>(priority));
         }
