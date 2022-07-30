@@ -5,7 +5,7 @@ using MOCA.Presistence.Repositories.Base;
 
 namespace MOCA.Presistence.Repositories.LocationManagment
 {
-    public class LocationTypeRepository : Repository<LocationType>, ILocationTypeRepository
+    public class LocationTypeRepository : GenericRepository<LocationType>, ILocationTypeRepository
     {
         private readonly ApplicationDbContext _context;
         public LocationTypeRepository(ApplicationDbContext context) : base(context)

@@ -3,7 +3,7 @@ using MOCA.Core.Interfaces.Base;
 
 namespace MOCA.Core.Interfaces.MocaSettings.Repositories
 {
-    public interface IPolicyRepository : IRepository<Policy>
+    public interface IPolicyRepository : IGenericRepository<Policy>
     {
         Task<bool> PolicyExistsAsync(long id);
         Task<bool> PolicyExistsAsync(long id, long typeId, long? lobSpaceTypeId);

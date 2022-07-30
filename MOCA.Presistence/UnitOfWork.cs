@@ -10,11 +10,6 @@ using MOCA.Presistence.Contexts;
 using MOCA.Presistence.Repositories.Base;
 using MOCA.Presistence.Repositories.LocationManagment;
 using MOCA.Presistence.Repositories.MocaSettings;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MOCA.Presistence
 {
@@ -45,117 +40,131 @@ namespace MOCA.Presistence
         }
 
         #region Moca Settings
+        private ICategoriesRepository _categories;
         public ICategoriesRepository Categories
         {
             get
             {
-                return this.Categories ?? new CategoriesRepository(_context);
+                return _categories ?? new CategoriesRepository(_context);
             }
         }
 
+        private IFaqsRepository _faqs;
         public IFaqsRepository Faqs
         {
             get
             {
-                return this.Faqs ?? new FaqsRepository(_context);
+                return _faqs ?? new FaqsRepository(_context);
             }
         }
 
+        private IPlansRepository _plans;
         public IPlansRepository Plans
         {
             get
             {
-                return this.Plans ?? new PlansRepository(_context);
+                return _plans ?? new PlansRepository(_context);
             }
         }
 
+        private IPlanTypesRepository _planTypes;
         public IPlanTypesRepository PlanTypes
         {
             get
             {
-                return this.PlanTypes ?? new PlanTypesRepository(_context);
+                return _planTypes ?? new PlanTypesRepository(_context);
             }
         }
 
+        private ITopUpsRespository _topUps;
         public ITopUpsRespository TopUps
         {
             get
             {
-                return this.TopUps ?? new TopUpsRepository(_context);
+                return _topUps ?? new TopUpsRepository(_context);
             }
         }
 
+        private ITopUpTypesRepository _topUpTypes;
         public ITopUpTypesRepository TopUpTypes
         {
             get
             {
-                return this.TopUpTypes ?? new TopUpTypesRepository(_context);
+                return _topUpTypes ?? new TopUpTypesRepository(_context);
             }
         }
 
+        private IPolicyTypesRepository _policyTypes;
         public IPolicyTypesRepository PolicyTypes
         {
             get
             {
-                return this.PolicyTypes ?? new PolicyTypesRepository(_context);
+                return _policyTypes ?? new PolicyTypesRepository(_context);
             }
         }
 
+        private IPolicyRepository _policies;
         public IPolicyRepository Policies
         {
             get
             {
-                return this.Policies ?? new PolicyRepository(_context);
+                return _policies ?? new PolicyRepository(_context);
             }
         }
 
         //public ILobSpaceTypesRepository LobSpaceTypes => throw new NotImplementedException();
 
+        private IWifisRepository _wifis;
         public IWifisRepository Wifis
         {
             get
             {
-                return this.Wifis ?? new WifisRepository(_context);
+                return _wifis ?? new WifisRepository(_context);
             }
         }
 
+        private IStatusesRepository _statuses;
         public IStatusesRepository Statuses
         {
             get
             {
-                return this.Statuses ?? new StatusesRepository(_context);
+                return _statuses ?? new StatusesRepository(_context);
             }
         }
 
+        private ISeveritiesRepository _severities;
         public ISeveritiesRepository Severities
         {
             get
             {
-                return this.Severities ?? new SeveritiesRepository(_context);
+                return _severities ?? new SeveritiesRepository(_context);
             }
         }
 
+        private IPrioritiesRepository _priorities;
         public IPrioritiesRepository Priorities
         {
             get
             {
-                return this.Priorities ?? new PrioritiesRepository(_context);
+                return _priorities ?? new PrioritiesRepository(_context);
             }
         }
 
+        private ICaseTypesReository _caseTypes;
         public ICaseTypesReository CaseTypes
         {
             get
             {
-                return this.CaseTypes ?? new CaseTypesRepository(_context);
+                return _caseTypes ?? new CaseTypesRepository(_context);
             }
         }
 
+        private IIssueReportsRepository _issueReports;
         public IIssueReportsRepository IssueReports
         {
             get
             {
-                return this.IssueReports ?? new IssueReportsRepository(_context);
+                return _issueReports ?? new IssueReportsRepository(_context);
             }
         }
 
@@ -164,12 +173,12 @@ namespace MOCA.Presistence
 
         #region Location Managment
 
-        private IRepository<Country> _countryRepo;
-        public IRepository<Country> CountryRepo
+        private IGenericRepository<Country> _countryRepo;
+        public IGenericRepository<Country> CountryRepo
         {
             get
             {
-                return _countryRepo = _countryRepo ?? new Repository<Country>(_context);
+                return _countryRepo = _countryRepo ?? new GenericRepository<Country>(_context);
             }
         }
 
@@ -182,12 +191,12 @@ namespace MOCA.Presistence
             }
         }
 
-        private IRepository<City> _cityRepo;
-        public IRepository<City> CityRepo
+        private IGenericRepository<City> _cityRepo;
+        public IGenericRepository<City> CityRepo
         {
             get
             {
-                return _cityRepo = _cityRepo ?? new Repository<City>(_context);
+                return _cityRepo = _cityRepo ?? new GenericRepository<City>(_context);
             }
         }
 
@@ -200,12 +209,12 @@ namespace MOCA.Presistence
             }
         }
 
-        private IRepository<District> _districtRepo;
-        public IRepository<District> DistrictRepo
+        private IGenericRepository<District> _districtRepo;
+        public IGenericRepository<District> DistrictRepo
         {
             get
             {
-                return _districtRepo = _districtRepo ?? new Repository<District>(_context);
+                return _districtRepo = _districtRepo ?? new GenericRepository<District>(_context);
             }
         }
 
@@ -218,12 +227,12 @@ namespace MOCA.Presistence
             }
         }
 
-        IRepository<Currency> _currencyRepo;
-        public IRepository<Currency> CurrencyRepo
+        IGenericRepository<Currency> _currencyRepo;
+        public IGenericRepository<Currency> CurrencyRepo
         {
             get
             {
-                return _currencyRepo = _currencyRepo ?? new Repository<Currency>(_context);
+                return _currencyRepo = _currencyRepo ?? new GenericRepository<Currency>(_context);
             }
         }
 
@@ -236,12 +245,12 @@ namespace MOCA.Presistence
             }
         }
 
-        IRepository<LocationType> _locationTypeRepo;
-        public IRepository<LocationType> LocationTypeRepo
+        IGenericRepository<LocationType> _locationTypeRepo;
+        public IGenericRepository<LocationType> LocationTypeRepo
         {
             get
             {
-                return _locationTypeRepo = _locationTypeRepo ?? new Repository<LocationType>(_context);
+                return _locationTypeRepo = _locationTypeRepo ?? new GenericRepository<LocationType>(_context);
             }
         }
 

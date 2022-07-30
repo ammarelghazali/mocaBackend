@@ -3,7 +3,7 @@ using MOCA.Core.Interfaces.Base;
 
 namespace MOCA.Core.Interfaces.LocationManagment.Repositories
 {
-    public interface ICountryRepository : IRepository<Country>
+    public interface ICountryRepository : IGenericRepository<Country>
     {
         Task<Country> CountryIsExists(long countryID);
         Task<bool> HasAnyCities(long CountryID);

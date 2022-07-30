@@ -2,9 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MOCA.Core.DTOs.LocationManagment.Country;
 using MOCA.Core.DTOs.Shared;
-using MOCA.Core.DTOs.Shared.Responses;
-using MOCA.Core.Entities.LocationManagment;
-using MOCA.Core.Interfaces.LocationManagment.Repositories;
 using MOCA.Core.Interfaces.LocationManagment.Services;
 
 namespace LocationManagement.API.Controllers

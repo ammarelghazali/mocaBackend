@@ -6,7 +6,7 @@ using System.Data.Entity;
 
 namespace MOCA.Presistence.Repositories.LocationManagment
 {
-    public class CityRepository : Repository<City>, ICityRepository
+    public class CityRepository : GenericRepository<City>, ICityRepository
     {
         private readonly ApplicationDbContext _context;
         public CityRepository(ApplicationDbContext context) : base(context)

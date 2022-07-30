@@ -44,15 +44,15 @@ namespace MOCA.Core
 
         #region Location Managment
 
-        IRepository<Country> CountryRepo { get; }
+        IGenericRepository<Country> CountryRepo { get; }
         ICountryRepository CountryRepoEF { get; }
-        IRepository<City> CityRepo { get; }
+        IGenericRepository<City> CityRepo { get; }
         ICityRepository CityRepoEF { get; }
-        IRepository<District> DistrictRepo { get; }
+        IGenericRepository<District> DistrictRepo { get; }
         IDistrictRepository DistrictRepoEF { get; }
-        IRepository<Currency> CurrencyRepo { get; }
+        IGenericRepository<Currency> CurrencyRepo { get; }
         ICurrencyRepository CurrencyRepoEF { get; }
-        IRepository<LocationType> LocationTypeRepo { get; }
+        IGenericRepository<LocationType> LocationTypeRepo { get; }
         ILocationTypeRepository LocationTypeRepoEF { get; }
 
         #endregion

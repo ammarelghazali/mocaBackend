@@ -7,7 +7,7 @@ using MOCA.Presistence.Repositories.Base;
 
 namespace MOCA.Presistence.Repositories.MocaSettings
 {
-    public class FaqsRepository : Repository<Faq>, IFaqsRepository
+    public class FaqsRepository : GenericRepository<Faq>, IFaqsRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -16,7 +16,7 @@ namespace MOCA.Presistence.Repositories.MocaSettings
             _context = context;
         }
 
-        public async Task<IList<Faq>> GetAllAsync(long? spaceId)
+        public async Task<IList<Faq>> GetAllBaseAsync(long? spaceId)
         {
             return await _context.Faqs.Where(f => f.LobSpaceTypeId == spaceId &&
                                                  f.IsDeleted != true &&
@@ -69,28 +69,28 @@ namespace MOCA.Presistence.Repositories.MocaSettings
             {
                 await _context.Database
                 .ExecuteSqlInterpolatedAsync
-                ($"UPDATE Faqs SET DisplayOrder = DisplayOrder - 1 WHERE DisplayOrder > {displayOrder} AND CategoryId = {categoryId} AND LobSpaceTypeId = {lobSpaceTypeId} AND IsDeleted = 0");
+                ($"UPDATE Faq SET DisplayOrder = DisplayOrder - 1 WHERE DisplayOrder > {displayOrder} AND CategoryId = {categoryId} AND LobSpaceTypeId = {lobSpaceTypeId} AND IsDeleted = 0");
             }
 
             else if (categoryId != null && lobSpaceTypeId == null)
             {
                 await _context.Database
                 .ExecuteSqlInterpolatedAsync
-                ($"UPDATE Faqs SET DisplayOrder = DisplayOrder - 1 WHERE DisplayOrder > {displayOrder} AND CategoryId = {categoryId} AND LobSpaceTypeId IS NULL AND IsDeleted = 0");
+                ($"UPDATE Faq SET DisplayOrder = DisplayOrder - 1 WHERE DisplayOrder > {displayOrder} AND CategoryId = {categoryId} AND LobSpaceTypeId IS NULL AND IsDeleted = 0");
             }
 
             else if (categoryId == null && lobSpaceTypeId != null)
             {
                 await _context.Database
                 .ExecuteSqlInterpolatedAsync
-                ($"UPDATE Faqs SET DisplayOrder = DisplayOrder - 1 WHERE DisplayOrder > {displayOrder} AND CategoryId IS NULL  AND LobSpaceTypeId = {lobSpaceTypeId} AND IsDeleted = 0");
+                ($"UPDATE Faq SET DisplayOrder = DisplayOrder - 1 WHERE DisplayOrder > {displayOrder} AND CategoryId IS NULL  AND LobSpaceTypeId = {lobSpaceTypeId} AND IsDeleted = 0");
             }
 
             else
             {
                 await _context.Database
                 .ExecuteSqlInterpolatedAsync
-                ($"UPDATE Faqs SET DisplayOrder = DisplayOrder - 1 WHERE DisplayOrder > {displayOrder} AND CategoryId IS NULL  AND LobSpaceTypeId IS NULL AND IsDeleted = 0");
+                ($"UPDATE Faq SET DisplayOrder = DisplayOrder - 1 WHERE DisplayOrder > {displayOrder} AND CategoryId IS NULL  AND LobSpaceTypeId IS NULL AND IsDeleted = 0");
             }
         }
 

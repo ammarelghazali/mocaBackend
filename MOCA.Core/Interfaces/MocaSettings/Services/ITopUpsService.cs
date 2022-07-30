@@ -9,6 +9,6 @@ namespace MOCA.Core.Interfaces.MocaSettings.Services
         Task<Response<TopUpDto>> Add(long topUpTypeId, TopUpCreateionDto topUpCreateionDto);
         Task<Response<TopUpDto>> GetByTopUpTypeId(long id, TopUpForLobSpaceTypeDto topUpForLobSpaceTypeDto);
         Task<Response<bool>> Delete(long id, TopUpForLobSpaceTypeDto topUpForLobSpaceTypeDto);
-        Task<Response<bool>> Update(long topUpTypeId, TopUpForLobSpaceTypeDto topUpForLobSpaceTypeDto, UpdateTopUpDto updateTopUpDto);
+        Task<Response<TopUpDto>> Update(long topUpTypeId, TopUpForLobSpaceTypeDto topUpForLobSpaceTypeDto, UpdateTopUpDto updateTopUpDto);
     }
 }

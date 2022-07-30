@@ -5,16 +5,16 @@ using MOCA.Core.Interfaces.Base;
 
 namespace MOCA.Core.Interfaces.MocaSettings.Repositories
 {
-    public interface IIssueReportsRepository : IRepository<IssueReport>
+    public interface IIssueReportsRepository : IGenericRepository<IssueReport>
     {
         Task<long?> GetMaxReportId();
         Task<IList<IssueCaseStage>> GetCaseStages(long IssueReportId);
-        Task<PagedResponse<IList<IssueReport>>> GetReportsWithPagination(long? lobSpaceTypeId,
+        Task<IList<IssueReport>> GetReportsWithPagination(long? lobSpaceTypeId,
                                                           IssueReportsResourceParameters resourceParameters);
         Task<bool> IssueReportExists(long IssueReportId);
 
-        Task<IList<IssueReport>> GetAllIssueReporstWithStatusId(long statusId);
-        Task<IList<IssueReport>> GetAllIssueReporstWithSeveritysId(long severityId);
+        Task<List<IssueReport>> GetAllIssueReporstWithStatusId(long statusId);
+        Task<List<IssueReport>> GetAllIssueReporstWithSeveritysId(long severityId);
         Task<IssueReport> GetIssueReportById(long id);
         Task<IssueCaseStage> AddIssueCaseStage(IssueCaseStage issueCaseStage);
         Task<IssueReport> GetIssueById(long IssueReportId);

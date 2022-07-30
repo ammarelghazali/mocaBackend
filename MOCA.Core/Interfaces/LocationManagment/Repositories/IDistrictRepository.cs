@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MOCA.Core.Interfaces.LocationManagment.Repositories
 {
-    public interface IDistrictRepository : IRepository<District>
+    public interface IDistrictRepository : IGenericRepository<District>
     {
         Task<bool> HasAnyRelatedEntities(long DistrictId);
         Task<List<District>> GetDistrictsByCityId(long cityId);

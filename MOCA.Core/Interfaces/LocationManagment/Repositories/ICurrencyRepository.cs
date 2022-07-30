@@ -3,7 +3,7 @@ using MOCA.Core.Interfaces.Base;
 
 namespace MOCA.Core.Interfaces.LocationManagment.Repositories
 {
-    public interface ICurrencyRepository : IRepository<Currency>
+    public interface ICurrencyRepository : IGenericRepository<Currency>
     {
         Task<Currency> CurrencyIsExists(long CurrencyID);
         Task<bool> HasAnyRelatedEntities(long CurrencyID);

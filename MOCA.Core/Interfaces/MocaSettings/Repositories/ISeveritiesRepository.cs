@@ -3,7 +3,7 @@ using MOCA.Core.Interfaces.Base;
 
 namespace MOCA.Core.Interfaces.MocaSettings.Repositories
 {
-    public interface ISeveritiesRepository : IRepository<Severity>, IBaseAllGetableWithoutPrarmRepository<Severity>
+    public interface ISeveritiesRepository : IGenericRepository<Severity>, IBaseAllGetableWithoutPrarmRepository<Severity>
     {
         Task<bool> SeverityExists(long severityId);
         Task<bool> SeverityExists(string SeverityName);

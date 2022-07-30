@@ -6,7 +6,7 @@ using MOCA.Presistence.Repositories.Base;
 
 namespace MOCA.Presistence.Repositories.LocationManagment
 {
-    public class CountryRepository : Repository<Country>, ICountryRepository
+    public class CountryRepository : GenericRepository<Country>, ICountryRepository
     {
         private readonly ApplicationDbContext _context;
         public CountryRepository(ApplicationDbContext context) : base(context)

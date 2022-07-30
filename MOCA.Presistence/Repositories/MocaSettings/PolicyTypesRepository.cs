@@ -6,7 +6,7 @@ using MOCA.Presistence.Repositories.Base;
 
 namespace MOCA.Presistence.Repositories.MocaSettings
 {
-    public class PolicyTypesRepository : Repository<PolicyType>, IPolicyTypesRepository
+    public class PolicyTypesRepository : GenericRepository<PolicyType>, IPolicyTypesRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -72,7 +72,7 @@ namespace MOCA.Presistence.Repositories.MocaSettings
                                                        pt.Name == name && pt.Id != id);
         }
 
-        public async Task<bool> UpdateRelatedPolicy(long oldId, long newId, Guid user)
+        public async Task<bool> UpdateRelatedPolicy(long oldId, long newId)
         {
             var policies = await _context.Policies.Where(p => p.IsDeleted != true &&
                                                               p.PolicyTypeId == oldId)
@@ -96,7 +96,7 @@ namespace MOCA.Presistence.Repositories.MocaSettings
             return false;
         }
 
-        public async Task DeleteRelatedPolicy(long id, Guid user)
+        public async Task DeleteRelatedPolicy(long id)
         {
             var policies = await _context.Policies.Where(p => p.IsDeleted != true &&
                                                              p.PolicyTypeId == id)

@@ -6,7 +6,7 @@ using MOCA.Presistence.Repositories.Base;
 
 namespace MOCA.Presistence.Repositories.MocaSettings
 {
-    public class WifisRepository : Repository<Wifi>, IWifisRepository
+    public class WifisRepository : GenericRepository<Wifi>, IWifisRepository
     {
         private readonly ApplicationDbContext _context;
 

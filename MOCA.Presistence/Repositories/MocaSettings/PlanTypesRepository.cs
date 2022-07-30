@@ -6,7 +6,7 @@ using MOCA.Presistence.Repositories.Base;
 
 namespace MOCA.Presistence.Repositories.MocaSettings
 {
-    public class PlanTypesRepository : Repository<PlanType>, IPlanTypesRepository
+    public class PlanTypesRepository : GenericRepository<PlanType>, IPlanTypesRepository
     {
         private readonly ApplicationDbContext _context;
         public PlanTypesRepository(ApplicationDbContext context) : base(context)

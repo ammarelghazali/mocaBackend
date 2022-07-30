@@ -11,7 +11,7 @@ namespace MOCA.Core.Entities.MocaSetting
         public long? CategoryId { get; set; }
 
         [ForeignKey("CategoryId")]
-        public Category Category { get; set; }
+        public Category? Category { get; set; }
         
         [Required]
         [MaxLength(1000)]

@@ -3,7 +3,7 @@ using MOCA.Core.Interfaces.Base;
 
 namespace MOCA.Core.Interfaces.MocaSettings.Repositories
 {
-    public interface IFaqsRepository : IRepository<Faq>, IBaseAllGetableRepository<Faq>
+    public interface IFaqsRepository : IGenericRepository<Faq>, IBaseAllGetableRepository<Faq>
     {
         Task<IEnumerable<Faq>> GetAllFaqsByCategoryAsync(long? spaceId, long categoryId);
         Task<int> GetMaxDisplayOrder(long? spaceId, long? categoryId);

@@ -6,7 +6,7 @@ using MOCA.Presistence.Repositories.Base;
 
 namespace MOCA.Presistence.Repositories.MocaSettings
 {
-    public class CategoriesRepository : Repository<Category>, ICategoriesRepository
+    public class CategoriesRepository : GenericRepository<Category>, ICategoriesRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -15,7 +15,7 @@ namespace MOCA.Presistence.Repositories.MocaSettings
             _context = context;
         }
 
-        public async Task<IList<Category>> GetAllAsync(long? spaceId)
+        public async Task<IList<Category>> GetAllBaseAsync(long? spaceId)
         {
             return await _context.Categories.Where(c => c.LobSpaceTypeId == spaceId &&
                                                         c.IsDeleted != true)
@@ -42,13 +42,7 @@ namespace MOCA.Presistence.Repositories.MocaSettings
                                             .FirstOrDefaultAsync();
         }
 
-        public void UpdateRange(List<Category> categories)
-        {
-            _context.Categories.UpdateRange(categories);
-        }
-
-        public async Task DeleteCategory(long? spaceId, long categoryId, bool deleteRelatedQuestions,
-                                         Guid user)
+        public async Task DeleteCategory(long? spaceId, long categoryId, bool deleteRelatedQuestions)
         {
             if (!deleteRelatedQuestions)
             {
@@ -112,18 +106,18 @@ namespace MOCA.Presistence.Repositories.MocaSettings
 
             if (!isLast)
             {
-                if (spaceId == null)
-                {
+                //if (spaceId == null)
+                //{
+                //    await _context.Database
+                // .ExecuteSqlInterpolatedAsync
+                // ($"UPDATE Category SET DisplayOrder = DisplayOrder - 1 WHERE DisplayOrder > {category.DisplayOrder} AND LobSpaceTypeId IS NULL AND IsDeleted = 0");
+                //}
+                //else
+                //{
                     await _context.Database
                  .ExecuteSqlInterpolatedAsync
-                 ($"UPDATE Categories SET DisplayOrder = DisplayOrder - 1 WHERE DisplayOrder > {category.DisplayOrder} AND LobSpaceTypeId IS NULL AND IsDeleted = 0");
-                }
-                else
-                {
-                    await _context.Database
-                 .ExecuteSqlInterpolatedAsync
-                 ($"UPDATE Categories SET DisplayOrder = DisplayOrder - 1 WHERE DisplayOrder > {category.DisplayOrder} AND LobSpaceTypeId = {spaceId} AND IsDeleted = 0");
-                }
+                 ($"UPDATE Category SET DisplayOrder = DisplayOrder - 1 WHERE DisplayOrder > {category.DisplayOrder} AND LobSpaceTypeId = {spaceId} AND IsDeleted = 0");
+                //}
 
             }
         }
@@ -166,7 +160,7 @@ namespace MOCA.Presistence.Repositories.MocaSettings
                                                            c.Name == name);
         }
 
-        public async Task<bool> UpdateRelatedFaqs(long? lobSpaceTypeId, long? oldCategoryId, long newCategoryId, Guid user)
+        public async Task<bool> UpdateRelatedFaqs(long? lobSpaceTypeId, long? oldCategoryId, long newCategoryId)
         {
             var faqs = await _context.Faqs.Where(f => f.IsDeleted != true &&
                                                       f.CategoryId == oldCategoryId &&

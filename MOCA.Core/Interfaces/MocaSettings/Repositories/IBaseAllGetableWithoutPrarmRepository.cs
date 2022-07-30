@@ -2,6 +2,6 @@
 {
     public interface IBaseAllGetableWithoutPrarmRepository<T> where T : class
     {
-        Task<IList<T>> GetAllAsync();
+        Task<IList<T>> GetAllBaseAsync();
     }
 }

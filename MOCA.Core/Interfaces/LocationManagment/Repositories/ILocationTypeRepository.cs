@@ -3,7 +3,7 @@ using MOCA.Core.Interfaces.Base;
 
 namespace MOCA.Core.Interfaces.LocationManagment.Repositories
 {
-    public interface ILocationTypeRepository : IRepository<LocationType>
+    public interface ILocationTypeRepository : IGenericRepository<LocationType>
     {
         Task<bool> DeleteLocationType(long Id);
     }

@@ -6,7 +6,7 @@ using MOCA.Presistence.Repositories.Base;
 
 namespace MOCA.Presistence.Repositories.MocaSettings
 {
-    public class PrioritiesRepository : Repository<Priority>, IPrioritiesRepository
+    public class PrioritiesRepository : GenericRepository<Priority>, IPrioritiesRepository
     {
         private readonly ApplicationDbContext _context;
         public PrioritiesRepository(ApplicationDbContext context) : base(context)
@@ -14,7 +14,7 @@ namespace MOCA.Presistence.Repositories.MocaSettings
             _context = context;
         }
 
-        public async Task<IList<Priority>> GetAllAsync()
+        public async Task<IList<Priority>> GetAllBaseAsync()
         {
             return await _context.Priorities.Where(p => p.IsDeleted != true).ToListAsync();
         }

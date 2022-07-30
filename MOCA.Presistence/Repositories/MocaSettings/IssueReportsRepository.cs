@@ -8,7 +8,7 @@ using MOCA.Presistence.Repositories.Base;
 
 namespace MOCA.Presistence.Repositories.MocaSettings
 {
-    public class IssueReportsRepository : Repository<IssueReport>, IIssueReportsRepository
+    public class IssueReportsRepository : GenericRepository<IssueReport>, IIssueReportsRepository
     {
         private readonly ApplicationDbContext _context;
         public IssueReportsRepository(ApplicationDbContext context) : base(context)
@@ -46,7 +46,7 @@ namespace MOCA.Presistence.Repositories.MocaSettings
                                                  .ToListAsync();
         }
 
-        public async Task<PagedResponse<IList<IssueReport>>> GetReportsWithPagination(long? lobSpaceTypeId,
+        public async Task<IList<IssueReport>> GetReportsWithPagination(long? lobSpaceTypeId,
                                                                  IssueReportsResourceParameters resourceParameters)
         {
 
@@ -120,15 +120,11 @@ namespace MOCA.Presistence.Repositories.MocaSettings
             //    issueReports,
             //    resourceParameters.PageNumber,
             //    resourceParameters.PageSize);
-
-            int count = issueReports.Count();
-            IList<IssueReport> collection = await issueReports
+                
+               return await issueReports
                 .Skip(resourceParameters.PageSize * (resourceParameters.PageNumber - 1))
                 .Take(resourceParameters.PageSize)
                 .ToListAsync();
-
-
-            return new PagedResponse<IList<IssueReport>>(collection, resourceParameters.PageNumber, resourceParameters.PageSize, count);
         }
 
         public async Task<bool> IssueReportExists(long IssueReportId)
@@ -136,12 +132,12 @@ namespace MOCA.Presistence.Repositories.MocaSettings
             return await _context.IssueReports.AnyAsync(i => i.Id == IssueReportId);
         }
 
-        public async Task<IList<IssueReport>> GetAllIssueReporstWithStatusId(long statusId)
+        public async Task<List<IssueReport>> GetAllIssueReporstWithStatusId(long statusId)
         {
             return await _context.IssueReports.Where(i => i.StatusId == statusId && i.IsDeleted != true).ToListAsync();
         }
 
-        public async Task<IList<IssueReport>> GetAllIssueReporstWithSeveritysId(long severityId)
+        public async Task<List<IssueReport>> GetAllIssueReporstWithSeveritysId(long severityId)
         {
             return await _context.IssueReports.Where(i => i.LevelSeverityId == severityId && i.IsDeleted != true).ToListAsync();
         }

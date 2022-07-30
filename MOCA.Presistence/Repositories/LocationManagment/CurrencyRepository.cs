@@ -7,7 +7,7 @@ using System.Data.Entity;
 
 namespace MOCA.Presistence.Repositories.LocationManagment
 {
-    public class CurrencyRepository : Repository<Currency>, ICurrencyRepository
+    public class CurrencyRepository : GenericRepository<Currency>, ICurrencyRepository
     {
         private readonly ApplicationDbContext _context;
         public CurrencyRepository(ApplicationDbContext context) : base(context)

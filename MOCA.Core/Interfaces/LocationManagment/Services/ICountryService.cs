@@ -2,7 +2,6 @@
 using MOCA.Core.DTOs.Shared;
 using MOCA.Core.DTOs.Shared.Responses;
 
-
 namespace MOCA.Core.Interfaces.LocationManagment.Services
 {
     public interface ICountryService
