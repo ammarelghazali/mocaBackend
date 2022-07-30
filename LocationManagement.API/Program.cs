@@ -5,20 +5,15 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MOCA.Core;
 using MOCA.Core.DTOs.Shared.Responses;
-using MOCA.Core.Interfaces.Base;
-using MOCA.Core.Interfaces.LocationManagment.Repositories;
 using MOCA.Core.Interfaces.LocationManagment.Services;
 using MOCA.Core.Interfaces.Shared.Services;
 using MOCA.Presistence;
 using MOCA.Presistence.Contexts;
-using MOCA.Presistence.Repositories.Base;
-using MOCA.Presistence.Repositories.LocationManagment;
 using MOCA.Services;
 using MOCA.Services.Implementation.LocationManagment;
 using MOCA.Services.Implementation.Shared;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -61,9 +56,9 @@ builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 #region Repositories
 // Generic
-builder.Services.AddScoped<IGenericRepositoryAsync_Write, GenericRepositoryAsync_Write>();
-builder.Services.AddScoped<IGenericRepositoryAsync_Read, GenericRepositoryAsync_Read>();
-builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+//builder.Services.AddScoped<IGenericRepositoryAsync_Write, GenericRepositoryAsync_Write>();
+//builder.Services.AddScoped<IGenericRepositoryAsync_Read, GenericRepositoryAsync_Read>();
+//builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 //-----------------
 
 //builder.Services.AddTransient<ICountryRepository, CountryRepository>();
