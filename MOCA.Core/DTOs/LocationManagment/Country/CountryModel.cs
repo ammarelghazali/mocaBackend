@@ -1,6 +1,7 @@
 ﻿
 using FluentValidation;
 using MOCA.Core.Interfaces.LocationManagment.Repositories;
+using System.ComponentModel.DataAnnotations;
 
 namespace MOCA.Core.DTOs.LocationManagment.Country
 {
@@ -8,7 +9,9 @@ namespace MOCA.Core.DTOs.LocationManagment.Country
     {
         public long Id { get; set; }
         public string CountryName { get; set; }
+        [Required]
         public string CountryCode { get; set; }
+        [Required]
         public string CountryCodeString { get; set; }
     }
 
