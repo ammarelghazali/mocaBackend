@@ -1,4 +1,5 @@
-﻿using MOCA.Core.DTOs.LocationManagment;
+﻿using Compolitan.Core.DTOs;
+using MOCA.Core.DTOs.LocationManagment.Country;
 using MOCA.Core.DTOs.Shared.Responses;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,9 @@ namespace MOCA.Core.Interfaces.LocationManagment.Services
     public interface ICountryService
     {
         Task<Response<long>> AddCountry(CountryModel request);
+        Task<Response<bool>> UpdateCountry(CountryModel request);
+        Task<Response<CountryModel>> GetCountryByID(long Id);
+        Task<PagedResponse<List<CountryModel>>> GetAllCountryWithPagination(RequestParameter filter);
+        Task<Response<List<CountryModel>>> GetAllCountryWithoutPagination();
     }
 }

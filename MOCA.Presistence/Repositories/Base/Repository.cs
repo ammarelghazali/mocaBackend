@@ -12,12 +12,12 @@ namespace MOCA.Presistence.Repositories.Base
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        internal ApplicationDbContext context;
+        internal ApplicationDbContext _context;
         internal DbSet<TEntity> dbSet;
 
         public Repository(ApplicationDbContext context)
         {
-            this.context = context;
+            _context = (ApplicationDbContext)context;
             this.dbSet = context.Set<TEntity>();
         }
 
@@ -200,7 +200,7 @@ namespace MOCA.Presistence.Repositories.Base
 
         public virtual void Delete(TEntity entityToDelete)
         {
-            if (context.Entry(entityToDelete).State == EntityState.Detached)
+            if (_context.Entry(entityToDelete).State == EntityState.Detached)
             {
                 dbSet.Attach(entityToDelete);
             }

@@ -66,7 +66,7 @@ builder.Services.AddScoped<IGenericRepositoryAsync_Read, GenericRepositoryAsync_
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 //-----------------
 
-builder.Services.AddTransient<ICountryRepository, CountryRepository>();
+//builder.Services.AddTransient<ICountryRepository, CountryRepository>();
 
 #endregion
 
