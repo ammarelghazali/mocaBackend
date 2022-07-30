@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using MOCA.Core;
 using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.Entities.SSO.Identity;
 using MOCA.Core.Interfaces.Shared.Services;
+using MOCA.Presistence;
 using MOCA.Presistence.Contexts;
 using MOCA.Services;
 using MOCA.Services.Implementation.Shared;
@@ -54,10 +56,15 @@ builder.Services.AddIdentity<Admin, IdentityRole>(options => options.SignIn.Requ
 
 builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
 
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+
 // Shared Services
 builder.Services.AddTransient<IDateTimeService, DateTimeService>();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 
+// AutoMapper
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // Adds Api Versioning
 builder.Services.AddApiVersioning(config =>
