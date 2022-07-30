@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MOCA.Core.DTOs.LocationManagment.City;
 using MOCA.Core.DTOs.LocationManagment.Country;
+using MOCA.Core.DTOs.LocationManagment.Currency;
 using MOCA.Core.DTOs.LocationManagment.District;
 using MOCA.Core.Entities.LocationManagment;
 
@@ -24,6 +25,9 @@ namespace MOCA.Core.MappingProfiles
 
             CreateMap<DistrictModel, District>();
             CreateMap<District, DistrictModel>();
+
+            CreateMap<CurrencyModel, Currency>();
+            CreateMap<Currency, CurrencyModel>();
             #endregion
 
         }

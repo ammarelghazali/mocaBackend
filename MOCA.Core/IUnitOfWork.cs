@@ -19,6 +19,8 @@ namespace MOCA.Core
         ICityRepository CityRepoEF { get; }
         IRepository<District> DistrictRepo { get; }
         IDistrictRepository DistrictRepoEF { get; }
+        IRepository<Currency> CurrencyRepo { get; }
+        ICurrencyRepository CurrencyRepoEF { get; }
 
         #endregion
 

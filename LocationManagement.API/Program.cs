@@ -82,7 +82,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<ICityService, CityService>();
-builder.Services.AddScoped<IDistrictService, IDistrictService>();
+builder.Services.AddScoped<IDistrictService, DistrictService>();
+builder.Services.AddScoped<ICurrencyService, CurrencyService>();
 
 #endregion
 

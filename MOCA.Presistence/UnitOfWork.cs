@@ -102,6 +102,24 @@ namespace MOCA.Presistence
             }
         }
 
+        IRepository<Currency> _currencyRepo;
+        public IRepository<Currency> CurrencyRepo
+        {
+            get
+            {
+                return _currencyRepo = _currencyRepo ?? new Repository<Currency>(_context);
+            }
+        }
+
+        ICurrencyRepository _currencyRepoEF;
+        public ICurrencyRepository CurrencyRepoEF
+        {
+            get
+            {
+                return _currencyRepoEF = _currencyRepoEF ?? new CurrencyRepository(_context);
+            }
+        }
+
         #endregion
 
         public DateTime ConvertToLocalDate(DateTime dateInEasternTimeZone)
