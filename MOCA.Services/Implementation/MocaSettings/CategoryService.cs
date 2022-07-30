@@ -81,7 +81,7 @@ namespace MOCA.Services.Implementation.MocaSettings
             if (getAllCategoriesDto.WithFaqs)
                 categories = await _unitOfWork.Categories
                                   .GetAllCategoriesWithFaqsAsync(getAllCategoriesDto.LobSpaceTypeId);
-
+            else
                 categories = await _unitOfWork.Categories
                              .GetAllBaseAsync(getAllCategoriesDto.LobSpaceTypeId);
 
