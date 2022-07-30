@@ -34,5 +34,16 @@ namespace MOCA.Presistence.Repositories.LocationManagment
 
             return res;
         }
+
+        public async Task<bool> DeleteCountry(long Id)
+        {
+            var country = _context.Countries.Where(x => x.Id == Id && x.IsDeleted != true).FirstOrDefault();
+            if (country == null)
+            {
+                return false;
+            }
+            _context.Countries.Remove(country);
+            return true;
+        }
     }
 }

@@ -16,5 +16,6 @@ namespace MOCA.Core.Interfaces.LocationManagment.Services
         Task<Response<CountryModel>> GetCountryByID(long Id);
         Task<PagedResponse<List<CountryModel>>> GetAllCountryWithPagination(RequestParameter filter);
         Task<Response<List<CountryModel>>> GetAllCountryWithoutPagination();
+        Task<Response<bool>> DeleteCountry(long Id);
     }
 }

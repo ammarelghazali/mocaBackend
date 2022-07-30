@@ -72,13 +72,13 @@ namespace LocationManagement.API.Controllers
         }
 
         /// <summary>
-        /// Gets Paginated Country
+        /// Gets Paginated Countries
         /// </summary>
         /// <param name="filter">an object holds the filter data</param>
         /// <response code="200">Returns the Countries List</response>
         /// <response code="400">something goes wrong in backend</response>
-        [HttpGet("GetAllCountry")]
-        public async Task<IActionResult> GetAllCountry([FromQuery] RequestParameter filter)
+        [HttpGet("GetAllCountries")]
+        public async Task<IActionResult> GetAllCountries([FromQuery] RequestParameter filter)
         {
             var response = await _countryService.GetAllCountryWithPagination(filter);
 
@@ -90,15 +90,31 @@ namespace LocationManagement.API.Controllers
         }
 
         /// <summary>
-        /// Gets Not Paginated Country
+        /// Gets Not Paginated Countries
         /// </summary>
         /// <response code="200">Returns the Countries List</response>
         /// <response code="400">something goes wrong in backend</response>
-        [HttpGet("GetAllCountryWithoutPagination")]
-        public async Task<IActionResult> GetAllCountryWithoutPagination()
+        [HttpGet("GetAllCountriesWithoutPagination")]
+        public async Task<IActionResult> GetAllCountriesWithoutPagination()
         {
             var response = await _countryService.GetAllCountryWithoutPagination();
 
+            if (response.Succeeded == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Deletes Country
+        /// </summary>
+        /// <response code="200">Deletes Country and all related data successfully</response>
+        /// <response code="400">Country not found, or there is error while saving</response>
+        [HttpDelete("DeleteCountry")]
+        public async Task<IActionResult> DeleteCountry([FromQuery] long Id)
+        {
+            var response = await _countryService.DeleteCountry(Id);
             if (response.Succeeded == false)
             {
                 return BadRequest(response);

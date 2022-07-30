@@ -144,5 +144,33 @@ namespace MOCA.Services.Implementation.LocationManagment
             }
             return new Response<List<CountryModel>>(Res);
         }
+
+        public async Task<Response<bool>> DeleteCountry(long Id)
+        {
+            /*
+             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
+                {
+                    throw new UnauthorizedAccessException("User is not authorized");
+                }
+            */
+
+            // Check if country has any refrence entities
+            var HasAnyCities = await _unitOfWork.CountryRepoEF.HasAnyCities(Id);
+            if (HasAnyCities)
+            {
+                throw new EntityIsBusyException("Country Is Busy and Can't be deleted.");
+            }
+
+            var country = await _unitOfWork.CountryRepoEF.DeleteCountry(Id);
+
+            if (country == false)
+                return new Response<bool>("Country With This ID didn't exist.");
+
+            if (await _unitOfWork.SaveAsync() < 1)
+            {
+                return new Response<bool>("Cannot Delete Country right now");
+            }
+            return new Response<bool>(true, "Country Deleted Successfully.");
+        }
     }
 }
