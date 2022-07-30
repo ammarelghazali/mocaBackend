@@ -14,7 +14,7 @@ namespace MOCA.Core.Interfaces.Events.Repositories
         Task<List<EventSpaceBooking>> GetAllBookedEventSpaceByLocationTypeId(long locationTypeId);
         Task<List<long>> GetAllDistinctLocation();
         Task<List<long>> GetAllDistinctRequester(long? locationId);
-        Task<List<int>> GetAllDistinctIndusty(long? locationId);
+        Task<List<long>> GetAllDistinctIndusty(long? locationId);
         Task<List<long>> GetAllDistinctCategory(long? locationId);
         Task<List<long>> GetAllDistinctReccurance(long? locationId);
         Task<List<long>> GetAllDistinctType(long? locationId);
