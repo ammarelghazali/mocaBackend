@@ -78,7 +78,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             }
 
             var countryEntity = await _unitOfWork.CountryRepo.GetByIdAsync(request.CountryId);
-            if (countryEntity == null) { throw new NotFoundException(nameof(Country), request.Id); }
+            if (countryEntity == null) { throw new NotFoundException(nameof(Country), request.CountryId); }
 
             var cityEntity = await _unitOfWork.CityRepo.GetByIdAsync(request.Id);
             if (cityEntity == null) { throw new NotFoundException(nameof(City), request.Id); }
