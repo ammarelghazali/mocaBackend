@@ -7,10 +7,12 @@ using Microsoft.OpenApi.Models;
 using MOCA.Core;
 using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.Entities.SSO.Identity;
+using MOCA.Core.Interfaces.MocaSettings.Services;
 using MOCA.Core.Interfaces.Shared.Services;
 using MOCA.Presistence;
 using MOCA.Presistence.Contexts;
 using MOCA.Services;
+using MOCA.Services.Implementation.MocaSettings;
 using MOCA.Services.Implementation.Shared;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -133,6 +135,24 @@ builder.Services.AddAuthentication(options =>
             },
         };
     });
+
+// Service Layer
+#region Moca Settings Services
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ICaseTypeService, CaseTypeService>();
+builder.Services.AddScoped<IFaqService, FaqService>();
+builder.Services.AddScoped<IIssueReportService, IssueReportService>();
+builder.Services.AddScoped<IPlansService, PlansService>();
+builder.Services.AddScoped<IPlanTypesService, PlanTypesService>();
+builder.Services.AddScoped<IPolicyService, PolicyService>();
+builder.Services.AddScoped<IPolicyTypesService, PolicyTypesService>();
+builder.Services.AddScoped<IPriorityService, PriorityService>();
+builder.Services.AddScoped<ISeveritiesService, SeveritiesService>();
+builder.Services.AddScoped<IStatusesService, StatusesService>();
+builder.Services.AddScoped<ITopUpsService, TopUpsService>();
+builder.Services.AddScoped<ITopUpTypesService, TopUpTypesService>();
+builder.Services.AddScoped<IWifisService, WifisService>();
+#endregion
 
 
 var app = builder.Build();

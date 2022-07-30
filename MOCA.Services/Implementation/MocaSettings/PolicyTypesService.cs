@@ -45,11 +45,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<PolicyTypeDto>
-            {
-                Message = "Policy Type Added Successfully",
-                Data = _mapper.Map<PolicyTypeDto>(policyType)
-            };
+            return new Response<PolicyTypeDto>(_mapper.Map<PolicyTypeDto>(policyType), "Policy Type Added Successfully");
         }
 
         public async Task<Response<bool>> DeletePolicyType(long policyTypeId)
@@ -77,12 +73,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<bool>
-            {
-                Data = true,
-                Message = "Delete Policy Type Successfully"
-            };
-
+            return new Response<bool>(true, "Delete Policy Type Successfully");
         }
 
         public async Task<Response<object>> GetAllPolicyTypes(bool withRelatedDescription,
@@ -105,18 +96,12 @@ namespace MOCA.Services.Implementation.MocaSettings
                                 .Map<PolicyDtoMinimized>(policyTypes[i].Policy);
                 }
 
-                return new Response<object>
-                {
-                    Data = policiesWithDescription
-                };
+                return new Response<object>(policiesWithDescription);
             }
 
             policyTypes = await _unitOfWork.PolicyTypes.GetAllAsync();
 
-            return new Response<object>
-            {
-                Data = _mapper.Map<IList<PolicyTypeDto>>(policyTypes)
-            };
+            return new Response<object>(_mapper.Map<IList<PolicyTypeDto>>(policyTypes));
         }
 
         public async Task<Response<PolicyTypeWithDescriptionDto>> GetSinglePolicyType(long PolicyTypeId)
@@ -135,10 +120,7 @@ namespace MOCA.Services.Implementation.MocaSettings
             var policyTypeWithRelatedDescription = _mapper.Map<PolicyTypeWithDescriptionDto>(policyType);
             policyTypeWithRelatedDescription.Policy = _mapper.Map<PolicyDtoMinimized>(policyType.Policy);
 
-            return new Response<PolicyTypeWithDescriptionDto>
-            {
-                Data = policyTypeWithRelatedDescription
-            };
+            return new Response<PolicyTypeWithDescriptionDto>(policyTypeWithRelatedDescription);
         }
 
 
@@ -197,11 +179,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 }
             }
 
-            return new Response<PolicyTypeDto>
-            {
-                Message = "Policy Type Updated Successfully",
-                Data = _mapper.Map<PolicyTypeDto>(policyType)
-            };
+            return new Response<PolicyTypeDto>(_mapper.Map<PolicyTypeDto>(policyType), "Policy Type Updated Successfully");
         }
     }
 }

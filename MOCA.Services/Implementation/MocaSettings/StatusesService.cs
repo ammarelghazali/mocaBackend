@@ -28,10 +28,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                     Message = "No statuses found!"
                 };
 
-            return new Response<IReadOnlyList<StatusDto>>
-            {
-                Data = _mapper.Map<IReadOnlyList<StatusDto>>(statuses)
-            };
+            return new Response<IReadOnlyList<StatusDto>>(_mapper.Map<IReadOnlyList<StatusDto>>(statuses));
         }
 
         public async Task<Response<StatusDto>> GetSingleStatusAsync(long statusId)
@@ -43,11 +40,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                     Message = "No such a status found!"
                 };
 
-            return new Response<StatusDto>
-            {
-                Data = _mapper.Map<StatusDto>(status)
-            };
-
+            return new Response<StatusDto>(_mapper.Map<StatusDto>(status));
         }
 
         public async Task<Response<StatusDto>> AddStatusyAsync(StatusForCreationDto statusForCreationDto)
@@ -68,12 +61,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                     Message = "Server Error"
                 };
 
-
-            return new Response<StatusDto>
-            {
-                Message = "Status added successfully",
-                Data = _mapper.Map<StatusDto>(status)
-            };
+            return new Response<StatusDto>(_mapper.Map<StatusDto>(status), "Status added successfully");
         }
 
         public async Task<Response<bool>> UpdateStatusAsync(long statusId, StatusForCreationDto statusForCreationDto)
@@ -129,12 +117,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
 
 
-            return new Response<bool>
-            {
-                Data = true,
-                Message = "Status updated successfully"
-            };
-
+            return new Response<bool>(true, "Status updated successfully");
         }
 
         public async Task<Response<bool>> DeleteStatusyAsync(long statusId)
@@ -168,13 +151,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                     Message = "Server Error"
                 };
 
-            return new Response<bool>
-            {
-                Data = true,
-                Message = "Status Deleted Successfully"
-            };
-
+            return new Response<bool>(true, "Status Deleted Successfully");
         }
-
     }
 }

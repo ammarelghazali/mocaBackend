@@ -61,16 +61,10 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
 
             var issueReportDto = _mapper.Map<IssueReportDto>(issueReport);
-           // issueReportDto.ReportedBy = await _unitOfWork.Users.GetAdminName(issueReport.ReportedById);
+            // issueReportDto.ReportedBy = await _unitOfWork.Users.GetAdminName(issueReport.ReportedById);
 
-            return new Response<IssueReportDto>
-            {
-                Data = issueReportDto
-            };
-
+            return new Response<IssueReportDto>(issueReportDto);
         }
-
-
 
         public async Task<Response<bool>> AddIssueReportAsync(IssueReportForCreationDto issueReportForCreationDto)
         {
@@ -153,11 +147,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<bool>
-            {
-                Data = true,
-                Message = "Issue Added Successfully"
-            };
+            return new Response<bool>(true, "Issue Added Successfully");
         }
 
 
@@ -253,12 +243,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<bool>
-            {
-                Data = true,
-                Message = "Issue Report Updated Successfully",
-            };
-
+            return new Response<bool>(true, "Issue Report Updated Successfully");
         }
 
         public async Task<Response<bool>> DeleteIssueReportAsync(long issueReportId)
@@ -291,11 +276,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<bool>
-            {
-                Data = true,
-                Message = "Issue Report Deleted Successfully"
-            };
+            return new Response<bool>(true, "Issue Report Deleted Successfully");
         }
 
 
@@ -311,10 +292,7 @@ namespace MOCA.Services.Implementation.MocaSettings
 
             var caseStages = await _unitOfWork.IssueReports.GetCaseStages(issueReportId);
 
-            return new Response<IReadOnlyList<IssueCaseStagesDto>>
-            {
-                Data = _mapper.Map<IReadOnlyList<IssueCaseStagesDto>>(caseStages)
-            };
+            return new Response<IReadOnlyList<IssueCaseStagesDto>>(_mapper.Map<IReadOnlyList<IssueCaseStagesDto>>(caseStages));
         }
 
         public async Task<PagedResponse<List<IssueReportDto>>> GetPaginatedIssueReportsAsync(long? lobSpaceTypeId,

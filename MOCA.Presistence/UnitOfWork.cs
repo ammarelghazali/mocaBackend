@@ -38,117 +38,131 @@ namespace MOCA.Presistence
         }
 
         #region Moca Settings
+        private ICategoriesRepository _categories;
         public ICategoriesRepository Categories
         {
             get
             {
-                return this.Categories ?? new CategoriesRepository(context);
+                return _categories ?? new CategoriesRepository(context);
             }
         }
 
+        private IFaqsRepository _faqs;
         public IFaqsRepository Faqs
         {
             get
             {
-                return this.Faqs ?? new FaqsRepository(context);
+                return _faqs ?? new FaqsRepository(context);
             }
         }
 
+        private IPlansRepository _plans;
         public IPlansRepository Plans
         {
             get
             {
-                return this.Plans ?? new PlansRepository(context);
+                return _plans ?? new PlansRepository(context);
             }
         }
 
+        private IPlanTypesRepository _planTypes;
         public IPlanTypesRepository PlanTypes
         {
             get
             {
-                return this.PlanTypes ?? new PlanTypesRepository(context);
+                return _planTypes ?? new PlanTypesRepository(context);
             }
         }
 
+        private ITopUpsRespository _topUps;
         public ITopUpsRespository TopUps
         {
             get
             {
-                return this.TopUps ?? new TopUpsRepository(context);
+                return _topUps ?? new TopUpsRepository(context);
             }
         }
 
+        private ITopUpTypesRepository _topUpTypes;
         public ITopUpTypesRepository TopUpTypes
         {
             get
             {
-                return this.TopUpTypes ?? new TopUpTypesRepository(context);
+                return _topUpTypes ?? new TopUpTypesRepository(context);
             }
         }
 
+        private IPolicyTypesRepository _policyTypes;
         public IPolicyTypesRepository PolicyTypes
         {
             get
             {
-                return this.PolicyTypes ?? new PolicyTypesRepository(context);
+                return _policyTypes ?? new PolicyTypesRepository(context);
             }
         }
 
+        private IPolicyRepository _policies;
         public IPolicyRepository Policies
         {
             get
             {
-                return this.Policies ?? new PolicyRepository(context);
+                return _policies ?? new PolicyRepository(context);
             }
         }
 
         //public ILobSpaceTypesRepository LobSpaceTypes => throw new NotImplementedException();
 
+        private IWifisRepository _wifis;
         public IWifisRepository Wifis
         {
             get
             {
-                return this.Wifis ?? new WifisRepository(context);
+                return _wifis ?? new WifisRepository(context);
             }
         }
 
+        private IStatusesRepository _statuses;
         public IStatusesRepository Statuses
         {
             get
             {
-                return this.Statuses ?? new StatusesRepository(context);
+                return _statuses ?? new StatusesRepository(context);
             }
         }
 
+        private ISeveritiesRepository _severities;
         public ISeveritiesRepository Severities
         {
             get
             {
-                return this.Severities ?? new SeveritiesRepository(context);
+                return _severities ?? new SeveritiesRepository(context);
             }
         }
 
+        private IPrioritiesRepository _priorities;
         public IPrioritiesRepository Priorities
         {
             get
             {
-                return this.Priorities ?? new PrioritiesRepository(context);
+                return _priorities ?? new PrioritiesRepository(context);
             }
         }
 
+        private ICaseTypesReository _caseTypes;
         public ICaseTypesReository CaseTypes
         {
             get
             {
-                return this.CaseTypes ?? new CaseTypesRepository(context);
+                return _caseTypes ?? new CaseTypesRepository(context);
             }
         }
 
+        private IIssueReportsRepository _issueReports;
         public IIssueReportsRepository IssueReports
         {
             get
             {
-                return this.IssueReports ?? new IssueReportsRepository(context);
+                return _issueReports ?? new IssueReportsRepository(context);
             }
         }
 

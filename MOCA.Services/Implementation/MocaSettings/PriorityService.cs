@@ -44,10 +44,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<PriorityDto>
-            {
-                Data = _mapper.Map<PriorityDto>(priority)
-            };
+            return new Response<PriorityDto>(_mapper.Map<PriorityDto>(priority));
         }
 
         public async Task<Response<bool>> DeletePriorityAsync(long priorityId)
@@ -72,21 +69,14 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<bool>
-            {
-                Data = true,
-                Message = "Priority Deleted Successfully"
-            };
+            return new Response<bool>(true, "Priority Deleted Successfully");
         }
 
         public async Task<Response<IReadOnlyList<PriorityDto>>> GetAllPrioritiesAsync()
         {
             var priority = await _unitOfWork.Priorities.GetAllAsync();
 
-            return new Response<IReadOnlyList<PriorityDto>>
-            {
-                Data = _mapper.Map<IReadOnlyList<PriorityDto>>(priority)
-            };
+            return new Response<IReadOnlyList<PriorityDto>>(_mapper.Map<IReadOnlyList<PriorityDto>>(priority));
         }
 
         public async Task<Response<PriorityDto>> GetSinglePriorityAsync(long priorityId)
@@ -101,10 +91,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<PriorityDto>
-            {
-                Data = _mapper.Map<PriorityDto>(priority)
-            };
+            return new Response<PriorityDto>(_mapper.Map<PriorityDto>(priority));
         }
 
         public async Task<Response<PriorityDto>> UpdatePriorityAsync(long priorityId, PriorityForCreationDto priorityForCreation)
@@ -144,10 +131,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<PriorityDto>
-            {
-                Data = _mapper.Map<PriorityDto>(newPriority)
-            };
+            return new Response<PriorityDto>(_mapper.Map<PriorityDto>(newPriority));
         }
     }
 }

@@ -61,11 +61,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<FaqDto>
-            {
-                Message = "Faq Added Successfully",
-                Data = _mapper.Map<FaqDto>(faq)
-            };
+            return new Response<FaqDto>(_mapper.Map<FaqDto>(faq), "Faq Added Successfully");
         }
 
         public async Task<Response<IReadOnlyList<FaqDto>>> GetAllFaqsAsync(FaqsRequestSpaceIdDto getAllFaqsDto)
@@ -84,10 +80,7 @@ namespace MOCA.Services.Implementation.MocaSettings
 
             var faqs = await _unitOfWork.Faqs.GetAllBaseAsync(getAllFaqsDto.LobSpaceTypeId);
 
-            return new Response<IReadOnlyList<FaqDto>>
-            {
-                Data = _mapper.Map<IReadOnlyList<FaqDto>>(faqs)
-            };
+            return new Response<IReadOnlyList<FaqDto>>(_mapper.Map<IReadOnlyList<FaqDto>>(faqs));
         }
 
         public async Task<Response<IReadOnlyList<FaqDto>>> GetFaqsByCategoryIdAsync(FaqsRequestSpaceIdDto getFaqsDto, long categoryId = 0)
@@ -105,10 +98,7 @@ namespace MOCA.Services.Implementation.MocaSettings
 
             var faqs = await _unitOfWork.Faqs.GetAllFaqsByCategoryAsync(getFaqsDto.LobSpaceTypeId, categoryId);
 
-            return new Response<IReadOnlyList<FaqDto>>
-            {
-                Data = _mapper.Map<IReadOnlyList<FaqDto>>(faqs)
-            };
+            return new Response<IReadOnlyList<FaqDto>>(_mapper.Map<IReadOnlyList<FaqDto>>(faqs));
         }
 
         public async Task<Response<FaqDto>> GetSingleFaqAsync(long faqId)
@@ -123,10 +113,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<FaqDto>
-            {
-                Data = _mapper.Map<FaqDto>(faq)
-            };
+            return new Response<FaqDto>(_mapper.Map<FaqDto>(faq));
         }
 
         public async Task<Response<FaqDto>> UpdateFaqAsync(long faqId, FaqForUpdateDto faqForUpdateDto)
@@ -188,11 +175,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<FaqDto>
-            {
-                Message = "Faq Updated Successfully",
-                Data = _mapper.Map<FaqDto>(newFaq)
-            };
+            return new Response<FaqDto>(_mapper.Map<FaqDto>(newFaq), "Faq Updated Successfully");
         }
 
         public async Task<Response<bool>> UpdateFaqsDisplayOrderAsync(
@@ -262,11 +245,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<bool>
-            {
-                Data = true,
-                Message = "UpdateD Faq Display Order Successfully"
-            };
+            return new Response<bool>(true, "UpdateD Faq Display Order Successfully");
         }
 
         public async Task<Response<bool>> DeleteFaqAsync(FaqsRequestSpaceIdDto faqDto, long faqId)
@@ -300,11 +279,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<bool>
-            {
-                Data = true,
-                Message = "Delete Faq Successfully"
-            };
+            return new Response<bool>(true, "Delete Faq Successfully");
         }
     }
 }

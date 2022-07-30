@@ -29,10 +29,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                     Message = "No Types Found"
                 };
 
-            return new Response<IReadOnlyList<TopUpTypeDto>>
-            {
-                Data = allTopUpTypes
-            };
+            return new Response<IReadOnlyList<TopUpTypeDto>>(allTopUpTypes);
         }
 
         public async Task<Response<TopUpTypeDto>> GetTopUpTypeById(long id)
@@ -47,10 +44,7 @@ namespace MOCA.Services.Implementation.MocaSettings
 
             var topUpTypeDto = _mapper.Map<TopUpTypeDto>(topUpType);
 
-            return new Response<TopUpTypeDto>
-            {
-                Data = topUpTypeDto
-            };
+            return new Response<TopUpTypeDto>(topUpTypeDto);
         }
 
         public async Task<Response<TopUpTypeDto>> GetTopUpTypeByName(string name)
@@ -62,10 +56,7 @@ namespace MOCA.Services.Implementation.MocaSettings
 
             var topUpTypeDto = _mapper.Map<TopUpTypeDto>(topUpType);
 
-            return new Response<TopUpTypeDto>
-            {
-                Data = topUpTypeDto
-            };
+            return new Response<TopUpTypeDto>(topUpTypeDto);
         }
 
         public async Task<Response<TopUpTypeDto>> AddTopUpType(AddTopUpTypeDto addTopUpTypeDto)
@@ -88,11 +79,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                     Message = "Server Error"
                 };
 
-            return new Response<TopUpTypeDto>
-            {
-                Data = _mapper.Map<TopUpTypeDto>(topUpTypeTobeAdded),
-                Message = "Added Successfully"
-            };
+            return new Response<TopUpTypeDto>(_mapper.Map<TopUpTypeDto>(topUpTypeTobeAdded), "Added Successfully");
         }
 
         public async Task<Response<TopUpTypeDto>> UpdateTopUpType(long id, AddTopUpTypeDto topUpTypeDto)
@@ -144,11 +131,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                     };
             }
 
-            return new Response<TopUpTypeDto>
-            {
-                Message = "Updated Successfully",
-                Data = _mapper.Map<TopUpTypeDto>(topUpTypeTobeAdded)
-            };
+            return new Response<TopUpTypeDto>(_mapper.Map<TopUpTypeDto>(topUpTypeTobeAdded), "Updated Successfully");
         }
 
         public async Task<Response<bool>> DeleteTopUpType(long id)
@@ -180,11 +163,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                     };
             }
 
-            return new Response<bool>
-            {
-                Data = true,
-                Message = "Deleted Successfully"
-            };
+            return new Response<bool>(true, "Deleted Successfully");
         }
     }
 }

@@ -58,11 +58,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                     Message = "Server Cannot Save Resource Right now",
                 };
 
-            return new Response<CategoryDto>
-            {
-                Message = "Category Added Successfully",
-                Data = _mapper.Map<CategoryDto>(mappedCategory)
-            };
+            return new Response<CategoryDto>(_mapper.Map<CategoryDto>(mappedCategory), "Category Added Successfully");
         }
 
 
@@ -106,22 +102,13 @@ namespace MOCA.Services.Implementation.MocaSettings
                     var faqs = await _unitOfWork.Faqs.GetNonCategorizedFaqs(getAllCategoriesDto.LobSpaceTypeId);
                     nonCategorizedFaqs.NonCategorizedFaqs = _mapper.Map<IReadOnlyList<FaqBaseDto>>(faqs);
 
-                    return new Response<object>
-                    {
-                        Data = nonCategorizedFaqs
-                    };
+                    return new Response<object>(nonCategorizedFaqs);
                 }
 
-                return new Response<object>
-                {
-                    Data = categoriesWithFaqs
-                };
+                return new Response<object>(categoriesWithFaqs);
             }
 
-            return new Response<object>
-            {
-                Data = _mapper.Map<IEnumerable<CategoryDto>>(categories)
-            };
+            return new Response<object>(_mapper.Map<IEnumerable<CategoryDto>>(categories));
         }
 
         public async Task<Response<object>> GetSingleCategoryAsync(GetSingleCategoryDto getSingleCategoryDto,
@@ -150,16 +137,10 @@ namespace MOCA.Services.Implementation.MocaSettings
                 var categoryWithFaq = _mapper.Map<CategoryWithFaqDto>(category);
                 categoryWithFaq.Faqs = _mapper.Map<List<FaqBaseDto>>(categoryWithFaq.Faqs);
 
-                return new Response<object>
-                {
-                    Data = categoryWithFaq
-                };
+                return new Response<object>(categoryWithFaq);
             }
 
-            return new Response<object>
-            {
-                Data = _mapper.Map<CategoryDto>(category)
-            };
+            return new Response<object>(_mapper.Map<CategoryDto>(category));
         }
 
         public async Task<Response<bool>> UpdateCategoriesDisplayOrderAsync(List<UpdateCategoriesOrderDto> categoriesOrderDto,
@@ -206,11 +187,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<bool>
-            {
-                Message = "Category Display Order Updated Successfully",
-                Data = true
-            };
+            return new Response<bool>(true, "Category Display Order Updated Successfully");
         }
 
         public async Task<Response<CategoryDto>> UpdateCategoryAsync(long categoryId, CategoryForUpdateDto categoryForUpdate)
@@ -271,11 +248,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 }
             }
 
-            return new Response<CategoryDto>
-            {
-                Message = "Category Updated Successfully",
-                Data = _mapper.Map<CategoryDto>(newCategory)
-            };
+            return new Response<CategoryDto>(_mapper.Map<CategoryDto>(newCategory), "Category Updated Successfully");
         }
 
         public async Task<Response<bool>> DeleteCategoryAsync(long categoryId, DeleteCategoryDto deleteCategoryDto)
@@ -302,11 +275,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<bool>
-            {
-                Data = true,
-                Message = "Resource Deleted Successfully"
-            };
+            return new Response<bool>(true, "Resource Deleted Successfully");
         }
     }
 }

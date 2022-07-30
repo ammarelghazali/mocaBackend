@@ -44,10 +44,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<CaseTypeDto>
-            {
-                Data = _mapper.Map<CaseTypeDto>(caseType)
-            };
+            return new Response<CaseTypeDto>(_mapper.Map<CaseTypeDto>(caseType));
         }
 
         public async Task<Response<bool>> DeleteCaseTypeAsync(long caseTypeId)
@@ -72,22 +69,14 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<bool>
-            {
-                Data = true,
-                Message = "Resource Deleted Successfully",
-                Succeeded = true
-            };
+            return new Response<bool>(true, "Resource Deleted Successfully");
         }
 
         public async Task<Response<IReadOnlyList<CaseTypeDto>>> GetAllCaseTypesAsync()
         {
             var caseTypes = await _unitOfWork.CaseTypes.GetAllBaseAsync();
 
-            return new Response<IReadOnlyList<CaseTypeDto>>
-            {
-                Data = _mapper.Map<IReadOnlyList<CaseTypeDto>>(caseTypes)
-            };
+            return new Response<IReadOnlyList<CaseTypeDto>>(_mapper.Map<IReadOnlyList<CaseTypeDto>>(caseTypes));
         }
 
         public async Task<Response<CaseTypeDto>> GetSingleCaseTypeAsync(long caseTypeId)
@@ -102,10 +91,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<CaseTypeDto>
-            {
-                Data = _mapper.Map<CaseTypeDto>(caseType)
-            };
+            return new Response<CaseTypeDto>(_mapper.Map<CaseTypeDto>(caseType));
         }
 
         public async Task<Response<CaseTypeDto>> UpdateCaseTypeAsync(long caseTypeId, CaseTypeForCreationDto caseTypeForCreation)
@@ -145,10 +131,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<CaseTypeDto>
-            {
-                Data = _mapper.Map<CaseTypeDto>(newCaseType)
-            };
+            return new Response<CaseTypeDto>(_mapper.Map<CaseTypeDto>(newCaseType)); 
         }
     }
 }

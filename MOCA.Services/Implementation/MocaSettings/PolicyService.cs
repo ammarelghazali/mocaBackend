@@ -74,11 +74,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<PolicyDto>
-            {
-                Message = "Policy Added Successfully",
-                Data = _mapper.Map<PolicyDto>(newPolicy)
-            };
+            return new Response<PolicyDto>(_mapper.Map<PolicyDto>(newPolicy), "Policy Added Successfully");
         }
 
         public async Task<Response<bool>> DeletePolicyAsync(long policyId, LobSpaceTypeIdDto spaceTypeDto)
@@ -106,21 +102,14 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<bool>
-            {
-                Data = true,
-                Message = "Policy Deleted Successfully"
-            };
+            return new Response<bool>(true, "Policy Deleted Successfully");
         }
 
         public async Task<Response<IReadOnlyList<PolicyExtendedDto>>> GetAllPoliciesAsync(long? LobSpaceTypeId)
         {
             var policies = await _unitOfWork.Policies.GetAllPoliciesAsync(LobSpaceTypeId);
 
-            return new Response<IReadOnlyList<PolicyExtendedDto>>
-            {
-                Data = _mapper.Map<IReadOnlyList<PolicyExtendedDto>>(policies)
-            };
+            return new Response<IReadOnlyList<PolicyExtendedDto>>(_mapper.Map<IReadOnlyList<PolicyExtendedDto>>(policies));
         }
 
         public async Task<Response<PolicyDto>> GetPolicyByIdAsync(long policyId)
@@ -135,10 +124,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<PolicyDto>
-            {
-                Data = _mapper.Map<PolicyDto>(policy)
-            };
+            return new Response<PolicyDto>(_mapper.Map<PolicyDto>(policy));
         }
 
         public async Task<Response<PolicyDto>> GetPolicyByTypeIdAsync(long policyTypeId,
@@ -163,10 +149,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<PolicyDto>
-            {
-                Data = _mapper.Map<PolicyDto>(policy)
-            };
+            return new Response<PolicyDto>(_mapper.Map<PolicyDto>(policy));
         }
 
         public async Task<Response<PolicyDto>> UpdatePolicyAsync(long policyId,
@@ -200,11 +183,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<PolicyDto>
-            {
-                Message = "Policy Updated Successfully",
-                Data = _mapper.Map<PolicyDto>(newPolicy)
-            };
+            return new Response<PolicyDto>(_mapper.Map<PolicyDto>(newPolicy), "Policy Updated Successfully");
         }
     }
 }

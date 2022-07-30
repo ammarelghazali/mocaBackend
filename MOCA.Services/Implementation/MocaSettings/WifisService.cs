@@ -59,11 +59,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<WifiDto>
-            {
-                Message = "Wifi Added Successfully",
-                Data = _mapper.Map<WifiDto>(newWifi)
-            };
+            return new Response<WifiDto>(_mapper.Map<WifiDto>(newWifi), "Wifi Added Successfully");
         }
 
         public async Task<Response<bool>> DeleteWifi(long? lobSpaceTypeId)
@@ -100,11 +96,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            return new Response<bool>
-            {
-                Data = true,
-                Message = "Wifi Deleted Successfully"
-            };
+            return new Response<bool>(true, "Wifi Deleted Successfully");
         }
 
         public async Task<Response<WifiDto>> GetWifi(long? lobSpaceTypeId)
@@ -123,10 +115,7 @@ namespace MOCA.Services.Implementation.MocaSettings
 
             var wifi = await _unitOfWork.Wifis.GetWifiByLobSpaceTypeId(lobSpaceTypeId);
 
-            return new Response<WifiDto>
-            {
-                Data = _mapper.Map<WifiDto>(wifi)
-            };
+            return new Response<WifiDto>(_mapper.Map<WifiDto>(wifi));
         }
 
         public Task<Response<WifiDto>> UpdateWifi(long? lobSpaceTypeId, WifiForCreationDto wifiForCreation)

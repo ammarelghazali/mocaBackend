@@ -61,12 +61,8 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
 
             var topUpDto = _mapper.Map<TopUpDto>(topUpToBeAdded);
-            return new Response<TopUpDto>
-            {
-                Message = "Added Successfully",
-                Data = topUpDto
-            };
 
+            return new Response<TopUpDto>(topUpDto, "Added Successfully");
         }
 
 
@@ -97,10 +93,7 @@ namespace MOCA.Services.Implementation.MocaSettings
 
             var topUpDto = _mapper.Map<TopUpDto>(topUp);
 
-            return new Response<TopUpDto>
-            {
-                Data = topUpDto
-            };
+            return new Response<TopUpDto>(topUpDto);
         }
 
         public async Task<Response<bool>> Delete(long topUpTypeId, TopUpForLobSpaceTypeDto topUpForLobSpaceTypeDto)
@@ -139,12 +132,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                     Message = "Server Error"
                 };
 
-            return new Response<bool>
-            {
-                Data = true,
-                Message = "Deleted Successfully"
-            };
-
+            return new Response<bool>(true, "Deleted Successfully");
         }
 
 
@@ -199,12 +187,7 @@ namespace MOCA.Services.Implementation.MocaSettings
 
             var topUpDto = _mapper.Map<TopUpDto>(topUpToBeAdded);
 
-            return new Response<TopUpDto>
-            {
-                Data = topUpDto,
-                Message = "Updated Successfully"
-            };
-
+            return new Response<TopUpDto>(topUpDto, "Updated Successfully");
         }
     }
 }

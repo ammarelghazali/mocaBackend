@@ -30,10 +30,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                     Message = "No Severities found!"
                 };
 
-            return new Response<IReadOnlyList<SeverityDto>>
-            {
-                Data = _mapper.Map<IReadOnlyList<SeverityDto>>(severities)
-            };
+            return new Response<IReadOnlyList<SeverityDto>>(_mapper.Map<IReadOnlyList<SeverityDto>>(severities));
         }
 
         public async Task<Response<SeverityDto>> GetSingleSeverityAsync(long severityId)
@@ -45,10 +42,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                     Message = "No such a Severity found!"
                 };
 
-            return new Response<SeverityDto>
-            {
-                Data = _mapper.Map<SeverityDto>(severity)
-            };
+            return new Response<SeverityDto>(_mapper.Map<SeverityDto>(severity));
         }
 
         public async Task<Response<SeverityDto>> AddSeverityAsync(SeverityForCreationDto severityForCreationDto)
@@ -68,11 +62,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                     Message = "Server Error"
                 };
 
-            return new Response<SeverityDto>
-            {
-                Message = "Severity added successfully",
-                Data = _mapper.Map<SeverityDto>(severity)
-            };
+            return new Response<SeverityDto>(_mapper.Map<SeverityDto>(severity), "Severity added successfully");
         }
 
         public async Task<Response<bool>> UpdateSeverityAsync(long severityId, SeverityForCreationDto severityForCreationDto)
@@ -128,16 +118,8 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
 
 
-            return new Response<bool>
-            {
-                Data = true,
-                Message = "Severity updated successfully"
-            };
-
+            return new Response<bool>(true, "Severity updated successfully");
         }
-
-
-
 
         public async Task<Response<bool>> DeleteSeverityAsync(long severityId)
         {
@@ -170,13 +152,7 @@ namespace MOCA.Services.Implementation.MocaSettings
                     Message = "Server Error"
                 };
 
-            return new Response<bool>
-            {
-                Message = "Severity Deleted Successfully",
-                Data = true
-            };
-
+            return new Response<bool>(true, "Severity Deleted Successfully");
         }
-
     }
 }

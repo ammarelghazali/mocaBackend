@@ -38,18 +38,12 @@ namespace MOCA.Services.Implementation.MocaSettings
             planDto.LobSpaceTypeId = lobSpaceTypeId;
 
 
-            return new Response<PlanDto>
+            return new Response<PlanDto>(new PlanDto
             {
-                Data = new PlanDto
-                {
-                    Id = plan.Id,
-                    Plan = planDto
-                }
-            };
+                Id = plan.Id,
+                Plan = planDto
+            });
         }
-
-
-
 
         public async Task<Response<PlanDtoBase>> Add(long? lobSpaceTypeId, long planTypeId, PlanDtoBase planDto)
         {
@@ -84,13 +78,10 @@ namespace MOCA.Services.Implementation.MocaSettings
                 return new Response<PlanDtoBase> {Message = "Server Error" };
 
             var addedPlanDto = _mapper.Map<PlanDtoBase>(plan);
-            addedPlanDto.LobSpaceTypeId = lobSpaceTypeId;
-            return new Response<PlanDtoBase>
-            {
-                Message = "Plan added successfully",
-                Data = addedPlanDto
-            };
 
+            addedPlanDto.LobSpaceTypeId = lobSpaceTypeId;
+
+            return new Response<PlanDtoBase>(addedPlanDto, "Plan added successfully");
         }
 
 
@@ -115,7 +106,7 @@ namespace MOCA.Services.Implementation.MocaSettings
             if (num != 1)
                 return new Response<bool> { Message = "Server Error" };
 
-            return new Response<bool> { Message = "Plan deleted successfully", Data = true };
+            return new Response<bool>(true , "Plan deleted successfully");
         }
 
 
@@ -158,12 +149,7 @@ namespace MOCA.Services.Implementation.MocaSettings
             updatedPlanDto.LobSpaceTypeId = lobSpaceTypeId;
             updatedPlanDto.TypeId = planTypeId;
 
-            return new Response<PlanDtoBase>
-            {
-                Message = "Plan updated successfully",
-                Data = updatedPlanDto
-            };
+            return new Response<PlanDtoBase>(updatedPlanDto, "Plan updated successfully");
         }
-
     }
 }

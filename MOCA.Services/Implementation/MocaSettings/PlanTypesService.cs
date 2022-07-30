@@ -27,7 +27,7 @@ namespace MOCA.Services.Implementation.MocaSettings
             if (planTypes == null)
                 return new Response<IList<PlanTypeDto>> { Message = "No plan types found" };
 
-            return new Response<IList<PlanTypeDto>> { Data = allPlanTypes };
+            return new Response<IList<PlanTypeDto>>(allPlanTypes);
 
         }
 
@@ -46,17 +46,12 @@ namespace MOCA.Services.Implementation.MocaSettings
             if (num != 1)
                 return new Response<PlanTypeManipulationResponse> { Message = "Server Error" };
 
-            return new Response<PlanTypeManipulationResponse>
+            return new Response<PlanTypeManipulationResponse>(new PlanTypeManipulationResponse
             {
-                Message = "Added Successfully",
-                Data = new PlanTypeManipulationResponse
-                {
-                    Id = planType.Id,
-                    Name = planType.Name,
-                    URL = planType.URL,
-                }
-            };
-
+                Id = planType.Id,
+                Name = planType.Name,
+                URL = planType.URL,
+            }, "Added Successfully");
         }
 
 
@@ -98,17 +93,12 @@ namespace MOCA.Services.Implementation.MocaSettings
                 return new Response<PlanTypeManipulationResponse> { Message = "Server Error" };
 
 
-            return new Response<PlanTypeManipulationResponse>
+            return new Response<PlanTypeManipulationResponse>(new PlanTypeManipulationResponse
             {
-                Message = "Updated Successfully",
-                Data = new PlanTypeManipulationResponse
-                {
-                    Id = planTypeTobeAdded.Id,
-                    Name = planTypeTobeAdded.Name,
-                    URL = planTypeTobeAdded.URL,
-                }
-            };
-
+                Id = planTypeTobeAdded.Id,
+                Name = planTypeTobeAdded.Name,
+                URL = planTypeTobeAdded.URL,
+            }, "Updated Successfully");
         }
 
         public async Task<Response<bool>> Delete(long id)
@@ -130,7 +120,7 @@ namespace MOCA.Services.Implementation.MocaSettings
             if (num != plans.Count())
                 return new Response<bool> { Message = "Server Error" };
 
-            return new Response<bool> { Message = "Deleted Successfully", Data = true };
+            return new Response<bool> (true, "Deleted Successfully");
         }
     }
 }
