@@ -7,7 +7,6 @@ namespace MOCA.Core.DTOs.MocaSettings.PolicyTypesDtos.Request
         public long? LobSpaceTypeId { get; set; }
         [Required]
         public bool WithRelatedDescription { get; set; } = true;
-        public string URL { get; set; }
 
     }
 }

@@ -149,10 +149,7 @@ namespace MOCA.Services.Implementation.MocaSettings
             _unitOfWork.PolicyTypes.Delete(oldPolicyType);
 
             // Add the updated policy
-            var policyType = new PolicyType
-            {
-                Name = policyTypeDto.Name,
-            };
+            var policyType = _mapper.Map<PolicyType>(policyTypeDto);
 
             _unitOfWork.PolicyTypes.Insert(policyType);
 

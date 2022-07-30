@@ -30,6 +30,7 @@ using MOCA.Core.DTOs.LocationManagment.Currency;
 using MOCA.Core.DTOs.LocationManagment.District;
 using MOCA.Core.DTOs.LocationManagment.LocationType;
 using MOCA.Core.Entities.LocationManagment;
+using MOCA.Core.DTOs.MocaSettings.PolicyTypesDtos.Request;
 
 namespace MOCA.Core.MappingProfiles
 {
@@ -76,11 +77,6 @@ namespace MOCA.Core.MappingProfiles
                 .ForMember(i => i.Date, i2 => i2.MapFrom(i3 => ((DateTime)i3.LastModifiedAt).ToShortDateString()))
                 .ForMember(i => i.Stage, i2 => i2.MapFrom(i3 => i3.IssueReport.Status.Name))
                 .ForMember(i => i.Comment, i2 => i2.MapFrom(i3 => i3.IssueReport.Comment));
-            #region Moca Settings
-
-            #endregion
-
-            #region Location Managment
 
             CreateMap<UpdateIssueReportDto, IssueReport>().ReverseMap();
 
@@ -117,6 +113,7 @@ namespace MOCA.Core.MappingProfiles
             // Policy Type 
             CreateMap<PolicyType, PolicyTypeDto>();
             CreateMap<PolicyType, PolicyTypeWithDescriptionDto>();
+            CreateMap<PolicyTypeForCreationDto, PolicyType>();
 
             // Priority
             CreateMap<Priority, PriorityDto>();
@@ -148,8 +145,9 @@ namespace MOCA.Core.MappingProfiles
                .ForMember(p1 => p1.IsDeleted, p2 => p2.Ignore());
 
             CreateMap<Wifi, WifiDto>();
-
             #endregion
+
+            #region Location Managment
 
             CreateMap<CountryModel, Country>();
             CreateMap<Country, CountryModel>();
