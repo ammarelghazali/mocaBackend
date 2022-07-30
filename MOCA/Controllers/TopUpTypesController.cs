@@ -17,6 +17,11 @@ namespace MocaSettings.API.Controllers
             _topUpTypesService = topUpTypesService;
         }
 
+        /// <summary>
+        /// Get All Top Up Types
+        /// </summary>
+        /// <response code="200">Returns the Available Top Up Types</response>
+        /// <response code="400">the Request is not well formatted</response>
         [HttpGet]
         public async Task<IActionResult> GetAllTopUpTypes()
         {
@@ -29,6 +34,12 @@ namespace MocaSettings.API.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Get Single Top Up Type by Id
+        /// </summary>
+        /// <param name="id">Id of the Top Up Type</param>
+        /// <response code="200">Returns the Top Up Type</response>
+        /// <response code="400">the Request is not well formatted, or the id is wrong</response>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTopUpTypeById([FromRoute] long id)
         {
@@ -41,7 +52,12 @@ namespace MocaSettings.API.Controllers
             return Ok(response);
         }
 
-        [HttpPost]
+        /// <summary>
+        /// Add new Top Up Type
+        /// </summary>
+        /// <param name="addTopUpTypeDto">an object that has name and URL of the Top Up Type</param>
+        /// <response code="200">Added the Top Up Type Successfully</response>
+        /// <response code="400">the Request is not well formatted, or top Up Type with the same name is already exist</response>        
         public async Task<IActionResult> AddTopUpType(AddTopUpTypeDto addTopUpTypeDto)
         {
             var response = await _topUpTypesService.AddTopUpType(addTopUpTypeDto);
@@ -53,7 +69,12 @@ namespace MocaSettings.API.Controllers
             return Ok(response);
         }
 
-        [HttpDelete]
+        /// <summary>
+        /// Deletes Top Up Type
+        /// </summary>
+        /// <param name="id">Id of the Top Up Type</param>
+        /// <response code="200">Deletes the Top Up Type Successfully</response>
+        /// <response code="400">the Request is not well formatted, or top Up Type id is wrong</response>      
         public async Task<IActionResult> DeleteTopUpType(long id)
         {
             var response = await _topUpTypesService.DeleteTopUpType(id);
@@ -65,7 +86,13 @@ namespace MocaSettings.API.Controllers
             return Ok(response);
         }
 
-        [HttpPut]
+        /// <summary>
+        /// Updates Top Up Type
+        /// </summary>
+        /// <param name="id">id of the Top Up</param>
+        /// <param name="topUpTypeDto">an object that has the Top Up name and URL</param>
+        /// <response code="200">Updates the Top Up Type Successfully</response>
+        /// <response code="400">the Request is not well formatted, or top Up Type id is wrong</response>             
         public async Task<IActionResult> UpdateTopUpType(long id, AddTopUpTypeDto topUpTypeDto)
         {
             var response = await _topUpTypesService.UpdateTopUpType(id, topUpTypeDto);
