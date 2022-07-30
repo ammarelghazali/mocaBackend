@@ -69,28 +69,28 @@ namespace MOCA.Presistence.Repositories.MocaSettings
             {
                 await _context.Database
                 .ExecuteSqlInterpolatedAsync
-                ($"UPDATE Faqs SET DisplayOrder = DisplayOrder - 1 WHERE DisplayOrder > {displayOrder} AND CategoryId = {categoryId} AND LobSpaceTypeId = {lobSpaceTypeId} AND IsDeleted = 0");
+                ($"UPDATE Faq SET DisplayOrder = DisplayOrder - 1 WHERE DisplayOrder > {displayOrder} AND CategoryId = {categoryId} AND LobSpaceTypeId = {lobSpaceTypeId} AND IsDeleted = 0");
             }
 
             else if (categoryId != null && lobSpaceTypeId == null)
             {
                 await _context.Database
                 .ExecuteSqlInterpolatedAsync
-                ($"UPDATE Faqs SET DisplayOrder = DisplayOrder - 1 WHERE DisplayOrder > {displayOrder} AND CategoryId = {categoryId} AND LobSpaceTypeId IS NULL AND IsDeleted = 0");
+                ($"UPDATE Faq SET DisplayOrder = DisplayOrder - 1 WHERE DisplayOrder > {displayOrder} AND CategoryId = {categoryId} AND LobSpaceTypeId IS NULL AND IsDeleted = 0");
             }
 
             else if (categoryId == null && lobSpaceTypeId != null)
             {
                 await _context.Database
                 .ExecuteSqlInterpolatedAsync
-                ($"UPDATE Faqs SET DisplayOrder = DisplayOrder - 1 WHERE DisplayOrder > {displayOrder} AND CategoryId IS NULL  AND LobSpaceTypeId = {lobSpaceTypeId} AND IsDeleted = 0");
+                ($"UPDATE Faq SET DisplayOrder = DisplayOrder - 1 WHERE DisplayOrder > {displayOrder} AND CategoryId IS NULL  AND LobSpaceTypeId = {lobSpaceTypeId} AND IsDeleted = 0");
             }
 
             else
             {
                 await _context.Database
                 .ExecuteSqlInterpolatedAsync
-                ($"UPDATE Faqs SET DisplayOrder = DisplayOrder - 1 WHERE DisplayOrder > {displayOrder} AND CategoryId IS NULL  AND LobSpaceTypeId IS NULL AND IsDeleted = 0");
+                ($"UPDATE Faq SET DisplayOrder = DisplayOrder - 1 WHERE DisplayOrder > {displayOrder} AND CategoryId IS NULL  AND LobSpaceTypeId IS NULL AND IsDeleted = 0");
             }
         }
 

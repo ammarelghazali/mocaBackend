@@ -106,18 +106,18 @@ namespace MOCA.Presistence.Repositories.MocaSettings
 
             if (!isLast)
             {
-                if (spaceId == null)
-                {
+                //if (spaceId == null)
+                //{
+                //    await _context.Database
+                // .ExecuteSqlInterpolatedAsync
+                // ($"UPDATE Category SET DisplayOrder = DisplayOrder - 1 WHERE DisplayOrder > {category.DisplayOrder} AND LobSpaceTypeId IS NULL AND IsDeleted = 0");
+                //}
+                //else
+                //{
                     await _context.Database
                  .ExecuteSqlInterpolatedAsync
-                 ($"UPDATE Categories SET DisplayOrder = DisplayOrder - 1 WHERE DisplayOrder > {category.DisplayOrder} AND LobSpaceTypeId IS NULL AND IsDeleted = 0");
-                }
-                else
-                {
-                    await _context.Database
-                 .ExecuteSqlInterpolatedAsync
-                 ($"UPDATE Categories SET DisplayOrder = DisplayOrder - 1 WHERE DisplayOrder > {category.DisplayOrder} AND LobSpaceTypeId = {spaceId} AND IsDeleted = 0");
-                }
+                 ($"UPDATE Category SET DisplayOrder = DisplayOrder - 1 WHERE DisplayOrder > {category.DisplayOrder} AND LobSpaceTypeId = {spaceId} AND IsDeleted = 0");
+                //}
 
             }
         }
