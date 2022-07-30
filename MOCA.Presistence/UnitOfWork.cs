@@ -1,22 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MOCA.Core;
+using MOCA.Core.Entities.LocationManagment;
+using MOCA.Core.Interfaces.Base;
+using MOCA.Core.Interfaces.LocationManagment.Repositories;
 using MOCA.Core.Interfaces.MocaSettings.Repositories;
 using MOCA.Core.Interfaces.Shared.Services;
 using MOCA.Presistence.Contexts;
+using MOCA.Presistence.Repositories.Base;
+using MOCA.Presistence.Repositories.LocationManagment;
 using MOCA.Presistence.Repositories.MocaSettings;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MOCA.Presistence
 {
     public class UnitOfWork : IDisposable, IUnitOfWork
     {
-        public ApplicationDbContext context { get; }
-        public IConfiguration Configuration { get; }
+        public ApplicationDbContext _context { get; }
+        public IConfiguration _configuration { get; }
         private readonly IAuthenticatedUserService _authenticatedUser;
         private readonly IDateTimeService _dateTimeService;
 
@@ -24,15 +24,17 @@ namespace MOCA.Presistence
         {
             get
             {
-                return context;
+                return _context;
             }
         }
 
-        public UnitOfWork(ApplicationDbContext _context, IConfiguration configuration,
-                          IAuthenticatedUserService authenticatedUser, IDateTimeService dateTimeService)
+        public UnitOfWork(ApplicationDbContext context,
+            IConfiguration configuration,
+            IAuthenticatedUserService authenticatedUser,
+            IDateTimeService dateTimeService)
         {
-            context = _context;
-            Configuration = configuration;
+            _context = context;
+            _configuration = configuration;
             _authenticatedUser = authenticatedUser;
             _dateTimeService = dateTimeService;
         }
@@ -43,7 +45,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return _categories ?? new CategoriesRepository(context);
+                return _categories ?? new CategoriesRepository(_context);
             }
         }
 
@@ -52,7 +54,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return _faqs ?? new FaqsRepository(context);
+                return _faqs ?? new FaqsRepository(_context);
             }
         }
 
@@ -61,7 +63,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return _plans ?? new PlansRepository(context);
+                return _plans ?? new PlansRepository(_context);
             }
         }
 
@@ -70,7 +72,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return _planTypes ?? new PlanTypesRepository(context);
+                return _planTypes ?? new PlanTypesRepository(_context);
             }
         }
 
@@ -79,7 +81,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return _topUps ?? new TopUpsRepository(context);
+                return _topUps ?? new TopUpsRepository(_context);
             }
         }
 
@@ -88,7 +90,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return _topUpTypes ?? new TopUpTypesRepository(context);
+                return _topUpTypes ?? new TopUpTypesRepository(_context);
             }
         }
 
@@ -97,7 +99,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return _policyTypes ?? new PolicyTypesRepository(context);
+                return _policyTypes ?? new PolicyTypesRepository(_context);
             }
         }
 
@@ -106,7 +108,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return _policies ?? new PolicyRepository(context);
+                return _policies ?? new PolicyRepository(_context);
             }
         }
 
@@ -117,7 +119,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return _wifis ?? new WifisRepository(context);
+                return _wifis ?? new WifisRepository(_context);
             }
         }
 
@@ -126,7 +128,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return _statuses ?? new StatusesRepository(context);
+                return _statuses ?? new StatusesRepository(_context);
             }
         }
 
@@ -135,7 +137,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return _severities ?? new SeveritiesRepository(context);
+                return _severities ?? new SeveritiesRepository(_context);
             }
         }
 
@@ -144,7 +146,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return _priorities ?? new PrioritiesRepository(context);
+                return _priorities ?? new PrioritiesRepository(_context);
             }
         }
 
@@ -153,7 +155,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return _caseTypes ?? new CaseTypesRepository(context);
+                return _caseTypes ?? new CaseTypesRepository(_context);
             }
         }
 
@@ -162,11 +164,105 @@ namespace MOCA.Presistence
         {
             get
             {
-                return _issueReports ?? new IssueReportsRepository(context);
+                return _issueReports ?? new IssueReportsRepository(_context);
             }
         }
 
         //public IIdentityUserRepository Users => throw new NotImplementedException();
+        #endregion
+
+        #region Location Managment
+
+        private IGenericRepository<Country> _countryRepo;
+        public IGenericRepository<Country> CountryRepo
+        {
+            get
+            {
+                return _countryRepo = _countryRepo ?? new GenericRepository<Country>(_context);
+            }
+        }
+
+        private ICountryRepository _countryRepoEF;
+        public ICountryRepository CountryRepoEF
+        {
+            get
+            {
+                return _countryRepoEF = _countryRepoEF ?? new CountryRepository(_context);
+            }
+        }
+
+        private IGenericRepository<City> _cityRepo;
+        public IGenericRepository<City> CityRepo
+        {
+            get
+            {
+                return _cityRepo = _cityRepo ?? new GenericRepository<City>(_context);
+            }
+        }
+
+        private ICityRepository _cityRepoEF;
+        public ICityRepository CityRepoEF
+        {
+            get
+            {
+                return _cityRepoEF = _cityRepoEF ?? new CityRepository(_context);
+            }
+        }
+
+        private IGenericRepository<District> _districtRepo;
+        public IGenericRepository<District> DistrictRepo
+        {
+            get
+            {
+                return _districtRepo = _districtRepo ?? new GenericRepository<District>(_context);
+            }
+        }
+
+        private IDistrictRepository _districtRepoEF;
+        public IDistrictRepository DistrictRepoEF
+        {
+            get
+            {
+                return _districtRepoEF = _districtRepoEF ?? new DistrictRepository(_context);
+            }
+        }
+
+        IGenericRepository<Currency> _currencyRepo;
+        public IGenericRepository<Currency> CurrencyRepo
+        {
+            get
+            {
+                return _currencyRepo = _currencyRepo ?? new GenericRepository<Currency>(_context);
+            }
+        }
+
+        ICurrencyRepository _currencyRepoEF;
+        public ICurrencyRepository CurrencyRepoEF
+        {
+            get
+            {
+                return _currencyRepoEF = _currencyRepoEF ?? new CurrencyRepository(_context);
+            }
+        }
+
+        IGenericRepository<LocationType> _locationTypeRepo;
+        public IGenericRepository<LocationType> LocationTypeRepo
+        {
+            get
+            {
+                return _locationTypeRepo = _locationTypeRepo ?? new GenericRepository<LocationType>(_context);
+            }
+        }
+
+        ILocationTypeRepository _locationTypeRepoEF;
+        public ILocationTypeRepository LocationTypeRepoEF
+        {
+            get
+            {
+                return _locationTypeRepoEF = _locationTypeRepoEF ?? new LocationTypeRepository(_context);
+            }
+        }
+
         #endregion
 
         public DateTime ConvertToLocalDate(DateTime dateInEasternTimeZone)
@@ -192,7 +288,7 @@ namespace MOCA.Presistence
             {
                 if (disposing)
                 {
-                    context.Dispose();
+                    _context.Dispose();
                 }
             }
             disposed = true;
@@ -213,7 +309,7 @@ namespace MOCA.Presistence
         {
             try
             {
-                context.SaveChanges();
+                _context.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -225,7 +321,7 @@ namespace MOCA.Presistence
         {
             try
             {
-                return await context.SaveChangesAsync();
+                return await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {

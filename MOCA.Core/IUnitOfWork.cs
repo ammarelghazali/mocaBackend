@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MOCA.Core.Interfaces.MocaSettings.Repositories;
+using MOCA.Core.Entities.LocationManagment;
+using MOCA.Core.Interfaces.Base;
+using MOCA.Core.Interfaces.LocationManagment.Repositories;
 
 namespace MOCA.Core
 {
@@ -37,6 +40,21 @@ namespace MOCA.Core
         IIssueReportsRepository IssueReports { get; }
 
         //IIdentityUserRepository Users { get; }
+        #endregion
+
+        #region Location Managment
+
+        IGenericRepository<Country> CountryRepo { get; }
+        ICountryRepository CountryRepoEF { get; }
+        IGenericRepository<City> CityRepo { get; }
+        ICityRepository CityRepoEF { get; }
+        IGenericRepository<District> DistrictRepo { get; }
+        IDistrictRepository DistrictRepoEF { get; }
+        IGenericRepository<Currency> CurrencyRepo { get; }
+        ICurrencyRepository CurrencyRepoEF { get; }
+        IGenericRepository<LocationType> LocationTypeRepo { get; }
+        ILocationTypeRepository LocationTypeRepoEF { get; }
+
         #endregion
 
         void Save();

@@ -24,11 +24,15 @@ using MOCA.Core.DTOs.MocaSettings.TopUpTypeDtos.Request;
 using MOCA.Core.DTOs.MocaSettings.TopUpTypeDtos.Response;
 using MOCA.Core.DTOs.MocaSettings.WifiDtos.Response;
 using MOCA.Core.Entities.MocaSetting;
+using MOCA.Core.DTOs.LocationManagment.City;
+using MOCA.Core.DTOs.LocationManagment.Country;
+using MOCA.Core.DTOs.LocationManagment.Currency;
+using MOCA.Core.DTOs.LocationManagment.District;
+using MOCA.Core.DTOs.LocationManagment.LocationType;
+using MOCA.Core.Entities.LocationManagment;
 
 namespace MOCA.Core.MappingProfiles
 {
-
-    
     public class GeneralMappingProfile : Profile
     {
         public GeneralMappingProfile()
@@ -72,6 +76,11 @@ namespace MOCA.Core.MappingProfiles
                 .ForMember(i => i.Date, i2 => i2.MapFrom(i3 => ((DateTime)i3.LastModifiedAt).ToShortDateString()))
                 .ForMember(i => i.Stage, i2 => i2.MapFrom(i3 => i3.IssueReport.Status.Name))
                 .ForMember(i => i.Comment, i2 => i2.MapFrom(i3 => i3.IssueReport.Comment));
+            #region Moca Settings
+
+            #endregion
+
+            #region Location Managment
 
             CreateMap<UpdateIssueReportDto, IssueReport>().ReverseMap();
 
@@ -140,6 +149,22 @@ namespace MOCA.Core.MappingProfiles
 
             CreateMap<Wifi, WifiDto>();
 
+            #endregion
+
+            CreateMap<CountryModel, Country>();
+            CreateMap<Country, CountryModel>();
+
+            CreateMap<CityModel, City>();
+            CreateMap<City, CityModel>();
+
+            CreateMap<DistrictModel, District>();
+            CreateMap<District, DistrictModel>();
+
+            CreateMap<CurrencyModel, Currency>();
+            CreateMap<Currency, CurrencyModel>();
+
+            CreateMap<LocationTypeModel, LocationType>();
+            CreateMap<LocationType, LocationTypeModel>();
             #endregion
 
         }
