@@ -180,6 +180,9 @@ namespace MOCA.Core.MappingProfiles
 
             CreateMap<LocationContactModel, LocationContact>();
             CreateMap<LocationContact, LocationContactModel>();
+
+            CreateMap<LocationCurrencyModel, LocationCurrency>();
+            CreateMap<LocationCurrency, LocationCurrencyModel>();
             #endregion
 
         }
