@@ -195,6 +195,9 @@ namespace MOCA.Core.MappingProfiles
 
             CreateMap<LocationWorkingHourModel, LocationWorkingHour>();
             CreateMap<LocationWorkingHour, LocationWorkingHourModel>();
+
+            CreateMap<ServiceFeePaymentsDueDateModel, ServiceFeePaymentsDueDate>();
+            CreateMap<ServiceFeePaymentsDueDate, ServiceFeePaymentsDueDateModel>();
             #endregion
 
         }
