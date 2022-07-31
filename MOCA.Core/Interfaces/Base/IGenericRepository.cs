@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Linq.Expressions;
 
+
 namespace MOCA.Core.Interfaces.Base
 {
     public interface IGenericRepository<T> where T : class

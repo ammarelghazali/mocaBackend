@@ -5,6 +5,7 @@ using MOCA.Presistence.Contexts;
 using System.Data;
 using System.Linq.Expressions;
 
+
 namespace MOCA.Presistence.Repositories.Base
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class

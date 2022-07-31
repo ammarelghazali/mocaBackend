@@ -1990,7 +1990,6 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("nvarchar(1000)");
 
                     b.Property<long?>("CategoryId")
-                        .IsRequired()
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
@@ -3467,9 +3466,7 @@ namespace MOCA.Presistence.Migrations
                 {
                     b.HasOne("MOCA.Core.Entities.MocaSetting.Category", "Category")
                         .WithMany("Faqs")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
 
                     b.HasOne("MOCA.Core.Entities.LocationManagment.LocationType", "LobSpaceType")
                         .WithMany("Faqs")

@@ -52,7 +52,7 @@ namespace MOCA.Presistence.Contexts
         #region LocationManagment
         public DbSet<Building> Buildings { get; set; }
         public DbSet<BuildingFloor> BuildingFloors { get; set; }
-        public DbSet<City> Citys { get; set; }
+        public DbSet<City> Cities { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<District> Districts { get; set; }

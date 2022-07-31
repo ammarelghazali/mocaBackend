@@ -28,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\LocationManagment\" />
     <Folder Include="Repositories\MocaSettings\" />
     <Folder Include="Repositories\Events\" />
     <Folder Include="Repositories\SSO\" />

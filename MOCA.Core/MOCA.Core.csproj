@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -13,22 +13,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\Events\Account\Request\" />
-    <Folder Include="DTOs\LocationManagment\" />
+    <Folder Include="DTOs\MocaSettings\" />
     <Folder Include="DTOs\MocaSettings\" />
     <Folder Include="DTOs\SSO\" />
-    <Folder Include="Enums\MocaSettings\" />
-    <Folder Include="Enums\Events\" />
-    <Folder Include="Interfaces\LocationManagment\" />
-    <Folder Include="Interfaces\LocationManagment\Repositories\" />
-    <Folder Include="Interfaces\LocationManagment\Services\" />
     <Folder Include="Interfaces\MocaSettings\Repositories\" />
+    <Folder Include="Interfaces\MocaSettings\Services\" />
     <Folder Include="Interfaces\MocaSettings\Services\" />
     <Folder Include="Interfaces\SSO\Repositories\" />
     <Folder Include="Interfaces\SSO\Services\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="FluentValidation" Version="11.1.0" />
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.7" />
