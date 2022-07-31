@@ -282,7 +282,7 @@ namespace MOCA.Services.Implementation.Events
             CompanyInfo_ViewModel companyInfo_ViewModel = null;
             if (eventSpaceBooking.IndustryNameId != null)
             {
-                var industry = await _unitOfWork.IndustryRepo.GetByID((int)eventSpaceBooking.IndustryNameId);
+                var industry = await _unitOfWork.IndustryRepo.GetByIdAsync((int)eventSpaceBooking.IndustryNameId);
                 companyInfo_ViewModel = new CompanyInfo_ViewModel
                 {
                     CompanyName = eventSpaceBooking.CompanyCommericalName,

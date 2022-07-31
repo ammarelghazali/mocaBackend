@@ -57,7 +57,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             return new Response<long>(inclusion.Id, "Inclusion Added Successfully.");
         }
 
-        public async Task<Response<bool>> UpdateFeature(InclusionModel request)
+        public async Task<Response<bool>> UpdateInclusion(InclusionModel request)
         {
             var inclusion = _mapper.Map<Inclusion>(request);
 
@@ -91,7 +91,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             return new Response<bool>(true, "Inclusion Updated Successfully.");
         }
 
-        public async Task<Response<InclusionModel>> GetFeatureByID(long Id)
+        public async Task<Response<InclusionModel>> GetInclusionByID(long Id)
         {
             /*
              if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
@@ -111,7 +111,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             return new Response<InclusionModel>(_mapper.Map<InclusionModel>(inclusion));
         }
 
-        public async Task<PagedResponse<List<InclusionModel>>> GetAllFeaturesWithPagination(RequestParameter filter)
+        public async Task<PagedResponse<List<InclusionModel>>> GetAllInclusionsWithPagination(RequestParameter filter)
         {
             /*
              if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
@@ -133,7 +133,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             return new PagedResponse<List<InclusionModel>>(Res, filter.PageNumber, filter.PageSize, pg_total);
         }
 
-        public async Task<Response<List<InclusionModel>>> GetAllFeaturesWithoutPagination()
+        public async Task<Response<List<InclusionModel>>> GetAllInclusionsWithoutPagination()
         {
             /*
              if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))

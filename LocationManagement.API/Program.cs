@@ -14,6 +14,7 @@ using MOCA.Services.Implementation.LocationManagment;
 using MOCA.Services.Implementation.Shared;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,6 +33,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "LocationManagement.Api", Version = "v1" });
+
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
 });
 builder.Services.AddApiVersioning(config =>
 {

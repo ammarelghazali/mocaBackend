@@ -196,7 +196,6 @@ namespace MOCA.Presistence
         private IEventSpaceVenueRepository _eventSpaceVenuesRepo;
         private IContactDetailsRepository _contactDetailsRepo;
         private ILocationRepositoty _locationRepo;
-        private IIndustryRepository _industryRepo;
         private IInitiatedRepository _initiatedRepo;
         private ILoungeClientRepository _loungeClientRepo;
         private ISendEmailRepository _sendEmailRepo;
@@ -206,28 +205,28 @@ namespace MOCA.Presistence
         {
             get
             {
-                return this._eventRequesterRepo = this._eventRequesterRepo ?? new GenericRepository<EventRequester>(context);
+                return this._eventRequesterRepo = this._eventRequesterRepo ?? new GenericRepository<EventRequester>(_context);
             }
         }
         public IGenericRepository<EventAttendance> EventAttendanceRepo
         {
             get
             {
-                return this._eventAttendanceRepo = this._eventAttendanceRepo ?? new GenericRepository<EventAttendance>(context);
+                return this._eventAttendanceRepo = this._eventAttendanceRepo ?? new GenericRepository<EventAttendance>(_context);
             }
         }
         public IGenericRepository<EventType> EventTypeRepo
         {
             get
             {
-                return this._eventTypeRepo = this._eventTypeRepo ?? new GenericRepository<EventType>(context);
+                return this._eventTypeRepo = this._eventTypeRepo ?? new GenericRepository<EventType>(_context);
             }
         }
         public IGenericRepository<EventReccurance> EventReccuranceRepo
         {
             get
             {
-                return this._eventReccuranceRepo = this._eventReccuranceRepo ?? new GenericRepository<EventReccurance>(context);
+                return this._eventReccuranceRepo = this._eventReccuranceRepo ?? new GenericRepository<EventReccurance>(_context);
             }
         }
 
@@ -235,14 +234,14 @@ namespace MOCA.Presistence
         {
             get
             {
-                return this._eventCategoryRepo = this._eventCategoryRepo ?? new GenericRepository<EventCategory>(context);
+                return this._eventCategoryRepo = this._eventCategoryRepo ?? new GenericRepository<EventCategory>(_context);
             }
         }
         public IContactDetailsRepository ContactDetailsRepo
         {
             get
             {
-                return this._contactDetailsRepo = this._contactDetailsRepo ?? new ContactDetailsRepository(context);
+                return this._contactDetailsRepo = this._contactDetailsRepo ?? new ContactDetailsRepository(_context);
             }
         }
         public IEventSpaceBookingRepository EventSpaceBookingRepo
@@ -250,105 +249,98 @@ namespace MOCA.Presistence
             get
             {
                 return this._eventSpaceBookingRepository = this._eventSpaceBookingRepository ??
-                                                                  new EventSpaceBookingRepository(context);
+                                                                  new EventSpaceBookingRepository(_context);
             }
         }
         public IEventSpaceTimesRepository EventSpaceTimesRepo
         {
             get
             {
-                return this._eventSpaceTimesRepo = this._eventSpaceTimesRepo ?? new EventSpaceTimesRepository(context);
+                return this._eventSpaceTimesRepo = this._eventSpaceTimesRepo ?? new EventSpaceTimesRepository(_context);
             }
         }
         public IEventSpaceVenueRepository EventSpaceVenuesRepo
         {
             get
             {
-                return this._eventSpaceVenuesRepo = this._eventSpaceVenuesRepo ?? new EventSpaceVenueRepository(context);
+                return this._eventSpaceVenuesRepo = this._eventSpaceVenuesRepo ?? new EventSpaceVenueRepository(_context);
             }
         }
         public ISendEmailRepository SendEmailRepo
         {
             get
             {
-                return this._sendEmailRepo = this._sendEmailRepo ?? new SendEmailRepository(context);
+                return this._sendEmailRepo = this._sendEmailRepo ?? new SendEmailRepository(_context);
             }
         }
         public IInitiatedRepository InitiatedRepo
         {
             get
             {
-                return this._initiatedRepo = this._initiatedRepo ?? new InitiatedRepository(context);
+                return this._initiatedRepo = this._initiatedRepo ?? new InitiatedRepository(_context);
             }
         }
         public IOpportunityStageReportRepository OpportunityStageReportRepo
         {
             get
             {
-                return this._opportunityStageReportRepo = this._opportunityStageReportRepo ?? new OpportunityStageReportRepository(context);
+                return this._opportunityStageReportRepo = this._opportunityStageReportRepo ?? new OpportunityStageReportRepository(_context);
             }
         }
         public IOpportunityStageRepository OpportunityStageRepo
         {
             get
             {
-                return this._opportunityStageRepo = this._opportunityStageRepo ?? new OpportunityStageRepository(context);
+                return this._opportunityStageRepo = this._opportunityStageRepo ?? new OpportunityStageRepository(_context);
             }
         }
         public IEventOpportunityStatusRepository EventOpportunityStatusRepo
         {
             get
             {
-                return this._eventOpportunityStatusRepo = this._eventOpportunityStatusRepo ?? new EventOpportunityStatusRepository(context);
+                return this._eventOpportunityStatusRepo = this._eventOpportunityStatusRepo ?? new EventOpportunityStatusRepository(_context);
             }
         }
         public ILocationRepositoty LocationRepo
         {
             get
             {////////////////// All Configurations must be replaced with context after using DB
-                return this._locationRepo = this._locationRepo ?? new LocationRepositoty(Configuration);
-            }
-        }
-        public IIndustryRepository IndustryRepo
-        {
-            get
-            {
-                return this._industryRepo = this._industryRepo ?? new IndustryRepository(Configuration);
+                return this._locationRepo = this._locationRepo ?? new LocationRepositoty(_configuration);
             }
         }
         public IAccountService AccountService
         {
             get
             {
-                return this._accountService = this._accountService ?? new AccountService(Configuration);
+                return this._accountService = this._accountService ?? new AccountService(_configuration);
             }
         }
         public IUserService UserService
         {
             get
             {
-                return this._userService = this._userService ?? new UserService(Configuration);
+                return this._userService = this._userService ?? new UserService(_configuration);
             }
         }
         public ILoungeClientRepository LoungeClientRepo
         {
             get
             {
-                return this._loungeClientRepo = this._loungeClientRepo ?? new LoungeClientRepository(Configuration);
+                return this._loungeClientRepo = this._loungeClientRepo ?? new LoungeClientRepository(_configuration);
             }
         }
         public ILocationsMemberShipsRepository LocationsMemberShipsRepo
         {
             get
             {
-                return this._locationsMemberShipsRepo = this._locationsMemberShipsRepo ?? new LocationsMemberShipsRepository(Configuration);
+                return this._locationsMemberShipsRepo = this._locationsMemberShipsRepo ?? new LocationsMemberShipsRepository(_configuration);
             }
         }
         public IEmailTemplateRepository EmailTemplateRepository
         {
             get
             {
-                return this._emailTemplateRepository = this._emailTemplateRepository ?? new EmailTemplateRepository(Configuration, _authenticatedUser, _dateTimeService);
+                return this._emailTemplateRepository = this._emailTemplateRepository ?? new EmailTemplateRepository(_configuration, _authenticatedUser, _dateTimeService);
             }
         }
 

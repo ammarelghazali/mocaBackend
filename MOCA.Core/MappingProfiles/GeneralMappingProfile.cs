@@ -164,7 +164,6 @@ namespace MOCA.Core.MappingProfiles
             CreateMap<Wifi, WifiDto>();
             #endregion
 
-            #region Location Managment
 
             #region Location Managment
             CreateMap<CountryModel, Country>();
@@ -181,7 +180,15 @@ namespace MOCA.Core.MappingProfiles
 
             CreateMap<LocationTypeModel, LocationType>();
             CreateMap<LocationType, LocationTypeModel>();
-            #region Moca Settings
+
+            CreateMap<FeatureModel, Feature>();
+            CreateMap<Feature, FeatureModel>();
+
+            CreateMap<InclusionModel, Inclusion>();
+            CreateMap<Inclusion, InclusionModel>();
+
+            CreateMap<IndustryModel, Industry>();
+            CreateMap<Industry, IndustryModel>();
 
             #endregion
 
@@ -205,16 +212,6 @@ namespace MOCA.Core.MappingProfiles
             CreateMap<EventAttendance, get_AllEventAttendance_ViewModel>().ReverseMap();
             CreateMap<EventAttendanceForCreationDto, EventAttendance>();
             CreateMap<EventAttendance, EventAttendanceDto>();
-
-            CreateMap<FeatureModel, Feature>();
-            CreateMap<Feature, FeatureModel>();
-
-            CreateMap<InclusionModel, Inclusion>();
-            CreateMap<Inclusion, InclusionModel>();
-
-            CreateMap<IndustryModel, Industry>();
-            CreateMap<Industry, IndustryModel>();
-            #endregion
 
             // Event Category
 
@@ -255,6 +252,7 @@ namespace MOCA.Core.MappingProfiles
 
             // Email Templete
             CreateMap<EmailTemplate, GetEmailTempleteEventOpportunitylViewModelDto>().ReverseMap();
+
 
             #endregion
 

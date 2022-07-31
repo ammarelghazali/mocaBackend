@@ -123,7 +123,7 @@ namespace MOCA.Services.Implementation.Events
             if (eventCategory == null)
                 return new Response<long>("Event category must be added.");
 
-            var eventIndustry = await _unitOfWork.IndustryRepo.GetByID(request.IndustryName_ID.GetValueOrDefault());
+            var eventIndustry = await _unitOfWork.IndustryRepo.GetByIdAsync(request.IndustryName_ID.GetValueOrDefault());
             if (_unitOfWork.EventRequesterRepo.GetByIdAsync(request.EventRequester_ID).Result.Name == "Company")
             {
                 if (string.IsNullOrWhiteSpace(request.CompanyCommericalName))
@@ -232,7 +232,7 @@ namespace MOCA.Services.Implementation.Events
                 GetAllBookedEventSpaceResponseDto.EventCategory = _mapper.Map<EventCategoryDto>(eventSpace.EventCategory);
                 GetAllBookedEventSpaceResponseDto.EventType = _mapper.Map<EventTypeDto>(eventSpace.EventType);
 
-                var eventIndustry = await _unitOfWork.IndustryRepo.GetByID(eventSpace.IndustryNameId);
+                var eventIndustry = await _unitOfWork.IndustryRepo.GetByIdAsync(eventSpace.IndustryNameId);
                 if (eventIndustry != null)
                 {
                     GetAllBookedEventSpaceResponseDto.Industry = new IndustryViewModel { Id = eventIndustry.Id, IndustryName = eventIndustry.Name };
@@ -326,7 +326,7 @@ namespace MOCA.Services.Implementation.Events
                     var ind_data = new List<DropdownViewModel>();
                     foreach (var ids in IndustyIDs)
                     {
-                        var industy = await _unitOfWork.IndustryRepo.GetByID(ids);
+                        var industy = await _unitOfWork.IndustryRepo.GetByIdAsync(ids);
                         ind_data.Add(new DropdownViewModel { Id = industy.Id, Name = industy.Name });
                     }
                     allDropDowns.EventIndusties.AddRange(ind_data);
