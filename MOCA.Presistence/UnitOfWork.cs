@@ -601,6 +601,24 @@ namespace MOCA.Presistence
                 return _locationWorkingHourRepoEF = _locationWorkingHourRepoEF ?? new LocationWorkingHourRepository(_context);
             }
         }
+
+        IGenericRepository<ServiceFeePaymentsDueDate> _serviceFeePaymentsDueDateRepo;
+        public IGenericRepository<ServiceFeePaymentsDueDate> ServiceFeePaymentsDueDateRepo
+        {
+            get
+            {
+                return _serviceFeePaymentsDueDateRepo = _serviceFeePaymentsDueDateRepo ?? new GenericRepository<ServiceFeePaymentsDueDate>(_context);
+            }
+        }
+
+        IServiceFeePaymentsDueDateRepository _serviceFeePaymentsDueDateRepoEF;
+        public IServiceFeePaymentsDueDateRepository ServiceFeePaymentsDueDateRepoEF
+        {
+            get
+            {
+                return _serviceFeePaymentsDueDateRepoEF = _serviceFeePaymentsDueDateRepoEF ?? new ServiceFeePaymentsDueDateRepository(_context);
+            }
+        }
         #endregion
 
         public DateTime ConvertToLocalDate(DateTime dateInEasternTimeZone)
