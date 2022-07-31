@@ -68,6 +68,8 @@ namespace MOCA.Core
         ILocationCurrencyRepository LocationCurrencyRepoEF { get; }
         IGenericRepository<LocationFile> LocationFileRepo { get; }
         ILocationFileRepository LocationFileRepoEF { get; }
+        IGenericRepository<LocationImage> LocationImageRepo { get; }
+        ILocationImageRepository LocationImageRepoEF { get; }
         #endregion
 
         void Save();
