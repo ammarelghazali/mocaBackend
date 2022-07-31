@@ -16,5 +16,6 @@ namespace MOCA.Core.Entities.EventSpaceBookings
 
         [ForeignKey("EventSpaceBookingId")]
         public EventSpaceBooking EventSpaceBooking { get; set; }
+        public long BookEventSpace_ID { get; set; }
     }
 }

@@ -13,10 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="DTOs\Events\Account\Request\" />
     <Folder Include="DTOs\LocationManagment\" />
     <Folder Include="DTOs\MocaSettings\" />
     <Folder Include="DTOs\SSO\" />
     <Folder Include="Enums\MocaSettings\" />
+    <Folder Include="Enums\Events\" />
     <Folder Include="Interfaces\LocationManagment\" />
     <Folder Include="Interfaces\LocationManagment\Repositories\" />
     <Folder Include="Interfaces\LocationManagment\Services\" />
