@@ -529,6 +529,24 @@ namespace MOCA.Presistence
                 return _locationCurrencyRepoEF = _locationCurrencyRepoEF ?? new LocationCurrencyRepository(_context);
             }
         }
+
+        IGenericRepository<LocationFile> _locationFileRepo;
+        public IGenericRepository<LocationFile> LocationFileRepo
+        {
+            get
+            {
+                return _locationFileRepo = _locationFileRepo ?? new GenericRepository<LocationFile>(_context);
+            }
+        }
+
+        ILocationFileRepository _locationFileRepoEF;
+        public ILocationFileRepository LocationFileRepoEF
+        {
+            get
+            {
+                return _locationFileRepoEF = _locationFileRepoEF ?? new LocationFileRepository(_context);
+            }
+        }
         #endregion
 
         public DateTime ConvertToLocalDate(DateTime dateInEasternTimeZone)

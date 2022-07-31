@@ -70,6 +70,8 @@ namespace MOCA.Core
         ILocationContactRepository LocationContactRepoEF { get; }
         IGenericRepository<LocationCurrency> LocationCurrencyRepo { get; }
         ILocationCurrencyRepository LocationCurrencyRepoEF { get; }
+        IGenericRepository<LocationFile> LocationFileRepo { get; }
+        ILocationFileRepository LocationFileRepoEF { get; }
         #endregion
 
         #region Events
