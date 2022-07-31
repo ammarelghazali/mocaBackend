@@ -258,6 +258,9 @@ namespace MOCA.Core.MappingProfiles
 
             CreateMap<LocationBankAccountModel, LocationBankAccount>();
             CreateMap<LocationBankAccount, LocationBankAccountModel>();
+
+            CreateMap<LocationContactModel, LocationContact>();
+            CreateMap<LocationContact, LocationContactModel>();
             #endregion
 
         }
