@@ -565,6 +565,24 @@ namespace MOCA.Presistence
                 return _locationImageRepoEF = _locationImageRepoEF ?? new LocationImageRepository(_context);
             }
         }
+
+        IGenericRepository<LocationInclusion> _locationInclusionRepo;
+        public IGenericRepository<LocationInclusion> LocationInclusionRepo
+        {
+            get
+            {
+                return _locationInclusionRepo = _locationInclusionRepo ?? new GenericRepository<LocationInclusion>(_context);
+            }
+        }
+
+        ILocationInclusionRepository _locationInclusionRepoEF;
+        public ILocationInclusionRepository LocationInclusionRepoEF
+        {
+            get
+            {
+                return _locationInclusionRepoEF = _locationInclusionRepoEF ?? new LocationInclusionRepository(_context);
+            }
+        }
         #endregion
 
         public DateTime ConvertToLocalDate(DateTime dateInEasternTimeZone)

@@ -93,6 +93,7 @@ builder.Services.AddScoped<ILocationContactService, LocationContactService>();
 builder.Services.AddScoped<ILocationCurrencyService, LocationCurrencyService>();
 builder.Services.AddScoped<ILocationFileService, LocationFileService>();
 builder.Services.AddScoped<ILocationImageService, LocationImageService>();
+builder.Services.AddScoped<ILocationInclusionService, LocationInclusionService>();
 
 #endregion
 
