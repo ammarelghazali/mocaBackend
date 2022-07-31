@@ -189,6 +189,9 @@ namespace MOCA.Core.MappingProfiles
 
             CreateMap<LocationImageModel, LocationImage>();
             CreateMap<LocationImage, LocationImageModel>();
+
+            CreateMap<LocationInclusionModel, LocationInclusion>();
+            CreateMap<LocationInclusion, LocationInclusionModel>();
             #endregion
 
         }

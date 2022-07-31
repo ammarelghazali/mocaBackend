@@ -70,6 +70,8 @@ namespace MOCA.Core
         ILocationFileRepository LocationFileRepoEF { get; }
         IGenericRepository<LocationImage> LocationImageRepo { get; }
         ILocationImageRepository LocationImageRepoEF { get; }
+        IGenericRepository<LocationInclusion> LocationInclusionRepo { get; }
+        ILocationInclusionRepository LocationInclusionRepoEF { get; }
         #endregion
 
         void Save();
