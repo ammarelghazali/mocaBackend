@@ -64,6 +64,8 @@ namespace MOCA.Core
         IInclusionRepository InclusionRepoEF { get; }
         IGenericRepository<Industry> IndustryRepo { get; }
         IIndustryRepository IndustryRepoEF { get; }
+        IGenericRepository<LocationBankAccount> LocationBankAccountRepo { get; }
+        ILocationBankAccountRepository LocationBankAccountRepoEF { get; }
         #endregion
 
         #region Events

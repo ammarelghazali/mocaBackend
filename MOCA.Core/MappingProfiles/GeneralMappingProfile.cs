@@ -47,6 +47,7 @@ using MOCA.Core.DTOs.Events.EventTypeDtos.Response;
 using MOCA.Core.DTOs.Events.Response;
 using MOCA.Core.Entities.EventSpaceBookings;
 using MOCA.Core.DTOs.MocaSettings.PolicyTypesDtos.Request;
+using MOCA.Core.DTOs.LocationManagment.Location;
 
 namespace MOCA.Core.MappingProfiles
 {
@@ -254,6 +255,9 @@ namespace MOCA.Core.MappingProfiles
             CreateMap<EmailTemplate, GetEmailTempleteEventOpportunitylViewModelDto>().ReverseMap();
 
 
+
+            CreateMap<LocationBankAccountModel, LocationBankAccount>();
+            CreateMap<LocationBankAccount, LocationBankAccountModel>();
             #endregion
 
         }
