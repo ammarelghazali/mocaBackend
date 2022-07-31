@@ -84,6 +84,8 @@ builder.Services.AddScoped<IFeatureService, FeatureService>();
 builder.Services.AddScoped<IInclusionService, InclusionService>();
 builder.Services.AddScoped<IIndustryService, IndustryService>();
 builder.Services.AddScoped<ILocationBankAccountService, LocationBankAccountService>();
+builder.Services.AddScoped<ILocationContactService, LocationContactService>();
+builder.Services.AddScoped<ILocationCurrencyService, LocationCurrencyService>();
 
 #endregion
 

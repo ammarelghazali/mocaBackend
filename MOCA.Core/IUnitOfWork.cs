@@ -64,6 +64,8 @@ namespace MOCA.Core
         ILocationBankAccountRepository LocationBankAccountRepoEF { get; }
         IGenericRepository<LocationContact> LocationContactRepo { get; }
         ILocationContactRepository LocationContactRepoEF { get; }
+        IGenericRepository<LocationCurrency> LocationCurrencyRepo { get; }
+        ILocationCurrencyRepository LocationCurrencyRepoEF { get; }
         #endregion
 
         void Save();
