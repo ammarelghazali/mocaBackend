@@ -76,6 +76,8 @@ namespace MOCA.Core
         ILocationImageRepository LocationImageRepoEF { get; }
         IGenericRepository<LocationInclusion> LocationInclusionRepo { get; }
         ILocationInclusionRepository LocationInclusionRepoEF { get; }
+        IGenericRepository<LocationWorkingHour> LocationWorkingHourRepo { get; }
+        ILocationWorkingHourRepository LocationWorkingHourRepoEF { get; }
         #endregion
 
         #region Events

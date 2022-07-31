@@ -583,6 +583,24 @@ namespace MOCA.Presistence
                 return _locationInclusionRepoEF = _locationInclusionRepoEF ?? new LocationInclusionRepository(_context);
             }
         }
+
+        IGenericRepository<LocationWorkingHour> _locationWorkingHourRepo;
+        public IGenericRepository<LocationWorkingHour> LocationWorkingHourRepo
+        {
+            get
+            {
+                return _locationWorkingHourRepo = _locationWorkingHourRepo ?? new GenericRepository<LocationWorkingHour>(_context);
+            }
+        }
+
+        ILocationWorkingHourRepository _locationWorkingHourRepoEF;
+        public ILocationWorkingHourRepository LocationWorkingHourRepoEF
+        {
+            get
+            {
+                return _locationWorkingHourRepoEF = _locationWorkingHourRepoEF ?? new LocationWorkingHourRepository(_context);
+            }
+        }
         #endregion
 
         public DateTime ConvertToLocalDate(DateTime dateInEasternTimeZone)
