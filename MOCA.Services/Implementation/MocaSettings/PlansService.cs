@@ -21,15 +21,15 @@ namespace MOCA.Services.Implementation.MocaSettings
 
         public async Task<Response<PlanDto>> GetByType(long? lobSpaceTypeId, long planTypeId)
         {
-            Plan plan;
-            if (lobSpaceTypeId == null || lobSpaceTypeId == 0)
+            if (await _unitOfWork.LocationTypeRepoEF.GetByIdAsync(lobSpaceTypeId) is null)
             {
-                plan = await _unitOfWork.Plans.GetByType(planTypeId);
+                return new Response<PlanDto>
+                {
+                    Message = "There's no such LOB Space Type"
+                };
             }
-            else
-            {
-                plan = await _unitOfWork.Plans.GetByType((long)lobSpaceTypeId, planTypeId);
-            }
+
+            var plan = await _unitOfWork.Plans.GetByType((long)lobSpaceTypeId, planTypeId);
 
             if (plan == null)
                 return new Response<PlanDto> { Message = "No such a plan found" };
@@ -47,24 +47,25 @@ namespace MOCA.Services.Implementation.MocaSettings
 
         public async Task<Response<PlanDtoBase>> Add(long? lobSpaceTypeId, long planTypeId, PlanDtoBase planDto)
         {
+            if (await _unitOfWork.LocationTypeRepoEF.GetByIdAsync(lobSpaceTypeId) is null)
+            {
+                return new Response<PlanDtoBase>
+                {
+                    Message = "There's no such LOB Space Type"
+                };
+            }
+
             var planType = await _unitOfWork.PlanTypes.GetByIdAsync(planTypeId);
+
             if (planType == null || planType.IsDeleted)
                 return new Response<PlanDtoBase> { Message = "PlanType is not exist" };
 
 
             var plan = _mapper.Map<Plan>(planDto);
 
-            Plan existedPlan;
-            if (lobSpaceTypeId == null || lobSpaceTypeId == 0)
-            {
-                existedPlan = await _unitOfWork.Plans.GetByType(planTypeId);
-                plan.LobSpaceTypeId = null;
-            }
-            else
-            {
-                existedPlan = await _unitOfWork.Plans.GetByType((long)lobSpaceTypeId, planTypeId);
-                plan.LobSpaceTypeId = lobSpaceTypeId;
-            }
+       
+            var existedPlan = await _unitOfWork.Plans.GetByType((long)lobSpaceTypeId, planTypeId);
+            plan.LobSpaceTypeId = lobSpaceTypeId;
 
             if (existedPlan != null)
                 return new Response<PlanDtoBase> { Message = "This plan with this type is already existed" };
@@ -87,15 +88,15 @@ namespace MOCA.Services.Implementation.MocaSettings
 
         public async Task<Response<bool>> Delete(long? lobSpaceTypeId, long planTypeId)
         {
-            Plan plan;
-            if (lobSpaceTypeId == null || lobSpaceTypeId == 0)
+            if (await _unitOfWork.LocationTypeRepoEF.GetByIdAsync(lobSpaceTypeId) is null)
             {
-                plan = await _unitOfWork.Plans.GetByType(planTypeId);
+                return new Response<bool>
+                {
+                    Message = "There's no such LOB Space Type"
+                };
             }
-            else
-            {
-                plan = await _unitOfWork.Plans.GetByType((long)lobSpaceTypeId, planTypeId);
-            }
+
+            var plan = await _unitOfWork.Plans.GetByType((long)lobSpaceTypeId, planTypeId);
 
             if (plan == null)
                 return new Response<bool>() { Message = "no such plan found" };
@@ -112,23 +113,25 @@ namespace MOCA.Services.Implementation.MocaSettings
 
         public async Task<Response<PlanDtoBase>> Update(long? lobSpaceTypeId, long planTypeId, PlanDtoBase planDto)
         {
+            if (await _unitOfWork.LocationTypeRepoEF.GetByIdAsync(lobSpaceTypeId) is null)
+            {
+                return new Response<PlanDtoBase>
+                {
+                    Message = "There's no such LOB Space Type"
+                };
+            }
+
             var planType = await _unitOfWork.PlanTypes.GetByIdAsync(planTypeId);
+
             if (planType == null || planType.IsDeleted)
                 return new Response<PlanDtoBase> { Message = "PlanType is not exist" };
 
 
             var plan = _mapper.Map<Plan>(planDto);
-            Plan existedPlan;
-            if (lobSpaceTypeId == null || lobSpaceTypeId == 0)
-            {
-                existedPlan = await _unitOfWork.Plans.GetByType(planTypeId);
-                plan.LobSpaceTypeId = null;
-            }
-            else
-            {
-                existedPlan = await _unitOfWork.Plans.GetByType((long)lobSpaceTypeId, planTypeId);
-                plan.LobSpaceTypeId = lobSpaceTypeId;
-            }
+
+          
+            var existedPlan = await _unitOfWork.Plans.GetByType((long)lobSpaceTypeId, planTypeId);
+            plan.LobSpaceTypeId = lobSpaceTypeId;
 
             if (existedPlan == null)
                 return new Response<PlanDtoBase> { Message = "This plan is not existed" };

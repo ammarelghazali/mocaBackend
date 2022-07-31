@@ -22,6 +22,14 @@ namespace MOCA.Services.Implementation.MocaSettings
         public async Task<Response<PolicyDto>> AddPolicyAsync(PolicyForCreationDto policyForCreationDto,
                                          long policyTypeId)
         {
+            if (await _unitOfWork.LocationTypeRepoEF.GetByIdAsync(policyForCreationDto.LobSpaceTypeId) is null)
+            {
+                return new Response<PolicyDto>
+                {
+                    Message = "There's no such LOB Space Type"
+                };
+            }
+
             if (!await _unitOfWork.PolicyTypes.PolicyTypeExistsAsync(policyTypeId))
             {
                 return new Response<PolicyDto>
@@ -30,22 +38,8 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
             }
 
-            //if (policyForCreationDto.LobSpaceTypeId is not null)
-            //{
-            //    if (!await _unitOfWork.LobSpaceTypes.LobSpaceTypeExists(
-            //                                               (long)policyForCreationDto.LobSpaceTypeId))
-            //    {
-            //        return new ResponseDto
-            //        {
-            //            StatusCode = 400,
-            //            Message = "There's no such Policy Type"
-            //        };
-            //    }
-            //}
-
             var policy = await _unitOfWork.Policies.GetPolicyByTypeIdAsync(policyTypeId,
                                                                   policyForCreationDto.LobSpaceTypeId);
-
             var newPolicy = new Policy();
 
             if (policy != null)
@@ -107,6 +101,14 @@ namespace MOCA.Services.Implementation.MocaSettings
 
         public async Task<Response<IReadOnlyList<PolicyExtendedDto>>> GetAllPoliciesAsync(long? LobSpaceTypeId)
         {
+            if (await _unitOfWork.LocationTypeRepoEF.GetByIdAsync(LobSpaceTypeId) is null)
+            {
+                return new Response<IReadOnlyList<PolicyExtendedDto>>
+                {
+                    Message = "There's no such LOB Space Type"
+                };
+            }
+
             var policies = await _unitOfWork.Policies.GetAllPoliciesAsync(LobSpaceTypeId);
 
             return new Response<IReadOnlyList<PolicyExtendedDto>>(_mapper.Map<IReadOnlyList<PolicyExtendedDto>>(policies));

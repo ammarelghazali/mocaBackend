@@ -70,7 +70,7 @@ namespace MocaSettings.API.Controllers
         /// <response code="200">Get the issue reports successfully</response>
         /// <response code="400">If the request is nor well formatted or the Lob Space Id is wrong</response>
         [HttpPost("LobSpaceTypes/{LobSpaceTypeId?}")]
-        public async Task<IActionResult> GetPaginatedIssueReports([FromRoute] long? lobSpaceTypeId,
+        public async Task<IActionResult> GetPaginatedIssueReports([FromRoute] long lobSpaceTypeId,
                                                             [FromBody] IssueReportsResourceParameters resourceParameters)
         {
             var response = await _issueReportService.GetPaginatedIssueReportsAsync(lobSpaceTypeId, resourceParameters);

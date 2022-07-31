@@ -20,15 +20,14 @@ namespace MocaSettings.API.Controllers
         /// Add Wifi
         /// </summary>
         /// <param name="wifiForCreation">an object that has the wifi description</param>
-        /// <param name="lobSpaceTypeId">Id of the Lob Space Type. If it is not given, 
-        /// the wifi will be added to non-relatable to Lob Space wifi</param>
+        /// <param name="lobSpaceTypeId">Id of the Lob Space Type.</param>
         /// <response code="200">Wifi is added Successfully</response>
         /// <response code="400">if the request is not formatted well, or the Lob Space Id is not
         /// correct</response>
         /// <response code="500">Wifi Failed to save the Wifi</response>
         [HttpPost("{lobSpaceTypeId?}")]
         public async Task<IActionResult> AddWifi([FromBody] WifiForCreationDto wifiForCreation,
-                                                 [FromRoute] long? lobSpaceTypeId = null)
+                                                 [FromRoute] long lobSpaceTypeId)
         {
             var response = await _wifisService.AddWifi(lobSpaceTypeId, wifiForCreation);
             if (!response.Succeeded)
@@ -43,15 +42,14 @@ namespace MocaSettings.API.Controllers
         /// Update Wifi
         /// </summary>
         /// <param name="wifiForCreation">an object that has the wifi description</param>
-        /// <param name="lobSpaceTypeId">Id of the Lob Space Type. If it is not given, 
-        /// the wifi will be added to non-relatable to Lob Space wifi</param>
+        /// <param name="lobSpaceTypeId">Id of the Lob Space Type.</param>
         /// <response code="200">Wifi is updated Successfully</response>
         /// <response code="400">if the request is not formatted well, or the Lob Space Id is not
         /// correct</response>
         /// <response code="500">Wifi Failed to save the Wifi</response>
         [HttpPut("{lobSpaceTypeId?}")]
         public async Task<IActionResult> UpdateWifi([FromBody] WifiForCreationDto wifiForCreation,
-                                              [FromRoute] long? lobSpaceTypeId = null)
+                                              [FromRoute] long lobSpaceTypeId)
         {
             var response = await _wifisService.UpdateWifi(lobSpaceTypeId, wifiForCreation);
             if (!response.Succeeded)
@@ -65,13 +63,12 @@ namespace MocaSettings.API.Controllers
         /// <summary>
         /// Get Wifi
         /// </summary>
-        /// <param name="lobSpaceTypeId">Id of the Lob Space Type. If it is not given, 
-        /// the returned wifi will be the non-relatable to Lob Space wifi</param>
+        /// <param name="lobSpaceTypeId">Id of the Lob Space Type.</param>
         /// <response code="200">Wifi is returned Successfully</response>
         /// <response code="400">if the request is not formatted well, or the Lob Space Id is not
         /// correct</response>
         [HttpGet("{lobSpaceTypeId?}")]
-        public async Task<IActionResult> GetWifi([FromRoute] long? lobSpaceTypeId = null)
+        public async Task<IActionResult> GetWifi([FromRoute] long lobSpaceTypeId)
         {
             var response = await _wifisService.GetWifi(lobSpaceTypeId);
             if (!response.Succeeded)
@@ -85,14 +82,13 @@ namespace MocaSettings.API.Controllers
         /// <summary>
         /// Delete Wifi
         /// </summary>
-        /// <param name="lobSpaceTypeId">Id of the Lob Space Type. If it is not given, 
-        /// the deleted wifi will be the non-relatable to Lob Space wifi</param>
+        /// <param name="lobSpaceTypeId">Id of the Lob Space Type.</param>
         /// <response code="204">Wifi is deleted Successfully</response>
         /// <response code="400">if the request is not formatted well, or the Lob Space Id is not
         /// correct</response>
         /// <response code="500">Wifi Failed to save the Wifi</response>
         [HttpDelete("{lobSpaceTypeId?}")]
-        public async Task<IActionResult> DeleteWifi([FromRoute] long? lobSpaceTypeId = null)
+        public async Task<IActionResult> DeleteWifi([FromRoute] long lobSpaceTypeId)
         {
             var response = await _wifisService.DeleteWifi(lobSpaceTypeId);
 

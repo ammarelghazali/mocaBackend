@@ -24,7 +24,7 @@ namespace MOCA.Presistence.Repositories.MocaSettings
             return await _context.CaseTypes.AnyAsync(c => c.Name == name && c.IsDeleted != true);
         }
 
-        public async Task<IList<CaseType>> GetAllBaseAsync()
+        public async Task<IList<CaseType>> GetAllNotDeletedAsync()
         {
             return await _context.CaseTypes.Where(c => c.IsDeleted != true).ToListAsync();
         }

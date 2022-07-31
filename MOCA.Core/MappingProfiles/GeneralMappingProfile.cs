@@ -46,6 +46,7 @@ using MOCA.Core.DTOs.Events.EventsOpportunitiesDtos.Response;
 using MOCA.Core.DTOs.Events.EventTypeDtos.Response;
 using MOCA.Core.DTOs.Events.Response;
 using MOCA.Core.Entities.EventSpaceBookings;
+using MOCA.Core.DTOs.MocaSettings.PolicyTypesDtos.Request;
 
 namespace MOCA.Core.MappingProfiles
 {
@@ -93,6 +94,7 @@ namespace MOCA.Core.MappingProfiles
                 .ForMember(i => i.Stage, i2 => i2.MapFrom(i3 => i3.IssueReport.Status.Name))
                 .ForMember(i => i.Comment, i2 => i2.MapFrom(i3 => i3.IssueReport.Comment));
 
+
             CreateMap<UpdateIssueReportDto, IssueReport>().ReverseMap();
 
             // Plan 
@@ -128,6 +130,7 @@ namespace MOCA.Core.MappingProfiles
             // Policy Type 
             CreateMap<PolicyType, PolicyTypeDto>();
             CreateMap<PolicyType, PolicyTypeWithDescriptionDto>();
+            CreateMap<PolicyTypeForCreationDto, PolicyType>();
 
             // Priority
             CreateMap<Priority, PriorityDto>();
@@ -159,8 +162,9 @@ namespace MOCA.Core.MappingProfiles
                .ForMember(p1 => p1.IsDeleted, p2 => p2.Ignore());
 
             CreateMap<Wifi, WifiDto>();
-
             #endregion
+
+            #region Location Managment
 
             #region Location Managment
             CreateMap<CountryModel, Country>();

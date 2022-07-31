@@ -74,7 +74,7 @@ namespace MOCA.Services.Implementation.MocaSettings
 
         public async Task<Response<IReadOnlyList<CaseTypeDto>>> GetAllCaseTypesAsync()
         {
-            var caseTypes = await _unitOfWork.CaseTypes.GetAllBaseAsync();
+            var caseTypes = await _unitOfWork.CaseTypes.GetAllNotDeletedAsync();
 
             return new Response<IReadOnlyList<CaseTypeDto>>(_mapper.Map<IReadOnlyList<CaseTypeDto>>(caseTypes));
         }

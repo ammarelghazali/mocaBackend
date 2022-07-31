@@ -23,7 +23,7 @@ namespace MOCA.Services.Implementation.MocaSettings
 
         public async Task<Response<IReadOnlyList<SeverityDto>>> GetAllSeverityAsync()
         {
-            var severities = await _unitOfWork.Severities.GetAllAsync();
+            var severities = await _unitOfWork.Severities.GetAllNotDeletedAsync();
             if (severities == null)
                 return new Response<IReadOnlyList<SeverityDto>>
                 {

@@ -20,17 +20,13 @@ namespace MOCA.Services.Implementation.MocaSettings
         }
         public async Task<Response<FaqDto>> AddFaqAsync(FaqForCreationDto faqForCreation, long categoryId = 0)
         {
-            //if (faqForCreation.LobSpaceTypeId is not null)
-            //{
-            //    if (!await _unitOfWork.LobSpaceTypes.LobSpaceTypeExists(
-            //                                                      (long)faqForCreation.LobSpaceTypeId))
-            //    {
-            //        return new Response<FaqDto>
-            //        {
-            //            Message = "There's no such Lob Space"
-            //        };
-            //    }
-            //}
+            if (await _unitOfWork.LocationTypeRepoEF.GetByIdAsync(faqForCreation.LobSpaceTypeId) is null)
+            {
+                return new Response<FaqDto>
+                {
+                    Message = "There's no such LOB Space Type"
+                };
+            }
 
             if (categoryId != 0)
             {
@@ -66,17 +62,13 @@ namespace MOCA.Services.Implementation.MocaSettings
 
         public async Task<Response<IReadOnlyList<FaqDto>>> GetAllFaqsAsync(FaqsRequestSpaceIdDto getAllFaqsDto)
         {
-            //if (getAllFaqsDto.LobSpaceTypeId != null)
-            //{
-            //    if (!await _unitOfWork.LobSpaceTypes.LobSpaceTypeExists(
-            //                                                    (long)getAllFaqsDto.LobSpaceTypeId))
-            //    {
-            //        return new Response<IReadOnlyList<FaqDto>>
-            //        {
-            //            Message = "There's no such Lob Space"
-            //        };
-            //    }
-            //}
+            if (await _unitOfWork.LocationTypeRepoEF.GetByIdAsync(getAllFaqsDto.LobSpaceTypeId) is null)
+            {
+                return new Response<IReadOnlyList<FaqDto>>
+                {
+                    Message = "There's no such LOB Space Type"
+                };
+            }
 
             var faqs = await _unitOfWork.Faqs.GetAllBaseAsync(getAllFaqsDto.LobSpaceTypeId);
 

@@ -20,7 +20,7 @@ namespace MOCA.Services.Implementation.MocaSettings
 
         public async Task<Response<IReadOnlyList<TopUpTypeDto>>> GetAllTopUpTypes()
         {
-            var topUpTypes = await _unitOfWork.TopUpTypes.GetAllBaseAsync();
+            var topUpTypes = await _unitOfWork.TopUpTypes.GetAllNotDeletedAsync();
             var allTopUpTypes = _mapper.Map<IList<TopUpType>, IReadOnlyList<TopUpTypeDto>>(topUpTypes);
 
             if (allTopUpTypes == null)
