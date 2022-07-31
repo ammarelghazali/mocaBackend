@@ -192,6 +192,9 @@ namespace MOCA.Core.MappingProfiles
 
             CreateMap<LocationInclusionModel, LocationInclusion>();
             CreateMap<LocationInclusion, LocationInclusionModel>();
+
+            CreateMap<LocationWorkingHourModel, LocationWorkingHour>();
+            CreateMap<LocationWorkingHour, LocationWorkingHourModel>();
             #endregion
 
         }

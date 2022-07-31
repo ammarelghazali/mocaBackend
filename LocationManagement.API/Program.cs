@@ -89,6 +89,7 @@ builder.Services.AddScoped<ILocationCurrencyService, LocationCurrencyService>();
 builder.Services.AddScoped<ILocationFileService, LocationFileService>();
 builder.Services.AddScoped<ILocationImageService, LocationImageService>();
 builder.Services.AddScoped<ILocationInclusionService, LocationInclusionService>();
+builder.Services.AddScoped<ILocationWorkingHourService, LocationWorkingHourService>();
 
 #endregion
 
