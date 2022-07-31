@@ -267,6 +267,9 @@ namespace MOCA.Core.MappingProfiles
 
             CreateMap<LocationFileModel, LocationFile>();
             CreateMap<LocationFile, LocationFileModel>();
+
+            CreateMap<LocationImageModel, LocationImage>();
+            CreateMap<LocationImage, LocationImageModel>();
             #endregion
 
         }
