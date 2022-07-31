@@ -63,7 +63,6 @@ namespace MOCA.Core.Entities.LocationManagment
         public decimal? ServiceFeesAnnualIncrease { get; set; }
         public string Url360Tour { set; get; }
         public string VenuesBrochureURL { set; get; }
-        public string WorkspaceContract { get; set; }
         public string EventspaceContract { get; set; }
         public string About { get; set; }
         public string Terms { set; get; }
