@@ -317,6 +317,24 @@ namespace MOCA.Presistence
             }
         }
 
+        IGenericRepository<LocationBankAccount> _locationBankAccountRepo;
+        public IGenericRepository<LocationBankAccount> LocationBankAccountRepo
+        {
+            get
+            {
+                return _locationBankAccountRepo = _locationBankAccountRepo ?? new GenericRepository<LocationBankAccount>(_context);
+            }
+        }
+
+        ILocationBankAccountRepository _locationBankAccountRepoEF;
+        public ILocationBankAccountRepository LocationBankAccountRepoEF
+        {
+            get
+            {
+                return _locationBankAccountRepoEF = _locationBankAccountRepoEF ?? new LocationBankAccountRepository(_context);
+            }
+        }
+
         #endregion
 
         public DateTime ConvertToLocalDate(DateTime dateInEasternTimeZone)

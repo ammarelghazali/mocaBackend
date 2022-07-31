@@ -33,6 +33,7 @@ using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.DTOs.LocationManagment.Feature;
 using MOCA.Core.DTOs.LocationManagment.Inclusion;
 using MOCA.Core.DTOs.LocationManagment.Industry;
+using MOCA.Core.DTOs.LocationManagment.Location;
 
 namespace MOCA.Core.MappingProfiles
 {
@@ -173,6 +174,9 @@ namespace MOCA.Core.MappingProfiles
 
             CreateMap<IndustryModel, Industry>();
             CreateMap<Industry, IndustryModel>();
+
+            CreateMap<LocationBankAccountModel, LocationBankAccount>();
+            CreateMap<LocationBankAccount, LocationBankAccountModel>();
             #endregion
 
         }
