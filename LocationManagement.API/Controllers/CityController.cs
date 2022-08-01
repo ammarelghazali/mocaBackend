@@ -127,8 +127,8 @@ namespace LocationManagement.API.Controllers
         /// <param name="Id">an object holds the Id of City</param>
         /// <response code="200">Deletes City and all related data successfully</response>
         /// <response code="400">City not found, or there is error while saving</response>
-        [HttpDelete("DeleteCountry")]
-        public async Task<IActionResult> DeleteCountry([FromQuery] long Id)
+        [HttpDelete("DeleteCity")]
+        public async Task<IActionResult> DeleteCity([FromQuery] long Id)
         {
             var response = await _cityService.DeleteCity(Id);
             if (response.Succeeded == false)
