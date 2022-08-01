@@ -63,11 +63,11 @@ namespace MOCA.Core.Entities.MocaSetting
         public DateTime? ClosureDate { get; set; }
 
         [Required]
-        [MaxLength(1000)]
+        [MaxLength(2000)]
         public string Comment { get; set; }
 
         [Required]
-        [MaxLength(1000)]
+        [MaxLength(2000)]
         public string CaseDescription { get; set; }
     }
 }

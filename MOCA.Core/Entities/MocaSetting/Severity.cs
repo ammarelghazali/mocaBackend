@@ -6,7 +6,7 @@ namespace MOCA.Core.Entities.MocaSetting
     public class Severity : BaseEntity
     {
         [Required]
-        [MaxLength(150)]
+        [MaxLength(250)]
         public string Name { get; set; }
     }
 }

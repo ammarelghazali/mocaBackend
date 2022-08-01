@@ -163,7 +163,7 @@ namespace MOCA.Services.Implementation.Events
                         }
 
                         var EventSpaceTime = new EventSpaceTime();
-                        EventSpaceTime.BookEventSpace_ID = eventSpace.Id;
+                        EventSpaceTime.EventSpaceBookingId = eventSpace.Id;
                         EventSpaceTime.RecurrenceStartDate = item.RecurrenceStartDate;
                         EventSpaceTime.RecurrenceEndDate = item.RecurrenceEndDate;
                         EventSpaceTime.RecurrenceStartTime = item.RecurrenceStartTime.ToString("HH:mm:ss");
