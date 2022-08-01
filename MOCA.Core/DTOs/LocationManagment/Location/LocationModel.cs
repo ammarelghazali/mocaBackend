@@ -1,18 +1,14 @@
-﻿using MOCA.Core.Entities.BaseEntities;
-using MOCA.Core.Entities.EventSpaceBookings;
-using MOCA.Core.Entities.MocaSetting;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace MOCA.Core.Entities.LocationManagment
+namespace MOCA.Core.DTOs.LocationManagment.Location
 {
-    public class Location : BaseEntity
+    public class LocationModel
     {
+        public long Id { get; set; }
         [Required]
         public string Name { get; set; }
+        [Range(1, long.MaxValue, ErrorMessage = "District Id Cannot Be 0")]
         public long DistrictId { get; set; }
-        [ForeignKey("DistrictId")]
-        public virtual District District { get; set; }
         [Required]
         public string Address { get; set; }
         public int? BuildYear { get; set; }
@@ -28,7 +24,7 @@ namespace MOCA.Core.Entities.LocationManagment
         public DateTime ContractStartDate { get; set; }
         [Required]
         public DateTime ContractEndDate { get; set; }
-        [Range(1,5)]
+        [Range(1, 5)]
         public int? PaymentMethod { get; set; }
         [Range(1, 4)]
         public int? PaymentTerm { get; set; }
@@ -40,13 +36,11 @@ namespace MOCA.Core.Entities.LocationManagment
         public decimal? EstimatedAnnualizedAmount { get; set; }
         public decimal? EstimatedContractAmount { get; set; }
         public decimal? AnnualIncrease { get; set; }
+        [Range(1, long.MaxValue, ErrorMessage = "Currency Id Cannot Be 0")]
         public long CurrencyId { get; set; }
-        [ForeignKey("CurrencyId")]
-        public virtual Currency Currency { get; set; }
         public string Phone { get; set; }
+        [Range(1, long.MaxValue, ErrorMessage = "LocationType Id Cannot Be 0")]
         public long LocationTypeId { get; set; }
-        [ForeignKey("LocationTypeId")]
-        public virtual LocationType LocationType { get; set; }
         [Required]
         public string LandlordLegalName { get; set; }
         public string UploadContract { get; set; }
@@ -82,16 +76,13 @@ namespace MOCA.Core.Entities.LocationManagment
         public string TaxIdNumber { get; set; }
         public string CommercialRegisterNumber { get; set; }
         public bool IsPublish { get; set; }
-
-        public ICollection<EventSpaceBooking> EventSpaceBookings { get; set; }
-        public ICollection<IssueReport> IssueReports { get; set; }
-        public ICollection<Building> Buildings { get; set; }
-        public ICollection<LocationIndustry> LocationIndustries { get; set; }
-        public ICollection<LocationContact> LocationContacts { get; set; }
-        public ICollection<LocationCurrency> LocationCurrencies { get; set; }
-        public ICollection<LocationImage> LocationImages { get; set; }
-        public ICollection<LocationInclusion> LocationInclusions { get; set; }
-        public ICollection<LocationWorkingHour> LocationWorkingHours { get; set; }
-        public ICollection<ServiceFeePaymentsDueDate> ServiceFeePaymentsDueDates { get; set; }
+        public List<ServiceFeePaymentsDueDateModel> ServiceFeePaymentsDueDates { get; set; }
+        public List<LocationContactModel> LocationContacts { get; set; }
+        public List<LocationImageModel> LocationImages { get; set; }
+        public List<LocationCurrencyModel> LocationCurrencies { get; set; }
+        public List<LocationFileModel> LocationFiles { get; set; }
+        public List<LocationWorkingHourModel> LocationWorkingHours { get; set; }
+        public List<LocationBankAccountModel> LocationBankAccount { get; set; }
+        public List<LocationInclusionModel> LocationInclusions { get; set; }
     }
 }

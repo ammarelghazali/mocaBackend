@@ -80,6 +80,8 @@ namespace MOCA.Core
         ILocationWorkingHourRepository LocationWorkingHourRepoEF { get; }
         IGenericRepository<ServiceFeePaymentsDueDate> ServiceFeePaymentsDueDateRepo { get; }
         IServiceFeePaymentsDueDateRepository ServiceFeePaymentsDueDateRepoEF { get; }
+        IGenericRepository<Location> LocationRepo { get; }
+        ILocationRepository LocationRepoEF { get; }
         #endregion
 
         #region Events
