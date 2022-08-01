@@ -14,11 +14,9 @@ namespace MOCA.Core.Entities.MocaSetting
         public Category? Category { get; set; }
         
         [Required]
-        [MaxLength(1000)]
         public string Question { get; set; }
        
         [Required]
-        [MaxLength(1000)]
         public string Answer { get; set; }
         
         [Required]
