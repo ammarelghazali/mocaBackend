@@ -1,4 +1,6 @@
-﻿using MOCA.Core.DTOs.Shared;
+﻿using Microsoft.EntityFrameworkCore;
+using MOCA.Core.DTOs.LocationManagment.Location;
+using MOCA.Core.DTOs.Shared;
 using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Interfaces.LocationManagment.Repositories;
 using MOCA.Presistence.Contexts;
@@ -58,6 +60,28 @@ namespace MOCA.Presistence.Repositories.LocationManagment
                 return new List<DropdownViewModel>(null);
             }
             return new List<DropdownViewModel>(location);
+        }
+
+        public async Task<List<Location>> GetAllUnpublishedLocation()
+        {
+            var location = _context.Locations.Where(x => x.IsDeleted != true && x.IsPublish == false).AsNoTracking().ToList();
+
+            if (location == null)
+            {
+                return new List<Location>(null);
+            }
+            return new List<Location>(location);
+        }
+
+        public async Task<List<Location>> GetAllPublishedAndUnpublishedLocation()
+        {
+            var location = _context.Locations.Where(x => x.IsDeleted != true).AsNoTracking().ToList();
+
+            if (location == null)
+            {
+                return new List<Location>(null);
+            }
+            return new List<Location>(location);
         }
     }
 }
