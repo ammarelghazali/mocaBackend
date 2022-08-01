@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using MOCA.Core.DTOs.LocationManagment.FavouriteLocation;
 using MOCA.Core.DTOs.LocationManagment.Location;
 using MOCA.Core.DTOs.Shared;
 using MOCA.Core.Interfaces.LocationManagment.Services;
@@ -16,11 +17,13 @@ namespace LocationManagement.API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ILocationService _locationService;
+        private readonly IFavouriteLocationService _favouriteLocationService;
         private readonly FileSettings _fileSettings;
-        public LocationController(IMapper mapper, ILocationService locationService, IOptions<FileSettings> fileSettings)
+        public LocationController(IMapper mapper, ILocationService locationService, IFavouriteLocationService favouriteLocationService, IOptions<FileSettings> fileSettings)
         {
             _mapper = mapper;
             _locationService = locationService;
+            _favouriteLocationService = favouriteLocationService;
             _fileSettings = fileSettings.Value;
         }
 
@@ -289,5 +292,39 @@ namespace LocationManagement.API.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Add A New Favourite Location 
+        /// </summary>
+        /// <param name="model">an object holds the LocationId, BasicUserId of Favourite Location</param>
+        /// <response code="200">Favourite Location added successfully</response>
+        /// <response code="400">something goes wrong in backend</response>
+        [HttpPost("AddFavouriteLocation")]
+        public async Task<IActionResult> AddFavouriteLocation([FromBody] FavouriteLocationModel model)
+        {
+            var data = await _favouriteLocationService.AddFavouriteLocation(model);
+
+            if (data.Succeeded == false)
+            {
+                return BadRequest(data);
+            }
+            return Ok(data);
+        }
+
+        /// <summary>
+        /// Delete Favourite Location 
+        /// </summary>
+        /// <response code="200">Favourite Location Delete successfully</response>
+        /// <response code="400">something goes wrong in backend</response>
+        [HttpPost("DeleteFavouriteLocation")]
+        public async Task<IActionResult> DeleteFavouriteLocation([FromBody] long LocationId, long BasicUserID)
+        {
+            var data = await _favouriteLocationService.DeleteFavouriteLocation(LocationId, BasicUserID);
+
+            if (data.Succeeded == false)
+            {
+                return BadRequest(data);
+            }
+            return Ok(data);
+        }
     }
 }

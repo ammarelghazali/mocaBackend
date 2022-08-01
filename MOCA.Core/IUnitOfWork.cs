@@ -82,6 +82,8 @@ namespace MOCA.Core
         IServiceFeePaymentsDueDateRepository ServiceFeePaymentsDueDateRepoEF { get; }
         IGenericRepository<Location> LocationRepo { get; }
         ILocationRepository LocationRepoEF { get; }
+        IGenericRepository<FavouriteLocation> FavouriteLocationRepo { get; }
+        IFavouriteLocationRepository FavouriteLocationRepoEF { get; }
         #endregion
 
         #region Events
