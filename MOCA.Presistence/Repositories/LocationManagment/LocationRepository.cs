@@ -1,4 +1,5 @@
-﻿using MOCA.Core.Entities.LocationManagment;
+﻿using MOCA.Core.DTOs.Shared;
+using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Interfaces.LocationManagment.Repositories;
 using MOCA.Presistence.Contexts;
 using MOCA.Presistence.Repositories.Base;
@@ -42,6 +43,21 @@ namespace MOCA.Presistence.Repositories.LocationManagment
                 return new List<long>(null);
             }
             return new List<long>(locationDistricts);
+        }
+        
+        public async Task<List<DropdownViewModel>> GetAllDistinictLocation()
+        {
+            var location = _context.Locations.Where(x => x.IsDeleted != true).Select(x => new DropdownViewModel
+            {
+                Id = x.Id,
+                Name = x.Name
+            }).ToList();
+
+            if (location == null)
+            {
+                return new List<DropdownViewModel>(null);
+            }
+            return new List<DropdownViewModel>(location);
         }
     }
 }

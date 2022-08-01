@@ -168,14 +168,32 @@ namespace LocationManagement.API.Controllers
         }
 
         /// <summary>
-        /// Get Region Drop Down (District, City, Country)
+        /// Get Location Drop Down For Filter(District, City, Locations)
         /// </summary>
-        /// <response code="200">Region DropDown</response>
+        /// <response code="200">Location DropDown</response>
         /// <response code="400">there is error while request server</response>
-        [HttpGet("GetRegionDropDown")]
-        public async Task<IActionResult> GetRegionDropDown()
+        [HttpGet("GetAllForDropDown")]
+        public async Task<IActionResult> GetAllForDropDown()
         {
-            var response = await _locationService.GetRegionsDropDown();
+            var response = await _locationService.GetAllForDropDown();
+            if (response.Succeeded == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Gets Location By ID
+        /// </summary>
+        /// <param name="Id">an object holds the Id of Location</param>
+        /// <response code="200">Returns the Location</response>
+        /// <response code="400">something goes wrong in backend</response>
+        [HttpGet("GetLocationByID")]
+        public async Task<IActionResult> GetLocationByID([FromQuery] long Id)
+        {
+            var response = await _locationService.GetLocationByID(Id);
+
             if (response.Succeeded == false)
             {
                 return BadRequest(response);

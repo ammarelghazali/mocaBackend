@@ -11,6 +11,8 @@ namespace MOCA.Core.Interfaces.LocationManagment.Services
 
         Task<Response<bool>> DeleteLocation(long LocationId);
 
-        Task<Response<LocationRegion>> GetRegionsDropDown();
+        Task<Response<LocationDropDown>> GetAllForDropDown();
+
+        Task<Response<LocationModel>> GetLocationByID(long Id);
     }
 }

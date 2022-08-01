@@ -4,6 +4,7 @@ using MOCA.Core.DTOs.LocationManagment.City;
 using MOCA.Core.DTOs.LocationManagment.Country;
 using MOCA.Core.DTOs.LocationManagment.District;
 using MOCA.Core.DTOs.LocationManagment.Location;
+using MOCA.Core.DTOs.Shared;
 using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Interfaces.LocationManagment.Services;
@@ -411,7 +412,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             return new Response<bool>(true, "Location Deleted Successfully.");
         }
 
-        public async Task<Response<LocationRegion>> GetRegionsDropDown()
+        public async Task<Response<LocationDropDown>> GetAllForDropDown()
         {
             var districtIDs = await _unitOfWork.LocationRepoEF.GetAllDistinictDistrict();
 
@@ -430,17 +431,36 @@ namespace MOCA.Services.Implementation.LocationManagment
                 Cities.Add(_mapper.Map<CityModel>(city));
             }
 
-            var country = await _unitOfWork.CountryRepo.GetByIdAsync(Cities[0].CountryId);
-            CountryModel Country = _mapper.Map<CountryModel>(country);
+            var location = await _unitOfWork.LocationRepoEF.GetAllDistinictLocation();
 
-            LocationRegion locationRegion = new LocationRegion
+            LocationDropDown locationRegion = new LocationDropDown
             {
                 Districts = Districts,
                 Cities = Cities,
-                Country = Country
+                Locations = location
             };
 
-            return new Response<LocationRegion>(locationRegion);
+            return new Response<LocationDropDown>(locationRegion);
+        }
+
+        public async Task<Response<LocationModel>> GetLocationByID(long Id)
+        {
+            /*
+             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
+                {
+                    throw new UnauthorizedAccessException("User is not authorized");
+                }
+             */
+            if (Id <= 0)
+            {
+                return new Response<LocationModel>("ID must be greater than zero.");
+            }
+            var location = await _unitOfWork.LocationRepo.GetByIdAsync(Id);
+            if (location == null)
+            {
+                return new Response<LocationModel>(null, "No Location Found With This ID.");
+            }
+            return new Response<LocationModel>(_mapper.Map<LocationModel>(location));
         }
     }
 }

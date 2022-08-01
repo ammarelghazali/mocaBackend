@@ -1,4 +1,5 @@
-﻿using MOCA.Core.Entities.LocationManagment;
+﻿using MOCA.Core.DTOs.Shared;
+using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Interfaces.Base;
 
 namespace MOCA.Core.Interfaces.LocationManagment.Repositories
@@ -8,5 +9,6 @@ namespace MOCA.Core.Interfaces.LocationManagment.Repositories
         Task<bool> CheckLocationNameIsUinque(string LocationName);
         Task<bool> DeleteLocation(long Id);
         Task<List<long>> GetAllDistinictDistrict();
+        Task<List<DropdownViewModel>> GetAllDistinictLocation();
     }
 }
