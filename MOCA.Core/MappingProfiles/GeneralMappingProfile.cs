@@ -196,8 +196,8 @@ namespace MOCA.Core.MappingProfiles
             //EventSpaceBookings
 
             CreateMap<EventSpaceBooking, BooEventSpaceDto>()
-                .ForMember(x => x.eventSpace_Times, opt => opt.Ignore())
-                .ForMember(x => x.eventSpace_Venues, opt => opt.Ignore());
+                .ForMember(x => x.EventSpaceTimes, opt => opt.Ignore())
+                .ForMember(x => x.EventSpaceVenues, opt => opt.Ignore());
             CreateMap<EventSpaceBooking, BooEventSpaceDto>()
                 .ReverseMap()
                 .ForMember(x => x.EventSpaceTimes, opt => opt.Ignore())

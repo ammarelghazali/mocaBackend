@@ -60,7 +60,7 @@ namespace MOCA.Services.Implementation.Events
                     bool isNumeric = int.TryParse(_authenticatedUser.UserId, out _);
                     if (!isNumeric)
                     {
-                        request.IdentityUser_ID = _authenticatedUser.UserId;
+                        request.IdentityUserId = _authenticatedUser.UserId;
                     }
                 }
             }
@@ -72,23 +72,21 @@ namespace MOCA.Services.Implementation.Events
 
             request.SubmissionDate = _dateTimeService.NowUtc;
 
-            request.OpportunityStage_ID = 8;
-
-            if (request.IndustryName_ID == 0)
+            if (request.IndustryNameId == 0)
             {
-                request.IndustryName_ID = null;
+                request.IndustryNameId = null;
             }
 
-            if (request.EventCategory_ID == 0)
+            if (request.EventCategoryId == 0)
             {
-                request.EventCategory_ID = null;
+                request.EventCategoryId = null;
             }
 
-            var location = await _unitOfWork.LocationRepo.GetLocationByID(request.LocationName_ID);
-            if (request.LocationType_ID == 0 || request.LocationType_ID == null)
+            var location = await _unitOfWork.LocationsMemberShipsRepo.GetLocationByID(request.LocationNameId.GetValueOrDefault());
+            if (request.LobLocationTypeId == 0 || request.LobLocationTypeId == null)
             {
                 if (location != null)
-                    request.LocationType_ID = await _unitOfWork.LocationsMemberShipsRepo.GetLocationTypeByID(request.LocationName_ID);
+                    request.LobLocationTypeId = await _unitOfWork.LocationsMemberShipsRepo.GetLocationTypeByID(request.LocationNameId.GetValueOrDefault());
                 else
                     return new Response<long>("location not found.");
             }
@@ -102,47 +100,46 @@ namespace MOCA.Services.Implementation.Events
             if (request.ExpectedNoAttend < 1)
                 return new Response<long>("number of attendence must be greater than 0.");
 
-            if (await _unitOfWork.EventAttendanceRepo.GetByIdAsync(request.EventAttendance_ID) == null)
+            if (await _unitOfWork.EventAttendanceRepo.GetByIdAsync(request.EventAttendanceId) == null)
                 return new Response<long>("Event attendence must be added.");
-
-            var eventRequester = _unitOfWork.EventRequesterRepo.GetByID(request.EventRequester_ID);
+            
+            var eventRequester = _unitOfWork.EventRequesterRepo.GetByID(request.EventRequesterId);
             if (eventRequester == null)
-                return new Response<long>("Event requester must be added.");
+              return new Response<long>("Event requester must be added.");
 
-            if (await _unitOfWork.EventReccuranceRepo.GetByIdAsync(request.EventReccurance_ID) == null)
-                return new Response<long>("Event reccurance must be added.");
+            if (await _unitOfWork.EventReccuranceRepo.GetByIdAsync(request.EventReccuranceId) == null)
+               return new Response<long>("Event reccurance must be added.");
 
-            var eventType = _unitOfWork.EventTypeRepo.GetByID(request.EventType_ID);
+            var eventType = _unitOfWork.EventTypeRepo.GetByID(request.EventTypeId);
             if (eventType == null)
-                return new Response<long>("Event type must be added.");
+              return new Response<long>("Event type must be added.");
 
-            if (await _unitOfWork.InitiatedRepo.GetByIdAsync(request.Initiated_ID.GetValueOrDefault()) == null)
-                return new Response<long>("Intiated must be added.");
+            if (await _unitOfWork.InitiatedRepo.GetByIdAsync(request.InitiatedId) == null)
+            return new Response<long>("Intiated must be added.");
 
-            var eventCategory = _unitOfWork.EventCategoryRepo.GetByID(request.EventCategory_ID.GetValueOrDefault());
+            var eventCategory = _unitOfWork.EventCategoryRepo.GetByID(request.EventCategoryId.GetValueOrDefault());
             if (eventCategory == null)
                 return new Response<long>("Event category must be added.");
 
-            var eventIndustry = await _unitOfWork.IndustryRepo.GetByIdAsync(request.IndustryName_ID.GetValueOrDefault());
-            if (_unitOfWork.EventRequesterRepo.GetByIdAsync(request.EventRequester_ID).Result.Name == "Company")
+            var eventIndustry = await _unitOfWork.IndustryRepo.GetByIdAsync(request.IndustryNameId.GetValueOrDefault());
+            if (_unitOfWork.EventRequesterRepo.GetByIdAsync(request.EventRequesterId).Result.Name == "Company")
             {
                 if (string.IsNullOrWhiteSpace(request.CompanyCommericalName))
                     return new Response<long>("Company name must be added.");
 
-                if (request.IndustryName_ID == null || eventIndustry == null)
+                if (request.IndustryNameId == null || eventIndustry == null)
                     return new Response<long>("Industry must be added.");
             }
-
 
             try
             {
                 var eventSpace = _mapper.Map<EventSpaceBooking>(request);
-                await _unitOfWork.EventSpaceBookingRepo.BookEventSpace(eventSpace);
+                await _unitOfWork.EventSpaceBookingRepo.AddAsync(eventSpace);
 
-                if (request.eventSpace_Venues.Count() > 0)
+                if (request.EventSpaceVenues.Count() > 0)
                 {
                     var EventSpaceVenus = new List<EventSpaceVenues>();
-                    foreach (var item in request.eventSpace_Venues)
+                    foreach (var item in request.EventSpaceVenues)
                     {
                         var EventSpaceVenu = new EventSpaceVenues();
                         EventSpaceVenu.EventSpaceBookingId = eventSpace.Id;
@@ -152,10 +149,10 @@ namespace MOCA.Services.Implementation.Events
                     await _unitOfWork.EventSpaceVenuesRepo.AddEventSpaceVenues(EventSpaceVenus);
                 }
 
-                if (request.eventSpace_Times.Count() > 0)
+                if (request.EventSpaceTimes.Count() > 0)
                 {
                     var times = new List<EventSpaceTime>();
-                    foreach (var item in request.eventSpace_Times)
+                    foreach (var item in request.EventSpaceTimes)
                     {
                         if (item.RecurrenceStartDate == null)
                         {
@@ -219,13 +216,13 @@ namespace MOCA.Services.Implementation.Events
 
                 if (eventSpace.EventSpaceTimes.Count > 0)
                 {
-                    GetAllBookedEventSpaceResponseDto.eventSpace_Times = _mapper.Map<List<EventSpace_TimeDto>>(eventSpace.EventSpaceTimes);
+                    GetAllBookedEventSpaceResponseDto.eventSpaceTimes = _mapper.Map<List<EventSpace_TimeDto>>(eventSpace.EventSpaceTimes);
                 }
 
 
                 if (eventSpace.EventSpaceVenues.Count > 0)
                 {
-                    GetAllBookedEventSpaceResponseDto.eventSpace_Venues = _mapper.Map<List<EventSpace_VenuesDto>>(eventSpace.EventSpaceVenues);
+                    GetAllBookedEventSpaceResponseDto.eventSpaceVenues = _mapper.Map<List<EventSpace_VenuesDto>>(eventSpace.EventSpaceVenues);
                 }
 
                 GetAllBookedEventSpaceResponseDto.EventRequester = _mapper.Map<EventRequesterDto>(eventSpace.EventRequester);
@@ -260,11 +257,11 @@ namespace MOCA.Services.Implementation.Events
 
                 for (int i = 0; i < GetAllBookedEventSpaceResponseDtos.Count; i++)
                 {
-                    if (GetAllBookedEventSpaceResponseDtos[i].IdentityUser_ID != null)
+                    if (GetAllBookedEventSpaceResponseDtos[i].IdentityUserId != null)
                     {
                         var admin = await _unitOfWork.UserService
-                                                     .GetUserByID(GetAllBookedEventSpaceResponseDtos[i].IdentityUser_ID);
-                        GetAllBookedEventSpaceResponseDtos[i].IdentityUser_ID = admin.Data.FirstName + " " + admin.Data.LastName;
+                                                     .GetUserByID(GetAllBookedEventSpaceResponseDtos[i].IdentityUserId);
+                        GetAllBookedEventSpaceResponseDtos[i].IdentityUserId = admin.Data.FirstName + " " + admin.Data.LastName;
                     }
                 }
                 return new PagedResponse<IReadOnlyList<GetAllBookedEventSpaceResponseDto>>(GetAllBookedEventSpaceResponseDtos, request.pageNumber, request.pageSize, count);
@@ -276,12 +273,12 @@ namespace MOCA.Services.Implementation.Events
         }
 
         public async Task<Response<DropDownsResponseDto>> GetAllDataForDropDowns(GetAllBookedEventSpaceDropDownsDto dto)
-        {
+        {/*
             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
             {
                 throw new UnauthorizedAccessException("User is not authorized");
             }
-
+            */
             var allDropDowns = new DropDownsResponseDto();
 
 
