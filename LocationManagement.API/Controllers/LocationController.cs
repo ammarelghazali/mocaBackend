@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using MOCA.Core.DTOs.LocationManagment.Location;
+using MOCA.Core.DTOs.Shared;
 using MOCA.Core.Interfaces.LocationManagment.Services;
 using MOCA.Core.Settings;
 using System.Net.Http.Headers;
@@ -200,5 +201,93 @@ namespace LocationManagement.API.Controllers
             }
             return Ok(response);
         }
+
+        /// <summary>
+        /// Gets Paginated Locations
+        /// </summary>
+        /// <param name="filter">an object holds the filter data</param>
+        /// <response code="200">Returns the Locations List</response>
+        /// <response code="400">something goes wrong in backend</response>
+        [HttpGet("GetAllLocations")]
+        public async Task<IActionResult> GetAllLocations([FromQuery] RequestParameter filter)
+        {
+            var response = await _locationService.GetAllLocationWithPagination(filter);
+
+            if (response.Succeeded == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Gets Not Paginated Locations
+        /// </summary>
+        /// <response code="200">Returns the Locations List</response>
+        /// <response code="400">something goes wrong in backend</response>
+        [HttpGet("GetAllLocationsWithoutPagination")]
+        public async Task<IActionResult> GetAllLocationsWithoutPagination()
+        {
+            var response = await _locationService.GetAllLocationWithoutPagination();
+
+            if (response.Succeeded == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Update Location Publish Status
+        /// </summary>
+        /// <param name="model"></param>
+        /// <response code="200">Location Published successfully</response>
+        /// <response code="400">something goes wrong in backend</response>
+        [HttpPut("UpdateLocationPublishStatus")]
+        public async Task<IActionResult> UpdateLocationPublishStatus([FromBody] long LocationId)
+        {
+            var response = await _locationService.UpdateLocationPublishStatus(LocationId);
+
+            if (response.Succeeded == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Gets All Locations
+        /// </summary>
+        /// <response code="200">Returns the Locations List</response>
+        /// <response code="400">something goes wrong in backend</response>
+        [HttpGet("GetAllLocationsPublishAndUnpublish")]
+        public async Task<IActionResult> GetAllLocationsPublishAndUnpublish()
+        {
+            var response = await _locationService.GetAllPublishedAndUnpublishedLocation();
+
+            if (response.Succeeded == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Gets All Unpublish Locations
+        /// </summary>
+        /// <response code="200">Returns the Locations List</response>
+        /// <response code="400">something goes wrong in backend</response>
+        [HttpGet("GetAllLocationsUnpublish")]
+        public async Task<IActionResult> GetAllLocationsUnpublish()
+        {
+            var response = await _locationService.GetAllUnpublishedLocation();
+
+            if (response.Succeeded == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
     }
 }

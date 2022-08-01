@@ -1,4 +1,5 @@
 ﻿using MOCA.Core.DTOs.LocationManagment.Location;
+using MOCA.Core.DTOs.Shared;
 using MOCA.Core.DTOs.Shared.Responses;
 
 namespace MOCA.Core.Interfaces.LocationManagment.Services
@@ -14,5 +15,15 @@ namespace MOCA.Core.Interfaces.LocationManagment.Services
         Task<Response<LocationDropDown>> GetAllForDropDown();
 
         Task<Response<LocationModel>> GetLocationByID(long Id);
+
+        Task<PagedResponse<List<LocationModel>>> GetAllLocationWithPagination(RequestParameter filter);
+
+        Task<Response<List<LocationModel>>> GetAllLocationWithoutPagination();
+
+        Task<Response<bool>> UpdateLocationPublishStatus(long LocationId);
+
+        Task<Response<List<LocationModel>>> GetAllUnpublishedLocation();
+
+        Task<Response<List<LocationModel>>> GetAllPublishedAndUnpublishedLocation();
     }
 }

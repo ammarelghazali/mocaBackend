@@ -462,5 +462,113 @@ namespace MOCA.Services.Implementation.LocationManagment
             }
             return new Response<LocationModel>(_mapper.Map<LocationModel>(location));
         }
+
+        public async Task<PagedResponse<List<LocationModel>>> GetAllLocationWithPagination(RequestParameter filter)
+        {
+            /*
+             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
+                {
+                    throw new UnauthorizedAccessException("User is not authorized");
+                }
+            */
+            int pg_total = await _unitOfWork.LocationRepo.GetCountAsync(x => x.IsDeleted == false);
+            var data = _unitOfWork.LocationRepo.GetPaged(filter.PageNumber,
+                filter.PageSize,
+                f => f.IsDeleted == false,
+                q => q.OrderBy(o => o.Name));
+
+            var Res = _mapper.Map<List<LocationModel>>(data);
+            if (Res.Count == 0)
+            {
+                return new PagedResponse<List<LocationModel>>(null, filter.PageNumber, filter.PageSize);
+            }
+            return new PagedResponse<List<LocationModel>>(Res, filter.PageNumber, filter.PageSize, pg_total);
+        }
+
+        public async Task<Response<List<LocationModel>>> GetAllLocationWithoutPagination()
+        {
+            /*
+             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
+                {
+                    throw new UnauthorizedAccessException("User is not authorized");
+                }
+            */
+            var data = _unitOfWork.LocationRepo.GetAll();
+
+            var Res = _mapper.Map<List<LocationModel>>(data);
+            if (Res.Count == 0)
+            {
+                return new Response<List<LocationModel>>(null);
+            }
+            return new Response<List<LocationModel>>(Res);
+        }
+
+        public async Task<Response<bool>> UpdateLocationPublishStatus(long LocationId)
+        {
+            var location = await _unitOfWork.LocationRepo.GetByIdAsync(LocationId);
+            if (location != null)
+            {
+                if (location.IsPublish == true)
+                {
+                    location.IsPublish = false;
+                }
+                else if (location.IsPublish == false)
+                {
+                    location.IsPublish = true;
+                }
+                _unitOfWork.LocationRepo.Update(location);
+                _unitOfWork.Save();
+                /*if (await _unitOfWork.SaveAsync() < 1)
+                {
+                    return new Response<long>("Cannot Updated Location right now");
+                }*/
+
+                if (location.IsPublish == true)
+                {
+                    return new Response<bool>(true, "Location Published Successfully.");
+                }
+                else if (location.IsPublish == false)
+                {
+                    return new Response<bool>(true, "Location UnPublished Successfully.");
+                }
+            }
+            return new Response<bool>("Error while updateting location Publish state.");
+        }
+
+        public async Task<Response<List<LocationModel>>> GetAllUnpublishedLocation()
+        {
+            /*
+             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
+                {
+                    throw new UnauthorizedAccessException("User is not authorized");
+                }
+            */
+            var data = _unitOfWork.LocationRepoEF.GetAllUnpublishedLocation();
+
+            var Res = _mapper.Map<List<LocationModel>>(data);
+            if (Res.Count == 0)
+            {
+                return new Response<List<LocationModel>>(null);
+            }
+            return new Response<List<LocationModel>>(Res);
+        }
+
+        public async Task<Response<List<LocationModel>>> GetAllPublishedAndUnpublishedLocation()
+        {
+            /*
+             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
+                {
+                    throw new UnauthorizedAccessException("User is not authorized");
+                }
+            */
+            var data = _unitOfWork.LocationRepoEF.GetAllPublishedAndUnpublishedLocation();
+
+            var Res = _mapper.Map<List<LocationModel>>(data);
+            if (Res.Count == 0)
+            {
+                return new Response<List<LocationModel>>(null);
+            }
+            return new Response<List<LocationModel>>(Res);
+        }
     }
 }
