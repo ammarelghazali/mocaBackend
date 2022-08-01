@@ -23,12 +23,12 @@ namespace MOCA.Presistence.Repositories.Events
         public async Task<List<EventSpaceTime>> GetBookedEventSpaceTimeById(long bookedEventSpaceID)
         {
             return await _dbContext.EventSpaceTimes
-                                   .Where(time => time.BookEventSpace_ID == bookedEventSpaceID && time.IsDeleted != true).ToListAsync();
+                                   .Where(time => time.EventSpaceBookingId == bookedEventSpaceID && time.IsDeleted != true).ToListAsync();
         }
 
-        public async Task<bool> DeleteByBookEventSpace_ID(long BookEventSpace_ID)
+        public async Task<bool> DeleteByBookEventSpace_ID(long BookEventSpaceId)
         {
-            var data = await _dbContext.EventSpaceTimes.Where(time => time.BookEventSpace_ID == BookEventSpace_ID
+            var data = await _dbContext.EventSpaceTimes.Where(time => time.EventSpaceBookingId == BookEventSpaceId
                                                                     && time.IsDeleted != true)
                                                         .FirstOrDefaultAsync();
             if (data != null)

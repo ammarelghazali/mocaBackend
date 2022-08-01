@@ -5,7 +5,6 @@ using MOCA.Core.Interfaces.Events;
 using MOCA.Core.Interfaces.Events.Repositories;
 using MOCA.Core.Interfaces.MocaSettings.Repositories;
 using MOCA.Core.Entities.LocationManagment;
-using MOCA.Core.Interfaces.Base;
 using MOCA.Core.Interfaces.LocationManagment.Repositories;
 
 namespace MOCA.Core

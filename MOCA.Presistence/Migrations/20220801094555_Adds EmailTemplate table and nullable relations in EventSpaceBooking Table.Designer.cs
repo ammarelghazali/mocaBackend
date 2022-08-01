@@ -4,6 +4,7 @@ using MOCA.Presistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MOCA.Presistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220801094555_Adds EmailTemplate table and nullable relations in EventSpaceBooking Table")]
+    partial class AddsEmailTemplatetableandnullablerelationsinEventSpaceBookingTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -433,7 +435,7 @@ namespace MOCA.Presistence.Migrations
                     b.Property<long?>("IndustryNameId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("InitiatedId")
+                    b.Property<long?>("InitiatedId")
                         .HasColumnType("bigint");
 
                     b.Property<bool>("IsDeleted")
@@ -3148,9 +3150,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasOne("MOCA.Core.Entities.EventSpaceBookings.Initiated", "Initiated")
                         .WithMany("EventSpaceBookings")
-                        .HasForeignKey("InitiatedId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("InitiatedId");
 
                     b.HasOne("MOCA.Core.Entities.LocationManagment.LocationType", "LocationType")
                         .WithMany("EventSpaceBookings")

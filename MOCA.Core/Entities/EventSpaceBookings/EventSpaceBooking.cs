@@ -9,7 +9,7 @@ namespace MOCA.Core.Entities.EventSpaceBookings
     {
         public long? LocationNameId { get; set; }
         public long? EventRequesterId { get; set; }
-
+                     
         [MaxLength(800)]
         public string? CompanyCommericalName { get; set; }
         public long? IndustryNameId { get; set; }
@@ -69,7 +69,7 @@ namespace MOCA.Core.Entities.EventSpaceBookings
 
         [MaxLength(800)]
         public string? OtherEventCategory { get; set; }
-        public long? InitiatedId { get; set; }
+        public long InitiatedId { get; set; }
         public string? IdentityUserId { get; set; }
         public long? OpportunityStageId { get; set; }
         public long? Revenue { get; set; }
@@ -78,37 +78,37 @@ namespace MOCA.Core.Entities.EventSpaceBookings
         public long? LobLocationTypeId { get; set; }
 
         [ForeignKey("LobLocationTypeId")]
-        public LocationType LocationType { get; set; }
+        public LocationType? LocationType { get; set; }
 
         [ForeignKey("IndustryNameId")]
-        public Industry Industry { get; set; }
+        public Industry? Industry { get; set; }
 
         [ForeignKey("LocationNameId")]
-        public Location Location{ get; set; }
+        public Location? Location{ get; set; }
 
         [ForeignKey("InitiatedId")]
         public Initiated Initiated { get; set; }
 
         [ForeignKey("EventOpportunityStatusId")]
-        public EventOpportunityStatus EventOpportunityStatus { get; set; }
+        public EventOpportunityStatus? EventOpportunityStatus { get; set; }
 
         [ForeignKey("EventCategoryId")]
-        public EventCategory EventCategory { get; set; }
+        public EventCategory? EventCategory { get; set; }
 
         [ForeignKey("EventAttendanceId")]
-        public EventAttendance EventAttendance { get; set; }
+        public EventAttendance? EventAttendance { get; set; }
 
         [ForeignKey("EventReccuranceId")]
-        public EventReccurance EventReccurance { get; set; }
+        public EventReccurance? EventReccurance { get; set; }
 
         [ForeignKey("EventRequesterId")]
         public EventRequester EventRequester { get; set; }
 
         [ForeignKey("OpportunityStageId")]
-        public OpportunityStage OpportunityStage { get; set; }
+        public OpportunityStage? OpportunityStage { get; set; }
 
         [ForeignKey("EventTypeId")]
-        public EventType EventType { get; set; }
+        public EventType? EventType { get; set; }
         public ICollection<EventSpaceTime> EventSpaceTimes { get; set; }
         public ICollection<EventSpaceVenues> EventSpaceVenues { get; set; }
         public ICollection<SendEmail> SendEmails { get; set; }

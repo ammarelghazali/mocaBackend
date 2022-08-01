@@ -197,7 +197,7 @@ namespace MOCA.Presistence.Repositories.Events
         public async Task<List<long>> GetAllDistinctInitiated()
         {
             return await _dbContext.EventSpaceBookings.Where(x => x.InitiatedId != null && x.IsDeleted != true)
-                                                       .Select(c => c.InitiatedId.Value).Distinct().ToListAsync();
+                                                       .Select(c => c.InitiatedId).Distinct().ToListAsync();
         }
 
         public async Task<EventSpaceBooking> CheckEmailAndMobileExist(string email, string mobile)
