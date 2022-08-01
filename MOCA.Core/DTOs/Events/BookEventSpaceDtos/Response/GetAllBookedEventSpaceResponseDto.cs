@@ -16,7 +16,7 @@ namespace MOCA.Core.DTOs.Events.BookEventSpaceDtos.Response
         public string CompanyCommericalName { get; set; }
         //public int IndustryName_ID { get; set; }
         public IndustryViewModel? Industry { get; set; }
-        public string Other_IndustryName { get; set; }
+        public string OtherIndustryName { get; set; }
         public string CompanyWebsite { get; set; }
         public string CompanyFacebook { get; set; }
         public string CompanyLinkedin { get; set; }
@@ -42,20 +42,20 @@ namespace MOCA.Core.DTOs.Events.BookEventSpaceDtos.Response
         public bool? DoesYourEventSupportStartup { get; set; }
         public bool? IsThereThirdPartyOrganizer { get; set; }
         public string OrgnizingCompany { get; set; }
-        public string IdentityUser_ID { get; set; }
+        public string IdentityUserId { get; set; }
         //public DateTime CreatedAt { get; set; }
         //public string LastModified { get; set; }
         //public DateTime? LastModifiedAt { get; set; }
         public bool? NeedConsultancy { get; set; }
         public string Platform { get; set; }
-        public List<EventSpace_TimeDto> eventSpace_Times { get; set; }
-        public List<EventSpace_VenuesDto> eventSpace_Venues { get; set; }
+        public List<EventSpace_TimeDto> eventSpaceTimes { get; set; }
+        public List<EventSpace_VenuesDto> eventSpaceVenues { get; set; }
         public InitiatedDto? Initiated { get; set; }
         public OpportunityStageDto? OpportunityStage { get; set; }
         public long? Revenue { get; set; }
         public DateTime? SubmissionDate { get; set; }
         public EventOpportunityStatusDto? EventOpportunityStatus { get; set; }
-        public int? LocationType_ID { get; set; }
+        public int? LobLocationTypeId { get; set; }
         //public int pg_total { get; set; }
     }
 }

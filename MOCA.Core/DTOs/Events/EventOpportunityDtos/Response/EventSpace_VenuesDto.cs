@@ -2,7 +2,7 @@
 {
     public class EventSpace_VenuesDto
     {
-        public long BookEventSpace_ID { get; set; }
+        public long EventSpaceBookingId { get; set; }
         public string VenueName { get; set; }
     }
 }
