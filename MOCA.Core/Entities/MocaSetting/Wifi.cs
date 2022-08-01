@@ -9,7 +9,6 @@ namespace MOCA.Core.Entities.MocaSetting
     public class Wifi : BaseEntity
     {
         [Required]
-        [MaxLength(1000)]
         public string Description { get; set; }
 
         public long? LobSpaceTypeId { get; set; }

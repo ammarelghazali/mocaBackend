@@ -19,19 +19,15 @@ namespace MOCA.Core.Entities.MocaSetting
         public LocationType LobSpaceType { get; set; }
         
         [Required]
-        [MaxLength(1000)]
         public string Description { get; set; }
 
         [Required]
-        [MaxLength(1000)]
         public string Points { get; set; }
 
         [Required]
-        [MaxLength(1000)]
         public string WhatYouGet { get; set; }
 
         [Required]
-        [MaxLength(1000)]
         public string TermsOfUse { get; set; }
 
     }
