@@ -198,6 +198,9 @@ namespace MOCA.Core.MappingProfiles
 
             CreateMap<ServiceFeePaymentsDueDateModel, ServiceFeePaymentsDueDate>();
             CreateMap<ServiceFeePaymentsDueDate, ServiceFeePaymentsDueDateModel>();
+
+            CreateMap<LocationModel, Location>();
+            CreateMap<Location, LocationModel>();
             #endregion
 
         }
