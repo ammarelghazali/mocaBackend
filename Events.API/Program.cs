@@ -156,17 +156,24 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseMiddleware<ErrorHandlerMiddleware>();
+
+
+app.UseSwagger();
+app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Events.Api v1"));
+
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
+
+app.UseCors(c => c.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
+
+app.UseAuthentication();
+
 
 app.UseAuthorization();
 
 app.MapControllers();
-app.UseMiddleware<ErrorHandlerMiddleware>();
 app.Run();

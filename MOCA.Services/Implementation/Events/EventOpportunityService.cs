@@ -48,7 +48,7 @@ namespace MOCA.Services.Implementation.Events
         {
             try
             {
-
+                
                 if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
                 {
                     throw new UnauthorizedAccessException("User is not authorized");
@@ -69,16 +69,16 @@ namespace MOCA.Services.Implementation.Events
                     }
                 }
 
-                var locTypeExists = await _unitOfWork.LocationsMemberShipsRepo.LocationTypeExists(request.LocationType_ID);
+                var locTypeExists = await _unitOfWork.LocationTypeRepo.GetByIdAsync((int)request.LobLocationTypeId);
 
-                if (!locTypeExists)
+                if (locTypeExists == null)
                 {
-                    return new Response<long>($"location type {request.LocationType_ID} is not exists");
+                    return new Response<long>($"location type {request.LobLocationTypeId} is not exists");
                 }
 
-                if (await _unitOfWork.EventRequesterRepo.GetByIdAsync(request.EventRequester_ID) is null)
+                if (await _unitOfWork.EventRequesterRepo.GetByIdAsync(request.EventRequesterId) is null)
                 {
-                    return new Response<long>($"Event Requester {request.EventRequester_ID} is not exists");
+                    return new Response<long>($"Event Requester {request.EventRequesterId} is not exists");
                 }
 
                 var opportunity = _mapper.Map<EventSpaceBooking>(request);
@@ -155,7 +155,6 @@ namespace MOCA.Services.Implementation.Events
             parms.Add("@LocationTypeId", request.LocationType_ID);
             parms.Add("@pageNumber", request.pageNumber);
             parms.Add("@pageSize", request.pageSize);
-
             var res = await _unitOfWork.EventSpaceBookingRepo.QueryAsync<EventsOpportunitiesSearch_ViewModel>("[dbo].[SP_EventsOpportunities_Search]", parms, System.Data.CommandType.StoredProcedure);
             var EventOpportunityDetailsWithoutPagination = new List<EventOpportunityDetails_Send_ViewModel>();
 
@@ -163,14 +162,14 @@ namespace MOCA.Services.Implementation.Events
             {
                 var EventOpportunityDetails = new EventOpportunityDetails_Send_ViewModel();
 
-                var ContactDetails = await _unitOfWork.ContactDetailsRepo.GetAllContact_DetailByOpportunitiyID(item.ID);
-                var EmailsHistory = await _unitOfWork.SendEmailRepo.GetEmailHistoryByOpportunitiyID(item.ID);
-                var EventRequest = _unitOfWork.EventRequesterRepo.GetByID(item.EventRequester_ID);
-                var initiat = await _unitOfWork.InitiatedRepo.GetByIdAsync(item.Initiated_ID.Value);
+                var ContactDetails = await _unitOfWork.ContactDetailsRepo.GetAllContact_DetailByOpportunitiyID(item.Id);
+                var EmailsHistory = await _unitOfWork.SendEmailRepo.GetEmailHistoryByOpportunitiyID(item.Id);
+                var EventRequest = _unitOfWork.EventRequesterRepo.GetByID(item.EventRequesterId);
+                var initiat = await _unitOfWork.InitiatedRepo.GetByIdAsync(item.InitiatedId);
 
                 EventOpportunityDetails = new EventOpportunityDetails_Send_ViewModel
                 {
-                    Opportunity_ID = item.ID,
+                    Opportunity_ID = item.Id,
                     SubmissionDate = (DateTime)item.SubmissionDate,
                     OpportunityOwner = _authenticatedUser.UserName,
                     Initiated = new Initiated
@@ -178,7 +177,7 @@ namespace MOCA.Services.Implementation.Events
                         Id = initiat.Id,
                         Name = initiat.Name,
                     },
-                    EventRequester_ID = (long)item.EventRequester_ID,
+                    EventRequester_ID = (long)item.EventRequesterId,
                     CompanyName = item.CompanyName,
                     EventRequester_Name = EventRequest.Name,
                     ContactDetails = _mapper.Map<List<EventOpportunityContactDetails_ViewModel>>(ContactDetails),
@@ -523,7 +522,7 @@ namespace MOCA.Services.Implementation.Events
                 var ContactDetails = await _unitOfWork.ContactDetailsRepo.GetAllContact_DetailByOpportunitiyID(item.Id);
                 var EmailsHistory = await _unitOfWork.SendEmailRepo.GetEmailHistoryByOpportunitiyID(item.Id);
                 var EventRequest = _unitOfWork.EventRequesterRepo.GetByID(item.EventRequesterId.GetValueOrDefault());
-                var initiat = await _unitOfWork.InitiatedRepo.GetByIdAsync(item.InitiatedId.GetValueOrDefault());
+                var initiat = await _unitOfWork.InitiatedRepo.GetByIdAsync(item.InitiatedId);
                 EventOpportunityDetails = new EventOpportunityDetails_Send_ViewModel
                 {
                     Opportunity_ID = item.Id,
@@ -628,7 +627,7 @@ namespace MOCA.Services.Implementation.Events
                 var emailTemplate = await _unitOfWork.EmailTemplateRepository.GetLatestEmailTemplate(1);
                 request.Body = request.Body.Replace("\"", "'");
                 var headerImage = "";
-                if (emailTemplate.ImagePath != null)
+                if (emailTemplate != null && emailTemplate.ImagePath != null)
                 {
                     headerImage = "https://api.copolitan.com/" + emailTemplate.ImagePath;
                 }
@@ -641,7 +640,7 @@ namespace MOCA.Services.Implementation.Events
                 emailStringBuilder.Append($"<head></head>");
                 emailStringBuilder.Append($"<body>");
                 emailStringBuilder.Append($"<div class='pageContainer' style='margin: 0 auto; width: 80%;'>");
-                if (emailTemplate.ImagePath != null)
+                if (emailTemplate != null && emailTemplate.ImagePath != null)
                 {
                     emailStringBuilder.Append($"<div class='headerImage' style='background-color: #ba43ff33; display: flex;width: 100%;justify-content: center;height: 240px;margin-top: 20px;'>");
                     emailStringBuilder.AppendFormat("<img src='{0}' alt='cover' style='margin:0 auto;' />", headerImage);
@@ -736,17 +735,13 @@ namespace MOCA.Services.Implementation.Events
                 }
             }
 
-            EventSpaceBooking UpdateEventOpportunitiy = new EventSpaceBooking
-            {
-                Id = request.Opportunity_ID,
-                SubmissionDate = DateTime.UtcNow,
-                EventRequesterId = request.EventRequester_ID,
-                CompanyCommericalName = request.CompanyName,
-                LastModifiedAt = DateTime.UtcNow,
-                LastModifiedBy = _authenticatedUser.UserId,
-            };
+            eventOpportunitiy.Id = request.Opportunity_ID;
+            eventOpportunitiy.SubmissionDate = DateTime.UtcNow;
+            eventOpportunitiy.EventRequesterId = request.EventRequester_ID;
+            eventOpportunitiy.CompanyCommericalName = request.CompanyName;
+            
 
-            await _unitOfWork.EventSpaceBookingRepo.UpdateAsync(UpdateEventOpportunitiy);
+            await _unitOfWork.EventSpaceBookingRepo.UpdateAsync(eventOpportunitiy);
 
             await _unitOfWork.ContactDetailsRepo.DeleteContact_DetailByID(request.Opportunity_ID);
 

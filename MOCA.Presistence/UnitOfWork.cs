@@ -1,5 +1,4 @@
-﻿using System.Configuration;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MOCA.Core;
 using MOCA.Core.Entities.EventSpaceBookings;
@@ -7,14 +6,12 @@ using MOCA.Core.Interfaces.Base;
 using MOCA.Core.Interfaces.Events;
 using MOCA.Core.Interfaces.Events.Repositories;
 using MOCA.Core.Entities.LocationManagment;
-using MOCA.Core.Interfaces.Base;
 using MOCA.Core.Interfaces.LocationManagment.Repositories;
 using MOCA.Core.Interfaces.MocaSettings.Repositories;
 using MOCA.Core.Interfaces.Shared.Services;
 using MOCA.Presistence.Contexts;
 using MOCA.Presistence.Repositories.Base;
 using MOCA.Presistence.Repositories.Events;
-using MOCA.Presistence.Repositories.Base;
 using MOCA.Presistence.Repositories.LocationManagment;
 using MOCA.Presistence.Repositories.MocaSettings;
 
@@ -187,7 +184,6 @@ namespace MOCA.Presistence
         private IGenericRepository<EventAttendance> _eventAttendanceRepo;
         private IGenericRepository<EventReccurance> _eventReccuranceRepo;
         private ILocationsMemberShipsRepository _locationsMemberShipsRepo;
-        private IEmailTemplateRepository _emailTemplateRepository;
         private IEventOpportunityStatusRepository _eventOpportunityStatusRepo;
         private IOpportunityStageReportRepository _opportunityStageReportRepo;
         private IEventSpaceBookingRepository _eventSpaceBookingRepository;
@@ -201,6 +197,15 @@ namespace MOCA.Presistence
         private ISendEmailRepository _sendEmailRepo;
         private IUserService _userService;
         private IAccountService _accountService;
+        private IEmailTemplateRepository _emailTemplateRepo;
+
+        public IEmailTemplateRepository EmailTemplateRepository
+        {
+            get
+            {
+                return this._emailTemplateRepo = this._emailTemplateRepo ?? new EmailTemplateRepository(_context);
+            }
+        }
         public IGenericRepository<EventRequester> EventRequesterRepo
         {
             get
@@ -334,13 +339,6 @@ namespace MOCA.Presistence
             get
             {
                 return this._locationsMemberShipsRepo = this._locationsMemberShipsRepo ?? new LocationsMemberShipsRepository(_configuration);
-            }
-        }
-        public IEmailTemplateRepository EmailTemplateRepository
-        {
-            get
-            {
-                return this._emailTemplateRepository = this._emailTemplateRepository ?? new EmailTemplateRepository(_configuration, _authenticatedUser, _dateTimeService);
             }
         }
 

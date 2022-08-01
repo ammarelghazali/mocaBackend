@@ -59,9 +59,9 @@ namespace MOCA.Presistence.Repositories.Base
                 await _context.Set<T>().AddAsync(entity);
                 await _context.SaveChangesAsync();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-
+                throw ex;
             }
 
             return entity;
