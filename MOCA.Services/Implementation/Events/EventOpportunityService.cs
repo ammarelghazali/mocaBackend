@@ -257,7 +257,7 @@ namespace MOCA.Services.Implementation.Events
             if (eventSpaceBooking.LocationNameId != null)
             {
                 //return new Response<cmd_Get_DetailedEventOpportunity_ViewModel>("Please Complete your submission.");
-                location = await _unitOfWork.LocationRepo.GetLocationByID((long)eventSpaceBooking.LocationNameId);
+                location = await _unitOfWork.LocationsMemberShipsRepo.GetLocationByID((long)eventSpaceBooking.LocationNameId);
             }
 
             General_ViewModel general_ViewModel = null;
@@ -399,8 +399,8 @@ namespace MOCA.Services.Implementation.Events
 
             if (data.OpportunityInfo.MembershipStatus == "Mobile")
             {
-                var loungeClient = await _unitOfWork.LoungeClientRepo.GetClientNameById(long.Parse(data.OpportunityInfo.OpportunityOwner));
-                data.OpportunityInfo.OpportunityOwner = loungeClient;
+                //var loungeClient = await _unitOfWork.LoungeClientRepo.GetClientNameById(long.Parse(data.OpportunityInfo.OpportunityOwner));
+               // data.OpportunityInfo.OpportunityOwner = loungeClient;
             }
             else if (data.OpportunityInfo.MembershipStatus == "copolitan")
             {
