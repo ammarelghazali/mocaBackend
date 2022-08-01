@@ -97,6 +97,7 @@ builder.Services.AddScoped<ILocationImageService, LocationImageService>();
 builder.Services.AddScoped<ILocationInclusionService, LocationInclusionService>();
 builder.Services.AddScoped<ILocationWorkingHourService, LocationWorkingHourService>();
 builder.Services.AddScoped<IServiceFeePaymentsDueDateService, ServiceFeePaymentsDueDateService>();
+builder.Services.AddScoped<IFavouriteLocationService, FavouriteLocationService>();
 
 #endregion
 

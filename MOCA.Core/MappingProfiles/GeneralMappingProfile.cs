@@ -34,6 +34,7 @@ using MOCA.Core.DTOs.LocationManagment.Feature;
 using MOCA.Core.DTOs.LocationManagment.Inclusion;
 using MOCA.Core.DTOs.LocationManagment.Industry;
 using MOCA.Core.DTOs.LocationManagment.Location;
+using MOCA.Core.DTOs.LocationManagment.FavouriteLocation;
 
 namespace MOCA.Core.MappingProfiles
 {
@@ -201,6 +202,9 @@ namespace MOCA.Core.MappingProfiles
 
             CreateMap<LocationModel, Location>();
             CreateMap<Location, LocationModel>();
+
+            CreateMap<FavouriteLocationModel, FavouriteLocation>();
+            CreateMap<FavouriteLocation, FavouriteLocationModel>();
             #endregion
 
         }
