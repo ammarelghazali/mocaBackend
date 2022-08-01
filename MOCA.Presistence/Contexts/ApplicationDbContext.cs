@@ -91,6 +91,8 @@ namespace MOCA.Presistence.Contexts
         public DbSet<OpportunityStageReport> OpportunityStageReports { get; set; }
         public DbSet<SendEmail> SendEmails { get; set; }
         public DbSet<EmailTemplate> EmailTemplates { get; set; }
+        public DbSet<EmailTemplateType> EmailTemplateTypes { get; set; }
+
         #endregion
 
         #region SSO
