@@ -12,7 +12,7 @@ namespace MOCA.Core.Entities.Shared.Reservations
         [ForeignKey("ReservationTypeId")]
         public ReservationType ReservationType { get; set; }
 
-        // TODO: Column to determinte the plan days for workspace
+        // TODO: Column to determinte the plan days for workspace or multiple ids for each type
 
         [Required]
         public long ReservationTargetId { get; set; }
