@@ -72,6 +72,7 @@ namespace MOCA.Presistence.Contexts
         public DbSet<LocationType> LocationTypes { get; set; }
         public DbSet<LocationWorkingHour> LocationWorkingHours { get; set; }
         public DbSet<ServiceFeePaymentsDueDate> ServiceFeePaymentsDueDates { get; set; }
+        public DbSet<FavouriteLocation> FavouriteLocations { get; set; }
         #endregion
 
 
