@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request
+﻿namespace MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request
 {
-    public class GetAllWorkSpaceSubmissionsDto
+    public class GetAllWorkSpaceReservationsDto
     {
-        public GetAllWorkSpaceSubmissionsDto(int pageNumber, int pageSize)
+        public GetAllWorkSpaceReservationsDto(int pageNumber, int pageSize)
         {
             this.pageNumber = pageNumber <= 0 ? 1 : pageNumber;
             this.pageSize = pageSize <= 0 ? 10 : pageSize;

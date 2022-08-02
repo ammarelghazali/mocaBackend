@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request
 {
-    public class GetAllWorkSpaceSubmissionsParameters
+    public class GetAllWorkSpaceReservationsParam
     {
         public long? Id { get; set; }
         public long? LocationId { get; set; }

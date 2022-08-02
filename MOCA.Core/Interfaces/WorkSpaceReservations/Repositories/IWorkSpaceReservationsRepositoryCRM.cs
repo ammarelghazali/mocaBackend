@@ -12,6 +12,7 @@ namespace MOCA.Core.Interfaces.WorkSpaceReservations.Repositories
 {
     public interface IWorkSpaceReservationsRepositoryCRM 
     {
-        Task<IReadOnlyList<GetAllWorkSpaceSubmissionsResponse>> GetAllWorkSpaceSubmissions(GetAllWorkSpaceSubmissionsDto request);
+        Task<IReadOnlyList<GetAllWorkSpaceReservationsResponse>> GetAllWorkSpaceSubmissions(GetAllWorkSpaceReservationsDto request);
+        Task<IReadOnlyList<GatFilteredWorkSpaceReservationResponse>> GetFilteredSubmissions(GatFilteredWorkSpaceReservationDto request);
     }
 }
