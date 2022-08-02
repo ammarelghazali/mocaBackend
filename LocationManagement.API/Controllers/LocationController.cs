@@ -264,9 +264,9 @@ namespace LocationManagement.API.Controllers
         /// <response code="200">Returns the Locations List</response>
         /// <response code="400">something goes wrong in backend</response>
         [HttpGet("GetAllLocationsPublishAndUnpublish")]
-        public async Task<IActionResult> GetAllLocationsPublishAndUnpublish()
+        public async Task<IActionResult> GetAllLocationsPublishAndUnpublish([FromQuery] RequestParameter filter)
         {
-            var response = await _locationService.GetAllPublishedAndUnpublishedLocation();
+            var response = await _locationService.GetAllPublishedAndUnpublishedLocation(filter);
 
             if (response.Succeeded == false)
             {
