@@ -1,12 +1,7 @@
 ﻿using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.DTOs.WorkSpaceReservation.Mobile.Request;
 using MOCA.Core.DTOs.WorkSpaceReservation.Mobile.Response;
-using MOCA.Core.Interfaces.WorkSpaceReservations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MOCA.Core.Interfaces.WorkSpaceReservations.Services;
 
 namespace MOCA.Services.Implementation.WorkSpaceReservations
 {

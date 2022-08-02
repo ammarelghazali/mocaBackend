@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MOCA.Core.DTOs.WorkSpaceReservation.Mobile.Response
+﻿namespace MOCA.Core.DTOs.WorkSpaceReservation.Mobile.Response
 {
     public class WorkspaceReservationHomePageResponse
     {

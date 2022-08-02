@@ -20,7 +20,7 @@ namespace MOCA.Core.Entities.WorkSpaceReservations.Base
         public Location Location { get; set; }
 
         [Required]
-        public string BasicUserId { get; set; }
+        public long BasicUserId { get; set; }
 
         [ForeignKey("BasicUserId")]
         public BasicUser BasicUser { get; set; }

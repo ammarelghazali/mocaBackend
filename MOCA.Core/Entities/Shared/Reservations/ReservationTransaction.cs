@@ -14,7 +14,7 @@ namespace MOCA.Core.Entities.Shared.Reservations
         public ReservationType ReservationType { get; set; }
 
         [Required]
-        public string BasicUserId { get; set; }
+        public long BasicUserId { get; set; }
 
         [ForeignKey("BasicUserId")]
         public BasicUser BasicUser { get; set; }

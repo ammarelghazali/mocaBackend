@@ -14,6 +14,8 @@ using MOCA.Presistence.Repositories.Base;
 using MOCA.Presistence.Repositories.Events;
 using MOCA.Presistence.Repositories.LocationManagment;
 using MOCA.Presistence.Repositories.MocaSettings;
+using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
+using MOCA.Presistence.Repositories.WorkSpaceReservations;
 
 namespace MOCA.Presistence
 {
@@ -343,6 +345,17 @@ namespace MOCA.Presistence
         }
 
 
+        #endregion
+
+        #region WorkSpaceReservations
+        private IWorkSpaceReservationsRepositoryCRM _workSpaceReservationCRM;
+        public IWorkSpaceReservationsRepositoryCRM WorkSpaceReservationsRepositoryCRM 
+        {
+            get
+            {
+                return _workSpaceReservationCRM ?? new WorkSpaceReservationsRepositoryCRM(_context);
+            }
+        }
         #endregion
 
         #region Location Managment
