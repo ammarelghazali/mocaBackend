@@ -24,6 +24,8 @@ namespace MOCA.Core.Interfaces.LocationManagment.Services
 
         Task<Response<List<LocationGetAllModel>>> GetAllUnpublishedLocation();
 
-        Task<Response<List<LocationGetAllModel>>> GetAllPublishedAndUnpublishedLocation(RequestParameter filter);
+        Task<PagedResponse<List<LocationGetAllModel>>> GetAllPublishedAndUnpublishedLocation(RequestParameter filter);
+
+        Task<PagedResponse<List<LocationGetAllFilterModel>>> GetAllPublishedAndUnpublishedLocationFilter(RequestGetAllLocationParameter filter);
     }
 }
