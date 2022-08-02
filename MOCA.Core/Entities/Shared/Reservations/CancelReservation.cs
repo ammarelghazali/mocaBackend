@@ -9,9 +9,22 @@ namespace MOCA.Core.Entities.Shared.Reservations
     public class CancelReservation : BaseEntity
     {
         [Required]
-        public string ReservationType { get; set; }
+        public long ReservationTargetId { get; set; }
 
-        // TODO: Column to determinte the plan days for workspace or multiple ids for each type
+        /// <summary>
+        /// Whether if it is Workspace, meetingrooms, or Bizlounge
+        /// </summary>
+        [Required]
+        public long ReservationTypeId { get; set; }
+
+        [ForeignKey("ReservationTypeId")]
+        public ReservationType ReservationType { get; set; }
+
+        /// <summary>
+        /// Refund Reservation Type Enum
+        /// </summary>
+        [Required]
+        public int RefundReservationType { get; set; }
 
         [Required]
         public DateTime CancelDate { get; set; }
@@ -26,13 +39,5 @@ namespace MOCA.Core.Entities.Shared.Reservations
 
         [ForeignKey("AdminId")]
         public Admin Admin { get; set; }
-
-        public long? WorkSpaceReservationId { get; set; }
-        //TODO: Relation with WorknMunchWorkSpace
-        public long? MeetingRoomReservationId { get; set; }
-        //TODO: Relation with WorknMunchMeetingRooms
-
-        public long? BizLoungeReservationId { get; set; }
-        //TODO: Relation with WorknMunchBizLounge
     }
 }

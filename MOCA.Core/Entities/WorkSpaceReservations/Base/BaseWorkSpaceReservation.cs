@@ -5,7 +5,6 @@ using MOCA.Core.Entities.SSO;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
 namespace MOCA.Core.Entities.WorkSpaceReservations.Base
 {
     public class BaseWorkSpaceReservation : BaseEntity
@@ -13,10 +12,6 @@ namespace MOCA.Core.Entities.WorkSpaceReservations.Base
         [Required]
         public long WorkSpaceId { get; set; }
         //TODO: Add Relation To WorkSpace
-
-        [Required]
-        public long ResturantId { get; set; }
-        //TODO: Add Relation To Foodics Resturants
 
         [Required]
         public long LocationId { get; set; }
@@ -37,12 +32,5 @@ namespace MOCA.Core.Entities.WorkSpaceReservations.Base
 
         [ForeignKey("PaymentMethodId")]
         public PaymentMethod PaymentMethod { get; set; }
-        public long? PaymentStatusId { get; set; }
-
-        [ForeignKey("PaymentStatusId")]
-        public PaymentStatus PaymentStatus { get; set; }
-
-        [MaxLength(500)]
-        public string? Platform { get; set; }
     }
 }
