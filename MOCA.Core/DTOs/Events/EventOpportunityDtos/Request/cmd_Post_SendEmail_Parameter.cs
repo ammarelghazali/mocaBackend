@@ -2,7 +2,7 @@
 {
     public class cmd_Post_SendEmail_Parameter
     {
-        public long EventsOpportunities_ID { get; set; }
+        public long EventsOpportunitiesId { get; set; }
         public IList<string> ToUsers { get; set; }
         public string? CC { get; set; }
         public string? Subject { get; set; }

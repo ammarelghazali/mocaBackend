@@ -9,7 +9,7 @@
         }
         public int pageNumber { get; set; }
         public int pageSize { get; set; }
-        public long LocationType_ID { get; set; }
+        public long LocationTypeId { get; set; }
         public long? Id { get; set; }
         public DateTime? FromSubmissionDate { get; set; }
         public DateTime? ToSubmissionDate { get; set; }

@@ -2,7 +2,7 @@
 {
     public class cmd_Get_EventOpportunityDetails_Parameter
     {
-        public long Opportunity_ID { get; set; }
+        public long OpportunityId { get; set; }
     }
 
 }
