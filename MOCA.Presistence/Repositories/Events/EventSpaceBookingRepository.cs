@@ -156,7 +156,7 @@ namespace MOCA.Presistence.Repositories.Events
 
         public async Task<List<long>> GetAllDistinctRequester(long? locationId)
         {
-            return await _dbContext.EventSpaceBookings.Where(x => x.LobLocationTypeId.Value == locationId.Value && x.IsDeleted != true)
+            return await _dbContext.EventSpaceBookings.Where(x => x.LobLocationTypeId == locationId.Value && x.IsDeleted != true)
                                                        .Select(c => c.EventRequesterId.Value).Distinct().ToListAsync();
         }
 
