@@ -28,6 +28,6 @@ namespace MOCA.Core.Interfaces.LocationManagment.Services
 
         Task<PagedResponse<List<LocationGetAllFilterModel>>> GetAllPublishedAndUnpublishedLocationFilter(RequestGetAllLocationParameter filter);
 
-        Task<PagedResponse<List<LocationGetAllFilterModel>>> GetAllPublishedAndUnpublishedLocationFilterWithoutPagination(RequestGetAllLocationWithoutPaginationParameter filter);
+        Task<Response<List<LocationGetAllFilterModel>>> GetAllPublishedAndUnpublishedLocationFilterWithoutPagination(RequestGetAllLocationWithoutPaginationParameter filter);
     }
 }
