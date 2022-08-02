@@ -443,7 +443,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             return new Response<LocationDropDown>(locationRegion);
         }
 
-        public async Task<Response<LocationModel>> GetLocationByID(long Id)
+        public async Task<Response<LocationDetailsModel>> GetLocationByID(long Id)
         {
             /*
              if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
@@ -453,15 +453,18 @@ namespace MOCA.Services.Implementation.LocationManagment
              */
             if (Id <= 0)
             {
-                return new Response<LocationModel>("ID must be greater than zero.");
+                return new Response<LocationDetailsModel>("ID must be greater than zero.");
             }
-            LocationModel locationDetails = new LocationModel();
+            LocationModel locationModel = new LocationModel();
             var location = await _unitOfWork.LocationRepo.GetByIdAsync(Id);
             if (location == null)
             {
-                return new Response<LocationModel>(null, "No Location Found With This ID.");
+                return new Response<LocationDetailsModel>(null, "No Location Found With This ID.");
             }
-            locationDetails = _mapper.Map<LocationModel>(location);
+            locationModel = _mapper.Map<LocationModel>(location);
+
+            LocationDetailsModel locationDetails = new LocationDetailsModel();
+            locationDetails = _mapper.Map<LocationDetailsModel>(locationModel);
 
             #region serviceFee
             var serviceFee = await _unitOfWork.ServiceFeePaymentsDueDateRepoEF.GetAllServiceFeePaymentsDueDateByLocationID(Id);
@@ -503,7 +506,52 @@ namespace MOCA.Services.Implementation.LocationManagment
             locationDetails.LocationInclusions = _mapper.Map<List<LocationInclusionModel>>(locationInclusion);
             #endregion
 
-            return new Response<LocationModel>(locationDetails);
+            #region District
+            var District = await _unitOfWork.DistrictRepo.GetByIdAsync(locationModel.DistrictId);
+            locationDetails.District = new DropdownViewModel
+            {
+                Id = District.Id,
+                Name = District.DistrictName
+            };
+            #endregion
+
+            #region City
+            var City = await _unitOfWork.CityRepo.GetByIdAsync(District.CityId);
+            locationDetails.City = new DropdownViewModel
+            {
+                Id = City.Id,
+                Name = City.CityName
+            };
+            #endregion
+
+            #region Country
+            var Country = await _unitOfWork.CountryRepo.GetByIdAsync(City.CountryId);
+            locationDetails.Country = new DropdownViewModel
+            {
+                Id = Country.Id,
+                Name = Country.CountryName
+            };
+            #endregion
+
+            #region Currency
+            var Currency = await _unitOfWork.CurrencyRepo.GetByIdAsync(locationModel.CurrencyId);
+            locationDetails.Currency = new DropdownViewModel
+            {
+                Id = Currency.Id,
+                Name = Currency.Name
+            };
+            #endregion
+
+            #region LocationType
+            var LocationType = await _unitOfWork.LocationTypeRepo.GetByIdAsync(locationModel.LocationTypeId);
+            locationDetails.LocationType = new DropdownViewModel
+            {
+                Id = LocationType.Id,
+                Name = LocationType.Name
+            };
+            #endregion
+
+            return new Response<LocationDetailsModel>(locationDetails);
         }
 
         public async Task<PagedResponse<List<LocationModel>>> GetAllLocationWithPagination(RequestParameter filter)
@@ -670,7 +718,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             return new Response<bool>("Error while updateting location Publish state.");
         }
 
-        public async Task<Response<List<LocationModel>>> GetAllUnpublishedLocation()
+        public async Task<Response<List<LocationGetAllModel>>> GetAllUnpublishedLocation()
         {
             /*
              if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
@@ -678,17 +726,45 @@ namespace MOCA.Services.Implementation.LocationManagment
                     throw new UnauthorizedAccessException("User is not authorized");
                 }
             */
-            var data = _unitOfWork.LocationRepoEF.GetAllUnpublishedLocation();
-
-            var Res = _mapper.Map<List<LocationModel>>(data);
-            if (Res.Count == 0)
+            var data = await _unitOfWork.LocationRepoEF.GetAllUnpublishedLocation();
+            for (int i = 0; i < data.Count; i++)
             {
-                return new Response<List<LocationModel>>(null);
+                #region District
+                var District = await _unitOfWork.DistrictRepo.GetByIdAsync(data[i].District.Id);
+                data[i].District = new DropdownViewModel
+                {
+                    Id = District.Id,
+                    Name = District.DistrictName
+                };
+                #endregion
+
+                #region City
+                var City = await _unitOfWork.CityRepo.GetByIdAsync(District.CityId);
+                data[i].City = new DropdownViewModel
+                {
+                    Id = City.Id,
+                    Name = City.CityName
+                };
+                #endregion
+
+                #region LocationType
+                var LocationType = await _unitOfWork.LocationTypeRepo.GetByIdAsync(data[i].LocationType.Id);
+                data[i].LocationType = new DropdownViewModel
+                {
+                    Id = LocationType.Id,
+                    Name = LocationType.Name
+                };
+                #endregion
             }
-            return new Response<List<LocationModel>>(Res);
+
+            if (data.Count == 0)
+            {
+                return new Response<List<LocationGetAllModel>>(null);
+            }
+            return new Response<List<LocationGetAllModel>>(data);
         }
 
-        public async Task<Response<List<LocationModel>>> GetAllPublishedAndUnpublishedLocation()
+        public async Task<Response<List<LocationGetAllModel>>> GetAllPublishedAndUnpublishedLocation()
         {
             /*
              if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
@@ -696,14 +772,43 @@ namespace MOCA.Services.Implementation.LocationManagment
                     throw new UnauthorizedAccessException("User is not authorized");
                 }
             */
-            var data = _unitOfWork.LocationRepoEF.GetAllPublishedAndUnpublishedLocation();
+            var data = await _unitOfWork.LocationRepoEF.GetAllPublishedAndUnpublishedLocation();
 
-            var Res = _mapper.Map<List<LocationModel>>(data);
-            if (Res.Count == 0)
+            for (int i = 0; i < data.Count; i++)
             {
-                return new Response<List<LocationModel>>(null);
+                #region District
+                var District = await _unitOfWork.DistrictRepo.GetByIdAsync(data[i].District.Id);
+                data[i].District = new DropdownViewModel
+                {
+                    Id = District.Id,
+                    Name = District.DistrictName
+                };
+                #endregion
+
+                #region City
+                var City = await _unitOfWork.CityRepo.GetByIdAsync(District.CityId);
+                data[i].City = new DropdownViewModel
+                {
+                    Id = City.Id,
+                    Name = City.CityName
+                };
+                #endregion
+
+                #region LocationType
+                var LocationType = await _unitOfWork.LocationTypeRepo.GetByIdAsync(data[i].LocationType.Id);
+                data[i].LocationType = new DropdownViewModel
+                {
+                    Id = LocationType.Id,
+                    Name = LocationType.Name
+                };
+                #endregion
             }
-            return new Response<List<LocationModel>>(Res);
+
+            if (data.Count == 0)
+            {
+                return new Response<List<LocationGetAllModel>>(null);
+            }
+            return new Response<List<LocationGetAllModel>>(data);
         }
     }
 }

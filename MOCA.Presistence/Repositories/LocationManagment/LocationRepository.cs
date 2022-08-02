@@ -62,26 +62,62 @@ namespace MOCA.Presistence.Repositories.LocationManagment
             return new List<DropdownViewModel>(location);
         }
 
-        public async Task<List<Location>> GetAllUnpublishedLocation()
+        public async Task<List<LocationGetAllModel>> GetAllUnpublishedLocation()
         {
-            var location = _context.Locations.Where(x => x.IsDeleted != true && x.IsPublish == false).AsNoTracking().ToList();
+            var location = _context.Locations.Where(x => x.IsDeleted != true && x.IsPublish == false).Select(x => new LocationGetAllModel
+            {
+                Id = x.Id,
+                Name = x.Name,
+                ContractLength = x.ContractLength,
+                ContractStartDate = x.ContractStartDate,
+                GrossArea = x.GrossArea,
+                NetArea = x.NetArea,
+                IsPublish = x.IsPublish,
+                LocationType = new DropdownViewModel
+                {
+                    Id = x.LocationTypeId
+                },
+                District = new DropdownViewModel
+                {
+                    Id = x.DistrictId
+                },
+                City = new DropdownViewModel()
+            }).AsNoTracking().ToList();
 
             if (location == null)
             {
-                return new List<Location>(null);
+                return new List<LocationGetAllModel>(null);
             }
-            return new List<Location>(location);
+            return new List<LocationGetAllModel>(location);
         }
 
-        public async Task<List<Location>> GetAllPublishedAndUnpublishedLocation()
+        public async Task<List<LocationGetAllModel>> GetAllPublishedAndUnpublishedLocation()
         {
-            var location = _context.Locations.Where(x => x.IsDeleted != true).AsNoTracking().ToList();
+            var location = _context.Locations.Where(x => x.IsDeleted != true).Select(x => new LocationGetAllModel
+            {
+                Id = x.Id,
+                Name = x.Name,
+                ContractLength = x.ContractLength,
+                ContractStartDate = x.ContractStartDate,
+                GrossArea = x.GrossArea,
+                NetArea = x.NetArea,
+                IsPublish = x.IsPublish,
+                LocationType = new DropdownViewModel
+                {
+                    Id = x.LocationTypeId
+                },
+                District = new DropdownViewModel
+                {
+                    Id = x.DistrictId
+                },
+                City = new DropdownViewModel()
+            }).AsNoTracking().ToList();
 
             if (location == null)
             {
-                return new List<Location>(null);
+                return new List<LocationGetAllModel>(null);
             }
-            return new List<Location>(location);
+            return new List<LocationGetAllModel>(location);
         }
     }
 }

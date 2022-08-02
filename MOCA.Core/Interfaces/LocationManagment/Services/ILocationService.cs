@@ -14,7 +14,7 @@ namespace MOCA.Core.Interfaces.LocationManagment.Services
 
         Task<Response<LocationDropDown>> GetAllForDropDown();
 
-        Task<Response<LocationModel>> GetLocationByID(long Id);
+        Task<Response<LocationDetailsModel>> GetLocationByID(long Id);
 
         Task<PagedResponse<List<LocationModel>>> GetAllLocationWithPagination(RequestParameter filter);
 
@@ -22,8 +22,8 @@ namespace MOCA.Core.Interfaces.LocationManagment.Services
 
         Task<Response<bool>> UpdateLocationPublishStatus(long LocationId);
 
-        Task<Response<List<LocationModel>>> GetAllUnpublishedLocation();
+        Task<Response<List<LocationGetAllModel>>> GetAllUnpublishedLocation();
 
-        Task<Response<List<LocationModel>>> GetAllPublishedAndUnpublishedLocation();
+        Task<Response<List<LocationGetAllModel>>> GetAllPublishedAndUnpublishedLocation();
     }
 }
