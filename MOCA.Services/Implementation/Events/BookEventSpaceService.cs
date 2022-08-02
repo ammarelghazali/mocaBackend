@@ -216,13 +216,13 @@ namespace MOCA.Services.Implementation.Events
 
                 if (eventSpace.EventSpaceTimes.Count > 0)
                 {
-                    GetAllBookedEventSpaceResponseDto.eventSpaceTimes = _mapper.Map<List<EventSpace_TimeDto>>(eventSpace.EventSpaceTimes);
+                    GetAllBookedEventSpaceResponseDto.eventSpaceTimes = _mapper.Map<List<Core.DTOs.Events.EventOpportunityDtos.Response.EventSpaceTimeDto>>(eventSpace.EventSpaceTimes);
                 }
 
 
                 if (eventSpace.EventSpaceVenues.Count > 0)
                 {
-                    GetAllBookedEventSpaceResponseDto.eventSpaceVenues = _mapper.Map<List<EventSpace_VenuesDto>>(eventSpace.EventSpaceVenues);
+                    GetAllBookedEventSpaceResponseDto.eventSpaceVenues = _mapper.Map<List<Core.DTOs.Events.EventOpportunityDtos.Response.EventSpaceVenuesDto>>(eventSpace.EventSpaceVenues);
                 }
 
                 GetAllBookedEventSpaceResponseDto.EventRequester = _mapper.Map<EventRequesterDto>(eventSpace.EventRequester);

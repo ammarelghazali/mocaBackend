@@ -14,7 +14,7 @@ namespace MOCA.Presistence.Repositories.Events
             _context = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
-        public async Task<List<OpportunitySatgeModel_ViewModel>> GetDefaultStage()
+        public async Task<List<OpportunitySatgeModelViewModel>> GetDefaultStage()
         {
             /*var OpportunityStages = _context.OpportunityStages.Where(x => x.Id >= 1 && x.Id <= 7).ToList();
             List<OpportunitySatgeModel_ViewModel> data = new List<OpportunitySatgeModel_ViewModel>();
@@ -29,7 +29,7 @@ namespace MOCA.Presistence.Repositories.Events
             }
             return data;*/
             return _context.OpportunityStages.Where(x => x.Id >= 1 && x.Id <= 7 && x.IsDeleted != true)
-                                              .Select(c => new OpportunitySatgeModel_ViewModel
+                                              .Select(c => new OpportunitySatgeModelViewModel
                                               {
                                                   Id = c.Id,
                                                   Name = c.Name,
@@ -37,7 +37,7 @@ namespace MOCA.Presistence.Repositories.Events
                                               }).ToList();
         }
 
-        public async Task<OpportunitySatgeModel_ViewModel> GetCurrentStage(long OpportunityStage_ID)
+        public async Task<OpportunitySatgeModelViewModel> GetCurrentStage(long OpportunityStage_ID)
         {
             /*var OpportunityStage = _context.OpportunityStages.Where(x => x.Id == OpportunityStage_ID).FirstOrDefault();
             OpportunitySatgeModel_ViewModel data = new OpportunitySatgeModel_ViewModel
@@ -47,7 +47,7 @@ namespace MOCA.Presistence.Repositories.Events
                 IsSelected = true
             };
             return data;*/
-            return _context.OpportunityStages.Where(x => x.Id == OpportunityStage_ID && x.IsDeleted != true).Select(c => new OpportunitySatgeModel_ViewModel
+            return _context.OpportunityStages.Where(x => x.Id == OpportunityStage_ID && x.IsDeleted != true).Select(c => new OpportunitySatgeModelViewModel
             {
                 Id = c.Id,
                 Name = c.Name,

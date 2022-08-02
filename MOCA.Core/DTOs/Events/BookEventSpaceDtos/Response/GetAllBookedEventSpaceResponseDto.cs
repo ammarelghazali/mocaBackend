@@ -48,8 +48,8 @@ namespace MOCA.Core.DTOs.Events.BookEventSpaceDtos.Response
         //public DateTime? LastModifiedAt { get; set; }
         public bool? NeedConsultancy { get; set; }
         public string Platform { get; set; }
-        public List<EventSpace_TimeDto> eventSpaceTimes { get; set; }
-        public List<EventSpace_VenuesDto> eventSpaceVenues { get; set; }
+        public List<EventSpaceTimeDto> eventSpaceTimes { get; set; }
+        public List<EventSpaceVenuesDto> eventSpaceVenues { get; set; }
         public InitiatedDto? Initiated { get; set; }
         public OpportunityStageDto? OpportunityStage { get; set; }
         public long? Revenue { get; set; }

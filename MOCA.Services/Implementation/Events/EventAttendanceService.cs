@@ -16,11 +16,11 @@ namespace MOCA.Services.Implementation.Events
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
-        public async Task<PagedResponse<IReadOnlyList<get_AllEventAttendance_ViewModel>>> GetAll(GetAllEventAttendanceDto getAllEventAttendanceDto)
+        public async Task<PagedResponse<IReadOnlyList<GetAllEventAttendanceViewModel>>> GetAll(GetAllEventAttendanceDto getAllEventAttendanceDto)
         {
             var allEventAttendance = await _unitOfWork.EventAttendanceRepo.GetAllWithFilterAsync(x => x.IsDeleted != true);
-            var dataViewModel = _mapper.Map<List<get_AllEventAttendance_ViewModel>>(allEventAttendance);
-            return new PagedResponse<IReadOnlyList<get_AllEventAttendance_ViewModel>>(dataViewModel,
+            var dataViewModel = _mapper.Map<List<GetAllEventAttendanceViewModel>>(allEventAttendance);
+            return new PagedResponse<IReadOnlyList<GetAllEventAttendanceViewModel>>(dataViewModel,
                 getAllEventAttendanceDto.pageNumber, getAllEventAttendanceDto.pageSize, allEventAttendance.Count());
         }
 
