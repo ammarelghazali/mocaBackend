@@ -294,6 +294,24 @@ namespace LocationManagement.API.Controllers
         }
 
         /// <summary>
+        /// Gets All Locations With Filter WithoutPagination
+        /// </summary>
+        /// <param name="filter">an object holds the Filter Body of Location</param>
+        /// <response code="200">Returns the Locations List</response>
+        /// <response code="400">something goes wrong in backend</response>
+        [HttpPost("GetAllLocationsPublishAndUnpublishFilterWithoutPagination")]
+        public async Task<IActionResult> GetAllLocationsPublishAndUnpublishFilterWithoutPagination([FromBody] RequestGetAllLocationWithoutPaginationParameter filter)
+        {
+            var response = await _locationService.GetAllPublishedAndUnpublishedLocationFilterWithoutPagination(filter);
+
+            if (response.Succeeded == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        /// <summary>
         /// Gets All Unpublish Locations
         /// </summary>
         /// <response code="200">Returns the Locations List</response>

@@ -829,5 +829,21 @@ namespace MOCA.Services.Implementation.LocationManagment
             }
             return new PagedResponse<List<LocationGetAllFilterModel>>(data.ToList(), filter.PageNumber, filter.PageSize, data[0].pgTotal);
         }
+
+        public async Task<Response<List<LocationGetAllFilterModel>>> GetAllPublishedAndUnpublishedLocationFilterWithoutPagination(RequestGetAllLocationWithoutPaginationParameter filter)
+        {
+            DynamicParameters parms = new DynamicParameters();
+            parms.Add("@Id", filter.Id);
+            parms.Add("@CityId", filter.CityId);
+            parms.Add("@DistrictId", filter.DistrictId);
+            parms.Add("@ContractLength", filter.ContractLength);
+            var data = await _unitOfWork.LocationRepo.QueryAsync<LocationGetAllFilterModel>("[dbo].[SP_Location_GetAll_Filter_WithoutPagination]", parms, System.Data.CommandType.StoredProcedure);
+
+            if (data.Count == 0)
+            {
+                return new Response<List<LocationGetAllFilterModel>>(null);
+            }
+            return new Response<List<LocationGetAllFilterModel>>(data.ToList());
+        }
     }
 }
