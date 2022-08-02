@@ -404,8 +404,8 @@ namespace MOCA.Services.Implementation.Events
             }
             else if (data.OpportunityInfo.MembershipStatus == "copolitan")
             {
-                var admin = await _unitOfWork.UserService.GetUserByID(data.OpportunityInfo.OpportunityOwner);
-                data.OpportunityInfo.OpportunityOwner = admin.Data.FirstName + " " + admin.Data.LastName;
+                //var admin = await _unitOfWork.UserService.GetUserByID(data.OpportunityInfo.OpportunityOwner);
+                //data.OpportunityInfo.OpportunityOwner = admin.Data.FirstName + " " + admin.Data.LastName;
             }
 
             return new Response<cmd_Get_DetailedEventOpportunity_ViewModel>(data);

@@ -80,8 +80,6 @@ namespace MOCA.Core
         IOpportunityStageReportRepository OpportunityStageReportRepo { get; }
         IOpportunityStageRepository OpportunityStageRepo { get; }
         IEventOpportunityStatusRepository EventOpportunityStatusRepo { get; }
-        IAccountService AccountService { get; }
-        IUserService UserService { get; }
         ILocationsMemberShipsRepository LocationsMemberShipsRepo { get; }
         IEmailTemplateRepository EmailTemplateRepository { get; }
 

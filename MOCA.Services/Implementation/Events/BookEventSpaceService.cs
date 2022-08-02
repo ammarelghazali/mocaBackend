@@ -259,9 +259,9 @@ namespace MOCA.Services.Implementation.Events
                 {
                     if (GetAllBookedEventSpaceResponseDtos[i].IdentityUserId != null)
                     {
-                        var admin = await _unitOfWork.UserService
-                                                     .GetUserByID(GetAllBookedEventSpaceResponseDtos[i].IdentityUserId);
-                        GetAllBookedEventSpaceResponseDtos[i].IdentityUserId = admin.Data.FirstName + " " + admin.Data.LastName;
+                        //var admin = await _unitOfWork.UserService.
+                        //                             .GetUserByID(GetAllBookedEventSpaceResponseDtos[i].IdentityUserId);
+                        //GetAllBookedEventSpaceResponseDtos[i].IdentityUserId = admin.Data.FirstName + " " + admin.Data.LastName;
                     }
                 }
                 return new PagedResponse<IReadOnlyList<GetAllBookedEventSpaceResponseDto>>(GetAllBookedEventSpaceResponseDtos, request.pageNumber, request.pageSize, count);

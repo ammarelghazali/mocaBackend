@@ -306,20 +306,6 @@ namespace MOCA.Presistence
                 return this._eventOpportunityStatusRepo = this._eventOpportunityStatusRepo ?? new EventOpportunityStatusRepository(_context);
             }
         }
-        public IAccountService AccountService
-        {
-            get
-            {
-                return this._accountService = this._accountService ?? new AccountService(_configuration);
-            }
-        }
-        public IUserService UserService
-        {
-            get
-            {
-                return this._userService = this._userService ?? new UserService(_configuration);
-            }
-        }
         public ILocationsMemberShipsRepository LocationsMemberShipsRepo
         {
             get
