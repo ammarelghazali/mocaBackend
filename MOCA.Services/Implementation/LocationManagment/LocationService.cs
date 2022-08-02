@@ -455,12 +455,55 @@ namespace MOCA.Services.Implementation.LocationManagment
             {
                 return new Response<LocationModel>("ID must be greater than zero.");
             }
+            LocationModel locationDetails = new LocationModel();
             var location = await _unitOfWork.LocationRepo.GetByIdAsync(Id);
             if (location == null)
             {
                 return new Response<LocationModel>(null, "No Location Found With This ID.");
             }
-            return new Response<LocationModel>(_mapper.Map<LocationModel>(location));
+            locationDetails = _mapper.Map<LocationModel>(location);
+
+            #region serviceFee
+            var serviceFee = await _unitOfWork.ServiceFeePaymentsDueDateRepoEF.GetAllServiceFeePaymentsDueDateByLocationID(Id);
+            locationDetails.ServiceFeePaymentsDueDates = _mapper.Map<List<ServiceFeePaymentsDueDateModel>>(serviceFee);
+            #endregion
+
+            #region LocationImage
+            var locationImage = await _unitOfWork.LocationImageRepoEF.GetAllLocationImageByLocationID(Id);
+            locationDetails.LocationImages = _mapper.Map<List<LocationImageModel>>(locationImage);
+            #endregion
+
+            #region LocationContact
+            var locationContact = await _unitOfWork.LocationContactRepoEF.GetAllLocationContactByLocationID(Id);
+            locationDetails.LocationContacts = _mapper.Map<List<LocationContactModel>>(locationContact);
+            #endregion
+
+            #region LocationCurrency
+            var locationCurrency = await _unitOfWork.LocationCurrencyRepoEF.GetByLocationID(Id);
+            locationDetails.LocationCurrencies = _mapper.Map<List<LocationCurrencyModel>>(locationCurrency);
+            #endregion
+
+            #region LocationFile
+            var locationFile = await _unitOfWork.LocationFileRepoEF.GetAllLocationFileByLocationID(Id);
+            locationDetails.LocationFiles = _mapper.Map<List<LocationFileModel>>(locationFile);
+            #endregion
+
+            #region LocationWorkingHour
+            var locationWorkingHour = await _unitOfWork.LocationWorkingHourRepoEF.GetAllLocationWorkingHourByLocationID(Id);
+            locationDetails.LocationWorkingHours = _mapper.Map<List<LocationWorkingHourModel>>(locationWorkingHour);
+            #endregion
+
+            #region LocationBankAccount
+            var locationBankAccount = await _unitOfWork.LocationBankAccountRepoEF.GetByLocationID(Id);
+            locationDetails.LocationBankAccount = _mapper.Map<List<LocationBankAccountModel>>(locationBankAccount);
+            #endregion
+
+            #region locationInclusion
+            var locationInclusion = await _unitOfWork.LocationInclusionRepoEF.GetAllLocationInclusionByLocationID(Id);
+            locationDetails.LocationInclusions = _mapper.Map<List<LocationInclusionModel>>(locationInclusion);
+            #endregion
+
+            return new Response<LocationModel>(locationDetails);
         }
 
         public async Task<PagedResponse<List<LocationModel>>> GetAllLocationWithPagination(RequestParameter filter)
@@ -477,12 +520,58 @@ namespace MOCA.Services.Implementation.LocationManagment
                 f => f.IsDeleted == false,
                 q => q.OrderBy(o => o.Name));
 
-            var Res = _mapper.Map<List<LocationModel>>(data);
-            if (Res.Count == 0)
+            if (data.Count() == 0)
             {
                 return new PagedResponse<List<LocationModel>>(null, filter.PageNumber, filter.PageSize);
             }
-            return new PagedResponse<List<LocationModel>>(Res, filter.PageNumber, filter.PageSize, pg_total);
+
+            List<LocationModel> locationDetails = new List<LocationModel>();
+            locationDetails = _mapper.Map<List<LocationModel>>(data);
+
+            for (int i = 0; i < locationDetails.Count; i++)
+            {
+                #region serviceFee
+                var serviceFee = await _unitOfWork.ServiceFeePaymentsDueDateRepoEF.GetAllServiceFeePaymentsDueDateByLocationID(locationDetails[i].Id);
+                locationDetails[i].ServiceFeePaymentsDueDates = _mapper.Map<List<ServiceFeePaymentsDueDateModel>>(serviceFee);
+                #endregion
+
+                #region LocationImage
+                var locationImage = await _unitOfWork.LocationImageRepoEF.GetAllLocationImageByLocationID(locationDetails[i].Id);
+                locationDetails[i].LocationImages = _mapper.Map<List<LocationImageModel>>(locationImage);
+                #endregion
+
+                #region LocationContact
+                var locationContact = await _unitOfWork.LocationContactRepoEF.GetAllLocationContactByLocationID(locationDetails[i].Id);
+                locationDetails[i].LocationContacts = _mapper.Map<List<LocationContactModel>>(locationContact);
+                #endregion
+
+                #region LocationCurrency
+                var locationCurrency = await _unitOfWork.LocationCurrencyRepoEF.GetByLocationID(locationDetails[i].Id);
+                locationDetails[i].LocationCurrencies = _mapper.Map<List<LocationCurrencyModel>>(locationCurrency);
+                #endregion
+
+                #region LocationFile
+                var locationFile = await _unitOfWork.LocationFileRepoEF.GetAllLocationFileByLocationID(locationDetails[i].Id);
+                locationDetails[i].LocationFiles = _mapper.Map<List<LocationFileModel>>(locationFile);
+                #endregion
+
+                #region LocationWorkingHour
+                var locationWorkingHour = await _unitOfWork.LocationWorkingHourRepoEF.GetAllLocationWorkingHourByLocationID(locationDetails[i].Id);
+                locationDetails[i].LocationWorkingHours = _mapper.Map<List<LocationWorkingHourModel>>(locationWorkingHour);
+                #endregion
+
+                #region LocationBankAccount
+                var locationBankAccount = await _unitOfWork.LocationBankAccountRepoEF.GetByLocationID(locationDetails[i].Id);
+                locationDetails[i].LocationBankAccount = _mapper.Map<List<LocationBankAccountModel>>(locationBankAccount);
+                #endregion
+
+                #region locationInclusion
+                var locationInclusion = await _unitOfWork.LocationInclusionRepoEF.GetAllLocationInclusionByLocationID(locationDetails[i].Id);
+                locationDetails[i].LocationInclusions = _mapper.Map<List<LocationInclusionModel>>(locationInclusion);
+                #endregion
+            }
+
+            return new PagedResponse<List<LocationModel>>(locationDetails, filter.PageNumber, filter.PageSize, pg_total);
         }
 
         public async Task<Response<List<LocationModel>>> GetAllLocationWithoutPagination()
@@ -495,12 +584,58 @@ namespace MOCA.Services.Implementation.LocationManagment
             */
             var data = _unitOfWork.LocationRepo.GetAll();
 
-            var Res = _mapper.Map<List<LocationModel>>(data);
-            if (Res.Count == 0)
+            if (data.Count() == 0)
             {
                 return new Response<List<LocationModel>>(null);
             }
-            return new Response<List<LocationModel>>(Res);
+
+            List<LocationModel> locationDetails = new List<LocationModel>();
+            locationDetails = _mapper.Map<List<LocationModel>>(data);
+
+            for (int i = 0; i < locationDetails.Count; i++)
+            {
+                #region serviceFee
+                var serviceFee = await _unitOfWork.ServiceFeePaymentsDueDateRepoEF.GetAllServiceFeePaymentsDueDateByLocationID(locationDetails[i].Id);
+                locationDetails[i].ServiceFeePaymentsDueDates = _mapper.Map<List<ServiceFeePaymentsDueDateModel>>(serviceFee);
+                #endregion
+
+                #region LocationImage
+                var locationImage = await _unitOfWork.LocationImageRepoEF.GetAllLocationImageByLocationID(locationDetails[i].Id);
+                locationDetails[i].LocationImages = _mapper.Map<List<LocationImageModel>>(locationImage);
+                #endregion
+
+                #region LocationContact
+                var locationContact = await _unitOfWork.LocationContactRepoEF.GetAllLocationContactByLocationID(locationDetails[i].Id);
+                locationDetails[i].LocationContacts = _mapper.Map<List<LocationContactModel>>(locationContact);
+                #endregion
+
+                #region LocationCurrency
+                var locationCurrency = await _unitOfWork.LocationCurrencyRepoEF.GetByLocationID(locationDetails[i].Id);
+                locationDetails[i].LocationCurrencies = _mapper.Map<List<LocationCurrencyModel>>(locationCurrency);
+                #endregion
+
+                #region LocationFile
+                var locationFile = await _unitOfWork.LocationFileRepoEF.GetAllLocationFileByLocationID(locationDetails[i].Id);
+                locationDetails[i].LocationFiles = _mapper.Map<List<LocationFileModel>>(locationFile);
+                #endregion
+
+                #region LocationWorkingHour
+                var locationWorkingHour = await _unitOfWork.LocationWorkingHourRepoEF.GetAllLocationWorkingHourByLocationID(locationDetails[i].Id);
+                locationDetails[i].LocationWorkingHours = _mapper.Map<List<LocationWorkingHourModel>>(locationWorkingHour);
+                #endregion
+
+                #region LocationBankAccount
+                var locationBankAccount = await _unitOfWork.LocationBankAccountRepoEF.GetByLocationID(locationDetails[i].Id);
+                locationDetails[i].LocationBankAccount = _mapper.Map<List<LocationBankAccountModel>>(locationBankAccount);
+                #endregion
+
+                #region locationInclusion
+                var locationInclusion = await _unitOfWork.LocationInclusionRepoEF.GetAllLocationInclusionByLocationID(locationDetails[i].Id);
+                locationDetails[i].LocationInclusions = _mapper.Map<List<LocationInclusionModel>>(locationInclusion);
+                #endregion
+            }
+
+            return new Response<List<LocationModel>>(locationDetails);
         }
 
         public async Task<Response<bool>> UpdateLocationPublishStatus(long LocationId)
