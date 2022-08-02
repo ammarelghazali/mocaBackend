@@ -11,7 +11,7 @@ namespace MOCA.Core.Entities.Shared.Reservations
     public class ReservationType : BaseEntity
     {
         [Required]
-        [MaxLength(500)]
+        [MaxLength(500)]    
         public string Name { get; set; }
 
         public ICollection<ReservationTransaction> ReservationTransactions { get; set; }

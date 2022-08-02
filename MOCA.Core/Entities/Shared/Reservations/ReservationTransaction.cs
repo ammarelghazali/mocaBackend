@@ -31,4 +31,4 @@ namespace MOCA.Core.Entities.Shared.Reservations
 
         public ICollection<ReservationDetail> ReservationDetails { get; set; }
     }
-}
+}   
