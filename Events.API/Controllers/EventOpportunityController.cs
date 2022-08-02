@@ -28,7 +28,7 @@ namespace Events.API.Controllers
         /// <reponse code="400">Failed to save the opportuniy, maybe that happened if the contacts has an
         /// already opened opportunity or a tour</reponse>
         [HttpPost("CreateNewOpportunity")]
-        public async Task<IActionResult> CreateNewOpportunity([FromBody] cmd_Create_NewEventOpportunity_Parameter filter)
+        public async Task<IActionResult> CreateNewOpportunity([FromBody] cmdCreateNewEventOpportunityParameter filter)
         {
             var data = await _eventOpportunityService.CreateNewOpportunity(filter);
 
@@ -46,7 +46,7 @@ namespace Events.API.Controllers
         /// <response code="200">Deletes the opportunity and all related data successfully</response>
         /// <response code="400">Opportunity not found, or there is error while saving</response>
         [HttpDelete("DeleteOpportunity")]
-        public async Task<IActionResult> DeleteOpportunity([FromQuery] cmd_Delete_EventOpportunity_Parameter filter)
+        public async Task<IActionResult> DeleteOpportunity([FromQuery] cmdDeleteEventOpportunityParameter filter)
         {
             var response = await _eventOpportunityService.DeleteOpportunity(filter);
 
@@ -64,7 +64,7 @@ namespace Events.API.Controllers
         /// <response code="200">Updated Opportunity Successfully</response>
         /// <response code="400">Failed to update the opportunity or the id is not found</response>
         [HttpPut("UpdateOpportunity")]
-        public async Task<IActionResult> UpdateOpportunity([FromBody] cmd_Update_EventOpportunity_Parameter filter)
+        public async Task<IActionResult> UpdateOpportunity([FromBody] cmdUpdateEventOpportunityParameter filter)
         {
             var response = await _eventOpportunityService.UpdateOpportunity(filter);
 
@@ -81,14 +81,14 @@ namespace Events.API.Controllers
         /// <param name="filter">filters parameters</param>
         /// <response code="200">Returns the oppportunities successfully</response>
         [HttpPost("FilterWithPagination")]
-        public async Task<IActionResult> FilterWithPagination([FromBody] cmd_Filter_EventOpportunityDetails_WithPagination_Parameter filter)
+        public async Task<IActionResult> FilterWithPagination([FromBody] cmdFilterEventOpportunityDetailsWithPaginationParameter filter)
         {
 
-            var response = await _eventOpportunityService.FilterWithPagination(new cmd_Filter_EventOpportunityDetails_WithPagination_Query((int)filter.pageNumber, (int)filter.pageSize)
+            var response = await _eventOpportunityService.FilterWithPagination(new cmdFilterEventOpportunityDetailsWithPagination_Query((int)filter.pageNumber, (int)filter.pageSize)
             {
                 pageNumber = (int)filter.pageNumber,
                 pageSize = (int)filter.pageSize,
-                LocationType_ID = (int)filter.LocationType_ID,
+                LocationTypeId = (int)filter.LocationTypeId,
                 OwnerName = filter.OwnerName,
                 Name = filter.Name,
                 Id = filter.Id,
@@ -108,7 +108,7 @@ namespace Events.API.Controllers
         /// <response code="200">Returns the opportunity details successfully</response>
         /// <response code="400">Not found opportunity</response>
         [HttpGet("GetOpportunityDetailsByEventOpportunityID")]
-        public async Task<IActionResult> GetOpportunityDetailsByEventOpportunityID([FromQuery] cmd_Get_EventOpportunityDetails_Parameter filter)
+        public async Task<IActionResult> GetOpportunityDetailsByEventOpportunityID([FromQuery] cmdGetEventOpportunityDetailsParameter filter)
         {
             var response = await _eventOpportunityService.GetOpportunityDetailsByEventOpportunityID(filter);
 
@@ -143,7 +143,7 @@ namespace Events.API.Controllers
         /// <response code="200">Email Sent Successfully</response>
         /// <response code="400">failed to sent the Email Sent Successfully</response>
         [HttpPost("SendEmails")]
-        public async Task<IActionResult> SendEmails([FromBody] cmd_Post_SendEmail_Parameter filter)
+        public async Task<IActionResult> SendEmails([FromBody] cmdPostSendEmailParameter filter)
         {
             var response = await _eventOpportunityService.SendEmails(filter);
 
@@ -162,7 +162,7 @@ namespace Events.API.Controllers
         /// <response code="400">if the opportunity is not found or deleted the id is wrong</response>
         /// <response code="200">Returns the Opportunity Details</response>
         [HttpGet("GetEventOpportunityDetails")]
-        public async Task<IActionResult> GetEventOpportunityDetails([FromQuery] cmd_Get_DetailedEventOpportunity_Parameter filter)
+        public async Task<IActionResult> GetEventOpportunityDetails([FromQuery] cmdGetDetailedEventOpportunityParameter filter)
         {
             var response = await _eventOpportunityService.GetEventOpportunityDetails(filter);
 
@@ -182,7 +182,7 @@ namespace Events.API.Controllers
         /// <response code="200"> Saved Successfully and report stage added Opp stage repoert </response>
         /// <response code="400"> Error happend </response>
         [HttpPost("SaveEventOpportunityDetails")]
-        public async Task<IActionResult> SaveEventOpportunityDetails([FromBody] cmd_Post_EventOpportunityStageReport_Parameter filter)
+        public async Task<IActionResult> SaveEventOpportunityDetails([FromBody] cmdPostEventOpportunityStageReportParameter filter)
         {
             var response = await _eventOpportunityService.SaveEventOpportunityDetails(filter);
 

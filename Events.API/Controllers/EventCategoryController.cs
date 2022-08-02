@@ -17,9 +17,9 @@ namespace Events.API.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll([FromQuery] get_AllEventCategory_Parameter filter)
+        public async Task<IActionResult> GetAll([FromQuery] GetAllEventCategoryParameter filter)
         {
-            var response = await _eventCategoryService.GetAll(new get_AllEventCategory_Query(filter.pageNumber, filter.pageSize));
+            var response = await _eventCategoryService.GetAll(new GetAllEventCategoryQuery(filter.pageNumber, filter.pageSize));
             return Ok(response);
         }
     }

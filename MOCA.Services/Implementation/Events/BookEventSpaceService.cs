@@ -216,13 +216,13 @@ namespace MOCA.Services.Implementation.Events
 
                 if (eventSpace.EventSpaceTimes.Count > 0)
                 {
-                    GetAllBookedEventSpaceResponseDto.eventSpaceTimes = _mapper.Map<List<EventSpace_TimeDto>>(eventSpace.EventSpaceTimes);
+                    GetAllBookedEventSpaceResponseDto.eventSpaceTimes = _mapper.Map<List<Core.DTOs.Events.EventOpportunityDtos.Response.EventSpaceTimeDto>>(eventSpace.EventSpaceTimes);
                 }
 
 
                 if (eventSpace.EventSpaceVenues.Count > 0)
                 {
-                    GetAllBookedEventSpaceResponseDto.eventSpaceVenues = _mapper.Map<List<EventSpace_VenuesDto>>(eventSpace.EventSpaceVenues);
+                    GetAllBookedEventSpaceResponseDto.eventSpaceVenues = _mapper.Map<List<Core.DTOs.Events.EventOpportunityDtos.Response.EventSpaceVenuesDto>>(eventSpace.EventSpaceVenues);
                 }
 
                 GetAllBookedEventSpaceResponseDto.EventRequester = _mapper.Map<EventRequesterDto>(eventSpace.EventRequester);
@@ -259,9 +259,9 @@ namespace MOCA.Services.Implementation.Events
                 {
                     if (GetAllBookedEventSpaceResponseDtos[i].IdentityUserId != null)
                     {
-                        var admin = await _unitOfWork.UserService
-                                                     .GetUserByID(GetAllBookedEventSpaceResponseDtos[i].IdentityUserId);
-                        GetAllBookedEventSpaceResponseDtos[i].IdentityUserId = admin.Data.FirstName + " " + admin.Data.LastName;
+                        //var admin = await _unitOfWork.UserService.
+                        //                             .GetUserByID(GetAllBookedEventSpaceResponseDtos[i].IdentityUserId);
+                        //GetAllBookedEventSpaceResponseDtos[i].IdentityUserId = admin.Data.FirstName + " " + admin.Data.LastName;
                     }
                 }
                 return new PagedResponse<IReadOnlyList<GetAllBookedEventSpaceResponseDto>>(GetAllBookedEventSpaceResponseDtos, request.pageNumber, request.pageSize, count);
