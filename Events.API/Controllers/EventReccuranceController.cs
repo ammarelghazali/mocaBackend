@@ -21,7 +21,7 @@ namespace Events.API.Controllers
         public async Task<IActionResult> GetAll([FromQuery] GetAllEventReccuranceDto filter)
         {
             var response = await _eventRecurrenceService.GetAll(
-                               new get_AllEventReccurance_Query(filter.pageNumber, filter.pageSize)
+                               new GetAllEventReccuranceQuery(filter.pageNumber, filter.pageSize)
                                {
                                    pageSize = filter.pageSize,
                                    pageNumber = filter.pageNumber

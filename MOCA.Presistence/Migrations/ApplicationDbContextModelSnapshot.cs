@@ -496,7 +496,7 @@ namespace MOCA.Presistence.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("LobLocationTypeId")
+                    b.Property<long>("LobLocationTypeId")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("LocationNameId")
@@ -3204,7 +3204,9 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasOne("MOCA.Core.Entities.LocationManagment.LocationType", "LocationType")
                         .WithMany("EventSpaceBookings")
-                        .HasForeignKey("LobLocationTypeId");
+                        .HasForeignKey("LobLocationTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MOCA.Core.Entities.LocationManagment.Location", "Location")
                         .WithMany("EventSpaceBookings")

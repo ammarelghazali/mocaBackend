@@ -6,7 +6,7 @@ namespace MOCA.Core.Interfaces.Events.Repositories
 {
     public interface IOpportunityStageRepository : IGenericRepository<OpportunityStage>
     {
-        Task<List<OpportunitySatgeModel_ViewModel>> GetDefaultStage();
-        Task<OpportunitySatgeModel_ViewModel> GetCurrentStage(long OpportunityStage_ID);
+        Task<List<OpportunitySatgeModelViewModel>> GetDefaultStage();
+        Task<OpportunitySatgeModelViewModel> GetCurrentStage(long OpportunityStage_ID);
     }
 }

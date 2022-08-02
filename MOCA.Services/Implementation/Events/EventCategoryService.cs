@@ -18,11 +18,11 @@ namespace MOCA.Services.Implementation.Events
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<PagedResponse<IReadOnlyList<get_AllEventCategory_ViewModel>>> GetAll(get_AllEventCategory_Query request)
+        public async Task<PagedResponse<IReadOnlyList<GetAllEventCategoryViewModel>>> GetAll(GetAllEventCategoryQuery request)
         {
             var allEventCategory = await _unitOfWork.EventCategoryRepo.GetAllWithFilterAsync(x => x.IsDeleted == false);
-            var dataViewModel = mapper.Map<List<get_AllEventCategory_ViewModel>>(allEventCategory);
-            return new PagedResponse<IReadOnlyList<get_AllEventCategory_ViewModel>>(dataViewModel,
+            var dataViewModel = mapper.Map<List<GetAllEventCategoryViewModel>>(allEventCategory);
+            return new PagedResponse<IReadOnlyList<GetAllEventCategoryViewModel>>(dataViewModel,
                 request.pageNumber, request.pageSize, allEventCategory.Count());
         }
     }

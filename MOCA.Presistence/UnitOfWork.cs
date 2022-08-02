@@ -308,34 +308,6 @@ namespace MOCA.Presistence
                 return this._eventOpportunityStatusRepo = this._eventOpportunityStatusRepo ?? new EventOpportunityStatusRepository(_context);
             }
         }
-        public ILocationRepositoty LocationRepo
-        {
-            get
-            {////////////////// All Configurations must be replaced with context after using DB
-                return this._locationRepo = this._locationRepo ?? new LocationRepositoty(_configuration);
-            }
-        }
-        public IAccountService AccountService
-        {
-            get
-            {
-                return this._accountService = this._accountService ?? new AccountService(_configuration);
-            }
-        }
-        public IUserService UserService
-        {
-            get
-            {
-                return this._userService = this._userService ?? new UserService(_configuration);
-            }
-        }
-        public ILoungeClientRepository LoungeClientRepo
-        {
-            get
-            {
-                return this._loungeClientRepo = this._loungeClientRepo ?? new LoungeClientRepository(_configuration);
-            }
-        }
         public ILocationsMemberShipsRepository LocationsMemberShipsRepo
         {
             get

@@ -6,6 +6,6 @@ namespace MOCA.Core.Interfaces.Events.Services
 {
     public interface IEventCategoryService
     {
-        Task<PagedResponse<IReadOnlyList<get_AllEventCategory_ViewModel>>> GetAll(get_AllEventCategory_Query request);
+        Task<PagedResponse<IReadOnlyList<GetAllEventCategoryViewModel>>> GetAll(GetAllEventCategoryQuery request);
     }
 }
