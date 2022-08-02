@@ -764,7 +764,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             return new Response<List<LocationGetAllModel>>(data);
         }
 
-        public async Task<Response<List<LocationGetAllModel>>> GetAllPublishedAndUnpublishedLocation()
+        public async Task<Response<List<LocationGetAllModel>>> GetAllPublishedAndUnpublishedLocation(RequestParameter filter)
         {
             /*
              if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
@@ -772,7 +772,7 @@ namespace MOCA.Services.Implementation.LocationManagment
                     throw new UnauthorizedAccessException("User is not authorized");
                 }
             */
-            var data = await _unitOfWork.LocationRepoEF.GetAllPublishedAndUnpublishedLocation();
+            var data = await _unitOfWork.LocationRepoEF.GetAllPublishedAndUnpublishedLocation(filter);
 
             for (int i = 0; i < data.Count; i++)
             {

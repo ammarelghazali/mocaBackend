@@ -91,7 +91,7 @@ namespace MOCA.Presistence.Repositories.LocationManagment
             return new List<LocationGetAllModel>(location);
         }
 
-        public async Task<List<LocationGetAllModel>> GetAllPublishedAndUnpublishedLocation()
+        public async Task<List<LocationGetAllModel>> GetAllPublishedAndUnpublishedLocation(RequestParameter filter)
         {
             var location = _context.Locations.Where(x => x.IsDeleted != true).Select(x => new LocationGetAllModel
             {
@@ -111,7 +111,11 @@ namespace MOCA.Presistence.Repositories.LocationManagment
                     Id = x.DistrictId
                 },
                 City = new DropdownViewModel()
-            }).AsNoTracking().ToList();
+            })
+                .AsNoTracking()
+                .Skip((filter.PageNumber - 1) * filter.PageSize)
+                .Take(filter.PageSize)
+                .ToList();
 
             if (location == null)
             {

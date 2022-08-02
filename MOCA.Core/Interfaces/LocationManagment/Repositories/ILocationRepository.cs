@@ -12,6 +12,6 @@ namespace MOCA.Core.Interfaces.LocationManagment.Repositories
         Task<List<long>> GetAllDistinictDistrict();
         Task<List<DropdownViewModel>> GetAllDistinictLocation();
         Task<List<LocationGetAllModel>> GetAllUnpublishedLocation();
-        Task<List<LocationGetAllModel>> GetAllPublishedAndUnpublishedLocation();
+        Task<List<LocationGetAllModel>> GetAllPublishedAndUnpublishedLocation(RequestParameter filter);
     }
 }
