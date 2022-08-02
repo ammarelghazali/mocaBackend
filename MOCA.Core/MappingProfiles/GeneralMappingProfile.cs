@@ -284,6 +284,9 @@ namespace MOCA.Core.MappingProfiles
             CreateMap<LocationModel, Location>();
             CreateMap<Location, LocationModel>();
 
+            CreateMap<LocationModel, LocationDetailsModel>();
+            CreateMap<LocationDetailsModel, LocationModel>();
+
             CreateMap<FavouriteLocationModel, FavouriteLocation>();
             CreateMap<FavouriteLocation, FavouriteLocationModel>();
             #endregion

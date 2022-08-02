@@ -11,7 +11,7 @@ namespace MOCA.Core.Interfaces.LocationManagment.Repositories
         Task<bool> DeleteLocation(long Id);
         Task<List<long>> GetAllDistinictDistrict();
         Task<List<DropdownViewModel>> GetAllDistinictLocation();
-        Task<List<Location>> GetAllUnpublishedLocation();
-        Task<List<Location>> GetAllPublishedAndUnpublishedLocation();
+        Task<List<LocationGetAllModel>> GetAllUnpublishedLocation();
+        Task<List<LocationGetAllModel>> GetAllPublishedAndUnpublishedLocation();
     }
 }
