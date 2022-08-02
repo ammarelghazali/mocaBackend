@@ -276,6 +276,24 @@ namespace LocationManagement.API.Controllers
         }
 
         /// <summary>
+        /// Gets All Locations With Filter
+        /// </summary>
+        /// <param name="filter">an object holds the Filter Body of Location</param>
+        /// <response code="200">Returns the Locations List</response>
+        /// <response code="400">something goes wrong in backend</response>
+        [HttpPost("GetAllLocationsPublishAndUnpublishFilter")]
+        public async Task<IActionResult> GetAllLocationsPublishAndUnpublishFilter([FromBody] RequestGetAllLocationParameter filter)
+        {
+            var response = await _locationService.GetAllPublishedAndUnpublishedLocationFilter(filter);
+
+            if (response.Succeeded == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        /// <summary>
         /// Gets All Unpublish Locations
         /// </summary>
         /// <response code="200">Returns the Locations List</response>

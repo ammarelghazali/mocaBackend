@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Dapper;
 using MOCA.Core;
 using MOCA.Core.DTOs.LocationManagment.City;
 using MOCA.Core.DTOs.LocationManagment.Country;
@@ -764,7 +765,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             return new Response<List<LocationGetAllModel>>(data);
         }
 
-        public async Task<Response<List<LocationGetAllModel>>> GetAllPublishedAndUnpublishedLocation(RequestParameter filter)
+        public async Task<PagedResponse<List<LocationGetAllModel>>> GetAllPublishedAndUnpublishedLocation(RequestParameter filter)
         {
             /*
              if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
@@ -773,7 +774,7 @@ namespace MOCA.Services.Implementation.LocationManagment
                 }
             */
             var data = await _unitOfWork.LocationRepoEF.GetAllPublishedAndUnpublishedLocation(filter);
-
+            int pg_total = await _unitOfWork.LocationRepo.GetCountAsync(x => x.IsDeleted == false);
             for (int i = 0; i < data.Count; i++)
             {
                 #region District
@@ -806,9 +807,27 @@ namespace MOCA.Services.Implementation.LocationManagment
 
             if (data.Count == 0)
             {
-                return new Response<List<LocationGetAllModel>>(null);
+                return new PagedResponse<List<LocationGetAllModel>>(null, filter.PageNumber, filter.PageSize, pg_total);
             }
-            return new Response<List<LocationGetAllModel>>(data);
+            return new PagedResponse<List<LocationGetAllModel>>(data, filter.PageNumber, filter.PageSize, pg_total);
+        }
+
+        public async Task<PagedResponse<List<LocationGetAllFilterModel>>> GetAllPublishedAndUnpublishedLocationFilter(RequestGetAllLocationParameter filter)
+        {
+            DynamicParameters parms = new DynamicParameters();
+            parms.Add("@Id", filter.Id);
+            parms.Add("@CityId", filter.CityId);
+            parms.Add("@DistrictId", filter.DistrictId);
+            parms.Add("@ContractLength", filter.ContractLength);
+            parms.Add("@pageNumber", filter.PageNumber);
+            parms.Add("@pageSize", filter.PageSize);
+            var data = await _unitOfWork.LocationRepo.QueryAsync<LocationGetAllFilterModel>("[dbo].[SP_Location_GetAll_Filter_Pagination]", parms, System.Data.CommandType.StoredProcedure);
+            
+            if (data.Count == 0)
+            {
+                return new PagedResponse<List<LocationGetAllFilterModel>>(null, filter.PageNumber, filter.PageSize, data[0].pgTotal);
+            }
+            return new PagedResponse<List<LocationGetAllFilterModel>>(data.ToList(), filter.PageNumber, filter.PageSize, data[0].pgTotal);
         }
     }
 }
