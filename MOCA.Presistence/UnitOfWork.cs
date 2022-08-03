@@ -193,7 +193,6 @@ namespace MOCA.Presistence
         private IEventSpaceTimesRepository _eventSpaceTimesRepo;
         private IEventSpaceVenueRepository _eventSpaceVenuesRepo;
         private IContactDetailsRepository _contactDetailsRepo;
-        private ILocationRepositoty _locationRepo;
         private IInitiatedRepository _initiatedRepo;
         private ILoungeClientRepository _loungeClientRepo;
         private ISendEmailRepository _sendEmailRepo;
