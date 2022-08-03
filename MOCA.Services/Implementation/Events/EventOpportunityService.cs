@@ -653,11 +653,21 @@ namespace MOCA.Services.Implementation.Events
                 emailStringBuilder.Append($"</body>");
                 emailStringBuilder.Append($"</html>");
 
-                var SentEmail = new SendEmail();
                 foreach (var item in request.ToUsers)
                 {
                     var contact = await _unitOfWork.ContactDetailsRepo.GetContact_DetailByEmail(item);
+                    if(contact == null)
+                    {
+                        return new Response<bool>(false, $"not all users' emails are in contact details!");
+                    }
+                }
 
+                var SentEmail = new SendEmail();
+                foreach (var item in request.ToUsers)
+                {
+
+                    var contact = await _unitOfWork.ContactDetailsRepo.GetContact_DetailByEmail(item);
+                    
                     var emailRequest = new EmailRequest();
                     if (request.IsUser != 1)
                     {
