@@ -16,28 +16,31 @@ namespace MOCA.Services.Implementation.LocationManagment
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IDateTimeService _dateTimeService;
-        public DistrictService(IUnitOfWork unitOfWork,
+        private readonly IAuthenticatedUserService _authenticatedUserService;
+        public DistrictService(
+            IAuthenticatedUserService authenticatedUserService, 
+            IUnitOfWork unitOfWork,
             IMapper mapper,
             IDateTimeService dateTimeService)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _dateTimeService = dateTimeService ?? throw new ArgumentNullException(nameof(dateTimeService));
+            _authenticatedUserService = authenticatedUserService ?? throw new ArgumentNullException(nameof(authenticatedUserService));
         }
 
         public async Task<Response<long>> AddDistrict(DistrictModel request)
         {
             var district = _mapper.Map<District>(request);
-            district.CreatedBy = "System";
-            /*if (string.IsNullOrWhiteSpace(city.CreatedBy))
+            if (string.IsNullOrWhiteSpace(district.CreatedBy))
             {
                 if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
                 {
                     throw new UnauthorizedAccessException("User is not authorized");
                 }
                 else
-                { city.CreatedBy = authenticatedUserService.UserId; }
-            }*/
+                { district.CreatedBy = _authenticatedUserService.UserId; }
+            }
             if (district.CreatedAt == null || district.CreatedAt == default)
             {
                 district.CreatedAt = _dateTimeService.NowUtc;
@@ -49,11 +52,10 @@ namespace MOCA.Services.Implementation.LocationManagment
             }
 
             _unitOfWork.DistrictRepo.Insert(district);
-            _unitOfWork.Save();
-            /*if (await _unitOfWork.SaveAsync() < 1)
+            if (await _unitOfWork.SaveAsync() < 1)
             {
                 return new Response<long>("Cannot Add District right now");
-            }*/
+            }
 
             return new Response<long>(district.Id, "District Added Successfully.");
         }
@@ -62,16 +64,15 @@ namespace MOCA.Services.Implementation.LocationManagment
         {
             var district = _mapper.Map<District>(request);
 
-            /*if (string.IsNullOrWhiteSpace(country.LastModifiedBy))
+            if (string.IsNullOrWhiteSpace(district.LastModifiedBy))
             {
-                if (string.IsNullOrWhiteSpace(authenticatedUser.UserId))
+                if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
                 {
                     throw new UnauthorizedAccessException("Last Modified By UserID is required");
                 }
                 else
-                { country.LastModifiedBy = authenticatedUser.UserId; }
-            }*/
-            district.LastModifiedBy = "System";
+                { district.LastModifiedBy = _authenticatedUserService.UserId; }
+            }
             if (district.LastModifiedAt == null)
             {
                 district.LastModifiedAt = DateTime.UtcNow;
@@ -86,23 +87,20 @@ namespace MOCA.Services.Implementation.LocationManagment
             district.CreatedAt = districtEntity.CreatedAt;
 
             _unitOfWork.DistrictRepo.Update(district);
-            _unitOfWork.Save();
-            /*if (await _unitOfWork.SaveAsync() < 1)
+            if (await _unitOfWork.SaveAsync() < 1)
             {
                 return new Response<bool>("Cannot Update District right now");
-            }*/
+            }
 
             return new Response<bool>(true, "District Updated Successfully.");
         }
 
         public async Task<Response<DistrictModel>> GetDistrictByID(long Id)
         {
-            /*
-             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-             */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
             if (Id <= 0)
             {
                 return new Response<DistrictModel>("ID must be greater than zero.");
@@ -117,12 +115,10 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<PagedResponse<List<DistrictModel>>> GetAllDistrictsWithPagination(RequestParameter filter)
         {
-            /*
-             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-            */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
             int pg_total = await _unitOfWork.DistrictRepo.GetCountAsync(x => x.IsDeleted == false);
             var data = _unitOfWork.DistrictRepo.GetPaged(filter.PageNumber,
                 filter.PageSize,
@@ -139,12 +135,10 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<Response<List<DistrictModel>>> GetAllDistrictsWithoutPagination()
         {
-            /*
-             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-            */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
             var data = _unitOfWork.DistrictRepo.GetAll();
 
             var Res = _mapper.Map<List<DistrictModel>>(data);
@@ -157,13 +151,10 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<Response<List<DistrictModel>>> GetAllDistrictsByCityID(long CityID)
         {
-            /*
-             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-            */
-
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
             if (CityID == null || CityID <= 0) { throw new ValidationException(); }
 
             var data = await _unitOfWork.DistrictRepoEF.GetDistrictsByCityId(CityID);
@@ -172,20 +163,19 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<Response<bool>> DeleteDistrict(long Id)
         {
-            /*
-            if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-               {
-                   throw new UnauthorizedAccessException("User is not authorized");
-               }
-           */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
+
             var HasAnyEntities = await _unitOfWork.DistrictRepoEF.HasAnyRelatedEntities(Id);
             if (HasAnyEntities)
             {
                 throw new EntityIsBusyException("District Is Busy and Can't be deleted.");
             }
 
-            var city = await _unitOfWork.DistrictRepoEF.DeleteDistrict(Id);
-            if (city == false)
+            var District = await _unitOfWork.DistrictRepoEF.DeleteDistrict(Id);
+            if (District == false)
                 return new Response<bool>("District With This ID didn't exist.");
 
             if (await _unitOfWork.SaveAsync() < 1)
