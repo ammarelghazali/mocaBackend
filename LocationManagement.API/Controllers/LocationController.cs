@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using MOCA.Core.DTOs.LocationManagment.FavouriteLocation;
@@ -13,6 +14,7 @@ namespace LocationManagement.API.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
+    [Authorize]
     public class LocationController : ControllerBase
     {
         private readonly IMapper _mapper;
