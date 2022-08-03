@@ -33,10 +33,9 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
         {
             var data = await _unitOfWork.WorkSpaceReservationsRepositoryCRM.GetFilteredSubmissions(request);
 
-            var lstWorkspaceSubmissions = data;
             if (data.Count > 0)
             {
-                return new PagedResponse<IReadOnlyList<GatFilteredWorkSpaceReservationResponse>>(lstWorkspaceSubmissions, request.pageNumber, request.pageSize, lstWorkspaceSubmissions.Count);
+                return new PagedResponse<IReadOnlyList<GatFilteredWorkSpaceReservationResponse>>(data, request.pageNumber, request.pageSize, data.Count);
 
             }
             return new PagedResponse<IReadOnlyList<GatFilteredWorkSpaceReservationResponse>>(null, request.pageNumber, request.pageSize);

@@ -12,6 +12,6 @@ namespace MOCA.Core.Entities.WorkSpaceReservations.Base
         public long? PaymentMethodId { get; set; }
 
         [ForeignKey("PaymentMethodId")]
-        public PaymentMethod MyProperty { get; set; }
+        public PaymentMethod PaymentMethod { get; set; }
     }
 }
