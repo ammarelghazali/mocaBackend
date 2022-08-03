@@ -170,14 +170,14 @@ namespace MOCA.Services.Implementation.Events
                 EventOpportunityDetails = new EventOpportunityDetails_Send_ViewModel
                 {
                     Opportunity_ID = item.Id,
-                    SubmissionDate = (DateTime)item.SubmissionDate,
-                    OpportunityOwner = _authenticatedUser.UserName,
+                    SubmissionDate = item.CreatedAt,
+                    OpportunityOwner = "Name",
                     Initiated = new Initiated
                     {
                         Id = initiat.Id,
                         Name = initiat.Name,
                     },
-                    EventRequester_ID = (long)item.EventRequesterId,
+                    EventRequester_ID = item.EventRequesterId == null ? 0 : item.EventRequesterId.Value,
                     CompanyName = item.CompanyName,
                     EventRequester_Name = EventRequest.Name,
                     ContactDetails = _mapper.Map<List<EventOpportunityContactDetails_ViewModel>>(ContactDetails),
