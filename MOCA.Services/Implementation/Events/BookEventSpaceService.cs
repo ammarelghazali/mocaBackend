@@ -4,6 +4,7 @@ using MOCA.Core.DTOs.Events.BookEventSpaceDtos.Request;
 using MOCA.Core.DTOs.Events.BookEventSpaceDtos.Response;
 using MOCA.Core.DTOs.Events.EventAttendanceDtos.Response;
 using MOCA.Core.DTOs.Events.EventCategoryDtos.Response;
+using MOCA.Core.DTOs.Events.EventOpportunityDtos.Request;
 using MOCA.Core.DTOs.Events.EventOpportunityDtos.Response;
 using MOCA.Core.DTOs.Events.EventReccuranceDtos.Response;
 using MOCA.Core.DTOs.Events.EventTypeDtos.Response;
@@ -273,18 +274,18 @@ namespace MOCA.Services.Implementation.Events
         }
 
         public async Task<Response<DropDownsResponseDto>> GetAllDataForDropDowns(GetAllBookedEventSpaceDropDownsDto dto)
-        {/*
+        {
             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
             {
                 throw new UnauthorizedAccessException("User is not authorized");
             }
-            */
+            
             var allDropDowns = new DropDownsResponseDto();
 
 
 
             var locationIDs = await _unitOfWork.EventSpaceBookingRepo.GetAllDistinctLocation();
-            var loc_data = new List<DropdownViewModel>();
+            var locationData = new List<DropdownViewModel>();
             allDropDowns.EventVenues = new List<DropdownViewModel>();
             allDropDowns.EventAttendances = new List<DropdownViewModel>();
             allDropDowns.EventReccurances = new List<DropdownViewModel>();
@@ -300,13 +301,10 @@ namespace MOCA.Services.Implementation.Events
                 var location = await _unitOfWork.LocationsMemberShipsRepo.GetLocationByIDAndLocType(id, dto.LocTypeId);
                 if (location != null)
                 {
-                    loc_data.Add(new DropdownViewModel { Id = id, Name = location.Name });
-                    foreach (var item in loc_data)
+                    locationData.Add(new DropdownViewModel { Id = id, Name = location.Name });
+                    foreach (var item in locationData)
                     {
-                        //// hna htb3t location id item.Id get all booking eventspace
                         var eventSpaces = await _unitOfWork.EventSpaceBookingRepo.GetAllBookedEventSpaceByLocationId(item.Id);
-                        ///get array of eventspace 
-                        ///loop {id bta3 booking eventspace send}
                         foreach (var eventSpace in eventSpaces)
                         {
                             var dataVenu = await _unitOfWork.EventSpaceVenuesRepo.GetAllDistinctVenue(eventSpace.Id);
@@ -318,7 +316,6 @@ namespace MOCA.Services.Implementation.Events
                         }
 
                     }
-                    // location.eventspaces.include(venues, industry, category, recurrence, typeId, requester, attendence, intiated)
                     var IndustyIDs = await _unitOfWork.EventSpaceBookingRepo.GetAllDistinctIndusty(id);
                     var ind_data = new List<DropdownViewModel>();
                     foreach (var ids in IndustyIDs)
@@ -359,13 +356,13 @@ namespace MOCA.Services.Implementation.Events
                     allDropDowns.EventTypes.AddRange(typ_data);
 
                     var AttendanceIDs = await _unitOfWork.EventSpaceBookingRepo.GetAllDistinctAttendance(id);
-                    var att_data = new List<DropdownViewModel>();
+                    var attendanceData = new List<DropdownViewModel>();
                     foreach (var ids in AttendanceIDs)
                     {
                         var attendance = _unitOfWork.EventAttendanceRepo.GetByID(ids);
-                        att_data.Add(new DropdownViewModel { Id = attendance.Id, Name = attendance.Name });
+                        attendanceData.Add(new DropdownViewModel { Id = attendance.Id, Name = attendance.Name });
                     }
-                    allDropDowns.EventAttendances.AddRange(att_data);
+                    allDropDowns.EventAttendances.AddRange(attendanceData);
                 }
             }
             var venus = allDropDowns.EventVenues.Select(x => x.Name).Distinct();
@@ -376,7 +373,7 @@ namespace MOCA.Services.Implementation.Events
                 dropdownViewModel.Name = venue;
                 allDropDowns.EventVenues.Add(dropdownViewModel);
             }
-            allDropDowns.Locations = loc_data;
+            allDropDowns.Locations = locationData;
 
             var RequesterIDs = await _unitOfWork.EventSpaceBookingRepo.GetAllDistinctRequester(dto.LocTypeId);
             var req_data = new List<DropdownViewModel>();
@@ -398,6 +395,87 @@ namespace MOCA.Services.Implementation.Events
 
             return new Response<DropDownsResponseDto>(allDropDowns);
         }
+
+
+        public async Task<Response<List<GetAllBookedEventSpaceResponseDto>>> FilterWithoutPagination(FilterWithoutPaginationDto dto)
+        {
+            if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
+
+            var allEventSpaces = await _unitOfWork.EventSpaceBookingRepo.GetAllIQueryable();
+
+            if(dto.Id != null)
+                allEventSpaces = allEventSpaces.Where(x => x.Id == dto.Id);
+
+            if (dto.IdentityUserId != null)
+                allEventSpaces = allEventSpaces.Where(x => x.IdentityUserId == dto.IdentityUserId);
+           
+            if (dto.CompanyCommericalName != null)
+                allEventSpaces = allEventSpaces.Where(x => x.CompanyCommericalName == dto.CompanyCommericalName);
+
+            if (dto.NeedConsultancy != null)
+                allEventSpaces = allEventSpaces.Where(x => x.NeedConsultancy == dto.NeedConsultancy);
+            
+            if (dto.DoesYourEventSupportStartup != null)
+                allEventSpaces = allEventSpaces.Where(x => x.DoesYourEventSupportStartup == dto.DoesYourEventSupportStartup);
+            
+            if (dto.EventAttendanceId != null)
+                allEventSpaces = allEventSpaces.Where(x => x.EventAttendanceId == dto.EventAttendanceId);
+            
+            if (dto.EventCategoryId != null)
+                allEventSpaces = allEventSpaces.Where(x => x.EventCategoryId == dto.EventCategoryId);
+
+            if (dto.EventRequesterId != null)
+                allEventSpaces = allEventSpaces.Where(x => x.EventRequesterId == dto.EventRequesterId);
+
+            if (dto.EventReccuranceId != null)
+                allEventSpaces = allEventSpaces.Where(x => x.EventRequesterId == dto.EventRequesterId);
+            
+            if (dto.EventName != null)
+                allEventSpaces = allEventSpaces.Where(x => x.EventName == dto.EventName);
+
+            if (dto.EventOpportunityStatusId != null)
+                allEventSpaces = allEventSpaces.Where(x => x.EventOpportunityStatusId == dto.EventOpportunityStatusId);
+
+            if (dto.OtherEventCategory != null)
+                allEventSpaces = allEventSpaces.Where(x => x.OtherEventCategory == dto.OtherEventCategory);
+           
+            if (dto.EventTypeId != null)
+                allEventSpaces = allEventSpaces.Where(x => x.EventTypeId == dto.EventTypeId);
+            
+            if (dto.IndustryNameId != null)
+                allEventSpaces = allEventSpaces.Where(x => x.IndustryNameId == dto.IndustryNameId);
+
+            if(dto.OpportunityStageId != null)
+                allEventSpaces = allEventSpaces.Where(x => x.IndustryNameId == dto.IndustryNameId);
+
+            if (dto.LobLocationTypeId != null)
+                allEventSpaces = allEventSpaces.Where(x => x.LobLocationTypeId == dto.LobLocationTypeId);
+            
+            if (dto.InitiatedId != null)
+                allEventSpaces = allEventSpaces.Where(x => x.InitiatedId == dto.InitiatedId);
+            
+            if (dto.OtherIndustryName != null)
+                allEventSpaces = allEventSpaces.Where(x => x.OtherIndustryName == dto.OtherIndustryName);
+
+            var filterdEventSpaces = allEventSpaces.ToList();
+
+            if(filterdEventSpaces != null)
+            {
+                var allBookedEventSpace = _mapper.Map<List<GetAllBookedEventSpaceResponseDto>>(filterdEventSpaces);
+                return new Response<List<GetAllBookedEventSpaceResponseDto>>(allBookedEventSpace);
+            }
+
+            return new Response<List<GetAllBookedEventSpaceResponseDto>>(null, "No Data Found");
+
+        }
+
+
+
+
+
 
     }
 }

@@ -16,6 +16,8 @@ using MOCA.Presistence.Repositories.LocationManagment;
 using MOCA.Presistence.Repositories.MocaSettings;
 using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
 using MOCA.Presistence.Repositories.WorkSpaceReservations;
+using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
+using MOCA.Presistence.Repositories.MeetingSpaceReservations;
 
 namespace MOCA.Presistence
 {
@@ -655,6 +657,21 @@ namespace MOCA.Presistence
             }
         }
         #endregion
+
+
+        #region MeetingSpaceReservations
+        private IMeetingSpaceReservationRepository _meetingSpaceReservationRepository;
+
+        public IMeetingSpaceReservationRepository MeetingSpaceReservationRepository
+        {
+            get 
+            { 
+                return _meetingSpaceReservationRepository = _meetingSpaceReservationRepository ?? new MeetingSpaceReservationRepository(_context); 
+            }
+        }
+
+        #endregion
+
 
         public DateTime ConvertToLocalDate(DateTime dateInEasternTimeZone)
         {
