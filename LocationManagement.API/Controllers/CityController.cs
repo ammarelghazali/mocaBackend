@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MOCA.Core.DTOs.LocationManagment.City;
 using MOCA.Core.DTOs.Shared;
@@ -9,6 +10,7 @@ namespace LocationManagement.API.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
+    [Authorize]
     public class CityController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -127,8 +129,8 @@ namespace LocationManagement.API.Controllers
         /// <param name="Id">an object holds the Id of City</param>
         /// <response code="200">Deletes City and all related data successfully</response>
         /// <response code="400">City not found, or there is error while saving</response>
-        [HttpDelete("DeleteCountry")]
-        public async Task<IActionResult> DeleteCountry([FromQuery] long Id)
+        [HttpDelete("DeleteCity")]
+        public async Task<IActionResult> DeleteCity([FromQuery] long Id)
         {
             var response = await _cityService.DeleteCity(Id);
             if (response.Succeeded == false)

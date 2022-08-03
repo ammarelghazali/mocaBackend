@@ -15,28 +15,31 @@ namespace MOCA.Services.Implementation.LocationManagment
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IDateTimeService _dateTimeService;
-        public IndustryService(IUnitOfWork unitOfWork,
+        private readonly IAuthenticatedUserService _authenticatedUserService;
+        public IndustryService(
+            IAuthenticatedUserService authenticatedUserService, 
+            IUnitOfWork unitOfWork,
             IMapper mapper,
             IDateTimeService dateTimeService)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _dateTimeService = dateTimeService ?? throw new ArgumentNullException(nameof(dateTimeService));
+            _authenticatedUserService = authenticatedUserService ?? throw new ArgumentNullException(nameof(authenticatedUserService));
         }
 
         public async Task<Response<long>> AddIndustry(IndustryModel request)
         {
             var industry = _mapper.Map<Industry>(request);
-            industry.CreatedBy = "System";
-            /*if (string.IsNullOrWhiteSpace(city.CreatedBy))
+            if (string.IsNullOrWhiteSpace(industry.CreatedBy))
             {
                 if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
                 {
                     throw new UnauthorizedAccessException("User is not authorized");
                 }
                 else
-                { city.CreatedBy = authenticatedUserService.UserId; }
-            }*/
+                { industry.CreatedBy = _authenticatedUserService.UserId; }
+            }
             if (industry.CreatedAt == null || industry.CreatedAt == default)
             {
                 industry.CreatedAt = _dateTimeService.NowUtc;
@@ -48,11 +51,10 @@ namespace MOCA.Services.Implementation.LocationManagment
             }
 
             _unitOfWork.IndustryRepo.Insert(industry);
-            _unitOfWork.Save();
-            /*if (await _unitOfWork.SaveAsync() < 1)
+            if (await _unitOfWork.SaveAsync() < 1)
             {
                 return new Response<long>("Cannot Add Industry right now");
-            }*/
+            }
 
             return new Response<long>(industry.Id, "Industry Added Successfully.");
         }
@@ -61,16 +63,15 @@ namespace MOCA.Services.Implementation.LocationManagment
         {
             var industry = _mapper.Map<Industry>(request);
 
-            /*if (string.IsNullOrWhiteSpace(country.LastModifiedBy))
+            if (string.IsNullOrWhiteSpace(industry.LastModifiedBy))
             {
-                if (string.IsNullOrWhiteSpace(authenticatedUser.UserId))
+                if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
                 {
                     throw new UnauthorizedAccessException("Last Modified By UserID is required");
                 }
                 else
-                { country.LastModifiedBy = authenticatedUser.UserId; }
-            }*/
-            industry.LastModifiedBy = "System";
+                { industry.LastModifiedBy = _authenticatedUserService.UserId; }
+            }
             if (industry.LastModifiedAt == null)
             {
                 industry.LastModifiedAt = DateTime.UtcNow;
@@ -82,23 +83,20 @@ namespace MOCA.Services.Implementation.LocationManagment
             industry.CreatedAt = industryEntity.CreatedAt;
 
             _unitOfWork.IndustryRepo.Update(industry);
-            _unitOfWork.Save();
-            /*if (await _unitOfWork.SaveAsync() < 1)
+            if (await _unitOfWork.SaveAsync() < 1)
             {
                 return new Response<bool>("Cannot Update Industry right now");
-            }*/
+            }
 
             return new Response<bool>(true, "Industry Updated Successfully.");
         }
 
         public async Task<Response<IndustryModel>> GetIndustryByID(long Id)
         {
-            /*
-             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-             */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
             if (Id <= 0)
             {
                 return new Response<IndustryModel>("ID must be greater than zero.");
@@ -113,12 +111,10 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<PagedResponse<List<IndustryModel>>> GetAllIndustriesWithPagination(RequestParameter filter)
         {
-            /*
-             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-            */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
             int pg_total = await _unitOfWork.IndustryRepo.GetCountAsync(x => x.IsDeleted == false);
             var data = _unitOfWork.IndustryRepo.GetPaged(filter.PageNumber,
                 filter.PageSize,
@@ -135,12 +131,11 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<Response<List<IndustryModel>>> GetAllIndustriesWithoutPagination()
         {
-            /*
-             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-            */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
+
             var data = _unitOfWork.IndustryRepo.GetAll();
 
             var Res = _mapper.Map<List<IndustryModel>>(data);
@@ -153,12 +148,10 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<Response<bool>> DeleteIndustry(long Id)
         {
-            /*
-            if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-               {
-                   throw new UnauthorizedAccessException("User is not authorized");
-               }
-           */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
             var HasAnyRelatedEntities = await _unitOfWork.IndustryRepoEF.HasAnyRelatedEntities(Id);
             if (HasAnyRelatedEntities)
             {

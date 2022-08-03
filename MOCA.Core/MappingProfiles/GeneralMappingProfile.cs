@@ -47,6 +47,8 @@ using MOCA.Core.DTOs.Events.EventTypeDtos.Response;
 using MOCA.Core.DTOs.Events.Response;
 using MOCA.Core.Entities.EventSpaceBookings;
 using MOCA.Core.DTOs.MocaSettings.PolicyTypesDtos.Request;
+using MOCA.Core.DTOs.LocationManagment.Location;
+using MOCA.Core.DTOs.LocationManagment.FavouriteLocation;
 
 namespace MOCA.Core.MappingProfiles
 {
@@ -190,6 +192,7 @@ namespace MOCA.Core.MappingProfiles
             CreateMap<IndustryModel, Industry>();
             CreateMap<Industry, IndustryModel>();
 
+
             #endregion
 
             #region Events
@@ -254,6 +257,39 @@ namespace MOCA.Core.MappingProfiles
             CreateMap<EmailTemplate, GetEmailTempleteEventOpportunitylViewModelDto>().ReverseMap();
 
 
+
+            CreateMap<LocationBankAccountModel, LocationBankAccount>();
+            CreateMap<LocationBankAccount, LocationBankAccountModel>();
+
+            CreateMap<LocationContactModel, LocationContact>();
+            CreateMap<LocationContact, LocationContactModel>();
+
+            CreateMap<LocationCurrencyModel, LocationCurrency>();
+            CreateMap<LocationCurrency, LocationCurrencyModel>();
+
+            CreateMap<LocationFileModel, LocationFile>();
+            CreateMap<LocationFile, LocationFileModel>();
+
+            CreateMap<LocationImageModel, LocationImage>();
+            CreateMap<LocationImage, LocationImageModel>();
+
+            CreateMap<LocationInclusionModel, LocationInclusion>();
+            CreateMap<LocationInclusion, LocationInclusionModel>();
+
+            CreateMap<LocationWorkingHourModel, LocationWorkingHour>();
+            CreateMap<LocationWorkingHour, LocationWorkingHourModel>();
+
+            CreateMap<ServiceFeePaymentsDueDateModel, ServiceFeePaymentsDueDate>();
+            CreateMap<ServiceFeePaymentsDueDate, ServiceFeePaymentsDueDateModel>();
+
+            CreateMap<LocationModel, Location>();
+            CreateMap<Location, LocationModel>();
+
+            CreateMap<LocationModel, LocationDetailsModel>();
+            CreateMap<LocationDetailsModel, LocationModel>();
+
+            CreateMap<FavouriteLocationModel, FavouriteLocation>();
+            CreateMap<FavouriteLocation, FavouriteLocationModel>();
             #endregion
 
         }
