@@ -10,8 +10,5 @@ namespace MOCA.Core.Interfaces.WorkSpaceReservations.Repositories
         Task<IReadOnlyList<GetAllWorkSpaceReservationsResponse>> GetAllWorkSpaceSubmissions(GetAllWorkSpaceReservationsDto request);
         Task<IReadOnlyList<GatFilteredWorkSpaceReservationResponse>> GetFilteredSubmissions(GatFilteredWorkSpaceReservationDto request);
         Task<List<DropdownViewModel>> GetWorkSpaceLocationsDropDowns();
-        //Task<WorkSpaceReservationHourly> GetHourlyReservationInfo(long id);
-        //Task<WorkSpaceReservationTailored> GetTailoredReservationInfo(long id);
-        //Task<WorkSpaceReservationBundle> GetBundleReservationInfo(long id);
     }
 }
