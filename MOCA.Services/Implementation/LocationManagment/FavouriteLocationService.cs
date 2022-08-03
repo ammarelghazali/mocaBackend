@@ -13,51 +13,51 @@ namespace MOCA.Services.Implementation.LocationManagment
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IDateTimeService _dateTimeService;
-        public FavouriteLocationService(IUnitOfWork unitOfWork,
+        private readonly IAuthenticatedUserService _authenticatedUserService;
+        public FavouriteLocationService(
+            IAuthenticatedUserService authenticatedUserService, 
+            IUnitOfWork unitOfWork,
             IMapper mapper,
             IDateTimeService dateTimeService)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _dateTimeService = dateTimeService ?? throw new ArgumentNullException(nameof(dateTimeService));
+            _authenticatedUserService = authenticatedUserService ?? throw new ArgumentNullException(nameof(authenticatedUserService));
         }
 
         public async Task<Response<long>> AddFavouriteLocation(FavouriteLocationModel request)
         {
             var FavouriteLocation = _mapper.Map<FavouriteLocation>(request);
-            FavouriteLocation.CreatedBy = "System";
-            /*if (string.IsNullOrWhiteSpace(city.CreatedBy))
+            if (string.IsNullOrWhiteSpace(FavouriteLocation.CreatedBy))
             {
                 if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
                 {
                     throw new UnauthorizedAccessException("User is not authorized");
                 }
                 else
-                { city.CreatedBy = authenticatedUserService.UserId; }
-            }*/
+                { FavouriteLocation.CreatedBy = _authenticatedUserService.UserId; }
+            }
             if (FavouriteLocation.CreatedAt == null || FavouriteLocation.CreatedAt == default)
             {
                 FavouriteLocation.CreatedAt = _dateTimeService.NowUtc;
             }
 
             _unitOfWork.FavouriteLocationRepo.Insert(FavouriteLocation);
-            _unitOfWork.Save();
-            /*if (await _unitOfWork.SaveAsync() < 1)
+            if (await _unitOfWork.SaveAsync() < 1)
             {
                 return new Response<long>("Cannot Add FavouriteLocation right now");
-            }*/
+            }
 
             return new Response<long>(FavouriteLocation.Id, "FavouriteLocation Added Successfully.");
         }
 
         public async Task<Response<bool>> DeleteFavouriteLocation(long LocationId, long BasicUserID)
         {
-            /*
-            if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-               {
-                   throw new UnauthorizedAccessException("User is not authorized");
-               }
-           */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
 
             var favouriteLocation = await _unitOfWork.FavouriteLocationRepoEF.DeleteFavouriteLocation(LocationId, BasicUserID);
 
