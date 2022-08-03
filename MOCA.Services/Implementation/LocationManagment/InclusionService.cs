@@ -15,28 +15,31 @@ namespace MOCA.Services.Implementation.LocationManagment
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IDateTimeService _dateTimeService;
-        public InclusionService(IUnitOfWork unitOfWork,
+        private readonly IAuthenticatedUserService _authenticatedUserService;
+        public InclusionService(
+            IAuthenticatedUserService authenticatedUserService, 
+            IUnitOfWork unitOfWork,
             IMapper mapper,
             IDateTimeService dateTimeService)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _dateTimeService = dateTimeService ?? throw new ArgumentNullException(nameof(dateTimeService));
+            _authenticatedUserService = authenticatedUserService ?? throw new ArgumentNullException(nameof(authenticatedUserService));
         }
 
         public async Task<Response<long>> AddInclusion(InclusionModel request)
         {
             var inclusion = _mapper.Map<Inclusion>(request);
-            inclusion.CreatedBy = "System";
-            /*if (string.IsNullOrWhiteSpace(city.CreatedBy))
+            if (string.IsNullOrWhiteSpace(inclusion.CreatedBy))
             {
                 if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
                 {
                     throw new UnauthorizedAccessException("User is not authorized");
                 }
                 else
-                { city.CreatedBy = authenticatedUserService.UserId; }
-            }*/
+                { inclusion.CreatedBy = _authenticatedUserService.UserId; }
+            }
             if (inclusion.CreatedAt == null || inclusion.CreatedAt == default)
             {
                 inclusion.CreatedAt = _dateTimeService.NowUtc;
@@ -48,11 +51,10 @@ namespace MOCA.Services.Implementation.LocationManagment
             }
 
             _unitOfWork.InclusionRepo.Insert(inclusion);
-            _unitOfWork.Save();
-            /*if (await _unitOfWork.SaveAsync() < 1)
+            if (await _unitOfWork.SaveAsync() < 1)
             {
                 return new Response<long>("Cannot Add Inclusion right now");
-            }*/
+            }
 
             return new Response<long>(inclusion.Id, "Inclusion Added Successfully.");
         }
@@ -61,16 +63,15 @@ namespace MOCA.Services.Implementation.LocationManagment
         {
             var inclusion = _mapper.Map<Inclusion>(request);
 
-            /*if (string.IsNullOrWhiteSpace(country.LastModifiedBy))
+            if (string.IsNullOrWhiteSpace(inclusion.LastModifiedBy))
             {
-                if (string.IsNullOrWhiteSpace(authenticatedUser.UserId))
+                if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
                 {
                     throw new UnauthorizedAccessException("Last Modified By UserID is required");
                 }
                 else
-                { country.LastModifiedBy = authenticatedUser.UserId; }
-            }*/
-            inclusion.LastModifiedBy = "System";
+                { inclusion.LastModifiedBy = _authenticatedUserService.UserId; }
+            }
             if (inclusion.LastModifiedAt == null)
             {
                 inclusion.LastModifiedAt = DateTime.UtcNow;
@@ -82,23 +83,20 @@ namespace MOCA.Services.Implementation.LocationManagment
             inclusion.CreatedAt = inclusionEntity.CreatedAt;
 
             _unitOfWork.InclusionRepo.Update(inclusion);
-            _unitOfWork.Save();
-            /*if (await _unitOfWork.SaveAsync() < 1)
+            if (await _unitOfWork.SaveAsync() < 1)
             {
                 return new Response<bool>("Cannot Update Inclusion right now");
-            }*/
+            }
 
             return new Response<bool>(true, "Inclusion Updated Successfully.");
         }
 
         public async Task<Response<InclusionModel>> GetInclusionByID(long Id)
         {
-            /*
-             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-             */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
             if (Id <= 0)
             {
                 return new Response<InclusionModel>("ID must be greater than zero.");
@@ -113,12 +111,11 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<PagedResponse<List<InclusionModel>>> GetAllInclusionsWithPagination(RequestParameter filter)
         {
-            /*
-             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-            */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
+
             int pg_total = await _unitOfWork.InclusionRepo.GetCountAsync(x => x.IsDeleted == false);
             var data = _unitOfWork.InclusionRepo.GetPaged(filter.PageNumber,
                 filter.PageSize,
@@ -135,12 +132,11 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<Response<List<InclusionModel>>> GetAllInclusionsWithoutPagination()
         {
-            /*
-             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-            */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
+
             var data = _unitOfWork.InclusionRepo.GetAll();
 
             var Res = _mapper.Map<List<InclusionModel>>(data);
@@ -153,12 +149,11 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<Response<bool>> DeleteInclusion(long Id)
         {
-            /*
-            if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-               {
-                   throw new UnauthorizedAccessException("User is not authorized");
-               }
-           */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
+
             var HasAnyRelatedEntities = await _unitOfWork.InclusionRepoEF.HasAnyRelatedEntities(Id);
             if (HasAnyRelatedEntities)
             {
