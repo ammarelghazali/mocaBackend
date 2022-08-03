@@ -704,7 +704,7 @@ namespace MOCA.Services.Implementation.Events
                         Body = emailStringBuilder.ToString(),
                         ContactDetailId = contact.Id,
                         BookATourId = null,
-                        //EventsOpportunitiesId = request.EventsOpportunities_ID,
+                        EventSpaceBookingId = request.EventsOpportunitiesId,
                         EmailTemplateId = emailTemplate.Id,
                         CreatedAt = _dateTimeService.NowUtc,
                     };
