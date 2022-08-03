@@ -6,13 +6,13 @@ namespace MOCA.Core.Entities.MocaSetting
     public class PolicyType : BaseEntity
     {
         [Required]
-        [MaxLength(150)]
+        [MaxLength(250)]
         public string Name { get; set; }
         
         public Policy Policy { get; set; }
         
         [Required]
-        [MaxLength(250)]
+        [MaxLength(500)]
         public string URL { get; set; }
     }
 }

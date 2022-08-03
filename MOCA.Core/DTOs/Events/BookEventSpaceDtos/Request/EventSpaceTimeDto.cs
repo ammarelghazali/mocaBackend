@@ -3,7 +3,7 @@
     public class EventSpaceTimeDto
     {
         public long? Id { get; set; }
-        public long? BookEventSpace_ID { get; set; }
+        public long? BookEventSpaceId { get; set; }
         public DateTime RecurrenceStartDate { get; set; }
         public DateTime? RecurrenceEndDate { get; set; }
         public DateTime RecurrenceStartTime { get; set; }

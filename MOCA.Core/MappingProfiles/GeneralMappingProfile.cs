@@ -196,8 +196,8 @@ namespace MOCA.Core.MappingProfiles
             //EventSpaceBookings
 
             CreateMap<EventSpaceBooking, BooEventSpaceDto>()
-                .ForMember(x => x.eventSpace_Times, opt => opt.Ignore())
-                .ForMember(x => x.eventSpace_Venues, opt => opt.Ignore());
+                .ForMember(x => x.EventSpaceTimes, opt => opt.Ignore())
+                .ForMember(x => x.EventSpaceVenues, opt => opt.Ignore());
             CreateMap<EventSpaceBooking, BooEventSpaceDto>()
                 .ReverseMap()
                 .ForMember(x => x.EventSpaceTimes, opt => opt.Ignore())
@@ -208,15 +208,15 @@ namespace MOCA.Core.MappingProfiles
 
             // Event Attendance
 
-            CreateMap<EventAttendance, get_AllEventAttendance_ViewModel>();
-            CreateMap<EventAttendance, get_AllEventAttendance_ViewModel>().ReverseMap();
+            CreateMap<EventAttendance, GetAllEventAttendanceViewModel>();
+            CreateMap<EventAttendance, GetAllEventAttendanceViewModel>().ReverseMap();
             CreateMap<EventAttendanceForCreationDto, EventAttendance>();
             CreateMap<EventAttendance, EventAttendanceDto>();
 
             // Event Category
 
-            CreateMap<EventCategory, get_AllEventCategory_ViewModel>();
-            CreateMap<EventCategory, get_AllEventCategory_ViewModel>().ReverseMap();
+            CreateMap<EventCategory, GetAllEventCategoryViewModel>();
+            CreateMap<EventCategory, GetAllEventCategoryViewModel>().ReverseMap();
             CreateMap<EventCategory, EventCategoryDto>();
 
             // Event Type
@@ -227,8 +227,8 @@ namespace MOCA.Core.MappingProfiles
 
             // Event Reccurance
 
-            CreateMap<EventReccurance, get_AllEventReccurance_ViewModel>();
-            CreateMap<EventReccurance, get_AllEventReccurance_ViewModel>().ReverseMap();
+            CreateMap<EventReccurance, GetAllEventReccuranceViewModel>();
+            CreateMap<EventReccurance, GetAllEventReccuranceViewModel>().ReverseMap();
             CreateMap<EventReccurance, EventRecurrenceDto>();
 
             // Event Requester
@@ -238,16 +238,16 @@ namespace MOCA.Core.MappingProfiles
             CreateMap<EventRequester, EventRequesterDto>();
 
             // Event Opportunity
-            CreateMap<EventSpaceBooking, cmd_Create_NewEventOpportunity_Parameter>().ReverseMap()
+            CreateMap<EventSpaceBooking, cmdCreateNewEventOpportunityParameter>().ReverseMap()
                 .ForMember(s => s.CompanyCommericalName, d => d.MapFrom(di => di.CompanyName));
 
-            CreateMap<ContactDetails, EventOpportunityContactDetail_ViewModel>().ReverseMap();
-            CreateMap<ContactDetails, EventOpportunityContactDetails_ViewModel>();
+            CreateMap<ContactDetails, EventOpportunityContactDetailViewModel>().ReverseMap();
+            CreateMap<ContactDetails, EventOpportunityContactDetailsViewModel>();
             CreateMap<OpportunityStage, OpportunityStageDto>();
             CreateMap<EventOpportunityStatus, EventOpportunityStatusDto>();
             CreateMap<Initiated, InitiatedDto>();
-            CreateMap<EventSpaceTime, EventSpace_TimeDto>();
-            CreateMap<EventSpaceVenues, EventSpace_VenuesDto>();
+            CreateMap<EventSpaceTime, DTOs.Events.EventOpportunityDtos.Response.EventSpaceTimeDto>();
+            CreateMap<EventSpaceVenues, DTOs.Events.EventOpportunityDtos.Response.EventSpaceVenuesDto>();
 
 
             // Email Templete

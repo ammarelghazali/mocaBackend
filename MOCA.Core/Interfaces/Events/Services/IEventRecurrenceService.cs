@@ -6,7 +6,7 @@ namespace MOCA.Core.Interfaces.Events.Services
 {
     public interface IEventRecurrenceService
     {
-        Task<PagedResponse<IReadOnlyList<get_AllEventReccurance_ViewModel>>>
-                                                    GetAll(get_AllEventReccurance_Query request);
+        Task<PagedResponse<IReadOnlyList<GetAllEventReccuranceViewModel>>>
+                                                    GetAll(GetAllEventReccuranceQuery request);
     }
 }

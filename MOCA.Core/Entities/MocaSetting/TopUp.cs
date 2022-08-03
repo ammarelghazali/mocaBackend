@@ -19,7 +19,6 @@ namespace MOCA.Core.Entities.MocaSetting
 
 
         [Required]
-        [MaxLength(1000)]
         public string TermsOfUse { get; set; }
 
     }
