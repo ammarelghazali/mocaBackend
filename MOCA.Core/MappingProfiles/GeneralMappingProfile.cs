@@ -49,6 +49,7 @@ using MOCA.Core.Entities.EventSpaceBookings;
 using MOCA.Core.DTOs.MocaSettings.PolicyTypesDtos.Request;
 using MOCA.Core.DTOs.LocationManagment.Location;
 using MOCA.Core.DTOs.LocationManagment.FavouriteLocation;
+using MOCA.Core.DTOs.LocationManagment.Building;
 
 namespace MOCA.Core.MappingProfiles
 {
@@ -290,6 +291,9 @@ namespace MOCA.Core.MappingProfiles
 
             CreateMap<FavouriteLocationModel, FavouriteLocation>();
             CreateMap<FavouriteLocation, FavouriteLocationModel>();
+
+            CreateMap<BuildingModel, Building>();
+            CreateMap<Building, BuildingModel>();
             #endregion
 
         }
