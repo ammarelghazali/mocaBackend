@@ -41,19 +41,39 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
             return new PagedResponse<IReadOnlyList<GatFilteredWorkSpaceReservationResponse>>(null, request.pageNumber, request.pageSize);
         }
 
-        public Task<Response<WorkSpaceReservationLocationsDropDown>> GetWorkSpaceLocationsDropDowns()
+        public async Task<Response<WorkSpaceReservationLocationsDropDown>> GetWorkSpaceLocationsDropDowns()
         {
-            throw new NotImplementedException();
+            var locations = await _unitOfWork.WorkSpaceReservationsRepositoryCRM.GetWorkSpaceLocationsDropDowns();
 
-            //get all distinct locations with its name
-            // put id in reservation transaction??
+            var workSpaceReservationLocations = new WorkSpaceReservationLocationsDropDown
+            {
+                Locations = locations
+            };
+
+            return new Response<WorkSpaceReservationLocationsDropDown>(workSpaceReservationLocations);
         }
 
         public Task<Response<WorkSpaceReservationHistoryResponse>> GetWorkSpaceOpportunityInfoHistory(GetWorkSpaceReservationHistoryDto request)
         {
             throw new NotImplementedException();
 
-            // From Id, and ReservationTypeId, using the WorkSpaceReservation Tables depend on type id to get where same id
+            dynamic reservation = null;
+
+            if(request.ReservationTypeId == 1)
+            {
+
+            }
+            else if(request.ReservationTypeId == 2)
+            {
+
+            }
+            else if(request.ReservationTypeId == 3)
+            {
+
+            }
+
+
+            // From Id, and ReservationTypeId, Choose the right WorkSpaceReservation Tables depend on type id to get where same id
             // with include 1. BasicUser, 2. Location .. then Include LocationType,
             // 3. ReservationTransactions..then Include Reservation Details
             // 4. ReservationType, 5. Top Ups

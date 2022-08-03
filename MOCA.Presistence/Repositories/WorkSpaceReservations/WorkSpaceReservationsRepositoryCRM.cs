@@ -1,6 +1,9 @@
 ﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
+using MOCA.Core.DTOs.Shared;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
+using MOCA.Core.Entities.WorkSpaceReservations;
 using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
 using MOCA.Presistence.Contexts;
 
@@ -46,6 +49,7 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
             return data.AsList();
         }
 
+       
         public async Task<IReadOnlyList<GatFilteredWorkSpaceReservationResponse>> GetFilteredSubmissions(GatFilteredWorkSpaceReservationDto request)
         {
             DynamicParameters parms = new DynamicParameters();
@@ -79,6 +83,20 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
             var data = await _context.Connection.QueryAsync<GatFilteredWorkSpaceReservationResponse>("dbo.SP_Work_n_Munch_Workspace_Submissions_GetAll_CRM", parms, null, (int)System.Data.CommandType.StoredProcedure);
 
             return data.AsList();
+        }
+
+
+        public async Task<List<DropdownViewModel>> GetWorkSpaceLocationsDropDowns()
+        {
+            return await _context.ReservationTransactions.Where(r => r.ReservationTypeId == 1 && r.ReservationTypeId == 2 &
+                                                                        r.ReservationTypeId == 3 && r.IsDeleted != true)
+                                                            .Include(r => r.Location)
+                                                            .Select(r => new DropdownViewModel
+                                                            {
+                                                                Id = r.LocationId,
+                                                                Name = r.Location.Name
+                                                            }).Distinct().ToListAsync();
+
         }
     }
 }

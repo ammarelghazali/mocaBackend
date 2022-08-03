@@ -5,8 +5,10 @@ using MOCA.Core.Entities.BaseEntities;
 using MOCA.Core.Entities.EventSpaceBookings;
 using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Entities.MocaSetting;
+using MOCA.Core.Entities.Shared.Reservations;
 using MOCA.Core.Entities.SSO;
 using MOCA.Core.Entities.SSO.Identity;
+using MOCA.Core.Entities.WorkSpaceReservations;
 using MOCA.Core.Interfaces.Shared.Services;
 using System;
 using System.Collections.Generic;
@@ -104,6 +106,22 @@ namespace MOCA.Presistence.Contexts
             public DbSet<MemberShipBenefitsTypes> MemberShipBenefitsTypes { get; set; }
             public DbSet<MemberShipTypes> MemberShipTypes { get; set; }
             public DbSet<MemberShipCategories> MemberShipCategories { get; set; }
+        #endregion
+
+        #region ReservationShared
+        public DbSet<CancelReservation> CancelReservations { get; set; }
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public DbSet<ReservationDetail> ReservationDetails { get; set; }
+        public DbSet<ReservationTransaction> ReservationTransactions { get; set; }
+        public DbSet<ReservationType> ReservationTypes { get; set; }
+        #endregion
+
+        #region WorkSpaceReservations
+        public DbSet<WorkSpaceReservationHourly> WorkSpaceReservationHourly { get; set; }
+        public DbSet<WorkSpaceReservationTailored> WorkSpaceReservationTailored { get; set; }
+        public DbSet<WorkSpaceReservationBundle> WorkSpaceReservationBundle { get; set; }
+        public DbSet<WorkSpaceHourlyTopUp> WorkSpaceHourlyTopUps { get; set; }
+        public DbSet<WorkSpaceTailoredTopUp> WorkSpaceTailoredTopUps { get; set; }
         #endregion
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
