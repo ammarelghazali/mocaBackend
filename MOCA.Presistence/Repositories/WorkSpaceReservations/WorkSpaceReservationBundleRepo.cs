@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
+using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
 using MOCA.Core.Entities.Shared.Reservations;
 using MOCA.Core.Entities.WorkSpaceReservations;
 using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
@@ -14,6 +16,33 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
         public WorkSpaceReservationBundleRepo(ApplicationDbContext context) : base(context)
         {
             _context = context;
+        }
+
+        public async Task<List<GetAllWorkSpaceReservationsResponse>> GetAllWorkSpaceSubmissions(GetAllWorkSpaceReservationsDto request)
+        {
+            var reservations = _context.WorkSpaceReservationBundle.OrderByDescending(r => r.CreatedAt)
+                                                                  .Include(r => r.BasicUser)
+                                                                  .Include(r => r.Location)
+                                                                  .Select(r => new GetAllWorkSpaceReservationsResponse
+                                                                  {
+                                                                     Id = r.Id,
+                                                                     BasicUserId = r.BasicUserId,
+                                                                     OpportunityStartDate = r.CreatedAt,
+                                                                     FirstName = r.BasicUser.FirstName,
+                                                                     LastName = r.BasicUser.LastName,
+                                                                     MobileNumber = r.BasicUser.MobileNumber,
+                                                                     LocationName = r.Location.Name,
+                                                                     ReservationType = "Bundle",
+                                                                     DateTime = r.PackageStartDate,
+                                                                     Amount = r.PackagePrice,
+                                                                     ReservationTypeId = 3,
+                                                                     Mode = "basic",
+                                                                     TopUpsLink = "resources/templates/unchecked.png",
+                                                                  });
+
+            return await reservations.Skip(request.pageSize * (request.pageNumber - 1))
+                                     .Take(request.pageSize)
+                                     .ToListAsync();
         }
 
         public async Task<ReservationTransaction> GetRelatedReservationTransaction(long Reservationid, long reservationTypeId)
