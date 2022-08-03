@@ -355,6 +355,11 @@ namespace MOCA.Presistence.Repositories.Base
             IQueryable<T> query = dbSet;
             return query;
         }
+        public async Task<IQueryable<T>> GetAllIQueryable()
+        {
+            IQueryable<T> query = dbSet;
+            return query;
+        }
 
         public IQueryable<T> GetAllWithRelatedEntities(string includeProperties = "")
         {

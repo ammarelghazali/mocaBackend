@@ -16,7 +16,6 @@
     <Folder Include="DTOs\MocaSettings\" />
     <Folder Include="DTOs\MocaSettings\" />
     <Folder Include="DTOs\SSO\" />
-    <Folder Include="Interfaces\MeetingSpaceReservations\Services\" />
     <Folder Include="Interfaces\MocaSettings\Repositories\" />
     <Folder Include="Interfaces\MocaSettings\Services\" />
     <Folder Include="Interfaces\MocaSettings\Services\" />

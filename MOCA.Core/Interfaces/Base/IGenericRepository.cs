@@ -6,7 +6,7 @@ namespace MOCA.Core.Interfaces.Base
 {
     public interface IGenericRepository<T> where T : class
     {
-
+        Task<IQueryable<T>> GetAllIQueryable();
         Task<T> GetByIdAsync(long id);
         Task<IReadOnlyList<T>> GetAllAsync();
         Task<IReadOnlyList<T>> GetPagedReponseAsync(int pageNumber, int pageSize);
