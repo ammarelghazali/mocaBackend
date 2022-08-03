@@ -1,10 +1,5 @@
 ﻿using MOCA.Core.Entities.BaseEntities;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MOCA.Core.Entities.LocationManagment
 {
@@ -18,6 +13,5 @@ namespace MOCA.Core.Entities.LocationManagment
         public decimal NetArea { get; set; }
         public int MaleRestroomCount { get; set; }
         public int FemaleRestroomCount { get; set; }
-        public ICollection<FloorUnit> FloorUnits { get; set; }
     }
 }

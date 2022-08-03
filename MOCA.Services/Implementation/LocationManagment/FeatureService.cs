@@ -15,28 +15,31 @@ namespace MOCA.Services.Implementation.LocationManagment
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IDateTimeService _dateTimeService;
-        public FeatureService(IUnitOfWork unitOfWork,
+        private readonly IAuthenticatedUserService _authenticatedUserService;
+        public FeatureService(
+            IAuthenticatedUserService authenticatedUserService, 
+            IUnitOfWork unitOfWork,
             IMapper mapper,
             IDateTimeService dateTimeService)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _dateTimeService = dateTimeService ?? throw new ArgumentNullException(nameof(dateTimeService));
+            _authenticatedUserService = authenticatedUserService ?? throw new ArgumentNullException(nameof(authenticatedUserService));
         }
 
         public async Task<Response<long>> AddFeature(FeatureModel request)
         {
             var feature = _mapper.Map<Feature>(request);
-            feature.CreatedBy = "System";
-            /*if (string.IsNullOrWhiteSpace(city.CreatedBy))
+            if (string.IsNullOrWhiteSpace(feature.CreatedBy))
             {
                 if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
                 {
                     throw new UnauthorizedAccessException("User is not authorized");
                 }
                 else
-                { city.CreatedBy = authenticatedUserService.UserId; }
-            }*/
+                { feature.CreatedBy = _authenticatedUserService.UserId; }
+            }
             if (feature.CreatedAt == null || feature.CreatedAt == default)
             {
                 feature.CreatedAt = _dateTimeService.NowUtc;
@@ -48,11 +51,10 @@ namespace MOCA.Services.Implementation.LocationManagment
             }
 
             _unitOfWork.FeatureRepo.Insert(feature);
-            _unitOfWork.Save();
-            /*if (await _unitOfWork.SaveAsync() < 1)
+            if (await _unitOfWork.SaveAsync() < 1)
             {
                 return new Response<long>("Cannot Add Feature right now");
-            }*/
+            }
 
             return new Response<long>(feature.Id, "Feature Added Successfully.");
         }
@@ -61,16 +63,15 @@ namespace MOCA.Services.Implementation.LocationManagment
         {
             var feature = _mapper.Map<Feature>(request);
 
-            /*if (string.IsNullOrWhiteSpace(country.LastModifiedBy))
+            if (string.IsNullOrWhiteSpace(feature.LastModifiedBy))
             {
-                if (string.IsNullOrWhiteSpace(authenticatedUser.UserId))
+                if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
                 {
                     throw new UnauthorizedAccessException("Last Modified By UserID is required");
                 }
                 else
-                { country.LastModifiedBy = authenticatedUser.UserId; }
-            }*/
-            feature.LastModifiedBy = "System";
+                { feature.LastModifiedBy = _authenticatedUserService.UserId; }
+            }
             if (feature.LastModifiedAt == null)
             {
                 feature.LastModifiedAt = DateTime.UtcNow;
@@ -82,23 +83,21 @@ namespace MOCA.Services.Implementation.LocationManagment
             feature.CreatedAt = featureEntity.CreatedAt;
 
             _unitOfWork.FeatureRepo.Update(feature);
-            _unitOfWork.Save();
-            /*if (await _unitOfWork.SaveAsync() < 1)
+            if (await _unitOfWork.SaveAsync() < 1)
             {
                 return new Response<bool>("Cannot Update Feature right now");
-            }*/
+            }
 
             return new Response<bool>(true, "Feature Updated Successfully.");
         }
 
         public async Task<Response<FeatureModel>> GetFeatureByID(long Id)
         {
-            /*
-             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-             */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
+
             if (Id <= 0)
             {
                 return new Response<FeatureModel>("ID must be greater than zero.");
@@ -113,12 +112,10 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<PagedResponse<List<FeatureModel>>> GetAllFeaturesWithPagination(RequestParameter filter)
         {
-            /*
-             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-            */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
             int pg_total = await _unitOfWork.FeatureRepo.GetCountAsync(x => x.IsDeleted == false);
             var data = _unitOfWork.FeatureRepo.GetPaged(filter.PageNumber,
                 filter.PageSize,
@@ -135,12 +132,10 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<Response<List<FeatureModel>>> GetAllFeaturesWithoutPagination()
         {
-            /*
-             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-            */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
             var data = _unitOfWork.FeatureRepo.GetAll();
 
             var Res = _mapper.Map<List<FeatureModel>>(data);
@@ -153,12 +148,11 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<Response<bool>> DeleteFeature(long Id)
         {
-            /*
-            if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-               {
-                   throw new UnauthorizedAccessException("User is not authorized");
-               }
-           */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
+
             var HasAnyRelatedEntities = await _unitOfWork.FeatureRepoEF.HasAnyRelatedEntities(Id);
             if (HasAnyRelatedEntities)
             {

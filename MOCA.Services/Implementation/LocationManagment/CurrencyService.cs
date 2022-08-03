@@ -15,7 +15,10 @@ namespace MOCA.Services.Implementation.LocationManagment
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IDateTimeService _dateTimeService;
-        public CurrencyService(IUnitOfWork unitOfWork,
+        private readonly IAuthenticatedUserService _authenticatedUserService;
+        public CurrencyService(
+            IAuthenticatedUserService authenticatedUserService, 
+            IUnitOfWork unitOfWork,
             IMapper mapper,
             IDateTimeService dateTimeService)
         {
@@ -27,16 +30,15 @@ namespace MOCA.Services.Implementation.LocationManagment
         public async Task<Response<long>> AddCurrency(CurrencyModel request)
         {
             var currency = _mapper.Map<Currency>(request);
-            currency.CreatedBy = "System";
-            /*if (string.IsNullOrWhiteSpace(city.CreatedBy))
+            if (string.IsNullOrWhiteSpace(currency.CreatedBy))
             {
                 if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
                 {
                     throw new UnauthorizedAccessException("User is not authorized");
                 }
                 else
-                { city.CreatedBy = authenticatedUserService.UserId; }
-            }*/
+                { currency.CreatedBy = _authenticatedUserService.UserId; }
+            }
             if (currency.CreatedAt == null || currency.CreatedAt == default)
             {
                 currency.CreatedAt = _dateTimeService.NowUtc;
@@ -48,11 +50,10 @@ namespace MOCA.Services.Implementation.LocationManagment
             }
 
             _unitOfWork.CurrencyRepo.Insert(currency);
-            _unitOfWork.Save();
-            /*if (await _unitOfWork.SaveAsync() < 1)
+            if (await _unitOfWork.SaveAsync() < 1)
             {
-                return new Response<long>("Cannot Add City right now");
-            }*/
+                return new Response<long>("Cannot Add Currency right now");
+            }
 
             return new Response<long>(currency.Id, "Currency Added Successfully.");
         }
@@ -61,19 +62,18 @@ namespace MOCA.Services.Implementation.LocationManagment
         {
             var currency = _mapper.Map<Currency>(request);
 
-            /*if (string.IsNullOrWhiteSpace(country.LastModifiedBy))
+           if (string.IsNullOrWhiteSpace(currency.LastModifiedBy))
             {
-                if (string.IsNullOrWhiteSpace(authenticatedUser.UserId))
+                if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
                 {
                     throw new UnauthorizedAccessException("Last Modified By UserID is required");
                 }
                 else
-                { country.LastModifiedBy = authenticatedUser.UserId; }
-            }*/
-            currency.LastModifiedBy = "System";
+                { currency.LastModifiedBy = _authenticatedUserService.UserId; }
+            }
             if (currency.LastModifiedAt == null)
             {
-                currency.LastModifiedAt = DateTime.UtcNow;
+                currency.LastModifiedAt = _dateTimeService.NowUtc;
             }
 
             var currencyEntity = await _unitOfWork.CurrencyRepo.GetByIdAsync(request.Id);
@@ -82,23 +82,20 @@ namespace MOCA.Services.Implementation.LocationManagment
             currency.CreatedAt = currencyEntity.CreatedAt;
 
             _unitOfWork.CurrencyRepo.Update(currency);
-            _unitOfWork.Save();
-            /*if (await _unitOfWork.SaveAsync() < 1)
+            if (await _unitOfWork.SaveAsync() < 1)
             {
-                return new Response<bool>("Cannot Update Country right now");
-            }*/
+                return new Response<bool>("Cannot Update Currency right now");
+            }
 
             return new Response<bool>(true, "Currency Updated Successfully.");
         }
 
         public async Task<Response<CurrencyModel>> GetCurrencyByID(long Id)
         {
-            /*
-             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-             */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
             if (Id <= 0)
             {
                 return new Response<CurrencyModel>("ID must be greater than zero.");
@@ -113,13 +110,13 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<PagedResponse<List<CurrencyModel>>> GetAllCurrenciesWithPagination(RequestParameter filter)
         {
-            /*
-             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-            */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
+
             int pg_total = await _unitOfWork.CurrencyRepo.GetCountAsync(x => x.IsDeleted == false);
+
             var data = _unitOfWork.CurrencyRepo.GetPaged(filter.PageNumber,
                 filter.PageSize,
                 f => f.IsDeleted == false,
@@ -135,12 +132,10 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<Response<List<CurrencyModel>>> GetAllCurrenciesWithoutPagination()
         {
-            /*
-             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-            */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
             var data = _unitOfWork.CurrencyRepo.GetAll();
 
             var Res = _mapper.Map<List<CurrencyModel>>(data);
@@ -153,12 +148,10 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<Response<bool>> DeleteCurrency(long Id)
         {
-            /*
-            if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-               {
-                   throw new UnauthorizedAccessException("User is not authorized");
-               }
-           */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
             var HasAnyEntities = await _unitOfWork.CurrencyRepoEF.HasAnyRelatedEntities(Id);
             if (HasAnyEntities)
             {

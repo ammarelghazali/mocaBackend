@@ -6,7 +6,7 @@
         public long pg_total { get; set; }
         public long? EventRequesterId { get; set; }
         public long InitiatedId { get; set; }
-        public DateTime? SubmissionDate { get; set; }
+        public DateTime CreatedAt { get; set; }
         public string CompanyName { get; set; }
 
     }

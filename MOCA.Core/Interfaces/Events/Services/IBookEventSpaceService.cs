@@ -11,5 +11,7 @@ namespace MOCA.Core.Interfaces.Events.Services
         Task<Response<long>> EventSpaceBooking(BooEventSpaceDto request);
 
         Task<PagedResponse<IReadOnlyList<GetAllBookedEventSpaceResponseDto>>> GetAllBookedEventSpaceTypeAsync(GetAllBookedEventSpaceByType_Query request);
+
+        Task<Response<List<GetAllBookedEventSpaceResponseDto>>> FilterWithoutPagination(FilterWithoutPaginationDto dto);
     }
 }

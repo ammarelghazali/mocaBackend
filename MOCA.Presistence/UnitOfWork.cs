@@ -16,6 +16,8 @@ using MOCA.Presistence.Repositories.LocationManagment;
 using MOCA.Presistence.Repositories.MocaSettings;
 using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
 using MOCA.Presistence.Repositories.WorkSpaceReservations;
+using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
+using MOCA.Presistence.Repositories.MeetingSpaceReservations;
 
 namespace MOCA.Presistence
 {
@@ -193,7 +195,6 @@ namespace MOCA.Presistence
         private IEventSpaceTimesRepository _eventSpaceTimesRepo;
         private IEventSpaceVenueRepository _eventSpaceVenuesRepo;
         private IContactDetailsRepository _contactDetailsRepo;
-        private ILocationRepositoty _locationRepo;
         private IInitiatedRepository _initiatedRepo;
         private ILoungeClientRepository _loungeClientRepo;
         private ISendEmailRepository _sendEmailRepo;
@@ -507,7 +508,201 @@ namespace MOCA.Presistence
             }
         }
 
+        IGenericRepository<LocationBankAccount> _locationBankAccountRepo;
+        public IGenericRepository<LocationBankAccount> LocationBankAccountRepo
+        {
+            get
+            {
+                return _locationBankAccountRepo = _locationBankAccountRepo ?? new GenericRepository<LocationBankAccount>(_context);
+            }
+        }
+
+        ILocationBankAccountRepository _locationBankAccountRepoEF;
+        public ILocationBankAccountRepository LocationBankAccountRepoEF
+        {
+            get
+            {
+                return _locationBankAccountRepoEF = _locationBankAccountRepoEF ?? new LocationBankAccountRepository(_context);
+            }
+        }
+
+        IGenericRepository<LocationContact> _locationContactRepo;
+        public IGenericRepository<LocationContact> LocationContactRepo
+        {
+            get
+            {
+                return _locationContactRepo = _locationContactRepo ?? new GenericRepository<LocationContact>(_context);
+            }
+        }
+
+        ILocationContactRepository _locationContactRepoEF;
+        public ILocationContactRepository LocationContactRepoEF
+        {
+            get
+            {
+                return _locationContactRepoEF = _locationContactRepoEF ?? new LocationContactRepository(_context);
+            }
+        }
+
+        IGenericRepository<LocationCurrency> _locationCurrencyRepo;
+        public IGenericRepository<LocationCurrency> LocationCurrencyRepo
+        {
+            get
+            {
+                return _locationCurrencyRepo = _locationCurrencyRepo ?? new GenericRepository<LocationCurrency>(_context);
+            }
+        }
+
+        ILocationCurrencyRepository _locationCurrencyRepoEF;
+        public ILocationCurrencyRepository LocationCurrencyRepoEF
+        {
+            get
+            {
+                return _locationCurrencyRepoEF = _locationCurrencyRepoEF ?? new LocationCurrencyRepository(_context);
+            }
+        }
+
+        IGenericRepository<LocationFile> _locationFileRepo;
+        public IGenericRepository<LocationFile> LocationFileRepo
+        {
+            get
+            {
+                return _locationFileRepo = _locationFileRepo ?? new GenericRepository<LocationFile>(_context);
+            }
+        }
+
+        ILocationFileRepository _locationFileRepoEF;
+        public ILocationFileRepository LocationFileRepoEF
+        {
+            get
+            {
+                return _locationFileRepoEF = _locationFileRepoEF ?? new LocationFileRepository(_context);
+            }
+        }
+
+        IGenericRepository<LocationImage> _locationImageRepo;
+        public IGenericRepository<LocationImage> LocationImageRepo
+        {
+            get
+            {
+                return _locationImageRepo = _locationImageRepo ?? new GenericRepository<LocationImage>(_context);
+            }
+        }
+
+        ILocationImageRepository _locationImageRepoEF;
+        public ILocationImageRepository LocationImageRepoEF
+        {
+            get
+            {
+                return _locationImageRepoEF = _locationImageRepoEF ?? new LocationImageRepository(_context);
+            }
+        }
+
+        IGenericRepository<LocationInclusion> _locationInclusionRepo;
+        public IGenericRepository<LocationInclusion> LocationInclusionRepo
+        {
+            get
+            {
+                return _locationInclusionRepo = _locationInclusionRepo ?? new GenericRepository<LocationInclusion>(_context);
+            }
+        }
+
+        ILocationInclusionRepository _locationInclusionRepoEF;
+        public ILocationInclusionRepository LocationInclusionRepoEF
+        {
+            get
+            {
+                return _locationInclusionRepoEF = _locationInclusionRepoEF ?? new LocationInclusionRepository(_context);
+            }
+        }
+
+        IGenericRepository<LocationWorkingHour> _locationWorkingHourRepo;
+        public IGenericRepository<LocationWorkingHour> LocationWorkingHourRepo
+        {
+            get
+            {
+                return _locationWorkingHourRepo = _locationWorkingHourRepo ?? new GenericRepository<LocationWorkingHour>(_context);
+            }
+        }
+
+        ILocationWorkingHourRepository _locationWorkingHourRepoEF;
+        public ILocationWorkingHourRepository LocationWorkingHourRepoEF
+        {
+            get
+            {
+                return _locationWorkingHourRepoEF = _locationWorkingHourRepoEF ?? new LocationWorkingHourRepository(_context);
+            }
+        }
+
+        IGenericRepository<ServiceFeePaymentsDueDate> _serviceFeePaymentsDueDateRepo;
+        public IGenericRepository<ServiceFeePaymentsDueDate> ServiceFeePaymentsDueDateRepo
+        {
+            get
+            {
+                return _serviceFeePaymentsDueDateRepo = _serviceFeePaymentsDueDateRepo ?? new GenericRepository<ServiceFeePaymentsDueDate>(_context);
+            }
+        }
+
+        IServiceFeePaymentsDueDateRepository _serviceFeePaymentsDueDateRepoEF;
+        public IServiceFeePaymentsDueDateRepository ServiceFeePaymentsDueDateRepoEF
+        {
+            get
+            {
+                return _serviceFeePaymentsDueDateRepoEF = _serviceFeePaymentsDueDateRepoEF ?? new ServiceFeePaymentsDueDateRepository(_context);
+            }
+        }
+
+        IGenericRepository<Location> _locationRepo;
+        public IGenericRepository<Location> LocationRepo
+        {
+            get
+            {
+                return _locationRepo = _locationRepo ?? new GenericRepository<Location>(_context);
+            }
+        }
+
+        ILocationRepository _locationRepoEF;
+        public ILocationRepository LocationRepoEF
+        {
+            get
+            {
+                return _locationRepoEF = _locationRepoEF ?? new LocationRepository(_context);
+            }
+        }
+
+        IGenericRepository<FavouriteLocation> _favouriteLocationRepo;
+        public IGenericRepository<FavouriteLocation> FavouriteLocationRepo
+        {
+            get
+            {
+                return _favouriteLocationRepo = _favouriteLocationRepo ?? new GenericRepository<FavouriteLocation>(_context);
+            }
+        }
+
+        IFavouriteLocationRepository _favouriteLocationRepoEF;
+        public IFavouriteLocationRepository FavouriteLocationRepoEF
+        {
+            get
+            {
+                return _favouriteLocationRepoEF = _favouriteLocationRepoEF ?? new FavouriteLocationRepository(_context);
+            }
+        }
         #endregion
+
+
+        #region MeetingSpaceReservations
+        private IMeetingSpaceReservationRepository _meetingSpaceReservationRepository;
+
+        public IMeetingSpaceReservationRepository MeetingSpaceReservationRepository
+        {
+            get 
+            { 
+                return _meetingSpaceReservationRepository = _meetingSpaceReservationRepository ?? new MeetingSpaceReservationRepository(_context); 
+            }
+        }
+
+        #endregion
+
 
         public DateTime ConvertToLocalDate(DateTime dateInEasternTimeZone)
         {

@@ -15,32 +15,36 @@ namespace MOCA.Services.Implementation.LocationManagment
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IDateTimeService _dateTimeService;
-        public LocationTypeService(IUnitOfWork unitOfWork,
+        private readonly IAuthenticatedUserService _authenticatedUserService;
+        public LocationTypeService(
+            IAuthenticatedUserService authenticatedUserService, 
+            IUnitOfWork unitOfWork,
             IMapper mapper,
             IDateTimeService dateTimeService)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _dateTimeService = dateTimeService ?? throw new ArgumentNullException(nameof(dateTimeService));
+            _authenticatedUserService = authenticatedUserService ?? throw new ArgumentNullException(nameof(authenticatedUserService));
         }
 
         public async Task<Response<long>> AddLocationType(LocationTypeModel request)
         {
             var locationType = _mapper.Map<LocationType>(request);
-            locationType.CreatedBy = "System";
-            /*if (string.IsNullOrWhiteSpace(city.CreatedBy))
+            if (string.IsNullOrWhiteSpace(locationType.CreatedBy))
             {
                 if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
                 {
                     throw new UnauthorizedAccessException("User is not authorized");
                 }
                 else
-                { city.CreatedBy = authenticatedUserService.UserId; }
-            }*/
+                { locationType.CreatedBy = _authenticatedUserService.UserId; }
+            }
             if (locationType.CreatedAt == null || locationType.CreatedAt == default)
             {
                 locationType.CreatedAt = _dateTimeService.NowUtc;
             }
+
             var entitylocationType = await _unitOfWork.LocationTypeRepo.GetByIdAsync(request.Id);
             if (entitylocationType == null)
             {
@@ -48,11 +52,10 @@ namespace MOCA.Services.Implementation.LocationManagment
             }
 
             _unitOfWork.LocationTypeRepo.Insert(locationType);
-            _unitOfWork.Save();
-            /*if (await _unitOfWork.SaveAsync() < 1)
+            if (await _unitOfWork.SaveAsync() < 1)
             {
                 return new Response<long>("Cannot Add LocationType right now");
-            }*/
+            }
 
             return new Response<long>(locationType.Id, "LocationType Added Successfully.");
         }
@@ -61,16 +64,15 @@ namespace MOCA.Services.Implementation.LocationManagment
         {
             var locationType = _mapper.Map<LocationType>(request);
 
-            /*if (string.IsNullOrWhiteSpace(country.LastModifiedBy))
+            if (string.IsNullOrWhiteSpace(locationType.LastModifiedBy))
             {
-                if (string.IsNullOrWhiteSpace(authenticatedUser.UserId))
+                if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
                 {
                     throw new UnauthorizedAccessException("Last Modified By UserID is required");
                 }
                 else
-                { country.LastModifiedBy = authenticatedUser.UserId; }
-            }*/
-            locationType.LastModifiedBy = "System";
+                { locationType.LastModifiedBy = _authenticatedUserService.UserId; }
+            }
             if (locationType.LastModifiedAt == null)
             {
                 locationType.LastModifiedAt = DateTime.UtcNow;
@@ -82,23 +84,21 @@ namespace MOCA.Services.Implementation.LocationManagment
             locationType.CreatedAt = locationTypeEntity.CreatedAt;
 
             _unitOfWork.LocationTypeRepo.Update(locationType);
-            _unitOfWork.Save();
-            /*if (await _unitOfWork.SaveAsync() < 1)
+            if (await _unitOfWork.SaveAsync() < 1)
             {
                 return new Response<bool>("Cannot Update locationType right now");
-            }*/
+            }
 
             return new Response<bool>(true, "LocationType Updated Successfully.");
         }
 
         public async Task<Response<LocationTypeModel>> GetLocationTypeByID(long Id)
         {
-            /*
-            if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-               {
-                   throw new UnauthorizedAccessException("User is not authorized");
-               }
-            */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
+
             if (Id <= 0)
             {
                 return new Response<LocationTypeModel>("ID must be greater than zero.");
@@ -113,12 +113,10 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<PagedResponse<List<LocationTypeModel>>> GetAllLocationTypesWithPagination(RequestParameter filter)
         {
-            /*
-             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-            */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
             int pg_total = await _unitOfWork.LocationTypeRepo.GetCountAsync(x => x.IsDeleted == false);
             var data = _unitOfWork.LocationTypeRepo.GetPaged(filter.PageNumber,
                 filter.PageSize,
@@ -135,12 +133,10 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<Response<List<LocationTypeModel>>> GetAllLocationTypesWithoutPagination()
         {
-            /*
-             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-            */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
             var data = _unitOfWork.LocationTypeRepo.GetAll();
 
             var Res = _mapper.Map<List<LocationTypeModel>>(data);
@@ -153,12 +149,10 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<Response<bool>> DeleteLocationType(long Id)
         {
-            /*
-            if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-               {
-                   throw new UnauthorizedAccessException("User is not authorized");
-               }
-           */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
 
             var locationType = await _unitOfWork.LocationTypeRepoEF.DeleteLocationType(Id);
             if (locationType == false)

@@ -59,7 +59,6 @@ namespace MOCA.Presistence.Contexts
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<District> Districts { get; set; }
         public DbSet<Feature> Features { get; set; }
-        public DbSet<FloorUnit> FloorUnits { get; set; }
         public DbSet<Inclusion> Inclusions { get; set; }
         public DbSet<Industry> Industries { get; set; }
         public DbSet<Location> Locations { get; set; }
@@ -74,6 +73,7 @@ namespace MOCA.Presistence.Contexts
         public DbSet<LocationType> LocationTypes { get; set; }
         public DbSet<LocationWorkingHour> LocationWorkingHours { get; set; }
         public DbSet<ServiceFeePaymentsDueDate> ServiceFeePaymentsDueDates { get; set; }
+        public DbSet<FavouriteLocation> FavouriteLocations { get; set; }
         #endregion
 
 

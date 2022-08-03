@@ -1,18 +1,18 @@
 ﻿using MOCA.Core.Entities.BaseEntities;
-using System;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MOCA.Core.Entities.LocationManagment
 {
     public class LocationWorkingHour : BaseEntity
     {
+        [Required]
         public TimeSpan StartWorkingHour { get; set; }
+        [Required]
         public TimeSpan EndWorkingHour { get; set; }
+        [Required]
         public string DayFrom { get; set; }
+        [Required]
         public string DayTo { get; set; }
         public long LocationId { get; set; }
         [ForeignKey("LocationId")]
