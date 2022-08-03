@@ -192,6 +192,7 @@ namespace MOCA.Core.MappingProfiles
             CreateMap<IndustryModel, Industry>();
             CreateMap<Industry, IndustryModel>();
 
+
             #endregion
 
             #region Events

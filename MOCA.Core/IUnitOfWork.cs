@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MOCA.Core.Entities.EventSpaceBookings;
 using MOCA.Core.Interfaces.Base;
 using MOCA.Core.Interfaces.Events;
@@ -84,6 +84,7 @@ namespace MOCA.Core
         ILocationRepository LocationRepoEF { get; }
         IGenericRepository<FavouriteLocation> FavouriteLocationRepo { get; }
         IFavouriteLocationRepository FavouriteLocationRepoEF { get; }
+
         #endregion
 
         #region Events
