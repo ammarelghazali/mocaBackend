@@ -14,32 +14,36 @@ namespace MOCA.Services.Implementation.LocationManagment
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IDateTimeService _dateTimeService;
-        public LocationBankAccountService(IUnitOfWork unitOfWork,
+        private readonly IAuthenticatedUserService _authenticatedUserService;
+        public LocationBankAccountService(
+            IAuthenticatedUserService authenticatedUserService, 
+            IUnitOfWork unitOfWork,
             IMapper mapper,
             IDateTimeService dateTimeService)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _dateTimeService = dateTimeService ?? throw new ArgumentNullException(nameof(dateTimeService));
+            _authenticatedUserService = authenticatedUserService ?? throw new ArgumentNullException(nameof(authenticatedUserService));
         }
 
         public async Task<Response<long>> AddLocationBankAccount(LocationBankAccountModel request)
         {
             var locationBankAccount = _mapper.Map<LocationBankAccount>(request);
-            locationBankAccount.CreatedBy = "System";
-            /*if (string.IsNullOrWhiteSpace(city.CreatedBy))
+            if (string.IsNullOrWhiteSpace(locationBankAccount.CreatedBy))
             {
                 if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
                 {
                     throw new UnauthorizedAccessException("User is not authorized");
                 }
                 else
-                { city.CreatedBy = authenticatedUserService.UserId; }
-            }*/
+                { locationBankAccount.CreatedBy = _authenticatedUserService.UserId; }
+            }
             if (locationBankAccount.CreatedAt == null || locationBankAccount.CreatedAt == default)
             {
                 locationBankAccount.CreatedAt = _dateTimeService.NowUtc;
             }
+
             var entityLocationBankAccount = await _unitOfWork.LocationBankAccountRepo.GetByIdAsync(request.Id);
             if (entityLocationBankAccount == null)
             {
@@ -47,11 +51,10 @@ namespace MOCA.Services.Implementation.LocationManagment
             }
 
             _unitOfWork.LocationBankAccountRepo.Insert(locationBankAccount);
-            _unitOfWork.Save();
-            /*if (await _unitOfWork.SaveAsync() < 1)
+            if (await _unitOfWork.SaveAsync() < 1)
             {
                 return new Response<long>("Cannot Add Location Bank Account right now");
-            }*/
+            }
 
             return new Response<long>(locationBankAccount.Id, "Location Bank Account Added Successfully.");
         }
@@ -60,16 +63,15 @@ namespace MOCA.Services.Implementation.LocationManagment
         {
             var locationBankAccount = _mapper.Map<LocationBankAccount>(request);
 
-            /*if (string.IsNullOrWhiteSpace(country.LastModifiedBy))
+            if (string.IsNullOrWhiteSpace(locationBankAccount.LastModifiedBy))
             {
-                if (string.IsNullOrWhiteSpace(authenticatedUser.UserId))
+                if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
                 {
                     throw new UnauthorizedAccessException("Last Modified By UserID is required");
                 }
                 else
-                { country.LastModifiedBy = authenticatedUser.UserId; }
-            }*/
-            locationBankAccount.LastModifiedBy = "System";
+                { locationBankAccount.LastModifiedBy = _authenticatedUserService.UserId; }
+            }
             if (locationBankAccount.LastModifiedAt == null)
             {
                 locationBankAccount.LastModifiedAt = DateTime.UtcNow;
@@ -81,23 +83,20 @@ namespace MOCA.Services.Implementation.LocationManagment
             locationBankAccount.CreatedAt = locationBankAccountEntity.CreatedAt;
 
             _unitOfWork.LocationBankAccountRepo.Update(locationBankAccount);
-            _unitOfWork.Save();
-            /*if (await _unitOfWork.SaveAsync() < 1)
+            if (await _unitOfWork.SaveAsync() < 1)
             {
                 return new Response<bool>("Cannot Update Location Bank Account right now");
-            }*/
+            }
 
             return new Response<bool>(true, "Location Bank Account Updated Successfully.");
         }
 
         public async Task<Response<LocationBankAccountModel>> GetLocationBankAccountByLocationID(long ByLocationID)
         {
-            /*
-             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-             */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
             if (ByLocationID <= 0)
             {
                 return new Response<LocationBankAccountModel>("ID must be greater than zero.");
@@ -112,12 +111,10 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<Response<bool>> DeleteLocationBankAccountByLocationID(long ByLocationID)
         {
-            /*
-            if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-               {
-                   throw new UnauthorizedAccessException("User is not authorized");
-               }
-           */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
 
             var locationBankAccount = await _unitOfWork.LocationBankAccountRepoEF.DeleteByLocationID(ByLocationID);
             if (locationBankAccount == false)
