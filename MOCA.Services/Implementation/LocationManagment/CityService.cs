@@ -53,7 +53,6 @@ namespace MOCA.Services.Implementation.LocationManagment
             }
 
             _unitOfWork.CityRepo.Insert(city);
-            //_unitOfWork.Save();
             if (await _unitOfWork.SaveAsync() < 1)
             {
                 return new Response<long>("Cannot Add City right now");
