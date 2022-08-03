@@ -7,6 +7,7 @@ using MOCA.Core.Interfaces.MocaSettings.Repositories;
 using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Interfaces.LocationManagment.Repositories;
 using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
+using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
 
 namespace MOCA.Core
 {
@@ -90,6 +91,9 @@ namespace MOCA.Core
         public IWorkSpaceReservationsRepositoryCRM WorkSpaceReservationsRepositoryCRM { get; }
         #endregion
 
+        #region MeetingSpaceReservations
+        public IMeetingSpaceReservationRepository MeetingSpaceReservationRepository { get; }
+        #endregion  
         void Save();
         Task<int> SaveAsync();
         DateTime? GetServerDate();
