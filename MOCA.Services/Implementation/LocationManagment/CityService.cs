@@ -16,32 +16,36 @@ namespace MOCA.Services.Implementation.LocationManagment
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IDateTimeService _dateTimeService;
-        public CityService(IUnitOfWork unitOfWork,
+        private readonly IAuthenticatedUserService _authenticatedUserService;
+        public CityService(
+            IAuthenticatedUserService authenticatedUserService,
+            IUnitOfWork unitOfWork,
             IMapper mapper,
             IDateTimeService dateTimeService)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _dateTimeService = dateTimeService ?? throw new ArgumentNullException(nameof(dateTimeService));
+            _authenticatedUserService = authenticatedUserService ?? throw new ArgumentNullException(nameof(authenticatedUserService));
         }
 
         public async Task<Response<long>> AddCity(CityModel request)
         {
             var city = _mapper.Map<City>(request);
-            city.CreatedBy = "System";
-            /*if (string.IsNullOrWhiteSpace(city.CreatedBy))
+            if (string.IsNullOrWhiteSpace(city.CreatedBy))
             {
                 if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
                 {
                     throw new UnauthorizedAccessException("User is not authorized");
                 }
                 else
-                { city.CreatedBy = authenticatedUserService.UserId; }
-            }*/
+                { city.CreatedBy = _authenticatedUserService.UserId; }
+            }
             if (city.CreatedAt == null || city.CreatedAt == default)
             {
                 city.CreatedAt = _dateTimeService.NowUtc;
             }
+
             var entityCountry = await _unitOfWork.CountryRepo.GetByIdAsync(request.CountryId);
             if (entityCountry == null) 
             { 
@@ -49,11 +53,11 @@ namespace MOCA.Services.Implementation.LocationManagment
             }
 
             _unitOfWork.CityRepo.Insert(city);
-            _unitOfWork.Save();
-            /*if (await _unitOfWork.SaveAsync() < 1)
+            //_unitOfWork.Save();
+            if (await _unitOfWork.SaveAsync() < 1)
             {
                 return new Response<long>("Cannot Add City right now");
-            }*/
+            }
 
             return new Response<long>(city.Id, "City Added Successfully.");
         }
@@ -62,16 +66,15 @@ namespace MOCA.Services.Implementation.LocationManagment
         {
             var city = _mapper.Map<City>(request);
 
-            /*if (string.IsNullOrWhiteSpace(country.LastModifiedBy))
+            if (string.IsNullOrWhiteSpace(city.LastModifiedBy))
             {
-                if (string.IsNullOrWhiteSpace(authenticatedUser.UserId))
+                if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
                 {
                     throw new UnauthorizedAccessException("Last Modified By UserID is required");
                 }
                 else
-                { country.LastModifiedBy = authenticatedUser.UserId; }
-            }*/
-            city.LastModifiedBy = "System";
+                { city.LastModifiedBy = _authenticatedUserService.UserId; }
+            }
             if (city.LastModifiedAt == null)
             {
                 city.LastModifiedAt = DateTime.UtcNow;
@@ -86,23 +89,21 @@ namespace MOCA.Services.Implementation.LocationManagment
             city.CreatedAt = cityEntity.CreatedAt;
 
             _unitOfWork.CityRepo.Update(city);
-            _unitOfWork.Save();
-            /*if (await _unitOfWork.SaveAsync() < 1)
+            if (await _unitOfWork.SaveAsync() < 1)
             {
-                return new Response<bool>("Cannot Update Country right now");
-            }*/
+                return new Response<bool>("Cannot Update City right now");
+            }
 
             return new Response<bool>(true, "City Updated Successfully.");
         }
 
         public async Task<Response<CityModel>> GetCityByID(long Id)
         {
-            /*
-             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-             */
+             if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+             {
+                throw new UnauthorizedAccessException("User is not authorized");
+             }
+            
             if (Id <= 0)
             {
                 return new Response<CityModel>("ID must be greater than zero.");
@@ -117,12 +118,11 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<PagedResponse<List<CityModel>>> GetAllCityWithPagination(RequestParameter filter)
         {
-            /*
-             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-            */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
+
             int pg_total = await _unitOfWork.CityRepo.GetCountAsync(x => x.IsDeleted == false);
             var data = _unitOfWork.CityRepo.GetPaged(filter.PageNumber, 
                 filter.PageSize,
@@ -139,12 +139,11 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<Response<List<CityModel>>> GetAllCityWithoutPagination()
         {
-            /*
-             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-            */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
+
             var data = _unitOfWork.CityRepo.GetAll();
 
             var Res = _mapper.Map<List<CityModel>>(data);
@@ -157,12 +156,10 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<Response<List<CityModel>>> GetAllCityByCountryID(long CountryID)
         {
-            /*
-             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-            */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
             
             if (CountryID == null || CountryID <= 0) { throw new ValidationException(); }
 
@@ -172,12 +169,11 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<Response<bool>> DeleteCity(long Id)
         {
-            /*
-            if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-               {
-                   throw new UnauthorizedAccessException("User is not authorized");
-               }
-           */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
+
             var HasAnyDistricts = await _unitOfWork.CityRepoEF.HasAnyDistricts(Id);
             if (HasAnyDistricts)
             {
