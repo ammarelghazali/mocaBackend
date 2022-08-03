@@ -14,7 +14,7 @@ namespace MOCA.Presistence.Repositories.MocaSettings
             _context = context;
         }
 
-        public async Task<IList<TopUp>> GetAllBaseAsync()
+        public async Task<IList<TopUp>> GetAllNotDeletedAsync()
         {
             var topUps = await _context.TopUps.Where(x => x.IsDeleted == false)
                                               .Include(x => x.TopUpType)

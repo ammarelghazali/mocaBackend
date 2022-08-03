@@ -21,7 +21,7 @@ namespace MOCA.Services.Implementation.MocaSettings
 
         public async Task<Response<IReadOnlyList<StatusDto>>> GetAllStatusesAsync()
         {
-            var statuses = await _unitOfWork.Statuses.GetAllAsync();
+            var statuses = await _unitOfWork.Statuses.GetAllNotDeletedAsync();
             if (statuses == null)
                 return new Response<IReadOnlyList<StatusDto>>
                 {

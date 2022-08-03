@@ -27,3 +27,4 @@ namespace MOCA.Core.Entities.EventSpaceBookings
         public EventSpaceBooking EventSpaceBooking { get; set; }
     }
 }
+

@@ -19,8 +19,8 @@ namespace MocaSettings.API.Controllers
         /// <summary>
         /// Add TopUp
         /// </summary>
-        /// <param name="topUpTypeId"></param>
-        /// <param name="topUpCreationDto"></param>
+        /// <param name="topUpTypeId">if of the Top Up Type</param>
+        /// <param name="topUpCreationDto">an Object that has Terms of Use and Lob Space Type</param>
         /// <response code="200">Added successfully</response>
         /// <response code="400">Ids are wrong</response>
         /// <response code="500">Server Error</response>
@@ -37,10 +37,10 @@ namespace MocaSettings.API.Controllers
         }
 
         /// <summary>
-        /// Get topUp by type and lobSpaceType (lobSpaceType is optional)
+        /// Get topUp by type and lobSpaceType
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="topUpForLobSpaceType"></param>
+        /// <param name="id">Id of the top up type</param>
+        /// <param name="topUpForLobSpaceType">an object that has the id of the lob spcae type</param>
         /// <response code="200">Added successfully</response>
         /// <response code="400">Ids are wrong</response>
         /// <response code="500">Server Error</response>
@@ -57,10 +57,10 @@ namespace MocaSettings.API.Controllers
         }
 
         /// <summary>
-        /// Update topUp by type and lobSpaceType (lobSpaceType is optional)
+        /// Update topUp by type and lobSpaceType
         /// </summary>
-        /// <param name="topUpTypeId"></param>
-        /// <param name="topUpCreationDto"></param>
+        /// <param name="topUpTypeId">id of the top up type</param>
+        /// <param name="topUpCreationDto">an object that has the terms of use and lob space type id</param>
         /// <response code="200">Added successfully</response>
         /// <response code="400">Ids are wrong</response>
         /// <response code="500">Server Error</response>
@@ -81,10 +81,10 @@ namespace MocaSettings.API.Controllers
 
 
         /// <summary>
-        /// Delete topUp by type and lobSpaceType (lobSpaceType is optional)
+        /// Delete topUp by type and lobSpaceType
         /// </summary>
-        /// <param name="topUpTypeId"></param>
-        /// <param name="topUpForLobSpaceTypeDto"></param>
+        /// <param name="topUpTypeId">Id of the top up type</param>
+        /// <param name="topUpForLobSpaceTypeDto">an object that has the id of the lob space type</param>
         /// <response code="200">Added successfully</response>
         /// <response code="400">Ids are wrong</response>
         /// <response code="500">Server Error</response>

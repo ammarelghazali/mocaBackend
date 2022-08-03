@@ -6,11 +6,11 @@ namespace MOCA.Core.Entities.MocaSetting
 {
     public class PlanType : BaseEntity
     {
-        [Required, MaxLength(150)]
+        [Required, MaxLength(250)]
         public string Name { get; set; }
 
         [Required]
-        [MaxLength(250)]
+        [MaxLength(500)]
         public string URL { get; set; }
 
     }

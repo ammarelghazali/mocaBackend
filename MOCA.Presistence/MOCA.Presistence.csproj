@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <Folder Include="Repositories\MocaSettings\" />
+    <Folder Include="Repositories\Events\" />
     <Folder Include="Repositories\SSO\" />
   </ItemGroup>
 

@@ -16,7 +16,7 @@ namespace MOCA.Presistence.Repositories.MocaSettings
         }
 
 
-        public async Task<IList<TopUpType>> GetAllBaseAsync()
+        public async Task<IList<TopUpType>> GetAllNotDeletedAsync()
         {
             var topUpTypes = await _context.TopUpTypes.Where(x => x.IsDeleted == false).ToListAsync();
             return topUpTypes;

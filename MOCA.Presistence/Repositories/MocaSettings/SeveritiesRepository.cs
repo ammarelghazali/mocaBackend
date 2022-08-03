@@ -15,7 +15,7 @@ namespace MOCA.Presistence.Repositories.MocaSettings
         }
 
 
-        public async Task<IList<Severity>> GetAllBaseAsync()
+        public async Task<IList<Severity>> GetAllNotDeletedAsync()
         {
             return await _context.Severities.Where(x => x.IsDeleted != true).ToListAsync();
         }

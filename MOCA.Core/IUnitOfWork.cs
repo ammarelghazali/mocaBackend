@@ -1,8 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using MOCA.Core.Entities.EventSpaceBookings;
+using MOCA.Core.Interfaces.Base;
+using MOCA.Core.Interfaces.Events;
+using MOCA.Core.Interfaces.Events.Repositories;
 using MOCA.Core.Interfaces.MocaSettings.Repositories;
 using MOCA.Core.Entities.LocationManagment;
-using MOCA.Core.Interfaces.Base;
 using MOCA.Core.Interfaces.LocationManagment.Repositories;
+using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
 
 namespace MOCA.Core
 {
@@ -80,6 +84,31 @@ namespace MOCA.Core
         ILocationRepository LocationRepoEF { get; }
         IGenericRepository<FavouriteLocation> FavouriteLocationRepo { get; }
         IFavouriteLocationRepository FavouriteLocationRepoEF { get; }
+
+        #endregion
+
+        #region Events
+        IGenericRepository<EventRequester> EventRequesterRepo { get; }
+        IGenericRepository<EventCategory> EventCategoryRepo { get; }
+        IGenericRepository<EventReccurance> EventReccuranceRepo { get; }
+        IGenericRepository<EventAttendance> EventAttendanceRepo { get; }
+        IGenericRepository<EventType> EventTypeRepo { get; }
+        IContactDetailsRepository ContactDetailsRepo { get; }
+        IEventSpaceBookingRepository EventSpaceBookingRepo { get; }
+        IEventSpaceTimesRepository EventSpaceTimesRepo { get; }
+        IEventSpaceVenueRepository EventSpaceVenuesRepo { get; }
+        ISendEmailRepository SendEmailRepo { get; }
+        IInitiatedRepository InitiatedRepo { get; }
+        IOpportunityStageReportRepository OpportunityStageReportRepo { get; }
+        IOpportunityStageRepository OpportunityStageRepo { get; }
+        IEventOpportunityStatusRepository EventOpportunityStatusRepo { get; }
+        ILocationsMemberShipsRepository LocationsMemberShipsRepo { get; }
+        IEmailTemplateRepository EmailTemplateRepository { get; }
+
+        #endregion
+
+        #region WorkSpaceReservations
+        public IWorkSpaceReservationsRepositoryCRM WorkSpaceReservationsRepositoryCRM { get; }
         #endregion
 
         void Save();

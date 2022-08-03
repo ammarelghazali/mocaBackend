@@ -5,6 +5,7 @@ using MOCA.Core.DTOs.MocaSettings.IssueReportDtos.Response;
 using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.Entities.MocaSetting;
 using MOCA.Core.Interfaces.MocaSettings.Services;
+using MOCA.Core.Interfaces.Shared.Services;
 
 namespace MOCA.Services.Implementation.MocaSettings
 {
@@ -12,11 +13,16 @@ namespace MOCA.Services.Implementation.MocaSettings
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IAuthenticatedUserService _authenticatedUser;
+        private readonly IDateTimeService _dateTimeService;
 
-        public IssueReportService(IUnitOfWork unitOfWork, IMapper mapper)
+        public IssueReportService(IUnitOfWork unitOfWork, IMapper mapper, 
+                                  IAuthenticatedUserService authenticatedUser, IDateTimeService dateTimeService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _authenticatedUser = authenticatedUser;
+            _dateTimeService = dateTimeService;
         }
 
 
@@ -61,43 +67,20 @@ namespace MOCA.Services.Implementation.MocaSettings
                 };
 
             var issueReportDto = _mapper.Map<IssueReportDto>(issueReport);
-            // issueReportDto.ReportedBy = await _unitOfWork.Users.GetAdminName(issueReport.ReportedById);
+            //TODO: issueReportDto.ReportedBy = await _unitOfWork.Users.GetAdminName(issueReport.ReportedById);
 
             return new Response<IssueReportDto>(issueReportDto);
         }
 
         public async Task<Response<bool>> AddIssueReportAsync(IssueReportForCreationDto issueReportForCreationDto)
         {
-            //if (issueReportForCreationDto.LobSpaceTypeId != null)
-            //{
-            //    if (!await _unitOfWork.LobSpaceTypes.LobSpaceTypeExists((long)issueReportForCreationDto.LobSpaceTypeId))
-            //    {
-            //        return new Response<bool>
-            //        {
-            //            Message = "There's no such Lob Space"
-            //        };
-            //    }
-            //}
-
-
-            if (await _unitOfWork.IssueReports.IssueReportExists(issueReportForCreationDto.Id))
+            if (await _unitOfWork.LocationTypeRepoEF.GetByIdAsync(issueReportForCreationDto.LobSpaceTypeId) is null)
             {
                 return new Response<bool>
                 {
-                    Message = "There's an issue report with the same id"
+                    Message = "There's no such LOB Space Type"
                 };
             }
-
-            //var reportedBy = await _unitOfWork.Users.GetAdminName(issueReportForCreationDto.ReportedById);
-
-            //if (reportedBy == "")
-            //{
-            //    return new ResponseDto
-            //    {
-            //        StatusCode = 400,
-            //        Message = "There's no such admin"
-            //    };
-            //}
 
             if (!await _unitOfWork.Priorities.PriorityExists(issueReportForCreationDto.PriorityId))
             {
@@ -132,7 +115,8 @@ namespace MOCA.Services.Implementation.MocaSettings
             }
 
             var issueReport = _mapper.Map<IssueReport>(issueReportForCreationDto);
-            issueReport.SubmissionDate = DateTime.UtcNow;
+            issueReport.SubmissionDate = _dateTimeService.NowUtc;
+            issueReport.OwnerId = _authenticatedUser.UserId; 
 
             _unitOfWork.IssueReports.Insert(issueReport);
 
@@ -163,17 +147,6 @@ namespace MOCA.Services.Implementation.MocaSettings
                     Message = "There's no such Issue Report"
                 };
             }
-
-            //var reportedBy = await _unitOfWork.Users.GetAdminName(updateIssueReportDto.ReportedById);
-
-            //if (reportedBy == "")
-            //{
-            //    return new ResponseDto
-            //    {
-            //        StatusCode = 400,
-            //        Message = "There's no such admin"
-            //    };
-            //}
 
             if (!await _unitOfWork.Priorities.PriorityExists(updateIssueReportDto.PriorityId))
             {
@@ -215,6 +188,7 @@ namespace MOCA.Services.Implementation.MocaSettings
             issueReprotToBeAdded.SubmissionDate = issueReport.SubmissionDate;
             issueReprotToBeAdded.ClosureDate = issueReport.ClosureDate;
             issueReprotToBeAdded.LobSpaceTypeId = issueReport.LobSpaceTypeId;
+            issueReprotToBeAdded.OwnerId = _authenticatedUser.UserId;
 
             if (issueReprotToBeAdded.StatusId != issueReport.StatusId)
             {
@@ -222,7 +196,7 @@ namespace MOCA.Services.Implementation.MocaSettings
 
                 if (status.Name == "Closed")
                 {
-                    issueReprotToBeAdded.ClosureDate = DateTime.UtcNow;
+                    issueReprotToBeAdded.ClosureDate = _dateTimeService.NowUtc;
                 }
 
                 _unitOfWork.IssueReports.Insert(issueReprotToBeAdded);
@@ -263,10 +237,7 @@ namespace MOCA.Services.Implementation.MocaSettings
             // Delete Related Case Stages
             var caseStages = await _unitOfWork.IssueReports.GetCaseStages(issueReportId);
 
-            foreach (var stage in caseStages)
-            {
-                stage.IsDeleted = true;
-            }
+            _unitOfWork.IssueReports.DeleteCaseStages(caseStages);
 
             if (await _unitOfWork.SaveAsync() < 1)
             {
@@ -298,16 +269,14 @@ namespace MOCA.Services.Implementation.MocaSettings
         public async Task<PagedResponse<List<IssueReportDto>>> GetPaginatedIssueReportsAsync(long? lobSpaceTypeId,
                                                                IssueReportsResourceParameters resourceParameters)
         {
-            //if (lobSpaceTypeId != null)
-            //{
-            //    if (!await _unitOfWork.LobSpaceTypes.LobSpaceTypeExists((long)lobSpaceTypeId))
-            //    {
-            //        return new PagedResponse<IReadOnlyList<IssueReportDto>>
-            //        {
-            //            Message = "There's no such Lob Space"
-            //        };
-            //    }
-            //}
+            if (await _unitOfWork.LocationTypeRepoEF.GetByIdAsync(lobSpaceTypeId) is null)
+            {
+                return new PagedResponse<List<IssueReportDto>>(null, 0, 0, 0)
+                {
+                    Message = "There's no such LOB Space Type", 
+                    Succeeded = false
+                };
+            }
 
             var issueReports = await _unitOfWork.IssueReports
                                                 .GetReportsWithPagination(lobSpaceTypeId, resourceParameters);
@@ -317,7 +286,7 @@ namespace MOCA.Services.Implementation.MocaSettings
             foreach (var issue in issueReports)
             {
                 var issueDto = _mapper.Map<IssueReportDto>(issue);
-                //issueDto.ReportedBy = await _unitOfWork.Users.GetAdminName(issue.ReportedById);
+                //TODO: issueDto.ReportedBy = await _unitOfWork.Users.GetAdminName(issue.ReportedById);
 
                 issueReportsDto.Add(issueDto);
             }

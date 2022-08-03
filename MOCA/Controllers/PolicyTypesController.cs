@@ -19,7 +19,7 @@ namespace MocaSettings.API.Controllers
         /// <summary>
         /// Adds Policy Type
         /// </summary>
-        /// <param name="policyTypeDto">an object that has the name of the Policy Type</param>
+        /// <param name="policyTypeDto">an object that has the name and URL of the Policy Type</param>
         /// <response code="200">Policy Type Added Successfully</response>
         /// <response code="400">If the request is not well formatted</response>
         /// <response code="500">If the server failed to add the Policy Type</response>
@@ -39,7 +39,7 @@ namespace MocaSettings.API.Controllers
         /// Updates a Policy Type
         /// </summary>
         /// <param name="policyTypeId">Id of the Policy Type</param>
-        /// <param name="policyTypeDto">an Object that has the updated name of the Policy Type</param>
+        /// <param name="policyTypeDto">an Object that has the updated name and URL of the Policy Type</param>
         /// <response code="200">Policy Type Updated Successfully</response>
         /// <response code="400">If the request is not well formatted, or the id is not correct</response>
         /// <response code="500">If the server failed to update the Policy Type</response>

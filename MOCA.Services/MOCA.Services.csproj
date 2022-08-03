@@ -13,6 +13,7 @@
   <ItemGroup>
     <Folder Include="Configuration\" />
     <Folder Include="Implementation\MocaSettings\" />
+    <Folder Include="Implementation\Events\" />
     <Folder Include="Implementation\SSO\" />
   </ItemGroup>
 

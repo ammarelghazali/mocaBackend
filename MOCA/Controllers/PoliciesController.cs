@@ -21,13 +21,12 @@ namespace MocaSettings.API.Controllers
         /// Adds Policy
         /// </summary>
         /// <param name="policyForCreationDto">an object that has the Descripiton of the Policy. 
-        /// with Id of the Lob Space Type. If it is set to null, 
-        /// it will be the non-relatable to a space type policies</param>
+        /// with Id of the Lob Space Type.</param>
         /// <param name="policyTypeId">Id of the Policy Type</param>
         /// <response code="200">Adds the policy successfully</response>
         /// <response code="500">Server failed to add the policy</response>
         /// <response code="400">If the request is not well formatted, or the policy
-        /// type id is not correct</response>
+        /// type id is not correct, or the LOB Type Id is wrong</response>
         [HttpPost("PolicyType/{policyTypeId}")]
         public async Task<IActionResult> AddPolicy([FromBody] PolicyForCreationDto policyForCreationDto,
                                              [FromRoute] long policyTypeId)
@@ -46,12 +45,11 @@ namespace MocaSettings.API.Controllers
         /// </summary>
         /// <param name="policyId">Id of the Policy</param>
         /// <param name="policyForCreationDto">an object that has the Descripiton of the Policy. 
-        /// with the the Lob Space Type. If it is set to null, 
-        /// it will be the non-relatable to a space type policies</param>
+        /// with the the Lob Space Type. </param>
         /// <response code="200">Updates the policy successfully</response>
         /// <response code="500">Server failed to add the policy</response>
         /// <response code="400">If the request is not well formatted, or the policy
-        /// id is not correct</response>
+        /// id is not correct, or the LOB Type Id is wrong</response>
         [HttpPut("{policyId}")]
         public async Task<IActionResult> UpdatePolicy([FromRoute] long policyId,
                                                       [FromBody] PolicyForCreationDto policyForCreationDto)
@@ -88,11 +86,10 @@ namespace MocaSettings.API.Controllers
         /// Get Policy by PolicyType Id
         /// </summary>
         /// <param name="policyTypeId">Id of the Policy Type</param>
-        /// <param name="spaceTypeDto">Id of the Lob Space Type. If it is set to null, 
-        /// it will be the non-relatable to a space type policies</param>
+        /// <param name="spaceTypeDto">Id of the Lob Space Type.</param>
         /// <response code="200">Gets the policy successfully</response>
         /// <response code="400">If the request is not well formatted, or the policy type
-        /// id is not correct</response>
+        /// id is not correct, or  Lob Space Type is wrong</response>
         [HttpGet("PolicyType/{policyTypeId}")]
         public async Task<IActionResult> GetPolicyByPolicyTypeId([FromRoute] long policyTypeId,
                                                             [FromQuery] LobSpaceTypeIdDto spaceTypeDto)
@@ -110,12 +107,11 @@ namespace MocaSettings.API.Controllers
         /// <summary>
         /// Get All Policies with Name of its Policy Type 
         /// </summary>
-        /// <param name="lobSpaceTypeId">Id of the Lob Space Type. If it is set to null, 
-        /// it will be the non-relatable to a space type policies</param>
+        /// <param name="lobSpaceTypeId">Id of the Lob Space Type</param>
         /// <response code="200">Gets all the policies successfully</response>
-        /// <response code="400">If the request is not well formatted</response>
+        /// <response code="400">If the request is not well formatted, or Lob Space Type is wrong</response>
         [HttpGet("LobSpaceType/{lobSpaceTypeId?}")]
-        public async Task<IActionResult> GetAllPolicies([FromRoute] long? lobSpaceTypeId = null)
+        public async Task<IActionResult> GetAllPolicies([FromRoute] long lobSpaceTypeId)
         {
             var response = await _policyService.GetAllPoliciesAsync(lobSpaceTypeId);
             if (!response.Succeeded)
@@ -130,12 +126,11 @@ namespace MocaSettings.API.Controllers
         /// Delete Policy
         /// </summary>
         /// <param name="policyId">Id of the Policy</param>
-        /// <param name="spaceTypeDto">Id of the Lob Space Type. If it is set to null, 
-        /// it will be the non-relatable to a space type policies</param>
+        /// <param name="spaceTypeDto">Id of the Lob Space Type</param>
         /// <response code="204">Deletes the policy successfully</response>
         /// <response code="500">Server failed to delete the policy</response>
         /// <response code="400">If the request is not well formatted, or the policy
-        /// id is not correct</response>
+        /// id is not correct, or Lob Space Type</response>
         [HttpDelete("{policyId}")]
         public async Task<IActionResult> DeletePolicy([FromRoute] long policyId,
                                                       [FromBody] LobSpaceTypeIdDto spaceTypeDto)

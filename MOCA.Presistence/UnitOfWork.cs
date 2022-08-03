@@ -1,15 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MOCA.Core;
-using MOCA.Core.Entities.LocationManagment;
+using MOCA.Core.Entities.EventSpaceBookings;
 using MOCA.Core.Interfaces.Base;
+using MOCA.Core.Interfaces.Events;
+using MOCA.Core.Interfaces.Events.Repositories;
+using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Interfaces.LocationManagment.Repositories;
 using MOCA.Core.Interfaces.MocaSettings.Repositories;
 using MOCA.Core.Interfaces.Shared.Services;
 using MOCA.Presistence.Contexts;
 using MOCA.Presistence.Repositories.Base;
+using MOCA.Presistence.Repositories.Events;
 using MOCA.Presistence.Repositories.LocationManagment;
 using MOCA.Presistence.Repositories.MocaSettings;
+using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
+using MOCA.Presistence.Repositories.WorkSpaceReservations;
 
 namespace MOCA.Presistence
 {
@@ -169,6 +175,158 @@ namespace MOCA.Presistence
         }
 
         //public IIdentityUserRepository Users => throw new NotImplementedException();
+        #endregion
+
+
+        #region Events
+
+        private IGenericRepository<EventType> _eventTypeRepo;
+        private IGenericRepository<EventCategory> _eventCategoryRepo;
+        private IGenericRepository<EventRequester> _eventRequesterRepo;
+        private IGenericRepository<EventAttendance> _eventAttendanceRepo;
+        private IGenericRepository<EventReccurance> _eventReccuranceRepo;
+        private ILocationsMemberShipsRepository _locationsMemberShipsRepo;
+        private IEventOpportunityStatusRepository _eventOpportunityStatusRepo;
+        private IOpportunityStageReportRepository _opportunityStageReportRepo;
+        private IEventSpaceBookingRepository _eventSpaceBookingRepository;
+        private IOpportunityStageRepository _opportunityStageRepo;
+        private IEventSpaceTimesRepository _eventSpaceTimesRepo;
+        private IEventSpaceVenueRepository _eventSpaceVenuesRepo;
+        private IContactDetailsRepository _contactDetailsRepo;
+        private IInitiatedRepository _initiatedRepo;
+        private ILoungeClientRepository _loungeClientRepo;
+        private ISendEmailRepository _sendEmailRepo;
+        private IUserService _userService;
+        private IAccountService _accountService;
+        private IEmailTemplateRepository _emailTemplateRepo;
+
+        public IEmailTemplateRepository EmailTemplateRepository
+        {
+            get
+            {
+                return this._emailTemplateRepo = this._emailTemplateRepo ?? new EmailTemplateRepository(_context);
+            }
+        }
+        public IGenericRepository<EventRequester> EventRequesterRepo
+        {
+            get
+            {
+                return this._eventRequesterRepo = this._eventRequesterRepo ?? new GenericRepository<EventRequester>(_context);
+            }
+        }
+        public IGenericRepository<EventAttendance> EventAttendanceRepo
+        {
+            get
+            {
+                return this._eventAttendanceRepo = this._eventAttendanceRepo ?? new GenericRepository<EventAttendance>(_context);
+            }
+        }
+        public IGenericRepository<EventType> EventTypeRepo
+        {
+            get
+            {
+                return this._eventTypeRepo = this._eventTypeRepo ?? new GenericRepository<EventType>(_context);
+            }
+        }
+        public IGenericRepository<EventReccurance> EventReccuranceRepo
+        {
+            get
+            {
+                return this._eventReccuranceRepo = this._eventReccuranceRepo ?? new GenericRepository<EventReccurance>(_context);
+            }
+        }
+
+        public IGenericRepository<EventCategory> EventCategoryRepo
+        {
+            get
+            {
+                return this._eventCategoryRepo = this._eventCategoryRepo ?? new GenericRepository<EventCategory>(_context);
+            }
+        }
+        public IContactDetailsRepository ContactDetailsRepo
+        {
+            get
+            {
+                return this._contactDetailsRepo = this._contactDetailsRepo ?? new ContactDetailsRepository(_context);
+            }
+        }
+        public IEventSpaceBookingRepository EventSpaceBookingRepo
+        {
+            get
+            {
+                return this._eventSpaceBookingRepository = this._eventSpaceBookingRepository ??
+                                                                  new EventSpaceBookingRepository(_context);
+            }
+        }
+        public IEventSpaceTimesRepository EventSpaceTimesRepo
+        {
+            get
+            {
+                return this._eventSpaceTimesRepo = this._eventSpaceTimesRepo ?? new EventSpaceTimesRepository(_context);
+            }
+        }
+        public IEventSpaceVenueRepository EventSpaceVenuesRepo
+        {
+            get
+            {
+                return this._eventSpaceVenuesRepo = this._eventSpaceVenuesRepo ?? new EventSpaceVenueRepository(_context);
+            }
+        }
+        public ISendEmailRepository SendEmailRepo
+        {
+            get
+            {
+                return this._sendEmailRepo = this._sendEmailRepo ?? new SendEmailRepository(_context);
+            }
+        }
+        public IInitiatedRepository InitiatedRepo
+        {
+            get
+            {
+                return this._initiatedRepo = this._initiatedRepo ?? new InitiatedRepository(_context);
+            }
+        }
+        public IOpportunityStageReportRepository OpportunityStageReportRepo
+        {
+            get
+            {
+                return this._opportunityStageReportRepo = this._opportunityStageReportRepo ?? new OpportunityStageReportRepository(_context);
+            }
+        }
+        public IOpportunityStageRepository OpportunityStageRepo
+        {
+            get
+            {
+                return this._opportunityStageRepo = this._opportunityStageRepo ?? new OpportunityStageRepository(_context);
+            }
+        }
+        public IEventOpportunityStatusRepository EventOpportunityStatusRepo
+        {
+            get
+            {
+                return this._eventOpportunityStatusRepo = this._eventOpportunityStatusRepo ?? new EventOpportunityStatusRepository(_context);
+            }
+        }
+        public ILocationsMemberShipsRepository LocationsMemberShipsRepo
+        {
+            get
+            {
+                return this._locationsMemberShipsRepo = this._locationsMemberShipsRepo ?? new LocationsMemberShipsRepository(_configuration);
+            }
+        }
+
+
+        #endregion
+
+        #region WorkSpaceReservations
+        private IWorkSpaceReservationsRepositoryCRM _workSpaceReservationCRM;
+        public IWorkSpaceReservationsRepositoryCRM WorkSpaceReservationsRepositoryCRM 
+        {
+            get
+            {
+                return _workSpaceReservationCRM ?? new WorkSpaceReservationsRepositoryCRM(_context);
+            }
+        }
         #endregion
 
         #region Location Managment

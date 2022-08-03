@@ -17,7 +17,10 @@ namespace MocaSettings.API.Controllers
             _statusesService = statusesService;
         }
 
-
+        /// <summary>
+        /// Get All Stautuses
+        /// </summary>
+        /// <response code="200">Returns all the Statuses</response>
         [HttpGet]
         public async Task<IActionResult> GetAllStatuses()
         {
@@ -30,7 +33,12 @@ namespace MocaSettings.API.Controllers
             return Ok(response);
         }
 
-
+        /// <summary>
+        /// Get Single Status By Id
+        /// </summary>
+        /// <param name="statusId">Status Id</param>
+        /// <response code="200">Returns the Status Successfully</response>
+        /// <response code="400">Request is not well formatted, or the id is wrong</response>
         [HttpGet("{statusId}")]
         public async Task<IActionResult> GetSingleStatus([FromRoute] long statusId)
         {
@@ -43,6 +51,12 @@ namespace MocaSettings.API.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Add new Status
+        /// </summary>
+        /// <param name="statusForCreationDto">an object that has the name of the status</param>
+        /// <response code="200">Added the Status Successfully</response>
+        /// <response code="400">Request is not well formatted</response>
         [HttpPost]
         public async Task<IActionResult> AddStatus([FromBody] StatusForCreationDto statusForCreationDto)
         {
@@ -55,6 +69,14 @@ namespace MocaSettings.API.Controllers
             return Ok(response);
         }
 
+
+        /// <summary>
+        /// Update Status
+        /// </summary>
+        /// <param name="statusId">Status Id</param>
+        /// <param name="statusForCreationDto">an object that has the new name of the status</param>
+        /// <response code="200">Updates the Status Successfully</response>
+        /// <response code="400">Request is not well formatted, or the id is wrong</response>
         [HttpPut("{statusId}")]
         public async Task<IActionResult> UpdateStatus([FromRoute] long statusId,
                                                      [FromBody] StatusForCreationDto statusForCreationDto)
@@ -68,6 +90,12 @@ namespace MocaSettings.API.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Delete Status
+        /// </summary>
+        /// <param name="statusId">Status Id</param>
+        /// <response code="200">Deletes the Status Successfully</response>
+        /// <response code="400">Request is not well formatted, or the id is wrong</response>
         [HttpDelete("{statusId}")]
         public async Task<IActionResult> DeleteStatus([FromRoute] long statusId)
         {

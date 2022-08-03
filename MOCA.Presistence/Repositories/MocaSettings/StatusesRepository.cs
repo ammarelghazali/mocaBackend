@@ -14,7 +14,7 @@ namespace MOCA.Presistence.Repositories.MocaSettings
             _context = context;
         }
 
-        public async Task<IList<Status>> GetAllBaseAsync()
+        public async Task<IList<Status>> GetAllNotDeletedAsync()
         {
             return await _context.Statuses.Where(x => x.IsDeleted != true).ToListAsync();
         }

@@ -130,6 +130,89 @@ namespace MOCA.Presistence.Migrations
                     b.ToTable("ContactDetails");
                 });
 
+            modelBuilder.Entity("MOCA.Core.Entities.EventSpaceBookings.EmailTemplate", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EmailTemplateTypeID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmailTemplateTypeID");
+
+                    b.ToTable("EmailTemplate");
+                });
+
+            modelBuilder.Entity("MOCA.Core.Entities.EventSpaceBookings.EmailTemplateType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmailTemplateType");
+                });
+
             modelBuilder.Entity("MOCA.Core.Entities.EventSpaceBookings.EventAttendance", b =>
                 {
                     b.Property<long>("Id")
@@ -363,11 +446,9 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<long?>("EventAttendanceId")
-                        .IsRequired()
                         .HasColumnType("bigint");
 
                     b.Property<long?>("EventCategoryId")
-                        .IsRequired()
                         .HasColumnType("bigint");
 
                     b.Property<string>("EventDescription")
@@ -379,11 +460,9 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("nvarchar(800)");
 
                     b.Property<long?>("EventOpportunityStatusId")
-                        .IsRequired()
                         .HasColumnType("bigint");
 
                     b.Property<long?>("EventReccuranceId")
-                        .IsRequired()
                         .HasColumnType("bigint");
 
                     b.Property<long?>("EventRequesterId")
@@ -391,7 +470,6 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<long?>("EventTypeId")
-                        .IsRequired()
                         .HasColumnType("bigint");
 
                     b.Property<int?>("ExpectedNoAttend")
@@ -403,8 +481,7 @@ namespace MOCA.Presistence.Migrations
                     b.Property<long?>("IndustryNameId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("InitiatedId")
-                        .IsRequired()
+                    b.Property<long>("InitiatedId")
                         .HasColumnType("bigint");
 
                     b.Property<bool>("IsDeleted")
@@ -419,7 +496,7 @@ namespace MOCA.Presistence.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("LobLocationTypeId")
+                    b.Property<long>("LobLocationTypeId")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("LocationNameId")
@@ -429,7 +506,6 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<long?>("OpportunityStageId")
-                        .IsRequired()
                         .HasColumnType("bigint");
 
                     b.Property<string>("OrgnizingCompany")
@@ -749,10 +825,10 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("EmailTemplateId")
+                        .IsRequired()
                         .HasColumnType("bigint");
 
                     b.Property<long?>("EventSpaceBookingId")
-                        .IsRequired()
                         .HasColumnType("bigint");
 
                     b.Property<string>("FromUser")
@@ -775,6 +851,8 @@ namespace MOCA.Presistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ContactDetailId");
+
+                    b.HasIndex("EmailTemplateId");
 
                     b.HasIndex("EventSpaceBookingId");
 
@@ -1397,6 +1475,10 @@ namespace MOCA.Presistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
+                    b.Property<string>("CountryCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -1970,8 +2052,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.Property<string>("Answer")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("CategoryId")
                         .HasColumnType("bigint");
@@ -2000,8 +2081,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.Property<string>("Question")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -2062,8 +2142,8 @@ namespace MOCA.Presistence.Migrations
 
                     b.Property<string>("CaseDescription")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.Property<long>("CaseTypeId")
                         .HasColumnType("bigint");
@@ -2073,8 +2153,8 @@ namespace MOCA.Presistence.Migrations
 
                     b.Property<string>("Comment")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -2098,9 +2178,6 @@ namespace MOCA.Presistence.Migrations
 
                     b.Property<long>("LocationId")
                         .HasColumnType("bigint");
-
-                    b.Property<int>("MyProperty")
-                        .HasColumnType("int");
 
                     b.Property<string>("OwnerId")
                         .IsRequired()
@@ -2153,8 +2230,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -2171,21 +2247,18 @@ namespace MOCA.Presistence.Migrations
 
                     b.Property<string>("Points")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TermsOfUse")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("TypeId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("WhatYouGet")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -2222,13 +2295,13 @@ namespace MOCA.Presistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("URL")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.HasKey("Id");
 
@@ -2252,8 +2325,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -2306,13 +2378,13 @@ namespace MOCA.Presistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("URL")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.HasKey("Id");
 
@@ -2345,8 +2417,8 @@ namespace MOCA.Presistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.HasKey("Id");
 
@@ -2379,8 +2451,8 @@ namespace MOCA.Presistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.HasKey("Id");
 
@@ -2413,8 +2485,8 @@ namespace MOCA.Presistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.HasKey("Id");
 
@@ -2451,8 +2523,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.Property<string>("TermsOfUse")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("TopUpTypeId")
                         .HasColumnType("bigint");
@@ -2492,13 +2563,13 @@ namespace MOCA.Presistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("URL")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.HasKey("Id");
 
@@ -2522,8 +2593,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -3071,31 +3141,34 @@ namespace MOCA.Presistence.Migrations
                     b.Navigation("EventSpaceBooking");
                 });
 
+            modelBuilder.Entity("MOCA.Core.Entities.EventSpaceBookings.EmailTemplate", b =>
+                {
+                    b.HasOne("MOCA.Core.Entities.EventSpaceBookings.EmailTemplateType", "EmailTemplateType")
+                        .WithMany()
+                        .HasForeignKey("EmailTemplateTypeID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("EmailTemplateType");
+                });
+
             modelBuilder.Entity("MOCA.Core.Entities.EventSpaceBookings.EventSpaceBooking", b =>
                 {
                     b.HasOne("MOCA.Core.Entities.EventSpaceBookings.EventAttendance", "EventAttendance")
                         .WithMany("EventSpaceBookings")
-                        .HasForeignKey("EventAttendanceId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("EventAttendanceId");
 
                     b.HasOne("MOCA.Core.Entities.EventSpaceBookings.EventCategory", "EventCategory")
                         .WithMany("EventSpaceBookings")
-                        .HasForeignKey("EventCategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("EventCategoryId");
 
                     b.HasOne("MOCA.Core.Entities.EventSpaceBookings.EventOpportunityStatus", "EventOpportunityStatus")
                         .WithMany("EventSpaceBookings")
-                        .HasForeignKey("EventOpportunityStatusId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("EventOpportunityStatusId");
 
                     b.HasOne("MOCA.Core.Entities.EventSpaceBookings.EventReccurance", "EventReccurance")
                         .WithMany("EventSpaceBookings")
-                        .HasForeignKey("EventReccuranceId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("EventReccuranceId");
 
                     b.HasOne("MOCA.Core.Entities.EventSpaceBookings.EventRequester", "EventRequester")
                         .WithMany("EventSpaceBookings")
@@ -3105,9 +3178,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasOne("MOCA.Core.Entities.EventSpaceBookings.EventType", "EventType")
                         .WithMany("EventSpaceBookings")
-                        .HasForeignKey("EventTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("EventTypeId");
 
                     b.HasOne("MOCA.Core.Entities.LocationManagment.Industry", "Industry")
                         .WithMany("EventSpaceBookings")
@@ -3121,7 +3192,9 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasOne("MOCA.Core.Entities.LocationManagment.LocationType", "LocationType")
                         .WithMany("EventSpaceBookings")
-                        .HasForeignKey("LobLocationTypeId");
+                        .HasForeignKey("LobLocationTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MOCA.Core.Entities.LocationManagment.Location", "Location")
                         .WithMany("EventSpaceBookings")
@@ -3129,9 +3202,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasOne("MOCA.Core.Entities.EventSpaceBookings.OpportunityStage", "OpportunityStage")
                         .WithMany()
-                        .HasForeignKey("OpportunityStageId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("OpportunityStageId");
 
                     b.Navigation("EventAttendance");
 
@@ -3205,13 +3276,19 @@ namespace MOCA.Presistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("MOCA.Core.Entities.EventSpaceBookings.EventSpaceBooking", "EventSpaceBooking")
-                        .WithMany("SendEmails")
-                        .HasForeignKey("EventSpaceBookingId")
+                    b.HasOne("MOCA.Core.Entities.EventSpaceBookings.EmailTemplate", "EmailTemplate")
+                        .WithMany()
+                        .HasForeignKey("EmailTemplateId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("MOCA.Core.Entities.EventSpaceBookings.EventSpaceBooking", "EventSpaceBooking")
+                        .WithMany("SendEmails")
+                        .HasForeignKey("EventSpaceBookingId");
+
                     b.Navigation("ContactDetail");
+
+                    b.Navigation("EmailTemplate");
 
                     b.Navigation("EventSpaceBooking");
                 });

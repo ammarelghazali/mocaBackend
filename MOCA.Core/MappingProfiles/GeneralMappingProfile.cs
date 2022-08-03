@@ -33,6 +33,20 @@ using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.DTOs.LocationManagment.Feature;
 using MOCA.Core.DTOs.LocationManagment.Inclusion;
 using MOCA.Core.DTOs.LocationManagment.Industry;
+using MOCA.Core.DTOs.Events.BookEventSpaceDtos.Request;
+using MOCA.Core.DTOs.Events.BookEventSpaceDtos.Response;
+using MOCA.Core.DTOs.Events.EventAttendanceDtos.Request;
+using MOCA.Core.DTOs.Events.EventAttendanceDtos.Response;
+using MOCA.Core.DTOs.Events.EventCategoryDtos.Response;
+using MOCA.Core.DTOs.Events.EventOpportunityDtos.Request;
+using MOCA.Core.DTOs.Events.EventOpportunityDtos.Response;
+using MOCA.Core.DTOs.Events.EventReccuranceDtos.Response;
+using MOCA.Core.DTOs.Events.EventRequesterDtos.Response;
+using MOCA.Core.DTOs.Events.EventsOpportunitiesDtos.Response;
+using MOCA.Core.DTOs.Events.EventTypeDtos.Response;
+using MOCA.Core.DTOs.Events.Response;
+using MOCA.Core.Entities.EventSpaceBookings;
+using MOCA.Core.DTOs.MocaSettings.PolicyTypesDtos.Request;
 using MOCA.Core.DTOs.LocationManagment.Location;
 using MOCA.Core.DTOs.LocationManagment.FavouriteLocation;
 
@@ -82,6 +96,7 @@ namespace MOCA.Core.MappingProfiles
                 .ForMember(i => i.Stage, i2 => i2.MapFrom(i3 => i3.IssueReport.Status.Name))
                 .ForMember(i => i.Comment, i2 => i2.MapFrom(i3 => i3.IssueReport.Comment));
 
+
             CreateMap<UpdateIssueReportDto, IssueReport>().ReverseMap();
 
             // Plan 
@@ -117,6 +132,7 @@ namespace MOCA.Core.MappingProfiles
             // Policy Type 
             CreateMap<PolicyType, PolicyTypeDto>();
             CreateMap<PolicyType, PolicyTypeWithDescriptionDto>();
+            CreateMap<PolicyTypeForCreationDto, PolicyType>();
 
             // Priority
             CreateMap<Priority, PriorityDto>();
@@ -148,8 +164,8 @@ namespace MOCA.Core.MappingProfiles
                .ForMember(p1 => p1.IsDeleted, p2 => p2.Ignore());
 
             CreateMap<Wifi, WifiDto>();
-
             #endregion
+
 
             #region Location Managment
             CreateMap<CountryModel, Country>();
@@ -175,6 +191,72 @@ namespace MOCA.Core.MappingProfiles
 
             CreateMap<IndustryModel, Industry>();
             CreateMap<Industry, IndustryModel>();
+
+
+            #endregion
+
+            #region Events
+            //EventSpaceBookings
+
+            CreateMap<EventSpaceBooking, BooEventSpaceDto>()
+                .ForMember(x => x.EventSpaceTimes, opt => opt.Ignore())
+                .ForMember(x => x.EventSpaceVenues, opt => opt.Ignore());
+            CreateMap<EventSpaceBooking, BooEventSpaceDto>()
+                .ReverseMap()
+                .ForMember(x => x.EventSpaceTimes, opt => opt.Ignore())
+                .ForMember(x => x.EventSpaceVenues, opt => opt.Ignore());
+
+            CreateMap<GetAllBookedEventSpaceResponseDto, EventSpaceBooking>();
+            CreateMap<GetAllBookedEventSpaceResponseDto, EventSpaceBooking>().ReverseMap();
+
+            // Event Attendance
+
+            CreateMap<EventAttendance, GetAllEventAttendanceViewModel>();
+            CreateMap<EventAttendance, GetAllEventAttendanceViewModel>().ReverseMap();
+            CreateMap<EventAttendanceForCreationDto, EventAttendance>();
+            CreateMap<EventAttendance, EventAttendanceDto>();
+
+            // Event Category
+
+            CreateMap<EventCategory, GetAllEventCategoryViewModel>();
+            CreateMap<EventCategory, GetAllEventCategoryViewModel>().ReverseMap();
+            CreateMap<EventCategory, EventCategoryDto>();
+
+            // Event Type
+
+            CreateMap<EventType, AllEventTypesDto>();
+            CreateMap<EventType, AllEventTypesDto>().ReverseMap();
+            CreateMap<EventType, EventTypeDto>();
+
+            // Event Reccurance
+
+            CreateMap<EventReccurance, GetAllEventReccuranceViewModel>();
+            CreateMap<EventReccurance, GetAllEventReccuranceViewModel>().ReverseMap();
+            CreateMap<EventReccurance, EventRecurrenceDto>();
+
+            // Event Requester
+
+            CreateMap<EventRequester, GetAllEventRequesterResponseDto>();
+            CreateMap<EventRequester, GetAllEventRequesterResponseDto>().ReverseMap();
+            CreateMap<EventRequester, EventRequesterDto>();
+
+            // Event Opportunity
+            CreateMap<EventSpaceBooking, cmdCreateNewEventOpportunityParameter>().ReverseMap()
+                .ForMember(s => s.CompanyCommericalName, d => d.MapFrom(di => di.CompanyName));
+
+            CreateMap<ContactDetails, EventOpportunityContactDetailViewModel>().ReverseMap();
+            CreateMap<ContactDetails, EventOpportunityContactDetailsViewModel>();
+            CreateMap<OpportunityStage, OpportunityStageDto>();
+            CreateMap<EventOpportunityStatus, EventOpportunityStatusDto>();
+            CreateMap<Initiated, InitiatedDto>();
+            CreateMap<EventSpaceTime, DTOs.Events.EventOpportunityDtos.Response.EventSpaceTimeDto>();
+            CreateMap<EventSpaceVenues, DTOs.Events.EventOpportunityDtos.Response.EventSpaceVenuesDto>();
+
+
+            // Email Templete
+            CreateMap<EmailTemplate, GetEmailTempleteEventOpportunitylViewModelDto>().ReverseMap();
+
+
 
             CreateMap<LocationBankAccountModel, LocationBankAccount>();
             CreateMap<LocationBankAccount, LocationBankAccountModel>();

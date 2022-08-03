@@ -154,5 +154,9 @@ namespace MOCA.Presistence.Repositories.MocaSettings
                                               .FirstOrDefaultAsync();
         }
 
+        public void DeleteCaseStages(IList<IssueCaseStage> issueCaseStages)
+        {
+            _context.IssueCaseStages.RemoveRange(issueCaseStages);
+        }
     }
 }
