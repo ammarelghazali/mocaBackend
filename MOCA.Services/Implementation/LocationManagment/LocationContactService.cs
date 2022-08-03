@@ -13,13 +13,17 @@ namespace MOCA.Services.Implementation.LocationManagment
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IDateTimeService _dateTimeService;
-        public LocationContactService(IUnitOfWork unitOfWork,
+        private readonly IAuthenticatedUserService _authenticatedUserService;
+        public LocationContactService(
+            IAuthenticatedUserService authenticatedUserService, 
+            IUnitOfWork unitOfWork,
             IMapper mapper,
             IDateTimeService dateTimeService)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _dateTimeService = dateTimeService ?? throw new ArgumentNullException(nameof(dateTimeService));
+            _authenticatedUserService = authenticatedUserService ?? throw new ArgumentNullException(nameof(authenticatedUserService));
         }
 
         public async Task<Response<bool>> AddLocationContacts(List<LocationContactModel> request)
@@ -27,40 +31,28 @@ namespace MOCA.Services.Implementation.LocationManagment
             var locationContacts = _mapper.Map<List<LocationContact>>(request);
             for (int i = 0; i < locationContacts.Count; i++)
             {
-                locationContacts[i].CreatedBy = "System";
+                locationContacts[i].CreatedBy = _authenticatedUserService.UserId;
                 if (locationContacts[i].CreatedAt == null || locationContacts[i].CreatedAt == default)
                 {
                     locationContacts[i].CreatedAt = _dateTimeService.NowUtc;
                 }
             }
-            /*if (string.IsNullOrWhiteSpace(city.CreatedBy))
-            {
-                if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-                else
-                { city.CreatedBy = authenticatedUserService.UserId; }
-            }*/
 
             _unitOfWork.LocationContactRepo.InsertRang(locationContacts);
-            _unitOfWork.Save();
-            /*if (await _unitOfWork.SaveAsync() < 1)
+            if (await _unitOfWork.SaveAsync() < 1)
             {
                 return new Response<bool>("Cannot Add LocationContact right now");
-            }*/
+            }
 
             return new Response<bool>(true, "LocationContact Added Successfully.");
         }
 
         public async Task<Response<bool>> DeleteLocationContacts(long LocationID)
         {
-            /*
-            if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-               {
-                   throw new UnauthorizedAccessException("User is not authorized");
-               }
-           */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
 
             var LocationContact = await _unitOfWork.LocationContactRepoEF.DeleteAllLocationContactByLocationID(LocationID);
             if (LocationContact == false)
@@ -75,12 +67,10 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<Response<List<LocationContactModel>>> GetLocationContactsByLocationID(long LocationID)
         {
-            /*
-             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
-                {
-                    throw new UnauthorizedAccessException("User is not authorized");
-                }
-             */
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
             if (LocationID <= 0)
             {
                 return new Response<List<LocationContactModel>>("ID must be greater than zero.");
