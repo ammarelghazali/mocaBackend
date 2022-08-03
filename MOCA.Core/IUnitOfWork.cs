@@ -9,6 +9,7 @@ using MOCA.Core.Interfaces.LocationManagment.Repositories;
 using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
 using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
 using MOCA.Core.Interfaces.SSO.Repositories;
+using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
 
 namespace MOCA.Core
 {
