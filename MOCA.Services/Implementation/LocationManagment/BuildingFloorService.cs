@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using MOCA.Core;
+using MOCA.Core.Interfaces.LocationManagment.Services;
 using MOCA.Core.Interfaces.Shared.Services;
 
 namespace MOCA.Services.Implementation.LocationManagment
 {
-    public class BuildingFloorService
+    public class BuildingFloorService : IBuildingFloorService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;

@@ -99,6 +99,7 @@ builder.Services.AddScoped<ILocationWorkingHourService, LocationWorkingHourServi
 builder.Services.AddScoped<IServiceFeePaymentsDueDateService, ServiceFeePaymentsDueDateService>();
 builder.Services.AddScoped<IFavouriteLocationService, FavouriteLocationService>();
 builder.Services.AddScoped<IBuildingService, BuildingService>();
+builder.Services.AddScoped<IBuildingFloorService, BuildingFloorService>();
 
 #endregion
 
