@@ -125,6 +125,12 @@ namespace MOCA.Presistence.Contexts
         public DbSet<MeetingReservationTopUp> MeetingReservationTopUps { get; set; }
         #endregion
 
+        #region MeetingSpaceReservations
+        //public DbSet<MeetingSpaceReservation> MeetingSpaceReservations { get; set; }
+        //public DbSet<MeetingAttendee> MeetingAttendees { get; set; }
+        //public DbSet<MeetingReservationTopUp> MeetingReservationTopUps { get; set; }
+        #endregion
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             foreach (var entry in ChangeTracker.Entries<BaseEntity>())

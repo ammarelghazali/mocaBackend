@@ -8,11 +8,9 @@ namespace MOCA.Core.Entities.MeetingSpaceReservation
     {
         public long MeetingSpaceReservationId { set; get; }
         [ForeignKey("MeetingSpaceReservationId")]
-        public MeetingReservation MeetingSpaceReservation { set; get; }
-
-        [ForeignKey("MeetingSpaceReservationId")]
         public MeetingSpaceReservation meetingSpaceReservation { set; get; }
         
+
         public long? PaymentMethodId { get; set; }
         [ForeignKey("PaymentMethodId")]
         public PaymentMethod PaymentMethod { get; set; }
@@ -23,9 +21,6 @@ namespace MOCA.Core.Entities.MeetingSpaceReservation
         //public MeetingRoomTimePrice MeetingRoomTimePrice { get; set; }
         
         public string Description { set; get; }
-        public int TotalHours { set; get; }
-        public decimal? TotalPrice { set; get; }
-        public long? PaymentMethodId { get; set; }
 
     }
 }
