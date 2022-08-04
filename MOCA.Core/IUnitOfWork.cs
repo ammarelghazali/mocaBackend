@@ -85,6 +85,9 @@ namespace MOCA.Core
         IGenericRepository<FavouriteLocation> FavouriteLocationRepo { get; }
         IFavouriteLocationRepository FavouriteLocationRepoEF { get; }
 
+        IGenericRepository<Building> BuildingRepo { get; }
+        IBuildingRepository BuildingRepoEF { get; }
+
         #endregion
 
         #region Events

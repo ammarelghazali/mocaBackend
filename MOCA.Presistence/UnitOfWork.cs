@@ -672,6 +672,8 @@ namespace MOCA.Presistence
                 return _buildingRepoEF = _buildingRepoEF ?? new BuildingRepository(_context);
             }
         }
+
+
         #endregion
 
         public DateTime ConvertToLocalDate(DateTime dateInEasternTimeZone)
