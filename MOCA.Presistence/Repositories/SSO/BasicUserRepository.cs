@@ -28,5 +28,15 @@ namespace MOCA.Presistence.Repositories.SSO
         {
             return await _context.BasicUsers.Where(a => (a.MobileNumber == mobile || a.Email == Email) && a.IsVerified == true).AsNoTracking().FirstOrDefaultAsync();
         }
+        public async Task<BasicUser> getFirstBasicUserByEmail(string email)
+        {
+            return await _context.BasicUsers.FirstOrDefaultAsync(m => m.Email == email);
+        }
+        public async Task<BasicUser> getFirstBasicUserById(long Id)
+        {
+            return await _context.BasicUsers.FirstOrDefaultAsync(m => m.Id == Id);
+        }
+
+
     }
 }

@@ -6,5 +6,7 @@ namespace MOCA.Core.Interfaces.SSO.Repositories
 {
     public interface IClientDeviceRepository : IGenericRepository<ClientDevice>
     {
+
+        Task<ClientDevice> getFirstClientDeviceByUserId(long UId);
     }
 }

@@ -3,7 +3,7 @@ using MOCA.Core.Interfaces.Base;
 
 namespace MOCA.Core.Interfaces.SSO.Repositories
 {
-    public interface IMemberShipMainCategoriesRepository : IGenericRepository<BasicUser>
+    public interface IMemberShipMainCategoriesRepository : IGenericRepository<MemberShipMainCategories>
     {
     }
 }

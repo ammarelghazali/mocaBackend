@@ -7,6 +7,10 @@ namespace MOCA.Core.Interfaces.SSO.Repositories
     {
         Task<long> GetNewUserId();
 
+        Task<BasicUser> getFirstBasicUserByEmail(string email);
+
+        Task<BasicUser> getFirstBasicUserById(long Id);
+
         Task<BasicUser> GetClientByMobileNoOrEmail(string mobile, string Email);
 
     }
