@@ -22,6 +22,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Controllers\" />
     <ProjectReference Include="..\MOCA.Core\MOCA.Core.csproj" />
     <ProjectReference Include="..\MOCA.Presistence\MOCA.Presistence.csproj" />
   </ItemGroup>
