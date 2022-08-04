@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
 using MOCA.Core;
+using MOCA.Core.DTOs.LocationManagment.Building;
+using MOCA.Core.DTOs.Shared.Responses;
+using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Interfaces.LocationManagment.Services;
 using MOCA.Core.Interfaces.Shared.Services;
 
@@ -23,6 +26,46 @@ namespace MOCA.Services.Implementation.LocationManagment
             _authenticatedUserService = authenticatedUserService ?? throw new ArgumentNullException(nameof(authenticatedUserService));
         }
 
+        public async Task<Response<long>> AddBuilding(BuildingModel request)
+        {
+            var location = await _unitOfWork.LocationRepo.GetByIdAsync(request.LocationId);
+            if (location == null)
+            {
+                return new Response<long>("Location Not Found.");
+            }
+            var buildingCheck = await _unitOfWork.BuildingRepoEF.CheckBuildingExistence(request.LocationId, request.Name);
+            if (buildingCheck == false)
+            {
+                return new Response<long>("Building is exists before.");
+            }
 
+            var building = _mapper.Map<Building>(request);
+            if (string.IsNullOrWhiteSpace(building.CreatedBy))
+            {
+                if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+                {
+                    throw new UnauthorizedAccessException("User is not authorized");
+                }
+                else
+                { building.CreatedBy = _authenticatedUserService.UserId; }
+            }
+            if (building.CreatedAt == null || building.CreatedAt == default)
+            {
+                building.CreatedAt = _dateTimeService.NowUtc;
+            }
+
+            if (request.BuildingFloors.Count() > 0)
+            {
+                //
+            }
+
+            _unitOfWork.BuildingRepo.Insert(building);
+            if (await _unitOfWork.SaveAsync() < 1)
+            {
+                return new Response<long>("Cannot Add Building right now.");
+            }
+
+            return new Response<long>(building.Id, "Building Added Successfully.");
+        }
     }
 }

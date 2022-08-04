@@ -13,5 +13,18 @@ namespace MOCA.Presistence.Repositories.LocationManagment
             _context = context;
         }
 
+        public async Task<bool> CheckBuildingFloorExistence(long BuildingId, long FloorNumber)
+        {
+            if (BuildingId <= 0)
+                return false;
+
+            var BuildingFloor = _context.BuildingFloors.Where(x => x.BuildingId == BuildingId && x.FloorNumber == FloorNumber && x.IsDeleted != true).FirstOrDefault();
+            if (BuildingFloor == null)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }
