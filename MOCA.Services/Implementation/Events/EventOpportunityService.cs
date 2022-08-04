@@ -44,7 +44,7 @@ namespace MOCA.Services.Implementation.Events
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<Response<long>> CreateNewOpportunity(cmd_Create_NewEventOpportunity_Parameter request)
+        public async Task<Response<long>> CreateNewOpportunity(cmdCreateNewEventOpportunityParameter request)
         {
             try
             {
@@ -109,7 +109,7 @@ namespace MOCA.Services.Implementation.Events
             }
         }
 
-        public async Task<Response<bool>> DeleteOpportunity(cmd_Delete_EventOpportunity_Parameter request)
+        public async Task<Response<bool>> DeleteOpportunity(cmdDeleteEventOpportunityParameter request)
         {
             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
             {
@@ -138,7 +138,7 @@ namespace MOCA.Services.Implementation.Events
             return new Response<bool>(true, "Event Opportunitiy Deleted Successfully.");
         }
 
-        public async Task<PagedResponse<IList<EventOpportunityDetails_Send_ViewModel>>> FilterWithPagination(cmd_Filter_EventOpportunityDetails_WithPagination_Query request)
+        public async Task<PagedResponse<IList<EventOpportunityDetails_SendViewModel>>> FilterWithPagination(cmdFilterEventOpportunityDetailsWithPagination_Query request)
         {
             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
             {
@@ -152,35 +152,35 @@ namespace MOCA.Services.Implementation.Events
             parms.Add("@Initiated", request.Initiated);
             parms.Add("@Name", request.Name);
             parms.Add("@OwnerName", request.OwnerName);
-            parms.Add("@LocationTypeId", request.LocationType_ID);
+            parms.Add("@LocationTypeId", request.LocationTypeId);
             parms.Add("@pageNumber", request.pageNumber);
             parms.Add("@pageSize", request.pageSize);
-            var res = await _unitOfWork.EventSpaceBookingRepo.QueryAsync<EventsOpportunitiesSearch_ViewModel>("[dbo].[SP_EventsOpportunities_Search]", parms, System.Data.CommandType.StoredProcedure);
-            var EventOpportunityDetailsWithoutPagination = new List<EventOpportunityDetails_Send_ViewModel>();
+            var res = await _unitOfWork.EventSpaceBookingRepo.QueryAsync<EventsOpportunitiesSearchViewModel>("[dbo].[SP_EventsOpportunities_Search]", parms, System.Data.CommandType.StoredProcedure);
+            var EventOpportunityDetailsWithoutPagination = new List<EventOpportunityDetails_SendViewModel>();
 
             foreach (var item in res)
             {
-                var EventOpportunityDetails = new EventOpportunityDetails_Send_ViewModel();
+                var EventOpportunityDetails = new EventOpportunityDetails_SendViewModel();
 
                 var ContactDetails = await _unitOfWork.ContactDetailsRepo.GetAllContact_DetailByOpportunitiyID(item.Id);
                 var EmailsHistory = await _unitOfWork.SendEmailRepo.GetEmailHistoryByOpportunitiyID(item.Id);
                 var EventRequest = _unitOfWork.EventRequesterRepo.GetByID(item.EventRequesterId);
                 var initiat = await _unitOfWork.InitiatedRepo.GetByIdAsync(item.InitiatedId);
 
-                EventOpportunityDetails = new EventOpportunityDetails_Send_ViewModel
+                EventOpportunityDetails = new EventOpportunityDetails_SendViewModel
                 {
                     Opportunity_ID = item.Id,
-                    SubmissionDate = (DateTime)item.SubmissionDate,
-                    OpportunityOwner = _authenticatedUser.UserName,
+                    SubmissionDate = item.CreatedAt,
+                    OpportunityOwner = "Name",
                     Initiated = new Initiated
                     {
                         Id = initiat.Id,
                         Name = initiat.Name,
                     },
-                    EventRequester_ID = (long)item.EventRequesterId,
+                    EventRequester_ID = item.EventRequesterId == null ? 0 : item.EventRequesterId.Value,
                     CompanyName = item.CompanyName,
                     EventRequester_Name = EventRequest.Name,
-                    ContactDetails = _mapper.Map<List<EventOpportunityContactDetails_ViewModel>>(ContactDetails),
+                    ContactDetails = _mapper.Map<List<EventOpportunityContactDetailsViewModel>>(ContactDetails),
                     SendEmails = new List<SendEmail>(EmailsHistory)
                 };
                 EventOpportunityDetailsWithoutPagination.Add(EventOpportunityDetails);
@@ -188,31 +188,31 @@ namespace MOCA.Services.Implementation.Events
             // var Resultpaginated = EventOpportunityDetailsWithoutPagination.Skip( (request.pageNumber - 1) * request.pageSize ).Take(request.pageSize).ToList();
             if (EventOpportunityDetailsWithoutPagination.Count > 0)
             {
-                return new PagedResponse<IList<EventOpportunityDetails_Send_ViewModel>>(EventOpportunityDetailsWithoutPagination, request.pageNumber, request.pageSize, res[0].pg_total);
+                return new PagedResponse<IList<EventOpportunityDetails_SendViewModel>>(EventOpportunityDetailsWithoutPagination, request.pageNumber, request.pageSize, res[0].pg_total);
             }
 
-            return new PagedResponse<IList<EventOpportunityDetails_Send_ViewModel>>(null, request.pageNumber, request.pageSize);
+            return new PagedResponse<IList<EventOpportunityDetails_SendViewModel>>(null, request.pageNumber, request.pageSize);
         }
 
 
 
-        public async Task<Response<cmd_Get_DetailedEventOpportunity_ViewModel>> GetEventOpportunityDetails(cmd_Get_DetailedEventOpportunity_Parameter request)
+        public async Task<Response<cmdGetDetailedEventOpportunityViewModel>> GetEventOpportunityDetails(cmdGetDetailedEventOpportunityParameter request)
         {
             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
             {
                 throw new UnauthorizedAccessException("User is not authorized");
             }
 
-            var eventSpaceBooking = await _unitOfWork.EventSpaceBookingRepo.GetByIdAsync(request.OpportunityID);
+            var eventSpaceBooking = await _unitOfWork.EventSpaceBookingRepo.GetByIdAsync(request.OpportunityId);
             if (eventSpaceBooking == null || eventSpaceBooking.IsDeleted)
             {
-                return new Response<cmd_Get_DetailedEventOpportunity_ViewModel>("There is no submission with this Id.");
+                return new Response<cmdGetDetailedEventOpportunityViewModel>("There is no submission with this Id.");
             }
 
             List<OpportunityStageReport> opportunityStageReport = new List<OpportunityStageReport>();
             if (eventSpaceBooking.OpportunityStageId != null)
             {
-                opportunityStageReport = await _unitOfWork.OpportunityStageReportRepo.GetReportByIDs(request.OpportunityID);
+                opportunityStageReport = await _unitOfWork.OpportunityStageReportRepo.GetReportByIDs(request.OpportunityId);
             }
 
             var opportunityStageList = await _unitOfWork.OpportunityStageRepo.GetDefaultStage();
@@ -228,7 +228,7 @@ namespace MOCA.Services.Implementation.Events
                 //opportunityStageList[index - 1].IsSelected = true;
             }
 
-            OpportunityInfo_ViewModel opportunityInfo_ViewModel = new OpportunityInfo_ViewModel
+            OpportunityInfoViewModel opportunityInfo_ViewModel = new OpportunityInfoViewModel
             {
                 OpportunityID = eventSpaceBooking.Id,
                 LOS = "Eventspace",
@@ -238,12 +238,12 @@ namespace MOCA.Services.Implementation.Events
                 OpportunityStage = opportunityStageList
             };
 
-            List<opportunityStageReport_ViewModel> opportunityStageReportData = new List<opportunityStageReport_ViewModel>();
+            List<opportunityStageReportViewModel> opportunityStageReportData = new List<opportunityStageReportViewModel>();
             if (opportunityStageReport.Count > 0)
             {
                 foreach (var item in opportunityStageReport)
                 {
-                    opportunityStageReportData.Add(new opportunityStageReport_ViewModel
+                    opportunityStageReportData.Add(new opportunityStageReportViewModel
                     {
                         Date = item.Date.ToShortDateString(),
                         OpportunityUpdate = item.Comment,
@@ -260,33 +260,33 @@ namespace MOCA.Services.Implementation.Events
                 location = await _unitOfWork.LocationsMemberShipsRepo.GetLocationByID((long)eventSpaceBooking.LocationNameId);
             }
 
-            General_ViewModel general_ViewModel = null;
+            GeneralViewModel general_ViewModel = null;
             if (eventSpaceBooking.LocationNameId == null)
             {
-                general_ViewModel = new General_ViewModel
+                general_ViewModel = new GeneralViewModel
                 {
                     Location = null,
-                    EventRequester = new Model_ViewModel { Id = requester.Id, Name = requester.Name }
+                    EventRequester = new ModelViewModel { Id = requester.Id, Name = requester.Name }
                 };
             }
             else
             {
-                general_ViewModel = new General_ViewModel
+                general_ViewModel = new GeneralViewModel
                 {
-                    Location = new Model_ViewModel { Id = location.Id, Name = location.Name },
-                    EventRequester = new Model_ViewModel { Id = requester.Id, Name = requester.Name }
+                    Location = new ModelViewModel { Id = location.Id, Name = location.Name },
+                    EventRequester = new ModelViewModel { Id = requester.Id, Name = requester.Name }
                 };
             }
 
-            CompanyInfo_ViewModel companyInfo_ViewModel = null;
+            CompanyInfoViewModel companyInfo_ViewModel = null;
             if (eventSpaceBooking.IndustryNameId != null)
             {
                 var industry = await _unitOfWork.IndustryRepo.GetByIdAsync((int)eventSpaceBooking.IndustryNameId);
-                companyInfo_ViewModel = new CompanyInfo_ViewModel
+                companyInfo_ViewModel = new CompanyInfoViewModel
                 {
                     CompanyName = eventSpaceBooking.CompanyCommericalName,
                     Facebook = eventSpaceBooking.CompanyFacebook,
-                    Industry = new Model_ViewModel { Id = industry.Id, Name = industry.Name },
+                    Industry = new ModelViewModel { Id = industry.Id, Name = industry.Name },
                     Instagram = eventSpaceBooking.CompanyInstgram,
                     LinkedIn = eventSpaceBooking.CompanyLinkedin,
                     Website = eventSpaceBooking.CompanyWebsite
@@ -294,7 +294,7 @@ namespace MOCA.Services.Implementation.Events
             }
             else
             {
-                companyInfo_ViewModel = new CompanyInfo_ViewModel
+                companyInfo_ViewModel = new CompanyInfoViewModel
                 {
                     CompanyName = eventSpaceBooking.CompanyCommericalName,
                     Facebook = eventSpaceBooking.CompanyFacebook,
@@ -305,10 +305,10 @@ namespace MOCA.Services.Implementation.Events
                 };
             }
 
-            IndividualDetails_ViewModel individualDetails_ViewModel = new IndividualDetails_ViewModel
+            IndividualDetailsViewModel individualDetails_ViewModel = new IndividualDetailsViewModel
             {
-                FirstContact = new Contact_ViewModel { Name = eventSpaceBooking.ContactFullName1, Email = eventSpaceBooking.ContactEmail1, Mobile = eventSpaceBooking.ContactMobile1 },
-                SecondContact = new Contact_ViewModel { Name = eventSpaceBooking.ContactFullName2, Email = eventSpaceBooking.ContactEmail2, Mobile = eventSpaceBooking.ContactMobile2 }
+                FirstContact = new ContactViewModel { Name = eventSpaceBooking.ContactFullName1, Email = eventSpaceBooking.ContactEmail1, Mobile = eventSpaceBooking.ContactMobile1 },
+                SecondContact = new ContactViewModel { Name = eventSpaceBooking.ContactFullName2, Email = eventSpaceBooking.ContactEmail2, Mobile = eventSpaceBooking.ContactMobile2 }
             };
 
             EventCategory category = null;
@@ -327,10 +327,10 @@ namespace MOCA.Services.Implementation.Events
             var venues = await _unitOfWork.EventSpaceVenuesRepo.GetEventSpaceVenuesById(eventSpaceBooking.Id);
 
 
-            List<Model_ViewModel> venueData = new List<Model_ViewModel>();
+            List<ModelViewModel> venueData = new List<ModelViewModel>();
             foreach (var item in venues)
             {
-                venueData.Add(new Model_ViewModel
+                venueData.Add(new ModelViewModel
                 {
                     Id = item.Id,
                     Name = item.VenueName
@@ -349,19 +349,19 @@ namespace MOCA.Services.Implementation.Events
                 attend = _unitOfWork.EventAttendanceRepo.GetByID(eventSpaceBooking.EventAttendanceId);
             }
 
-            EventDetails_ViewModel eventDetails_ViewModel = new EventDetails_ViewModel();
+            EventDetailsViewModel eventDetails_ViewModel = new EventDetailsViewModel();
             if (category != null && reccurance != null && type != null && attend != null)
             {
-                eventDetails_ViewModel = new EventDetails_ViewModel
+                eventDetails_ViewModel = new EventDetailsViewModel
                 {
                     EventName = eventSpaceBooking.EventName,
-                    EventCategory = new Model_ViewModel { Id = category.Id, Name = category.Name },
-                    EventRecurrence = new Model_ViewModel { Id = reccurance.Id, Name = reccurance.Name },
+                    EventCategory = new ModelViewModel { Id = category.Id, Name = category.Name },
+                    EventRecurrence = new ModelViewModel { Id = reccurance.Id, Name = reccurance.Name },
                     eventTimes = times == null ? null : times,
                     ExpectedNumberOfAttendees = eventSpaceBooking.ExpectedNoAttend == null ? null : eventSpaceBooking.ExpectedNoAttend,
                     PreferredVenue = venueData == null ? null : venueData,
-                    EventType = new Model_ViewModel { Id = type.Id, Name = type.Name },
-                    EventAttendance = new Model_ViewModel { Id = attend.Id, Name = attend.Name },
+                    EventType = new ModelViewModel { Id = type.Id, Name = type.Name },
+                    EventAttendance = new ModelViewModel { Id = attend.Id, Name = attend.Name },
                     EventSupportStartups = eventSpaceBooking.DoesYourEventSupportStartup == null ? null : eventSpaceBooking.DoesYourEventSupportStartup,
                     PartyOrganizer = eventSpaceBooking.IsThereThirdPartyOrganizer == null ? null : eventSpaceBooking.IsThereThirdPartyOrganizer,
                     OrganizerName = eventSpaceBooking.OrgnizingCompany,
@@ -370,7 +370,7 @@ namespace MOCA.Services.Implementation.Events
             }
             else
             {
-                eventDetails_ViewModel = new EventDetails_ViewModel
+                eventDetails_ViewModel = new EventDetailsViewModel
                 {
                     EventName = eventSpaceBooking.EventName,
                     EventCategory = null,
@@ -387,7 +387,7 @@ namespace MOCA.Services.Implementation.Events
                 };
             }
 
-            cmd_Get_DetailedEventOpportunity_ViewModel data = new cmd_Get_DetailedEventOpportunity_ViewModel
+            cmdGetDetailedEventOpportunityViewModel data = new cmdGetDetailedEventOpportunityViewModel
             {
                 OpportunityInfo = opportunityInfo_ViewModel,
                 opportunityStageReport = opportunityStageReportData,
@@ -404,40 +404,40 @@ namespace MOCA.Services.Implementation.Events
             }
             else if (data.OpportunityInfo.MembershipStatus == "copolitan")
             {
-                var admin = await _unitOfWork.UserService.GetUserByID(data.OpportunityInfo.OpportunityOwner);
-                data.OpportunityInfo.OpportunityOwner = admin.Data.FirstName + " " + admin.Data.LastName;
+                //var admin = await _unitOfWork.UserService.GetUserByID(data.OpportunityInfo.OpportunityOwner);
+                //data.OpportunityInfo.OpportunityOwner = admin.Data.FirstName + " " + admin.Data.LastName;
             }
 
-            return new Response<cmd_Get_DetailedEventOpportunity_ViewModel>(data);
+            return new Response<cmdGetDetailedEventOpportunityViewModel>(data);
         }
 
 
 
-        public async Task<Response<EventOpportunityDetails_ViewModel>> GetOpportunityDetailsByEventOpportunityID(cmd_Get_EventOpportunityDetails_Parameter request)
+        public async Task<Response<EventOpportunityDetailsViewModel>> GetOpportunityDetailsByEventOpportunityID(cmdGetEventOpportunityDetailsParameter request)
         {
             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
             {
                 throw new UnauthorizedAccessException("User is not authorized");
             }
-            var EventsOpportunitiy = await _unitOfWork.EventSpaceBookingRepo.GetByIdAsync(request.Opportunity_ID);
+            var EventsOpportunitiy = await _unitOfWork.EventSpaceBookingRepo.GetByIdAsync(request.OpportunityId);
             if (EventsOpportunitiy == null || EventsOpportunitiy.IsDeleted)
             {
-                return new Response<EventOpportunityDetails_ViewModel>("There is no submission for this Id.");
+                return new Response<EventOpportunityDetailsViewModel>("There is no submission for this Id.");
             }
-            var ContactDetails = await _unitOfWork.ContactDetailsRepo.GetAllContact_DetailByOpportunitiyID(request.Opportunity_ID);
-            var SendEmailsHistory = await _unitOfWork.SendEmailRepo.GetEmailHistoryByOpportunitiyID(request.Opportunity_ID);
+            var ContactDetails = await _unitOfWork.ContactDetailsRepo.GetAllContact_DetailByOpportunitiyID(request.OpportunityId);
+            var SendEmailsHistory = await _unitOfWork.SendEmailRepo.GetEmailHistoryByOpportunitiyID(request.OpportunityId);
 
-            var EventOpportunityDetails = new EventOpportunityDetails_ViewModel
+            var EventOpportunityDetails = new EventOpportunityDetailsViewModel
             {
-                Opportunity_ID = request.Opportunity_ID,
+                Opportunity_ID = request.OpportunityId,
                 SubmissionDate = (DateTime)EventsOpportunitiy.SubmissionDate,
                 OpportunityOwner = _authenticatedUser.UserName,
                 EventRequester_ID = (long)EventsOpportunitiy.EventRequesterId,
                 CompanyName = EventsOpportunitiy.CompanyCommericalName,
             };
 
-            EventOpportunityDetails.ContactDetails = new List<EventOpportunityContactDetails_ViewModel>();
-            EventOpportunityDetails.EmailTemplate = new List<SendEmail_ViewModel>();
+            EventOpportunityDetails.ContactDetails = new List<EventOpportunityContactDetailsViewModel>();
+            EventOpportunityDetails.EmailTemplate = new List<SendEmailViewModel>();
 
             // Iterate over all send email history, and the emails with same email template and date considered to be the same email
             // but sent to different contact detail, so we need to check that and add all the contact details of the specific email
@@ -451,7 +451,7 @@ namespace MOCA.Services.Implementation.Events
                                                             && x.CreatedAt.ToString("yyyy-MM-dd HH:mm") == ((DateTime)items.CreatedAt)
                                                             .ToString("yyyy-MM-dd HH:mm")).FirstOrDefault();
 
-                EventOpportunityContactDetails_ViewModel eventOpportunityContactDetails_ViewModel = new EventOpportunityContactDetails_ViewModel();
+                EventOpportunityContactDetailsViewModel eventOpportunityContactDetails_ViewModel = new EventOpportunityContactDetailsViewModel();
 
                 if (check != null)
                 {
@@ -468,8 +468,8 @@ namespace MOCA.Services.Implementation.Events
                 }
                 else
                 {
-                    SendEmail_ViewModel SendEmailBycontact = new SendEmail_ViewModel();
-                    SendEmailBycontact.ContactDetails = new List<EventOpportunityContactDetails_ViewModel>();
+                    SendEmailViewModel SendEmailBycontact = new SendEmailViewModel();
+                    SendEmailBycontact.ContactDetails = new List<EventOpportunityContactDetailsViewModel>();
                     SendEmailBycontact.Id = items.Id;
                     SendEmailBycontact.Subject = items.Subject;
                     SendEmailBycontact.Body = items.Body;
@@ -493,7 +493,7 @@ namespace MOCA.Services.Implementation.Events
             }
             foreach (var item in ContactDetails)
             {
-                EventOpportunityDetails.ContactDetails.Add(new EventOpportunityContactDetails_ViewModel
+                EventOpportunityDetails.ContactDetails.Add(new EventOpportunityContactDetailsViewModel
                 {
                     id = item.Id,
                     name = item.Name,
@@ -502,28 +502,28 @@ namespace MOCA.Services.Implementation.Events
                 });
             }
 
-            return new Response<EventOpportunityDetails_ViewModel>(EventOpportunityDetails);
+            return new Response<EventOpportunityDetailsViewModel>(EventOpportunityDetails);
         }
 
 
 
-        public async Task<Response<IList<EventOpportunityDetails_Send_ViewModel>>> GetOpportunityDetailsWithoutPagination(long locationTypeId)
+        public async Task<Response<IList<EventOpportunityDetails_SendViewModel>>> GetOpportunityDetailsWithoutPagination(long locationTypeId)
         {
             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
             {
                 throw new UnauthorizedAccessException("User is not authorized");
             }
-            var EventOpportunityDetailsWithoutPagination = new List<EventOpportunityDetails_Send_ViewModel>();
+            var EventOpportunityDetailsWithoutPagination = new List<EventOpportunityDetails_SendViewModel>();
             var AllEventsOpportunitiy = await _unitOfWork.EventSpaceBookingRepo.GetAllBookedEventSpaceByLocationTypeId(locationTypeId);
 
             foreach (var item in AllEventsOpportunitiy)
             {
-                var EventOpportunityDetails = new EventOpportunityDetails_Send_ViewModel();
+                var EventOpportunityDetails = new EventOpportunityDetails_SendViewModel();
                 var ContactDetails = await _unitOfWork.ContactDetailsRepo.GetAllContact_DetailByOpportunitiyID(item.Id);
                 var EmailsHistory = await _unitOfWork.SendEmailRepo.GetEmailHistoryByOpportunitiyID(item.Id);
                 var EventRequest = _unitOfWork.EventRequesterRepo.GetByID(item.EventRequesterId.GetValueOrDefault());
                 var initiat = await _unitOfWork.InitiatedRepo.GetByIdAsync(item.InitiatedId);
-                EventOpportunityDetails = new EventOpportunityDetails_Send_ViewModel
+                EventOpportunityDetails = new EventOpportunityDetails_SendViewModel
                 {
                     Opportunity_ID = item.Id,
                     SubmissionDate = item.SubmissionDate.GetValueOrDefault(),
@@ -536,7 +536,7 @@ namespace MOCA.Services.Implementation.Events
                     EventRequester_ID = item.EventRequesterId.GetValueOrDefault(),
                     EventRequester_Name = EventRequest.Name,
                     CompanyName = item.CompanyCommericalName,
-                    ContactDetails = _mapper.Map<List<EventOpportunityContactDetails_ViewModel>>(ContactDetails),
+                    ContactDetails = _mapper.Map<List<EventOpportunityContactDetailsViewModel>>(ContactDetails),
                     SendEmails = new List<SendEmail>(EmailsHistory)
                 };
                 EventOpportunityDetailsWithoutPagination.Add(EventOpportunityDetails);
@@ -544,16 +544,16 @@ namespace MOCA.Services.Implementation.Events
 
             if (EventOpportunityDetailsWithoutPagination.Count > 0) // intiated must return without isDeleted..
             {
-                return new Response<IList<EventOpportunityDetails_Send_ViewModel>>(EventOpportunityDetailsWithoutPagination);
+                return new Response<IList<EventOpportunityDetails_SendViewModel>>(EventOpportunityDetailsWithoutPagination);
             }
 
-            return new Response<IList<EventOpportunityDetails_Send_ViewModel>>(null);
+            return new Response<IList<EventOpportunityDetails_SendViewModel>>(null);
         }
 
 
 
 
-        public async Task<Response<bool>> SaveEventOpportunityDetails(cmd_Post_EventOpportunityStageReport_Parameter request)
+        public async Task<Response<bool>> SaveEventOpportunityDetails(cmdPostEventOpportunityStageReportParameter request)
         {
             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
             {
@@ -565,12 +565,12 @@ namespace MOCA.Services.Implementation.Events
                 return new Response<bool>("Opportunity Update is required.");
             }
 
-            if (await _unitOfWork.OpportunityStageRepo.GetByIdAsync(request.OpportunityStage_ID) == null)
+            if (await _unitOfWork.OpportunityStageRepo.GetByIdAsync(request.OpportunityStageId) == null)
             {
                 return new Response<bool>("Opportunity stage Id not found.");
             }
 
-            if (await _unitOfWork.EventSpaceBookingRepo.GetByIdAsync(request.Opportunity_ID) == null)
+            if (await _unitOfWork.EventSpaceBookingRepo.GetByIdAsync(request.OpportunityId) == null)
             {
                 return new Response<bool>("Opportunity Id not found.");
             }
@@ -580,17 +580,17 @@ namespace MOCA.Services.Implementation.Events
             {
                 Id = 0,
                 Date = _dateTimeService.NowUtc,
-                OpportunityStageId = request.OpportunityStage_ID,
+                OpportunityStageId = request.OpportunityStageId,
                 Comment = request.OpportunityUpdate,
                 Reminder = request.Reminder,
-                EventSpaceBookingId = request.Opportunity_ID,
+                EventSpaceBookingId = request.OpportunityId,
                 CreatedBy = _authenticatedUser.UserId
             };
 
             try
             {
                 var opportunityStageReport = await _unitOfWork.OpportunityStageReportRepo.AddAsync(report);
-                await _unitOfWork.EventSpaceBookingRepo.UpdateEventOpportunitiyStageReportId(request.Opportunity_ID, request.OpportunityStage_ID);
+                await _unitOfWork.EventSpaceBookingRepo.UpdateEventOpportunitiyStageReportId(request.OpportunityId, request.OpportunityStageId);
             }
             catch (Exception ex)
             {
@@ -602,7 +602,7 @@ namespace MOCA.Services.Implementation.Events
             return new Response<bool>(true);
         }
 
-        public async Task<Response<bool>> SendEmails(cmd_Post_SendEmail_Parameter request)
+        public async Task<Response<bool>> SendEmails(cmdPostSendEmailParameter request)
         {
             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
             {
@@ -618,7 +618,7 @@ namespace MOCA.Services.Implementation.Events
                 {
                     return new Response<bool>("Body Should Contain Alphabets.");
                 }
-                bool CheckExistence = await _unitOfWork.EventSpaceBookingRepo.CheckEventOpportunitiyExistenceByID(request.EventsOpportunities_ID);
+                bool CheckExistence = await _unitOfWork.EventSpaceBookingRepo.CheckEventOpportunitiyExistenceByID(request.EventsOpportunitiesId);
                 if (!CheckExistence)
                 {
                     return new Response<bool>("Event Opportunity Doesn't Exist");
@@ -631,7 +631,7 @@ namespace MOCA.Services.Implementation.Events
                 {
                     headerImage = "https://api.copolitan.com/" + emailTemplate.ImagePath;
                 }
-                string EncID = await _passwordEncoderDecoder.EncodePasswordToBase64(request.EventsOpportunities_ID.ToString());
+                string EncID = await _passwordEncoderDecoder.EncodePasswordToBase64(request.EventsOpportunitiesId.ToString());
                 //string DecID = await _encoder.DecodePasswordFromBase64(EncID);
 
                 StringBuilder emailStringBuilder = new StringBuilder();
@@ -653,11 +653,21 @@ namespace MOCA.Services.Implementation.Events
                 emailStringBuilder.Append($"</body>");
                 emailStringBuilder.Append($"</html>");
 
-                var SentEmail = new SendEmail();
                 foreach (var item in request.ToUsers)
                 {
                     var contact = await _unitOfWork.ContactDetailsRepo.GetContact_DetailByEmail(item);
+                    if(contact == null)
+                    {
+                        return new Response<bool>(false, $"not all users' emails are in contact details!");
+                    }
+                }
 
+                var SentEmail = new SendEmail();
+                foreach (var item in request.ToUsers)
+                {
+
+                    var contact = await _unitOfWork.ContactDetailsRepo.GetContact_DetailByEmail(item);
+                    
                     var emailRequest = new EmailRequest();
                     if (request.IsUser != 1)
                     {
@@ -694,7 +704,7 @@ namespace MOCA.Services.Implementation.Events
                         Body = emailStringBuilder.ToString(),
                         ContactDetailId = contact.Id,
                         BookATourId = null,
-                        //EventsOpportunitiesId = request.EventsOpportunities_ID,
+                        EventSpaceBookingId = request.EventsOpportunitiesId,
                         EmailTemplateId = emailTemplate.Id,
                         CreatedAt = _dateTimeService.NowUtc,
                     };
@@ -707,14 +717,14 @@ namespace MOCA.Services.Implementation.Events
             catch (Exception ex) { return new Response<bool>(ex.Message); }
         }
 
-        public async Task<Response<bool>> UpdateOpportunity(cmd_Update_EventOpportunity_Parameter request)
+        public async Task<Response<bool>> UpdateOpportunity(cmdUpdateEventOpportunityParameter request)
         {
             if (string.IsNullOrWhiteSpace(_authenticatedUser.UserId))
             {
                 throw new UnauthorizedAccessException("User is not authorized");
             }
 
-            var eventOpportunitiy = await _unitOfWork.EventSpaceBookingRepo.GetByIdAsync(request.Opportunity_ID);
+            var eventOpportunitiy = await _unitOfWork.EventSpaceBookingRepo.GetByIdAsync(request.OpportunityId);
             if (eventOpportunitiy == null)
             {
                 return new Response<bool>(false, "Opportunity Doesn't Exist.");
@@ -735,15 +745,15 @@ namespace MOCA.Services.Implementation.Events
                 }
             }
 
-            eventOpportunitiy.Id = request.Opportunity_ID;
+            eventOpportunitiy.Id = request.OpportunityId;
             eventOpportunitiy.SubmissionDate = DateTime.UtcNow;
-            eventOpportunitiy.EventRequesterId = request.EventRequester_ID;
+            eventOpportunitiy.EventRequesterId = request.EventRequesterId;
             eventOpportunitiy.CompanyCommericalName = request.CompanyName;
             
 
             await _unitOfWork.EventSpaceBookingRepo.UpdateAsync(eventOpportunitiy);
 
-            await _unitOfWork.ContactDetailsRepo.DeleteContact_DetailByID(request.Opportunity_ID);
+            await _unitOfWork.ContactDetailsRepo.DeleteContact_DetailByID(request.OpportunityId);
 
             foreach (var item in request.ContactDetails)
             {
@@ -752,7 +762,7 @@ namespace MOCA.Services.Implementation.Events
                     Name = item.Name,
                     Email = item.Email,
                     MobileNumber = item.MobileNumber,
-                    EventSpaceBookingId = request.Opportunity_ID
+                    EventSpaceBookingId = request.OpportunityId
                 };
                 await _unitOfWork.ContactDetailsRepo.AddAsync(contact);
             }

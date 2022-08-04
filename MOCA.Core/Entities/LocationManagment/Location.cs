@@ -54,16 +54,11 @@ namespace MOCA.Core.Entities.LocationManagment
         public string TaxIdFile { get; set; }
         [Required]
         public string CommercialName { get; set; }
-
-        public long? LocationBankAccountId { get; set; }
-        [ForeignKey("LocationBankAccountId")]
-        public virtual LocationBankAccount LocationBankAccount { get; set; }
         public decimal? ServiceFeesPriceSqm { get; set; }
         public decimal? ServiceFeesTotalFees { get; set; }
         public decimal? ServiceFeesAnnualIncrease { get; set; }
         public string Url360Tour { set; get; }
         public string VenuesBrochureURL { set; get; }
-        public string WorkspaceContract { get; set; }
         public string EventspaceContract { get; set; }
         public string About { get; set; }
         public string Terms { set; get; }

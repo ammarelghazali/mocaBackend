@@ -496,7 +496,7 @@ namespace MOCA.Presistence.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("LobLocationTypeId")
+                    b.Property<long>("LobLocationTypeId")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("LocationNameId")
@@ -1113,6 +1113,45 @@ namespace MOCA.Presistence.Migrations
                     b.ToTable("District");
                 });
 
+            modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.FavouriteLocation", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<long>("BasicUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("LocationId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BasicUserId");
+
+                    b.HasIndex("LocationId");
+
+                    b.ToTable("FavouriteLocation");
+                });
+
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.Feature", b =>
                 {
                     b.Property<long>("Id")
@@ -1144,56 +1183,6 @@ namespace MOCA.Presistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Feature");
-                });
-
-            modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.FloorUnit", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<long>("BuildingFloorId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FemaleRestroomCount")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("GrossArea")
-                        .HasColumnType("decimal(18,3)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MaleRestroomCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("NetArea")
-                        .HasColumnType("decimal(18,3)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BuildingFloorId");
-
-                    b.ToTable("FloorUnit");
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.Inclusion", b =>
@@ -1373,9 +1362,6 @@ namespace MOCA.Presistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("LocationBankAccountId")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("LocationTypeId")
                         .HasColumnType("bigint");
 
@@ -1470,19 +1456,11 @@ namespace MOCA.Presistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WorkspaceContract")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CurrencyId");
 
                     b.HasIndex("DistrictId");
-
-                    b.HasIndex("LocationBankAccountId")
-                        .IsUnique()
-                        .HasFilter("[LocationBankAccountId] IS NOT NULL");
 
                     b.HasIndex("LocationTypeId");
 
@@ -1496,6 +1474,10 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("CountryCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -1563,6 +1545,8 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("LocationId");
+
                     b.ToTable("LocationBankAccount");
                 });
 
@@ -1573,6 +1557,10 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("CountryCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -3204,7 +3192,9 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasOne("MOCA.Core.Entities.LocationManagment.LocationType", "LocationType")
                         .WithMany("EventSpaceBookings")
-                        .HasForeignKey("LobLocationTypeId");
+                        .HasForeignKey("LobLocationTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MOCA.Core.Entities.LocationManagment.Location", "Location")
                         .WithMany("EventSpaceBookings")
@@ -3347,15 +3337,23 @@ namespace MOCA.Presistence.Migrations
                     b.Navigation("City");
                 });
 
-            modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.FloorUnit", b =>
+            modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.FavouriteLocation", b =>
                 {
-                    b.HasOne("MOCA.Core.Entities.LocationManagment.BuildingFloor", "BuildingFloor")
-                        .WithMany("FloorUnits")
-                        .HasForeignKey("BuildingFloorId")
+                    b.HasOne("MOCA.Core.Entities.SSO.BasicUser", "BasicUser")
+                        .WithMany()
+                        .HasForeignKey("BasicUserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("BuildingFloor");
+                    b.HasOne("MOCA.Core.Entities.LocationManagment.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("BasicUser");
+
+                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.Location", b =>
@@ -3372,10 +3370,6 @@ namespace MOCA.Presistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("MOCA.Core.Entities.LocationManagment.LocationBankAccount", "LocationBankAccount")
-                        .WithOne("Location")
-                        .HasForeignKey("MOCA.Core.Entities.LocationManagment.Location", "LocationBankAccountId");
-
                     b.HasOne("MOCA.Core.Entities.LocationManagment.LocationType", "LocationType")
                         .WithMany()
                         .HasForeignKey("LocationTypeId")
@@ -3386,9 +3380,18 @@ namespace MOCA.Presistence.Migrations
 
                     b.Navigation("District");
 
-                    b.Navigation("LocationBankAccount");
-
                     b.Navigation("LocationType");
+                });
+
+            modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.LocationBankAccount", b =>
+                {
+                    b.HasOne("MOCA.Core.Entities.LocationManagment.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.LocationContact", b =>
@@ -3839,11 +3842,6 @@ namespace MOCA.Presistence.Migrations
                     b.Navigation("BuildingFloors");
                 });
 
-            modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.BuildingFloor", b =>
-                {
-                    b.Navigation("FloorUnits");
-                });
-
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.Industry", b =>
                 {
                     b.Navigation("EventSpaceBookings");
@@ -3872,12 +3870,6 @@ namespace MOCA.Presistence.Migrations
                     b.Navigation("LocationWorkingHours");
 
                     b.Navigation("ServiceFeePaymentsDueDates");
-                });
-
-            modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.LocationBankAccount", b =>
-                {
-                    b.Navigation("Location")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.LocationType", b =>

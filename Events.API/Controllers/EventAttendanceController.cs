@@ -17,7 +17,7 @@ namespace Events.API.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll([FromQuery] get_AllEventAttendance_Parameter filter)
+        public async Task<IActionResult> GetAll([FromQuery] GetAllEventAttendanceParameter filter)
         {
             var response = await _eventAttendanceService.GetAll(new GetAllEventAttendanceDto { pageNumber = filter.pageNumber, pageSize = filter.pageSize });
             return Ok(response);

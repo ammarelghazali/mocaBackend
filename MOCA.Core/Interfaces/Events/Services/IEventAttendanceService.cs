@@ -6,6 +6,6 @@ namespace MOCA.Core.Interfaces.Events.Services
 {
     public interface IEventAttendanceService
     {
-        Task<PagedResponse<IReadOnlyList<get_AllEventAttendance_ViewModel>>> GetAll(GetAllEventAttendanceDto request);
+        Task<PagedResponse<IReadOnlyList<GetAllEventAttendanceViewModel>>> GetAll(GetAllEventAttendanceDto request);
     }
 }

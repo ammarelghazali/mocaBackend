@@ -47,6 +47,8 @@ using MOCA.Core.DTOs.Events.EventTypeDtos.Response;
 using MOCA.Core.DTOs.Events.Response;
 using MOCA.Core.Entities.EventSpaceBookings;
 using MOCA.Core.DTOs.MocaSettings.PolicyTypesDtos.Request;
+using MOCA.Core.DTOs.LocationManagment.Location;
+using MOCA.Core.DTOs.LocationManagment.FavouriteLocation;
 
 namespace MOCA.Core.MappingProfiles
 {
@@ -190,6 +192,7 @@ namespace MOCA.Core.MappingProfiles
             CreateMap<IndustryModel, Industry>();
             CreateMap<Industry, IndustryModel>();
 
+
             #endregion
 
             #region Events
@@ -208,15 +211,15 @@ namespace MOCA.Core.MappingProfiles
 
             // Event Attendance
 
-            CreateMap<EventAttendance, get_AllEventAttendance_ViewModel>();
-            CreateMap<EventAttendance, get_AllEventAttendance_ViewModel>().ReverseMap();
+            CreateMap<EventAttendance, GetAllEventAttendanceViewModel>();
+            CreateMap<EventAttendance, GetAllEventAttendanceViewModel>().ReverseMap();
             CreateMap<EventAttendanceForCreationDto, EventAttendance>();
             CreateMap<EventAttendance, EventAttendanceDto>();
 
             // Event Category
 
-            CreateMap<EventCategory, get_AllEventCategory_ViewModel>();
-            CreateMap<EventCategory, get_AllEventCategory_ViewModel>().ReverseMap();
+            CreateMap<EventCategory, GetAllEventCategoryViewModel>();
+            CreateMap<EventCategory, GetAllEventCategoryViewModel>().ReverseMap();
             CreateMap<EventCategory, EventCategoryDto>();
 
             // Event Type
@@ -227,8 +230,8 @@ namespace MOCA.Core.MappingProfiles
 
             // Event Reccurance
 
-            CreateMap<EventReccurance, get_AllEventReccurance_ViewModel>();
-            CreateMap<EventReccurance, get_AllEventReccurance_ViewModel>().ReverseMap();
+            CreateMap<EventReccurance, GetAllEventReccuranceViewModel>();
+            CreateMap<EventReccurance, GetAllEventReccuranceViewModel>().ReverseMap();
             CreateMap<EventReccurance, EventRecurrenceDto>();
 
             // Event Requester
@@ -238,22 +241,55 @@ namespace MOCA.Core.MappingProfiles
             CreateMap<EventRequester, EventRequesterDto>();
 
             // Event Opportunity
-            CreateMap<EventSpaceBooking, cmd_Create_NewEventOpportunity_Parameter>().ReverseMap()
+            CreateMap<EventSpaceBooking, cmdCreateNewEventOpportunityParameter>().ReverseMap()
                 .ForMember(s => s.CompanyCommericalName, d => d.MapFrom(di => di.CompanyName));
 
-            CreateMap<ContactDetails, EventOpportunityContactDetail_ViewModel>().ReverseMap();
-            CreateMap<ContactDetails, EventOpportunityContactDetails_ViewModel>();
+            CreateMap<ContactDetails, EventOpportunityContactDetailViewModel>().ReverseMap();
+            CreateMap<ContactDetails, EventOpportunityContactDetailsViewModel>();
             CreateMap<OpportunityStage, OpportunityStageDto>();
             CreateMap<EventOpportunityStatus, EventOpportunityStatusDto>();
             CreateMap<Initiated, InitiatedDto>();
-            CreateMap<EventSpaceTime, EventSpace_TimeDto>();
-            CreateMap<EventSpaceVenues, EventSpace_VenuesDto>();
+            CreateMap<EventSpaceTime, DTOs.Events.EventOpportunityDtos.Response.EventSpaceTimeDto>();
+            CreateMap<EventSpaceVenues, DTOs.Events.EventOpportunityDtos.Response.EventSpaceVenuesDto>();
 
 
             // Email Templete
             CreateMap<EmailTemplate, GetEmailTempleteEventOpportunitylViewModelDto>().ReverseMap();
 
 
+
+            CreateMap<LocationBankAccountModel, LocationBankAccount>();
+            CreateMap<LocationBankAccount, LocationBankAccountModel>();
+
+            CreateMap<LocationContactModel, LocationContact>();
+            CreateMap<LocationContact, LocationContactModel>();
+
+            CreateMap<LocationCurrencyModel, LocationCurrency>();
+            CreateMap<LocationCurrency, LocationCurrencyModel>();
+
+            CreateMap<LocationFileModel, LocationFile>();
+            CreateMap<LocationFile, LocationFileModel>();
+
+            CreateMap<LocationImageModel, LocationImage>();
+            CreateMap<LocationImage, LocationImageModel>();
+
+            CreateMap<LocationInclusionModel, LocationInclusion>();
+            CreateMap<LocationInclusion, LocationInclusionModel>();
+
+            CreateMap<LocationWorkingHourModel, LocationWorkingHour>();
+            CreateMap<LocationWorkingHour, LocationWorkingHourModel>();
+
+            CreateMap<ServiceFeePaymentsDueDateModel, ServiceFeePaymentsDueDate>();
+            CreateMap<ServiceFeePaymentsDueDate, ServiceFeePaymentsDueDateModel>();
+
+            CreateMap<LocationModel, Location>();
+            CreateMap<Location, LocationModel>();
+
+            CreateMap<LocationModel, LocationDetailsModel>();
+            CreateMap<LocationDetailsModel, LocationModel>();
+
+            CreateMap<FavouriteLocationModel, FavouriteLocation>();
+            CreateMap<FavouriteLocation, FavouriteLocationModel>();
             #endregion
 
         }
