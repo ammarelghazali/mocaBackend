@@ -4,7 +4,7 @@ using MOCA.Core.Entities.Shared.Reservations;
 
 namespace MOCA.Core.Entities.MeetingSpaceReservation
 {
-    public class MeetingSpaceReservation : BaseReservationEntity
+    public class MeetingReservation : BaseReservationEntity
     {
         public long? MeetingroomId { set; get; }
         //[ForeignKey("MeetingRoomId")]
