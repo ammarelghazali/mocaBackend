@@ -673,7 +673,23 @@ namespace MOCA.Presistence
             }
         }
 
+        IGenericRepository<BuildingFloor> _buildingFloorRepo;
+        public IGenericRepository<BuildingFloor> BuildingFloorRepo
+        {
+            get
+            {
+                return _buildingFloorRepo = _buildingFloorRepo ?? new GenericRepository<BuildingFloor>(_context);
+            }
+        }
 
+        IBuildingFloorRepository _buildingFloorRepoEF;
+        public IBuildingFloorRepository BuildingFloorRepoEF
+        {
+            get
+            {
+                return _buildingFloorRepoEF = _buildingFloorRepoEF ?? new BuildingFloorRepository(_context);
+            }
+        }
         #endregion
 
         public DateTime ConvertToLocalDate(DateTime dateInEasternTimeZone)
