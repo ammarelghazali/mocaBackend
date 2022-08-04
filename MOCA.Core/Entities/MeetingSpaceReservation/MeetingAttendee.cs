@@ -8,6 +8,7 @@ namespace MOCA.Core.Entities.MeetingSpaceReservation
         public long MeetingSpaceReservationId { set; get; }
         [ForeignKey("MeetingSpaceReservationId")]
         public MeetingSpaceReservation MeetingSpaceReservation { get; set; }
+        
         public string Name { set; get; }
         public string CountryCode { set; get; }
         public string MobileNumber { set; get; }

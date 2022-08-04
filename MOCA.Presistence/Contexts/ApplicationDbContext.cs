@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MOCA.Core.Entities.BaseEntities;
 using MOCA.Core.Entities.EventSpaceBookings;
 using MOCA.Core.Entities.LocationManagment;
+using MOCA.Core.Entities.MeetingSpaceReservation;
 using MOCA.Core.Entities.MocaSetting;
 using MOCA.Core.Entities.SSO;
 using MOCA.Core.Entities.SSO.Identity;
@@ -104,6 +105,12 @@ namespace MOCA.Presistence.Contexts
             public DbSet<MemberShipBenefitsTypes> MemberShipBenefitsTypes { get; set; }
             public DbSet<MemberShipTypes> MemberShipTypes { get; set; }
             public DbSet<MemberShipCategories> MemberShipCategories { get; set; }
+        #endregion
+
+        #region MeetingSpaceReservations
+        //public DbSet<MeetingSpaceReservation> MeetingSpaceReservations { get; set; }
+        //public DbSet<MeetingAttendee> MeetingAttendees { get; set; }
+        //public DbSet<MeetingReservationTopUp> MeetingReservationTopUps { get; set; }
         #endregion
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
