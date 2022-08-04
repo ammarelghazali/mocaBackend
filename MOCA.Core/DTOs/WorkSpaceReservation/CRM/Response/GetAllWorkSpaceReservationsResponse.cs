@@ -11,7 +11,7 @@
         public string LastName { get; set; }
         //public string CountryCode { get; set; }
         public string MobileNumber { get; set; }
-        public int? ReservationTypeId { get; set; }
+        public long ReservationTypeId { get; set; }
         public DateTime? EndDate { get; set; }
         public string Mode { get; set; }
         public decimal? CreditHours { get; set; }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MOCA.Core;
 using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
@@ -37,21 +38,71 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
         {
             // get pg_total
 
-            var hourlyReservations = await _hourlyService.GetAllWorkSpaceReservations(request);
-            var tailoredReservations = await _tailoredService.GetAllWorkSpaceReservations(request);
-            var bundleReservations = await _bundleService.GetAllWorkSpaceReservations(request);
+            var hourlyReservations = await _unitOfWork.WorkSpaceReservationHourlyRepo.GetAllWorkSpaceSubmissions(request);
+            var tailoredReservations = await _unitOfWork.WorkSpaceReservationTailoredRepo.GetAllWorkSpaceSubmissions(request);
+            var bundleReservations = await _unitOfWork.WorkSpaceReservationBundleRepo.GetAllWorkSpaceSubmissions(request);
 
-            var allSubmissions = new List<GetAllWorkSpaceReservationsResponse>();
+            var allReservations = await hourlyReservations.Union(tailoredReservations)
+                                                          .Union(bundleReservations)
+                                                          .OrderByDescending(r => r.OpportunityStartDate)
+                                                          .ToListAsync();
 
-            allSubmissions.AddRange(hourlyReservations);
-            allSubmissions.AddRange(tailoredReservations);
-            allSubmissions.AddRange(bundleReservations);
 
-            allSubmissions.OrderByDescending(r => r.OpportunityStartDate);
+            var paginatedReservation = allReservations.Skip(request.pageSize * (request.pageNumber - 1))
+                                                      .Take(request.pageSize).ToList();
 
-            if (allSubmissions.Count > 0)
+            foreach (var item in paginatedReservation)
             {
-                return new PagedResponse<IReadOnlyList<GetAllWorkSpaceReservationsResponse>>(allSubmissions, request.pageNumber, request.pageSize, allSubmissions.Count);
+                // get cart currency
+
+                var reservationTransaction = await _unitOfWork.WorkSpaceReservationHourlyRepo
+                                                     .GetRelatedReservationTransaction(item.Id, item.ReservationTypeId);
+
+                item.CreditHours = reservationTransaction.RemainingHours;
+                item.EndDate = reservationTransaction.ExtendExpiryDate;
+
+                item.EntryScanTime = reservationTransaction.ReservationDetails
+                                                      .OrderByDescending(r => r.CreatedAt)
+                                                      .FirstOrDefault().StartDateTime;
+
+                if (string.IsNullOrEmpty(item.TopUpsLink))
+                {
+                    item.TopUpsLink = item.Mode == "TopUp" ? "resources/templates/check.png" : "resources/templates/unchecked.png";
+                }
+
+                item.Scanin = reservationTransaction.ReservationDetails.Select(r => r.StartDateTime).FirstOrDefault();
+
+                item.ScanOut = reservationTransaction.ReservationDetails.OrderByDescending(r => r.Id)
+                                                                        .Select(r => r.EndDateTime).FirstOrDefault();
+
+                string status = string.Empty;
+
+                var expiryDate = reservationTransaction.ExtendExpiryDate ?? null;
+
+                if (expiryDate is not null)
+                {
+                    var isExpired = DateTime.Compare(_dateTimeService.NowUtc, expiryDate.Value);
+
+                    if (isExpired > 0 || isExpired == 0)
+                        status = "Closed";
+
+                    else
+                    {
+                        var isScannedIn = reservationTransaction.ReservationDetails.Count > 0;
+
+                        status = isScannedIn ? "Open" : "New";
+                    }
+                }
+
+                item.Status = status;
+            }   
+
+            if (paginatedReservation.Count > 0)
+            {
+                return new PagedResponse<IReadOnlyList<GetAllWorkSpaceReservationsResponse>>(paginatedReservation, 
+                                                                                             request.pageNumber, 
+                                                                                             request.pageSize, 
+                                                                                             (int)Math.Ceiling((double)allReservations.Count / request.pageSize) );
             }
             return new PagedResponse<IReadOnlyList<GetAllWorkSpaceReservationsResponse>>(null, request.pageNumber, request.pageSize);
         }

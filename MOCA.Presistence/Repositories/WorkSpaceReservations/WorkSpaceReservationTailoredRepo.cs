@@ -17,7 +17,7 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
             _context = context;
         }
 
-        public async Task<List<GetAllWorkSpaceReservationsResponse>> GetAllWorkSpaceSubmissions(GetAllWorkSpaceReservationsDto request)
+        public async Task<IQueryable<GetAllWorkSpaceReservationsResponse>> GetAllWorkSpaceSubmissions(GetAllWorkSpaceReservationsDto request)
         {
             var reservations = _context.WorkSpaceReservationTailored.OrderByDescending(r => r.CreatedAt)
                                                                               .Include(r => r.BasicUser)
@@ -39,9 +39,7 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
                                                                                   Mode = r.TopUps.Count > 0 ? "TopUp" : "Basic"
                                                                               });
 
-            return await reservations.Skip(request.pageSize * (request.pageNumber - 1))
-                                     .Take(request.pageSize)
-                                     .ToListAsync();
+            return reservations;
         }
 
         public async Task<ReservationTransaction> GetRelatedReservationTransaction(long Reservationid, long reservationTypeId)
