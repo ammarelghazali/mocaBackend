@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using MOCA.Core.DTOs.LocationManagment.BuildingFloor;
 using System.ComponentModel.DataAnnotations;
 
 namespace MOCA.Core.DTOs.LocationManagment.Building
@@ -17,6 +18,7 @@ namespace MOCA.Core.DTOs.LocationManagment.Building
         [Range(1, long.MaxValue, ErrorMessage = "Net Area Cannot Be 0")]
         public decimal NetArea { get; set; }
         public bool InstallAccessPoint { get; set; }
+        public List<BuildingFloorModel> BuildingFloors { get; set; }
     }
 
     public class Building_Validator : AbstractValidator<BuildingModel>
