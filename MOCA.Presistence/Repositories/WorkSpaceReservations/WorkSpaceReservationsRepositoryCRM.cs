@@ -16,7 +16,7 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
             _context = context;
         }
 
-        public async Task<IReadOnlyList<GatFilteredWorkSpaceReservationResponse>> GetFilteredSubmissions(GatFilteredWorkSpaceReservationDto request)
+        public async Task<IReadOnlyList<GetFilteredWorkSpaceReservationResponse>> GetFilteredSubmissions(GetFilteredWorkSpaceReservationDto request)
         {
             DynamicParameters parms = new DynamicParameters();
             parms.Add("@Id", request.Id);
@@ -46,7 +46,7 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
             parms.Add("@SortBy", request.SortBy);
             parms.Add("@SortDirection", request.SortDirection);
 
-            var data = await _context.Connection.QueryAsync<GatFilteredWorkSpaceReservationResponse>("dbo.SP_Work_n_Munch_Workspace_Submissions_GetAll_CRM", parms, null, (int)System.Data.CommandType.StoredProcedure);
+            var data = await _context.Connection.QueryAsync<GetFilteredWorkSpaceReservationResponse>("dbo.SP_Work_n_Munch_Workspace_Submissions_GetAll_CRM", parms, null, (int)System.Data.CommandType.StoredProcedure);
 
             return data.AsList();
         }
