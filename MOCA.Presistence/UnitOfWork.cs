@@ -329,6 +329,37 @@ namespace MOCA.Presistence
                 return _workSpaceReservationCRM ?? new WorkSpaceReservationsRepositoryCRM(_context);
             }
         }
+
+        private IWorkSpaceReservationBundleRepo _workSpaceReservationBundleRepo;
+
+        public IWorkSpaceReservationBundleRepo WorkSpaceReservationBundleRepo
+        {
+            get 
+            {
+                return _workSpaceReservationBundleRepo ?? new WorkSpaceReservationBundleRepo(_context);
+
+            }
+        }
+
+        private IWorkSpaceReservationHourlyRepo _workSpaceReservationHourlyRepo;
+        public IWorkSpaceReservationHourlyRepo WorkSpaceReservationHourlyRepo
+        {
+            get
+            {
+                return _workSpaceReservationHourlyRepo ?? new WorkSpaceReservationHourlyRepo(_context);
+
+            }
+        }
+
+        private IWorkSpaceReservationTailoredRepo _workSpaceReservationTailoredRepo;
+        public IWorkSpaceReservationTailoredRepo WorkSpaceReservationTailoredRepo
+        {
+            get
+            {
+                return _workSpaceReservationTailoredRepo ?? new WorkSpaceReservationTailoredRepo(_context);
+            }
+        }
+
         #endregion
 
         #region Location Managment

@@ -16,7 +16,7 @@ namespace MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response
         public string Mode { get; set; }
         public long CreditHours { get; set; }
         public decimal? Amount { get; set; }
-        public int? PaymentMethod { get; set; }
+        public long? PaymentMethod { get; set; }
         public DateTime? EntryScanTime { get; set; }
         public DateTime? OpportunityStartDate { get; set; }
         public string Status { get; set; }

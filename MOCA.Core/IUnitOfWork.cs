@@ -131,6 +131,9 @@ namespace MOCA.Core
 
         #region WorkSpaceReservations
         public IWorkSpaceReservationsRepositoryCRM WorkSpaceReservationsRepositoryCRM { get; }
+        public IWorkSpaceReservationBundleRepo WorkSpaceReservationBundleRepo { get; }
+        public IWorkSpaceReservationHourlyRepo WorkSpaceReservationHourlyRepo { get; }
+        public IWorkSpaceReservationTailoredRepo WorkSpaceReservationTailoredRepo { get; }
         #endregion
 
         #region MeetingSpaceReservations
