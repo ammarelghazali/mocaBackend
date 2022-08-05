@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MOCA.Services", "MOCA.Servi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MOCA.Presistence", "MOCA.Presistence\MOCA.Presistence.csproj", "{82692139-FBF9-4D8C-9037-4772397FE5C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Events.API", "Events.API\Events.API.csproj", "{C61BB27C-743D-4172-A9D4-C6079D70E194}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Events.API", "Events.API\Events.API.csproj", "{C61BB27C-743D-4172-A9D4-C6079D70E194}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocationManagement.API", "LocationManagement.API\LocationManagement.API.csproj", "{596CC5AD-4668-4DC4-B4D1-C047369D98EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocationManagement.API", "LocationManagement.API\LocationManagement.API.csproj", "{596CC5AD-4668-4DC4-B4D1-C047369D98EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSO.API", "SSO.API\SSO.API.csproj", "{BBA61F54-9149-40AC-92AC-12255E716A40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{596CC5AD-4668-4DC4-B4D1-C047369D98EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{596CC5AD-4668-4DC4-B4D1-C047369D98EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{596CC5AD-4668-4DC4-B4D1-C047369D98EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBA61F54-9149-40AC-92AC-12255E716A40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBA61F54-9149-40AC-92AC-12255E716A40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBA61F54-9149-40AC-92AC-12255E716A40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBA61F54-9149-40AC-92AC-12255E716A40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
