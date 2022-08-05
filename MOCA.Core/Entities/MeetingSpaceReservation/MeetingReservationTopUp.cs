@@ -7,17 +7,20 @@ namespace MOCA.Core.Entities.MeetingSpaceReservation
     public class MeetingReservationTopUp : BaseEntity
     {
         public long MeetingSpaceReservationId { set; get; }
-
         [ForeignKey("MeetingSpaceReservationId")]
-        public MeetingSpaceReservation meetingSpaceReservation { set; get; }
+        public MeetingReservation MeetingSpaceReservation { set; get; }
         
+
+        public long? PaymentMethodId { get; set; }
         [ForeignKey("PaymentMethodId")]
         public PaymentMethod PaymentMethod { get; set; }
         
+
+        public long MeetingRoomTimePriceId { set; get; }
+        //[ForeignKey("MeetingRoomTimePriceId")]
+        //public MeetingRoomTimePrice MeetingRoomTimePrice { get; set; }
+        
         public string Description { set; get; }
-        public int TotalHours { set; get; }
-        public decimal? TotalPrice { set; get; }
-        public long? PaymentMethodId { get; set; }
 
     }
 }

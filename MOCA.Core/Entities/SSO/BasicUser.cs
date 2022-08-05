@@ -1,5 +1,6 @@
 ﻿using MOCA.Core.Entities.BaseEntities;
 using MOCA.Core.Entities.LocationManagment;
+using MOCA.Core.Entities.MeetingSpaceReservation;
 using MOCA.Core.Entities.Shared.Reservations;
 using MOCA.Core.Entities.WorkSpaceReservations;
 using System.ComponentModel.DataAnnotations;
@@ -87,5 +88,7 @@ namespace MOCA.Core.Entities.SSO
         public ICollection<WorkSpaceReservationBundle> WorkSpaceBundleReservations { get; set; }
         public ICollection<WorkSpaceHourlyTopUp> WorkSpaceHourlyTopUps { get; set; }
         public ICollection<WorkSpaceTailoredTopUp> WorkSpaceTailoredTopUps { get; set; }
+        public ICollection<MeetingReservation> MeetingReservations { get; set; }
+        public ICollection<MeetingReservationTopUp> MeetingReservationTopUps { get; set; }
     }
 }

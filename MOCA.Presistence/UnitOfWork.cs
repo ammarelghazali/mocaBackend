@@ -666,7 +666,7 @@ namespace MOCA.Presistence
         {
             get 
             { 
-                return _meetingSpaceReservationRepository = _meetingSpaceReservationRepository ?? new MeetingSpaceReservationRepository(_context); 
+                return _meetingSpaceReservationRepository = _meetingSpaceReservationRepository ?? new MeetingSpaceReservationsRepository(_context); 
             }
         }
 

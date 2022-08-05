@@ -43,7 +43,7 @@ namespace MOCA.Core.DTOs.Events.BookEventSpaceDtos.Request
         public long? Revenue { get; set; }
         public DateTime? SubmissionDate { get; set; }
         public long? EventOpportunityStatusId { get; set; }
-        public long LobLocationTypeId { get; set; }
+        public long? LobLocationTypeId { get; set; }
 
     }
 }
