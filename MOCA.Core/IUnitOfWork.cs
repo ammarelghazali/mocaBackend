@@ -8,6 +8,7 @@ using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Interfaces.LocationManagment.Repositories;
 using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
 using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
+using MOCA.Core.Interfaces.SSO.Repositories;
 
 namespace MOCA.Core
 {
@@ -107,6 +108,26 @@ namespace MOCA.Core
         IEmailTemplateRepository EmailTemplateRepository { get; }
 
         #endregion
+
+        #region SSO
+
+        IBasicUserRepository BasicUserRepository { get; }
+
+        IBasicUserStatusHistoryRepository BasicUserStatusHistoryRepository { get; }
+
+        IClientDeviceRepository ClientDeviceRepository { get; }
+
+        IMemberShipTypesRepository MemberShipTypesRepository { get; }
+
+        IMemberShipMainCategoriesRepository  MemberShipMainCategoriesRepository { get; }
+
+        IMemberShipCategoriesRepository MemberShipCategoriesRepository { get; }
+
+        IMemberShipBenefitsTypesRepository MemberShipBenefitsTypesRepository { get; }
+
+        IGenderRepository GenderRepository { get; }
+
+        #endregion 
 
         #region WorkSpaceReservations
         public IWorkSpaceReservationsRepositoryCRM WorkSpaceReservationsRepositoryCRM { get; }
