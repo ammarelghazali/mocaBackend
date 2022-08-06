@@ -54,12 +54,13 @@ namespace MOCA.Services.Implementation.LocationManagment
                 building.CreatedAt = _dateTimeService.NowUtc;
             }
 
+            _unitOfWork.BuildingRepo.Insert(building);
             if (request.BuildingFloors.Count() > 0)
             {
-                //
+                var buildingFloor = _mapper.Map<List<BuildingFloor>>(request.BuildingFloors);
+                _unitOfWork.BuildingFloorRepo.InsertRang(buildingFloor);
             }
 
-            _unitOfWork.BuildingRepo.Insert(building);
             if (await _unitOfWork.SaveAsync() < 1)
             {
                 return new Response<long>("Cannot Add Building right now.");
