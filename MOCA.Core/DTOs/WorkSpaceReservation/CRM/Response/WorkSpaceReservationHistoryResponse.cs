@@ -16,7 +16,7 @@ namespace MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response
         public string Mode { get; set; }
         public long CreditHours { get; set; }
         public decimal? Amount { get; set; }
-        public int? PaymentMethod { get; set; }
+        public long? PaymentMethod { get; set; }
         public DateTime? EntryScanTime { get; set; }
         public DateTime? OpportunityStartDate { get; set; }
         public string Status { get; set; }
@@ -26,9 +26,9 @@ namespace MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response
         public long BasicUserId { get; set; }
         public long LocationTypeId { get; set; }
         public string LocationTypeName { get; set; }
-        public List<ReservationDetail> lstReservation_Details { get; set; }
+        public List<ReservationDetail> ReservationDetails { get; set; }
         //public List<FoodicsOrderViewModel> lstFoodics_Details { get; set; }
-        public List<WorkSpaceTopupHistoryResponse> lstTopupHistory { get; set; }
-        public List<GiftedHours> lstGiftedHours { get; set; }
+        public List<WorkSpaceTopupHistoryResponse> TopupHistory { get; set; }
+        public List<GiftedHours> GiftedHours { get; set; }
     }
 }

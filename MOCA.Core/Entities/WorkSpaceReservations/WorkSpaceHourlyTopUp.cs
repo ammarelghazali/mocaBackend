@@ -8,6 +8,7 @@ namespace MOCA.Core.Entities.WorkSpaceReservations
     {
         [Required]
         public long HourId { get; set; }
+        // TODO: Reference to LoungeLocationPricing
 
         [Required]
         public decimal HourlyTotalPrice { get; set; }
