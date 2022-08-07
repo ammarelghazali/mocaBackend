@@ -30,6 +30,7 @@ namespace MOCA.Presistence
         public IConfiguration _configuration { get; }
         private readonly IAuthenticatedUserService _authenticatedUser;
         private readonly IDateTimeService _dateTimeService;
+        private readonly IReservationsStatusService _reservationsStatusService;
 
         DbContext IUnitOfWork.contextForTransaction
         {
@@ -42,12 +43,13 @@ namespace MOCA.Presistence
         public UnitOfWork(ApplicationDbContext context,
             IConfiguration configuration,
             IAuthenticatedUserService authenticatedUser,
-            IDateTimeService dateTimeService)
+            IDateTimeService dateTimeService, IReservationsStatusService reservationsStatusService)
         {
             _context = context;
             _configuration = configuration;
             _authenticatedUser = authenticatedUser;
             _dateTimeService = dateTimeService;
+            _reservationsStatusService = reservationsStatusService;
         }
 
         #region Moca Settings
@@ -339,7 +341,7 @@ namespace MOCA.Presistence
         {
             get 
             {
-                return _workSpaceReservationBundleRepo ?? new WorkSpaceReservationBundleRepo(_context);
+                return _workSpaceReservationBundleRepo ?? new WorkSpaceReservationBundleRepo(_context, _reservationsStatusService);
 
             }
         }
@@ -349,7 +351,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return _workSpaceReservationHourlyRepo ?? new WorkSpaceReservationHourlyRepo(_context);
+                return _workSpaceReservationHourlyRepo ?? new WorkSpaceReservationHourlyRepo(_context, _reservationsStatusService);
 
             }
         }
@@ -359,7 +361,7 @@ namespace MOCA.Presistence
         {
             get
             {
-                return _workSpaceReservationTailoredRepo ?? new WorkSpaceReservationTailoredRepo(_context);
+                return _workSpaceReservationTailoredRepo ?? new WorkSpaceReservationTailoredRepo(_context, _reservationsStatusService);
             }
         }
 
