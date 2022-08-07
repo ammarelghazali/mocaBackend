@@ -765,20 +765,6 @@ namespace MOCA.Presistence
         #endregion 
 
 
-        #region MeetingSpaceReservations
-        private IMeetingSpaceReservationRepository _meetingSpaceReservationRepository;
-
-        public IMeetingSpaceReservationRepository MeetingSpaceReservationRepository
-        {
-            get 
-            { 
-                return _meetingSpaceReservationRepository = _meetingSpaceReservationRepository ?? new MeetingSpaceReservationRepository(_context); 
-            }
-        }
-
-        #endregion
-
-
         public DateTime ConvertToLocalDate(DateTime dateInEasternTimeZone)
         {
             #region convert american time to utc time
