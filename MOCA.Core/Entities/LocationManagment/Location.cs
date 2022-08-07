@@ -84,7 +84,7 @@ namespace MOCA.Core.Entities.LocationManagment
         public string TaxIdNumber { get; set; }
         public string CommercialRegisterNumber { get; set; }
         public bool IsPublish { get; set; }
-
+        public int LocationBankAccountType { get; set; }
         public ICollection<EventSpaceBooking> EventSpaceBookings { get; set; }
         public ICollection<IssueReport> IssueReports { get; set; }
         public ICollection<Building> Buildings { get; set; }

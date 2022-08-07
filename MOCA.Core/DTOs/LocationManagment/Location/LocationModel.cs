@@ -78,13 +78,14 @@ namespace MOCA.Core.DTOs.LocationManagment.Location
         public string TaxIdNumber { get; set; }
         public string CommercialRegisterNumber { get; set; }
         public bool IsPublish { get; set; }
+        public int LocationBankAccountType { get; set; }
         public List<ServiceFeePaymentsDueDateModel> ServiceFeePaymentsDueDates { get; set; }
         public List<LocationContactModel> LocationContacts { get; set; }
         public List<LocationImageModel> LocationImages { get; set; }
         public List<LocationCurrencyModel> LocationCurrencies { get; set; }
         public List<LocationFileModel> LocationFiles { get; set; }
         public List<LocationWorkingHourModel> LocationWorkingHours { get; set; }
-        public List<LocationBankAccountModel> LocationBankAccount { get; set; }
+        public LocationBankAccountModel LocationBankAccount { get; set; }
         public List<LocationInclusionModel> LocationInclusions { get; set; }
     }
 }
