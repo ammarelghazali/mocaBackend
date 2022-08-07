@@ -165,8 +165,8 @@ namespace LocationManagement.API.Controllers
         /// <param name="filter">an object holds the filter data</param>
         /// <response code="200">Returns the Buildings List</response>
         /// <response code="400">something goes wrong in backend</response>
-        [HttpPost("GetAllFilterBuildingsWithPagination")]
-        public async Task<IActionResult> GetAllFilterBuildingsWithPagination([FromBody] GetWithoutPaginatedBuildingFilterParameter filter)
+        [HttpPost("GetAllFilterBuildingsWithoutPagination")]
+        public async Task<IActionResult> GetAllFilterBuildingsWithoutPagination([FromBody] GetWithoutPaginatedBuildingFilterParameter filter)
         {
             var response = await _buildingService.GetAllFilterBuildingWithoutPagination(filter);
 
