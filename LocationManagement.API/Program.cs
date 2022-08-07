@@ -74,9 +74,10 @@ builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 #region Service Layer
 
 // Shared Services
-builder.Services.AddTransient<IDateTimeService, DateTimeService>();
 //Auth Would Be Change 
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
+builder.Services.AddScoped<IReservationsStatusService, ReservationsStatusService>();
+builder.Services.AddTransient<IDateTimeService, DateTimeService>();
 //-------------------------
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

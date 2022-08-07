@@ -6,6 +6,7 @@ using MOCA.Core.Entities.EventSpaceBookings;
 using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Entities.MeetingSpaceReservation;
 using MOCA.Core.Entities.MocaSetting;
+using MOCA.Core.Entities.Shared;
 using MOCA.Core.Entities.Shared.Reservations;
 using MOCA.Core.Entities.SSO;
 using MOCA.Core.Entities.SSO.Identity;
@@ -70,8 +71,24 @@ namespace MOCA.Presistence.Contexts
         public DbSet<LocationWorkingHour> LocationWorkingHours { get; set; }
         public DbSet<ServiceFeePaymentsDueDate> ServiceFeePaymentsDueDates { get; set; }
         public DbSet<FavouriteLocation> FavouriteLocations { get; set; }
+        public DbSet<Amenity> Amenities { get; set; }
+        public DbSet<SpaceAmenity> SpaceAmenities { get; set; }
+        public DbSet<EventSpace> EventSpaces { get; set; }
+        public DbSet<EventSpaceHourlyPricing> EventSpaceHourlyPricings { get; set; }
+        public DbSet<FurnishingType> FurnishingTypes { get; set; }
+        public DbSet<Furnishing> Furnishings { get; set; }
+        public DbSet<MeetingSpace> MeetingSpaces { get; set; }
+        public DbSet<MeetingSpaceHourlyPricing> MeetingSpaceHourlyPricings { get; set; }
+        public DbSet<WorkSpace> WorkSpaces { get; set; }
+        public DbSet<WorkSpaceCategory> WorkSpaceCategories { get; set; }
+        public DbSet<WorkSpaceType> WorkSpaceTypes { get; set; }
+        public DbSet<MarketingImages> MarketingImages { get; set; }
+        public DbSet<VenueSetup> VenueSetups { get; set; }
         #endregion
 
+        #region Shared
+        public DbSet<MemberType> MemberTypes { get; set; }
+        #endregion
 
         #region EventSpaceBookings
         public DbSet<ContactDetails> ContactDetails { get; set; }
