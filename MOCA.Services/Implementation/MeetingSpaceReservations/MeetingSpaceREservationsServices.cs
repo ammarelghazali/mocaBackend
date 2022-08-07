@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MOCA.Core;
 using MOCA.Core.DTOs.MeetingReservations.Request;
+using MOCA.Core.DTOs.MeetingReservations.Response;
 using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.Entities.MeetingSpaceReservation;
 using MOCA.Core.Interfaces.MeetingSpaceReservations.Services;
@@ -14,12 +15,29 @@ namespace MOCA.Services.Implementation.MeetingSpaceReservations
         {
             _unitOfWork = unitOfWork;
         }
+        public async Task<PagedResponse<List<GetAllMeetingSubmissionsResponseDto>>> GetAllSubmissionsWithPagination(int pageNumber, int pageSize)
+        {
+            pageSize = pageSize > 0 ? pageSize : 10;
+            pageNumber = pageNumber > 0 ? pageNumber : 1;
+            var allSubmissions =await _unitOfWork.MeetingSpaceReservationRepository.GetAllSubmissions();
+            var submissions = await allSubmissions.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+            return new PagedResponse<List<GetAllMeetingSubmissionsResponseDto>>(submissions, pageNumber, pageSize, submissions.Count);
 
-       
+        }
 
+        public async Task<Response<List<GetAllMeetingSubmissionsResponseDto>>> GetAllSubmissionsWithoutPagination()
+        {
+            var allSubmissions = await _unitOfWork.MeetingSpaceReservationRepository.GetAllSubmissions();
+            var submissions = await allSubmissions.ToListAsync();
+            return new Response<List<GetAllMeetingSubmissionsResponseDto>>(submissions);
 
-       
+        }
 
+        public async Task<Response<List<GetAllMeetingReservationLocationsDto>>> GetAllMeetingReservationLocations()
+        {
+            var locations = await _unitOfWork.MeetingSpaceReservationRepository.GetAllDistinctLocations();
+            return new Response<List<GetAllMeetingReservationLocationsDto>>(locations);
+        }
 
         public async Task<Response<MeetingReservation>> GetMeetingReservationById(long id)
         {
@@ -27,19 +45,6 @@ namespace MOCA.Services.Implementation.MeetingSpaceReservations
             return new Response<MeetingReservation>(meetingReservation);
         }
 
-        public async Task<Response<List<string>>> GetAllMeetingReservationLocations()
-        {
-            var meetingReservations = await _unitOfWork.MeetingSpaceReservationRepository.GetAllIQueryable();
-            var allLocations = await meetingReservations.Include(x => x.Location.Name)
-                                    .Select(x => x.Location.Name).Distinct().ToListAsync();
 
-            return new Response<List<string>>(allLocations);
-        }
-
-
-        public async Task GetAllFilteredMeetingREservations()
-        {
-
-        }
     }
 }

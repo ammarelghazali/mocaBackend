@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MOCA.Core.DTOs.MeetingReservations.Response
+﻿namespace MOCA.Core.DTOs.MeetingReservations.Response
 {
-    internal class GetAllMeetingReservationLocationsDto
+    public class GetAllMeetingReservationLocationsDto
     {
+        public long LocationId { get; set; }
+        public string LocationName { get; set; }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MOCA.Core.DTOs.MeetingReservations.Response;
+using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.Entities.MeetingSpaceReservation;
 using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
+using MOCA.Core.Interfaces.Shared.Services;
 using MOCA.Presistence.Contexts;
 using MOCA.Presistence.Repositories.Base;
 
@@ -10,6 +12,7 @@ namespace MOCA.Presistence.Repositories.MeetingSpaceReservations
     public class MeetingSpaceReservationsRepository : GenericRepository<MeetingReservation>, IMeetingSpaceReservationRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly IReservationsStatusService _reservationsStatusService;
         public MeetingSpaceReservationsRepository(ApplicationDbContext context) : base(context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
@@ -53,12 +56,30 @@ namespace MOCA.Presistence.Repositories.MeetingSpaceReservations
                                   .ReservationDetails
                                   .Select(d => d.EndDateTime)
                                   .FirstOrDefault(),
-                    // Status = GetStatus(x.MeetingReservationTransaction.ReservationTransaction)
+                    //Status = _reservationsStatusService
+                    //        .GetStatus(x.MeetingReservationTransaction.ReservationTransaction, 
+                    //        x.MeetingReservationTransaction.cancel));
                 });
 
             return allSubmissions;
         }
 
+        public async Task<List<GetAllMeetingReservationLocationsDto>> GetAllDistinctLocations()
+        {
+            var locations = await _context.MeetingSpaceReservations.OrderByDescending(x => x.CreatedAt)
+           .Include(x => x.Location)
+           .Select(x => new GetAllMeetingReservationLocationsDto
+           {
+               LocationId = x.LocationId,
+               LocationName = x.Location.Name,
+           })
+           .Distinct()
+           .ToListAsync();
+
+            return locations;
+        }
+
+      
 
     }
 }

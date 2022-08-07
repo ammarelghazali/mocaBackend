@@ -205,7 +205,7 @@ namespace MOCA.Services.Implementation.LocationManagment
                 {
                     Id = data[i].Id,
                     GrossArea = data[i].GrossArea,
-                    InstallAccessPoint = data[i].InstallAccessPoint,
+                    //InstallAccessPoint = data[i].InstallAccessPoint,
                     Name = data[i].Name,
                     NetArea = data[i].NetArea,
                     TotalFloors = buildingCount
@@ -237,7 +237,7 @@ namespace MOCA.Services.Implementation.LocationManagment
                 {
                     Id = data[i].Id,
                     GrossArea = data[i].GrossArea,
-                    InstallAccessPoint = data[i].InstallAccessPoint,
+                    //InstallAccessPoint = data[i].InstallAccessPoint,
                     Name = data[i].Name,
                     NetArea = data[i].NetArea,
                     TotalFloors = buildingCount

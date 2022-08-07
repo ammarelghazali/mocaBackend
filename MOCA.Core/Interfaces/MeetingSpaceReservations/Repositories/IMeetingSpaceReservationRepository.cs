@@ -7,5 +7,6 @@ namespace MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories
     public interface IMeetingSpaceReservationRepository : IGenericRepository<MeetingReservation>
     {
         Task<IQueryable<GetAllMeetingSubmissionsResponseDto>> GetAllSubmissions();
+        Task<List<GetAllMeetingReservationLocationsDto>> GetAllDistinctLocations();
     }
 }
