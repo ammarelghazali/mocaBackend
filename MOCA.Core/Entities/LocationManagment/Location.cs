@@ -28,6 +28,8 @@ namespace MOCA.Core.Entities.LocationManagment
         public DateTime ContractStartDate { get; set; }
         [Required]
         public DateTime ContractEndDate { get; set; }
+        [Required]
+        public DateTime LaunchDate { get; set; }
         [Range(1,5)]
         public int? PaymentMethod { get; set; }
         [Range(1, 4)]
