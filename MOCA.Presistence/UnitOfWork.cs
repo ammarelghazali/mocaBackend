@@ -363,6 +363,23 @@ namespace MOCA.Presistence
             }
         }
 
+        private IWorkSpaceHourlyTopUpRepo _workSpaceHourlyTopUpRepo;
+        public IWorkSpaceHourlyTopUpRepo WorkSpaceHourlyTopUpRepo
+        {
+            get
+            {
+                return _workSpaceHourlyTopUpRepo ?? new WorkSpaceHourlyTopUpRepo(_context);
+            }
+        }
+
+        private IWorkSpaceTailoredTopUpRepo _workSpaceTailoredTopUpRepo;
+        public IWorkSpaceTailoredTopUpRepo WorkSpaceTailoredTopUpRepo
+        {
+            get
+            {
+                return _workSpaceTailoredTopUpRepo ?? new WorkSpaceTailoredTopUpRepo(_context);
+            }
+        }
         #endregion
 
         #region Location Managment
@@ -740,6 +757,7 @@ namespace MOCA.Presistence
                 return _meetingSpaceReservationRepository = _meetingSpaceReservationRepository ?? new MeetingSpaceReservationsRepository(_context); 
             }
         }
+
 
         #endregion
 

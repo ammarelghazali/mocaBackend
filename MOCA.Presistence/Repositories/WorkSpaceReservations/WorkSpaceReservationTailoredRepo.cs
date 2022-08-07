@@ -22,6 +22,9 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
             var reservations = _context.WorkSpaceReservationTailored.OrderByDescending(r => r.CreatedAt)
                                                                               .Include(r => r.BasicUser)
                                                                               .Include(r => r.Location)
+                                                                              .Include(r => r.WorkSpaceTailoredTransactions)
+                                                                              .ThenInclude(r => r.ReservationTransaction)
+                                                                              .ThenInclude(r => r.ReservationDetails)
                                                                               .Include(r => r.TopUps)
                                                                               .Select(r => new GetAllWorkSpaceReservationsResponse
                                                                               {
@@ -36,19 +39,40 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
                                                                                   DateTime = r.TailoredStartDate,
                                                                                   Amount = r.TailoredPrice,
                                                                                   ReservationTypeId = 2,
-                                                                                  Mode = r.TopUps.Count > 0 ? "TopUp" : "Basic"
+                                                                                  Mode = r.TopUps.Count > 0 ? "TopUp" : "Basic",
+                                                                                  CreditHours = r.WorkSpaceTailoredTransactions.ReservationTransaction
+                                                                                                                 .RemainingHours,
+
+                                                                                  EndDate = r.WorkSpaceTailoredTransactions.ReservationTransaction
+                                                                                                             .ExtendExpiryDate,
+
+                                                                                  TopUpsLink = r.TopUps.Count > 0 ? "resources/templates/check.png" :
+                                                                                                        "resources/templates/unchecked.png",
+
+                                                                                  EntryScanTime = r.WorkSpaceTailoredTransactions
+                                                                                       .ReservationTransaction.ReservationDetails
+                                                                                       .OrderByDescending(r => r.CreatedAt)
+                                                                                       .FirstOrDefault().StartDateTime,
+
+                                                                                  Scanin = r.WorkSpaceTailoredTransactions.ReservationTransaction
+                                                                                .ReservationDetails.Select(r => r.StartDateTime).FirstOrDefault(),
+
+                                                                                  ScanOut = r.WorkSpaceTailoredTransactions.ReservationTransaction
+                                                                                 .ReservationDetails.OrderByDescending(r => r.Id)
+                                                                                 .Select(r => r.EndDateTime).FirstOrDefault(),
                                                                               });
 
             return reservations;
         }
 
-        public async Task<ReservationTransaction> GetRelatedReservationTransaction(long Reservationid, long reservationTypeId)
+        public async Task<WorkSpaceReservationTailored> GetReservationById(long id)
         {
-            return await _context.ReservationTransactions.Where(r => r.ReservationTypeId == reservationTypeId &&
-                                                                                r.ReservationTargetId == Reservationid)
-                                                                    .Include(r => r.ReservationDetails)
-                                                                    .Include(r => r.ReservationType)
-                                                                    .FirstOrDefaultAsync();
+            return await _context.WorkSpaceReservationTailored.Where(r => r.Id == id && r.IsDeleted != true)
+                                                                .Include(r => r.Location)
+                                                                .ThenInclude(r => r.LocationWorkingHours)
+                                                                .Include(r => r.WorkSpaceTailoredTransactions)
+                                                                .ThenInclude(r => r.ReservationTransaction)
+                                                                .FirstOrDefaultAsync();
         }
 
         public async Task<WorkSpaceReservationTailored> GetReservationInfo(long id)
@@ -57,6 +81,9 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
                                                             .Include(r => r.Location)
                                                             .ThenInclude(r => r.LocationType)
                                                             .Include(r => r.TopUps)
+                                                            .Include(r => r.WorkSpaceTailoredTransactions)
+                                                            .ThenInclude(r => r.ReservationTransaction)
+                                                            .ThenInclude(r => r.ReservationDetails)
                                                             .Include(r => r.BasicUser).FirstOrDefaultAsync();
         }
     }

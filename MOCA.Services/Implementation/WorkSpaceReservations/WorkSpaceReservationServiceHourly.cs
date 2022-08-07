@@ -2,15 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using MOCA.Core;
 using MOCA.Core.DTOs.Shared.Responses;
+using MOCA.Core.DTOs.WorkSpaceReservation;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
+using MOCA.Core.Entities.WorkSpaceReservations;
+using MOCA.Core.Enums.Shared;
 using MOCA.Core.Interfaces.Shared.Services;
 using MOCA.Core.Interfaces.WorkSpaceReservations.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MOCA.Services.Implementation.WorkSpaceReservations
 {
@@ -27,50 +25,65 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
             _dateTimeService = dateTimeService;
         }
 
-        public async Task<List<GetAllWorkSpaceReservationsResponse>> GetAllWorkSpaceReservations(GetAllWorkSpaceReservationsDto request)
+        public async Task<Response<SharedCreationResponse>> CreateTopUp(CreateWorkSpaceTopUp topUp)
         {
-            var hourlyReservations = await _unitOfWork.WorkSpaceReservationHourlyRepo.GetAllWorkSpaceSubmissions(request);
+            throw new NotImplementedException();
 
-            foreach (var item in hourlyReservations)
+            var reservation = await _unitOfWork.WorkSpaceReservationHourlyRepo.GetReservationById(topUp.WorkspaceReservationId);
+
+            // check if it exceeds the available hours and Availability
+
+            int reservationDay = (int)Enum.Parse(typeof(WeekDays), Convert.ToDateTime(reservation.Date).DayOfWeek.ToString());
+
+            List<int> listOfHours = new List<int> { 1, 2, 4, 6, 8 };
+
+            foreach (var item in reservation.Location.LocationWorkingHours)
             {
-                // get cart currency
+                int dayFrom = (int)Enum.Parse(typeof(WeekDays), item.DayFrom);
+                int dayTo = (int)Enum.Parse(typeof(WeekDays), item.DayTo);
 
-                var reservationTransaction = await _unitOfWork.WorkSpaceReservationHourlyRepo
-                                                     .GetRelatedReservationTransaction(item.Id, 1);
-
-                item.CreditHours = reservationTransaction.RemainingHours;
-                item.EndDate = reservationTransaction.ExtendExpiryDate;
-                item.EntryScanTime = reservationTransaction.ReservationDetails
-                                                      .OrderByDescending(r => r.CreatedAt)
-                                                      .FirstOrDefault().StartDateTime;
-
-                item.TopUpsLink = item.Mode == "TopUp" ? "resources/templates/check.png" : "resources/templates/unchecked.png";
-                item.Scanin = reservationTransaction.ReservationDetails.Select(r => r.StartDateTime).FirstOrDefault();
-                item.ScanOut = reservationTransaction.ReservationDetails.OrderByDescending(r => r.Id)
-                                                                        .Select(r => r.EndDateTime).FirstOrDefault();
-
-                string status = string.Empty;
-
-                var expiryDate = reservationTransaction.ExtendExpiryDate ?? null;
-
-                if (expiryDate is not null)
+                for (int day = dayFrom; day <= dayTo; day++)
                 {
-                    var isExpired = DateTime.Compare(_dateTimeService.NowUtc, expiryDate.Value);
-
-                    if (isExpired > 0 || isExpired == 0)
-                        status = "Closed";
-
-                    else
+                    if (reservationDay == day)
                     {
-                        var isScannedIn = reservationTransaction.ReservationDetails.Count > 0;
+                        //get remaining Hours and the maximum hours that can be Topped Up
 
-                        status = isScannedIn ? "Open" : "New";
+                        TimeSpan remainingHours = Convert.ToDateTime(item.EndWorkingHour) - DateTime.Now;
+
+                        int remainingHoursBeforeClosing = Convert.ToInt32(remainingHours.Hours);
+
+                        int closest = listOfHours.Aggregate((x, y) => Math.Abs(x - remainingHoursBeforeClosing) < Math.Abs(y - remainingHoursBeforeClosing) ? x : y);
+                        
+                        if (topUp.NumberOfHours > closest)
+                            return new Response<SharedCreationResponse>("Maximum hours are " + closest);
+
+                        break;
                     }
                 }
 
-                item.Status = status;
             }
 
+            // get the calculated price
+
+
+            // add the top up
+            var reservationTopUp = new WorkSpaceHourlyTopUp
+            {
+                Description = topUp.Description,
+                HourId = topUp.HourId ?? 0,
+                // HourlyTotalPrice = calculated price
+                WorkSpaceReservationHourlyId = topUp.WorkspaceReservationId,
+            };
+
+            _unitOfWork.WorkSpaceHourlyTopUpRepo.Insert(reservationTopUp);
+
+            // update  remaining hours with calculating the price using LoungqLocationPrice
+
+        }
+
+        public async Task<List<GetAllWorkSpaceReservationsResponse>> GetAllWorkSpaceReservations(GetAllWorkSpaceReservationsDto request)
+        {
+            var hourlyReservations = await _unitOfWork.WorkSpaceReservationHourlyRepo.GetAllWorkSpaceSubmissions(request);
 
             return await hourlyReservations.Skip(request.pageSize * (request.pageNumber - 1)).Take(request.pageSize).ToListAsync();
         }
@@ -85,21 +98,16 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
                 return new Response<WorkSpaceReservationHistoryResponse>("there's no such Reservation");
             }
 
-
-            var reservationTransaction = await _unitOfWork.WorkSpaceReservationHourlyRepo
-                                                      .GetRelatedReservationTransaction(request.WorkSpaceReservationId,
-                                                                                        request.ReservationTypeId);
-
             // Get Entry Scan Time 
 
-            var entryScanTime = reservationTransaction.ReservationDetails
+            var entryScanTime = reservation.WorkSpaceHourlyTransactions.ReservationTransaction.ReservationDetails
                                                       .OrderByDescending(r => r.CreatedAt)
                                                       .FirstOrDefault().StartDateTime;
 
             // Get Reservation Status
             string status;
 
-            var expiryDate = reservationTransaction.ExtendExpiryDate ?? null;
+            var expiryDate = reservation.WorkSpaceHourlyTransactions.ReservationTransaction.ExtendExpiryDate ?? null;
 
             if (expiryDate is null)
             {
@@ -113,7 +121,7 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
 
             else
             {
-                var isScannedIn = reservationTransaction.ReservationDetails.Count > 0;
+                var isScannedIn = reservation.WorkSpaceHourlyTransactions.ReservationTransaction.ReservationDetails.Count > 0;
 
                 status = isScannedIn ? "Open" : "New";
             }
@@ -165,18 +173,18 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
                 ReservationType = "Hourly",
                 ReservationTypeId = 1,
                 EntryScanTime = entryScanTime,
-                lstGiftedHours = giftedHours,
-                lstTopupHistory = topupHistory,
+                GiftedHours = giftedHours,
+                TopupHistory = topupHistory,
                 OpportunityStartDate = reservation.CreatedAt,
-                EndDate = reservationTransaction.ExtendExpiryDate,
-                CreditHours = reservationTransaction.RemainingHours,
+                EndDate = expiryDate,
+                CreditHours = reservation.WorkSpaceHourlyTransactions.ReservationTransaction.RemainingHours,
                 CountryCode = reservation.BasicUser.Country.CountryCode,
                 MobileNumber = reservation.BasicUser.MobileNumber,
                 DateTime = reservation.Date,
                 LocationId = reservation.LocationId,
                 LocationName = reservation.Location.Name,
                 LocationTypeId = reservation.Location.LocationTypeId,
-                lstReservation_Details = reservationTransaction.ReservationDetails.ToList(),
+                ReservationDetails = reservation.WorkSpaceHourlyTransactions.ReservationTransaction.ReservationDetails.ToList(),
                 LocationTypeName = reservation.Location.LocationType.Name,
                 Platform = "Mobile"
             };

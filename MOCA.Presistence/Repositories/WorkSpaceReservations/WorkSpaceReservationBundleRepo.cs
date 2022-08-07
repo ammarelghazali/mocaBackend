@@ -23,6 +23,9 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
             var reservations = _context.WorkSpaceReservationBundle.OrderByDescending(r => r.CreatedAt)
                                                                   .Include(r => r.BasicUser)
                                                                   .Include(r => r.Location)
+                                                                  .Include(r => r.WorkSpaceBundleTransactions)
+                                                                  .ThenInclude(r => r.ReservationTransaction)
+                                                                  .ThenInclude(r => r.ReservationDetails)
                                                                   .Select(r => new GetAllWorkSpaceReservationsResponse
                                                                   {
                                                                      Id = r.Id,
@@ -38,18 +41,29 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
                                                                      ReservationTypeId = 3,
                                                                      Mode = "basic",
                                                                      TopUpsLink = "resources/templates/unchecked.png",
+
+                                                                     CreditHours = r.WorkSpaceBundleTransactions.ReservationTransaction
+                                                                                                                 .RemainingHours,
+
+                                                                      EndDate = r.WorkSpaceBundleTransactions.ReservationTransaction
+                                                                                                             .ExtendExpiryDate,
+
+                                                          
+
+                                                                      EntryScanTime = r.WorkSpaceBundleTransactions
+                                                                                       .ReservationTransaction.ReservationDetails
+                                                                                       .OrderByDescending(r => r.CreatedAt)
+                                                                                       .FirstOrDefault().StartDateTime,
+
+                                                                      Scanin = r.WorkSpaceBundleTransactions.ReservationTransaction
+                                                                                .ReservationDetails.Select(r => r.StartDateTime).FirstOrDefault(),
+
+                                                                      ScanOut = r.WorkSpaceBundleTransactions.ReservationTransaction
+                                                                                 .ReservationDetails.OrderByDescending(r => r.Id)
+                                                                                 .Select(r => r.EndDateTime).FirstOrDefault(),
                                                                   });
 
             return reservations;
-        }
-
-        public async Task<ReservationTransaction> GetRelatedReservationTransaction(long Reservationid, long reservationTypeId)
-        {
-            return await _context.ReservationTransactions.Where(r => r.ReservationTypeId == reservationTypeId &&
-                                                                                r.ReservationTargetId == Reservationid)
-                                                                    .Include(r => r.ReservationDetails)
-                                                                    .Include(r => r.ReservationType)
-                                                                    .FirstOrDefaultAsync();
         }
 
         public async Task<WorkSpaceReservationBundle> GetReservationInfo(long id)
@@ -57,6 +71,9 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
             return await _context.WorkSpaceReservationBundle.Where(r => r.Id == id)
                                                             .Include(r => r.Location)
                                                             .ThenInclude(r => r.LocationType)
+                                                            .Include(r => r.WorkSpaceBundleTransactions)
+                                                            .ThenInclude(r => r.ReservationTransaction)
+                                                            .ThenInclude(r => r.ReservationDetails)
                                                             .Include(r => r.BasicUser).FirstOrDefaultAsync();
         }
     }
