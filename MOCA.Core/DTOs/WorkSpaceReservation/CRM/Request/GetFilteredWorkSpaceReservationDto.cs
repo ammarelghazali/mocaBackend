@@ -19,14 +19,14 @@ namespace MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request
         //public string Platform { get; set; }
         public DateTime? FromDateTime { get; set; }
         public DateTime? ToDateTime { get; set; }
-        public string Name { get; set; }
-        public string CountryCode { get; set; }
-        public string MobileNumber { get; set; }
+        public string? Name { get; set; }
+        public string? CountryCode { get; set; }
+        public string? MobileNumber { get; set; }
         public int? ReservationTypeId { get; set; }
         public DateTime? FromEndDate { get; set; }
         public DateTime? ToEndDate { get; set; }
-        public string Mode { get; set; }
-        public string ReservationType { get; set; }
+        public string? Mode { get; set; }
+        public string? ReservationType { get; set; }
         public decimal? CreditHours { get; set; }
         public decimal? MaxCreditHours { get; set; }
         public decimal? Amount { get; set; }
