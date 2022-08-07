@@ -18,6 +18,7 @@ using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
 using MOCA.Presistence.Repositories.WorkSpaceReservations;
 using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
 using MOCA.Presistence.Repositories.MeetingSpaceReservations;
+using MOCA.Core.Interfaces.SSO.Repositories;
 
 namespace MOCA.Presistence
 {
@@ -703,6 +704,26 @@ namespace MOCA.Presistence
 
         #endregion
 
+
+        #region SSO
+
+        public IBasicUserRepository BasicUserRepository { get; }
+
+        public IBasicUserStatusHistoryRepository BasicUserStatusHistoryRepository { get; }
+
+        public IClientDeviceRepository ClientDeviceRepository { get; }
+
+        public IMemberShipTypesRepository MemberShipTypesRepository { get; }
+
+        public IMemberShipMainCategoriesRepository MemberShipMainCategoriesRepository { get; }
+
+        public IMemberShipCategoriesRepository MemberShipCategoriesRepository { get; }
+
+        public IMemberShipBenefitsTypesRepository MemberShipBenefitsTypesRepository { get; }
+
+        public IGenderRepository GenderRepository { get; }
+
+        #endregion 
 
         public DateTime ConvertToLocalDate(DateTime dateInEasternTimeZone)
         {
