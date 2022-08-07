@@ -26,9 +26,9 @@ namespace MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response
         public long BasicUserId { get; set; }
         public long LocationTypeId { get; set; }
         public string LocationTypeName { get; set; }
-        public List<ReservationDetail> lstReservation_Details { get; set; }
+        public List<ReservationDetail> ReservationDetails { get; set; }
         //public List<FoodicsOrderViewModel> lstFoodics_Details { get; set; }
-        public List<WorkSpaceTopupHistoryResponse> lstTopupHistory { get; set; }
-        public List<GiftedHours> lstGiftedHours { get; set; }
+        public List<WorkSpaceTopupHistoryResponse> TopupHistory { get; set; }
+        public List<GiftedHours> GiftedHours { get; set; }
     }
 }

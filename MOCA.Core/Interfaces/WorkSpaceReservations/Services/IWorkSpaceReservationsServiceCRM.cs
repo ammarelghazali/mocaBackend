@@ -16,6 +16,6 @@ namespace MOCA.Core.Interfaces.WorkSpaceReservations.Services
         Task<Response<WorkSpaceReservationHistoryResponse>> GetWorkSpaceOpportunityInfoHistory(GetWorkSpaceReservationHistoryDto request);
         Task<Response<WorkSpaceReservationLocationsDropDown>> GetWorkSpaceLocationsDropDowns();
         Task<PagedResponse<IReadOnlyList<GetFilteredWorkSpaceReservationResponse>>> GetFilteredSubmissions(GetFilteredWorkSpaceReservationDto request);
-        //Task<Response<IReadOnlyList<GetFilteredWorkSpaceReservationNotPaginatedResponse>>> GetFilteredSubmissionsWithoutPagination(GetAllWorkSpaceReservationNotPaginated request);
+        Task<Response<IReadOnlyList<GetFilteredWorkSpaceReservationNotPaginatedResponse>>> GetFilteredSubmissionsWithoutPagination(GetAllWorkSpaceReservationNotPaginated request);
     }
 }

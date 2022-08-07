@@ -24,6 +24,9 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
                                                                   .Include(r => r.BasicUser)
                                                                   .Include(r => r.Location)
                                                                   .Include(r => r.TopUps)
+                                                                  .Include(r => r.WorkSpaceHourlyTransactions)
+                                                                  .ThenInclude(r => r.ReservationTransaction)
+                                                                  .ThenInclude(r => r.ReservationDetails)
                                                                   .Select(r => new GetAllWorkSpaceReservationsResponse
                                                                   {
                                                                       Id = r.Id,
@@ -37,20 +40,34 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
                                                                       DateTime = r.Date,
                                                                       Amount = r.Price,
                                                                       ReservationTypeId = 1,
-                                                                      Mode = r.TopUps.Count > 0 ? "TopUp" : "Basic"
+                                                                      Mode = r.TopUps.Count > 0 ? "TopUp" : "Basic",
+                                                                      CreditHours = r.WorkSpaceHourlyTransactions.ReservationTransaction
+                                                                                                                 .RemainingHours,
+
+                                                                      EndDate = r.WorkSpaceHourlyTransactions.ReservationTransaction
+                                                                                                             .ExtendExpiryDate,
+
+                                                                      TopUpsLink = r.TopUps.Count > 0 ? "resources/templates/check.png" : 
+                                                                                                        "resources/templates/unchecked.png",
+
+                                                                      EntryScanTime = r.WorkSpaceHourlyTransactions
+                                                                                       .ReservationTransaction.ReservationDetails
+                                                                                       .OrderByDescending(r => r.CreatedAt)
+                                                                                       .FirstOrDefault().StartDateTime,
+
+                                                                      Scanin = r.WorkSpaceHourlyTransactions.ReservationTransaction
+                                                                                .ReservationDetails.Select(r => r.StartDateTime).FirstOrDefault(),
+
+                                                                      ScanOut = r.WorkSpaceHourlyTransactions.ReservationTransaction
+                                                                                 .ReservationDetails.OrderByDescending(r => r.Id)
+                                                                                 .Select(r => r.EndDateTime).FirstOrDefault(),
+                                                                      Status = getStatus(r.WorkSpaceHourlyTransactions.ReservationTransaction)
+
                                                                   });
 
             return reservations;
         }
 
-        public async Task<ReservationTransaction> GetRelatedReservationTransaction(long Reservationid, long reservationTypeId)
-        {
-            return await _context.ReservationTransactions.Where(r => r.ReservationTypeId == reservationTypeId &&
-                                                                     r.ReservationTargetId == Reservationid)
-                                                         .Include(r => r.ReservationDetails)
-                                                         .Include(r => r.ReservationType)
-                                                         .FirstOrDefaultAsync();
-        }
 
         public async Task<WorkSpaceReservationHourly> GetReservationInfo(long id)
         {
@@ -59,7 +76,36 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
                                                             .ThenInclude(r => r.LocationType)
                                                             .Include(r => r.TopUps)
                                                             .ThenInclude(r => r.PaymentMethod)
+                                                            .Include(r => r.WorkSpaceHourlyTransactions)
+                                                            .ThenInclude(r => r.ReservationTransaction)
+                                                            .ThenInclude(r => r.ReservationDetails)
                                                             .Include(r => r.BasicUser).FirstOrDefaultAsync();
+        }
+
+        private string getStatus(ReservationTransaction reservation)
+        {
+            string status = string.Empty;
+
+            var expiryDate = reservation.ExtendExpiryDate ?? null;
+
+            if (expiryDate is null)
+            {
+                return status;
+            }
+
+            var isExpired = DateTime.Compare(DateTime.UtcNow, expiryDate.Value);
+
+            if (isExpired > 0 || isExpired == 0)
+                status = "Closed";
+
+            else
+            {
+                var isScannedIn = reservation.ReservationDetails.Count > 0;
+
+                status = isScannedIn ? "Open" : "New";
+            }
+
+            return status;
         }
     }
 }

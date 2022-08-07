@@ -17,5 +17,7 @@ namespace MOCA.Core.Entities.WorkSpaceReservations
         public decimal? HourlyDiscount { get; set; }
 
         public ICollection<WorkSpaceHourlyTopUp> TopUps { get; set; }
+
+        public WorkSpaceHourlyTransactions WorkSpaceHourlyTransactions { get; set; }
     }
 }

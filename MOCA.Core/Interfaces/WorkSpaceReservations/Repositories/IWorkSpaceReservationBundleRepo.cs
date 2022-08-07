@@ -9,8 +9,6 @@ namespace MOCA.Core.Interfaces.WorkSpaceReservations.Repositories
     public interface IWorkSpaceReservationBundleRepo : IGenericRepository<WorkSpaceReservationBundle>
     {
         Task<WorkSpaceReservationBundle> GetReservationInfo(long id);
-        Task<ReservationTransaction> GetRelatedReservationTransaction(long Reservationid, long reservationTypeId);
         Task<IQueryable<GetAllWorkSpaceReservationsResponse>> GetAllWorkSpaceSubmissions(GetAllWorkSpaceReservationsDto request);
-
     }
 }

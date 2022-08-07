@@ -19,5 +19,7 @@ namespace MOCA.Core.Entities.WorkSpaceReservations
         public DateTime PackageEndDate { get; set; }
 
         public decimal? PackageDiscount { get; set; }
+
+        public WorkSpaceBundleTransactions WorkSpaceBundleTransactions { get; set; }
     }
 }

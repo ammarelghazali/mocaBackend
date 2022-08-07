@@ -14,8 +14,6 @@ namespace MOCA.Core.Interfaces.WorkSpaceReservations.Repositories
     public interface IWorkSpaceReservationHourlyRepo: IGenericRepository<WorkSpaceReservationHourly>
     {
         Task<WorkSpaceReservationHourly> GetReservationInfo(long id);
-        Task<ReservationTransaction> GetRelatedReservationTransaction(long Reservationid, long reservationTypeId);
         Task<IQueryable<GetAllWorkSpaceReservationsResponse>> GetAllWorkSpaceSubmissions(GetAllWorkSpaceReservationsDto request);
-
     }
 }

@@ -31,47 +31,6 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
         {
             var hourlyReservations = await _unitOfWork.WorkSpaceReservationHourlyRepo.GetAllWorkSpaceSubmissions(request);
 
-            foreach (var item in hourlyReservations)
-            {
-                // get cart currency
-
-                var reservationTransaction = await _unitOfWork.WorkSpaceReservationHourlyRepo
-                                                     .GetRelatedReservationTransaction(item.Id, 1);
-
-                item.CreditHours = reservationTransaction.RemainingHours;
-                item.EndDate = reservationTransaction.ExtendExpiryDate;
-                item.EntryScanTime = reservationTransaction.ReservationDetails
-                                                      .OrderByDescending(r => r.CreatedAt)
-                                                      .FirstOrDefault().StartDateTime;
-
-                item.TopUpsLink = item.Mode == "TopUp" ? "resources/templates/check.png" : "resources/templates/unchecked.png";
-                item.Scanin = reservationTransaction.ReservationDetails.Select(r => r.StartDateTime).FirstOrDefault();
-                item.ScanOut = reservationTransaction.ReservationDetails.OrderByDescending(r => r.Id)
-                                                                        .Select(r => r.EndDateTime).FirstOrDefault();
-
-                string status = string.Empty;
-
-                var expiryDate = reservationTransaction.ExtendExpiryDate ?? null;
-
-                if (expiryDate is not null)
-                {
-                    var isExpired = DateTime.Compare(_dateTimeService.NowUtc, expiryDate.Value);
-
-                    if (isExpired > 0 || isExpired == 0)
-                        status = "Closed";
-
-                    else
-                    {
-                        var isScannedIn = reservationTransaction.ReservationDetails.Count > 0;
-
-                        status = isScannedIn ? "Open" : "New";
-                    }
-                }
-
-                item.Status = status;
-            }
-
-
             return await hourlyReservations.Skip(request.pageSize * (request.pageNumber - 1)).Take(request.pageSize).ToListAsync();
         }
 
@@ -85,21 +44,16 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
                 return new Response<WorkSpaceReservationHistoryResponse>("there's no such Reservation");
             }
 
-
-            var reservationTransaction = await _unitOfWork.WorkSpaceReservationHourlyRepo
-                                                      .GetRelatedReservationTransaction(request.WorkSpaceReservationId,
-                                                                                        request.ReservationTypeId);
-
             // Get Entry Scan Time 
 
-            var entryScanTime = reservationTransaction.ReservationDetails
+            var entryScanTime = reservation.WorkSpaceHourlyTransactions.ReservationTransaction.ReservationDetails
                                                       .OrderByDescending(r => r.CreatedAt)
                                                       .FirstOrDefault().StartDateTime;
 
             // Get Reservation Status
             string status;
 
-            var expiryDate = reservationTransaction.ExtendExpiryDate ?? null;
+            var expiryDate = reservation.WorkSpaceHourlyTransactions.ReservationTransaction.ExtendExpiryDate ?? null;
 
             if (expiryDate is null)
             {
@@ -113,7 +67,7 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
 
             else
             {
-                var isScannedIn = reservationTransaction.ReservationDetails.Count > 0;
+                var isScannedIn = reservation.WorkSpaceHourlyTransactions.ReservationTransaction.ReservationDetails.Count > 0;
 
                 status = isScannedIn ? "Open" : "New";
             }
@@ -165,18 +119,18 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
                 ReservationType = "Hourly",
                 ReservationTypeId = 1,
                 EntryScanTime = entryScanTime,
-                lstGiftedHours = giftedHours,
-                lstTopupHistory = topupHistory,
+                GiftedHours = giftedHours,
+                TopupHistory = topupHistory,
                 OpportunityStartDate = reservation.CreatedAt,
-                EndDate = reservationTransaction.ExtendExpiryDate,
-                CreditHours = reservationTransaction.RemainingHours,
+                EndDate = expiryDate,
+                CreditHours = reservation.WorkSpaceHourlyTransactions.ReservationTransaction.RemainingHours,
                 CountryCode = reservation.BasicUser.Country.CountryCode,
                 MobileNumber = reservation.BasicUser.MobileNumber,
                 DateTime = reservation.Date,
                 LocationId = reservation.LocationId,
                 LocationName = reservation.Location.Name,
                 LocationTypeId = reservation.Location.LocationTypeId,
-                lstReservation_Details = reservationTransaction.ReservationDetails.ToList(),
+                ReservationDetails = reservation.WorkSpaceHourlyTransactions.ReservationTransaction.ReservationDetails.ToList(),
                 LocationTypeName = reservation.Location.LocationType.Name,
                 Platform = "Mobile"
             };
