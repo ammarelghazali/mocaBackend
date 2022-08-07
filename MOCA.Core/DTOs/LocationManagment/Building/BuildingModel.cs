@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FluentValidation;
+using MOCA.Core.DTOs.LocationManagment.BuildingFloor;
+using System.ComponentModel.DataAnnotations;
 
 namespace MOCA.Core.DTOs.LocationManagment.Building
 {
@@ -7,10 +9,23 @@ namespace MOCA.Core.DTOs.LocationManagment.Building
         public long Id { get; set; }
         [Required]
         public long LocationId { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
+        [Range(1, long.MaxValue, ErrorMessage = "Gross Area Cannot Be 0")]
         public decimal GrossArea { get; set; }
+        [Required]
+        [Range(1, long.MaxValue, ErrorMessage = "Net Area Cannot Be 0")]
         public decimal NetArea { get; set; }
-        public int MaleRestroomCount { get; set; }
-        public int FemaleRestroomCount { get; set; }
+        public bool InstallAccessPoint { get; set; }
+        public List<BuildingFloorModel> BuildingFloors { get; set; }
+    }
+
+    public class Building_Validator : AbstractValidator<BuildingModel>
+    {
+        public Building_Validator()
+        {
+            RuleFor(x => x.GrossArea).GreaterThan(x => x.NetArea).WithMessage("{PropertyName} must be greater than NetArea");
+        }
     }
 }

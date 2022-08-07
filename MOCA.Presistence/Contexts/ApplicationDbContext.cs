@@ -4,18 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using MOCA.Core.Entities.BaseEntities;
 using MOCA.Core.Entities.EventSpaceBookings;
 using MOCA.Core.Entities.LocationManagment;
+using MOCA.Core.Entities.MeetingSpaceReservation;
 using MOCA.Core.Entities.MocaSetting;
 using MOCA.Core.Entities.Shared.Reservations;
 using MOCA.Core.Entities.SSO;
 using MOCA.Core.Entities.SSO.Identity;
 using MOCA.Core.Entities.WorkSpaceReservations;
 using MOCA.Core.Interfaces.Shared.Services;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MOCA.Presistence.Contexts
 {
@@ -101,7 +97,6 @@ namespace MOCA.Presistence.Contexts
         public DbSet<Admin> Admins { get; set; }
             public DbSet<BasicUser> BasicUsers { get; set; }
             public DbSet<ClientDevice> ClientDevices { get; set; }
-
             public DbSet<MemberShipMainCategories> MemberShipMainCategories { get; set; }
             public DbSet<MemberShipBenefitsTypes> MemberShipBenefitsTypes { get; set; }
             public DbSet<MemberShipTypes> MemberShipTypes { get; set; }
@@ -125,6 +120,12 @@ namespace MOCA.Presistence.Contexts
         public DbSet<WorkSpaceHourlyTransactions> WorkSpaceHourlyTransactions { get; set; }
         public DbSet<WorkSpaceTailoredTransactions> WorkSpaceTailoredTransactions { get; set; }
         public DbSet<WorkSpaceBundleTransactions> WorkSpaceBundleTransactions { get; set; }
+        #endregion
+        
+        #region MeetingSpaceReservations
+        public DbSet<MeetingReservation> MeetingSpaceReservations { get; set; }
+        public DbSet<MeetingAttendee> MeetingAttendees { get; set; }
+        public DbSet<MeetingReservationTopUp> MeetingReservationTopUps { get; set; }
         #endregion
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

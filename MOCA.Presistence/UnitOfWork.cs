@@ -18,6 +18,7 @@ using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
 using MOCA.Presistence.Repositories.WorkSpaceReservations;
 using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
 using MOCA.Presistence.Repositories.MeetingSpaceReservations;
+using MOCA.Core.Interfaces.SSO.Repositories;
 
 namespace MOCA.Presistence
 {
@@ -704,6 +705,42 @@ namespace MOCA.Presistence
                 return _favouriteLocationRepoEF = _favouriteLocationRepoEF ?? new FavouriteLocationRepository(_context);
             }
         }
+
+        IGenericRepository<Building> _buildingRepo;
+        public IGenericRepository<Building> BuildingRepo
+        {
+            get
+            {
+                return _buildingRepo = _buildingRepo ?? new GenericRepository<Building>(_context);
+            }
+        }
+
+        IBuildingRepository _buildingRepoEF;
+        public IBuildingRepository BuildingRepoEF
+        {
+            get
+            {
+                return _buildingRepoEF = _buildingRepoEF ?? new BuildingRepository(_context);
+            }
+        }
+
+        IGenericRepository<BuildingFloor> _buildingFloorRepo;
+        public IGenericRepository<BuildingFloor> BuildingFloorRepo
+        {
+            get
+            {
+                return _buildingFloorRepo = _buildingFloorRepo ?? new GenericRepository<BuildingFloor>(_context);
+            }
+        }
+
+        IBuildingFloorRepository _buildingFloorRepoEF;
+        public IBuildingFloorRepository BuildingFloorRepoEF
+        {
+            get
+            {
+                return _buildingFloorRepoEF = _buildingFloorRepoEF ?? new BuildingFloorRepository(_context);
+            }
+        }
         #endregion
 
 
@@ -714,13 +751,33 @@ namespace MOCA.Presistence
         {
             get 
             { 
-                return _meetingSpaceReservationRepository = _meetingSpaceReservationRepository ?? new MeetingSpaceReservationRepository(_context); 
+                return _meetingSpaceReservationRepository = _meetingSpaceReservationRepository ?? new MeetingSpaceReservationsRepository(_context); 
             }
         }
 
 
         #endregion
 
+
+        #region SSO
+
+        public IBasicUserRepository BasicUserRepository { get; }
+
+        public IBasicUserStatusHistoryRepository BasicUserStatusHistoryRepository { get; }
+
+        public IClientDeviceRepository ClientDeviceRepository { get; }
+
+        public IMemberShipTypesRepository MemberShipTypesRepository { get; }
+
+        public IMemberShipMainCategoriesRepository MemberShipMainCategoriesRepository { get; }
+
+        public IMemberShipCategoriesRepository MemberShipCategoriesRepository { get; }
+
+        public IMemberShipBenefitsTypesRepository MemberShipBenefitsTypesRepository { get; }
+
+        public IGenderRepository GenderRepository { get; }
+
+        #endregion 
 
         public DateTime ConvertToLocalDate(DateTime dateInEasternTimeZone)
         {

@@ -1,4 +1,6 @@
 ﻿using MOCA.Core;
+using MOCA.Core.DTOs.MeetingReservations.Request;
+using MOCA.Core.DTOs.MeetingReservations.Response;
 using MOCA.Core.Interfaces.MeetingSpaceReservations.Services;
 
 namespace MOCA.Services.Implementation.MeetingSpaceReservations
@@ -10,8 +12,11 @@ namespace MOCA.Services.Implementation.MeetingSpaceReservations
         {
             _unitOfWork = unitOfWork;
         }
-
-
-
+        /*
+        public async Task<GetAllMeetingSubmissionsREsponseDto> GetAllSubmissionsWithPagination(GetAllMeetingsSubmissionsDto getAllMeetingsSubmissionsDto)
+        {
+            var allSubmissions = await _unitOfWork.MeetingSpaceReservationRepository.GetAllIQueryable();
+            return allSubmissions;
+        }*/
     }
 }
