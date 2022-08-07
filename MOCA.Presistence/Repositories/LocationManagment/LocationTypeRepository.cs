@@ -23,5 +23,15 @@ namespace MOCA.Presistence.Repositories.LocationManagment
             _context.LocationTypes.Remove(locationType);
             return true;
         }
+
+        public async Task<bool> CheckLocationTypeIsUinque(string LocationTypeName)
+        {
+            var locationName = _context.LocationTypes.Where(x => x.Name == LocationTypeName && x.IsDeleted != true).FirstOrDefault();
+            if (locationName == null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

@@ -45,12 +45,11 @@ namespace MOCA.Services.Implementation.LocationManagment
                 locationType.CreatedAt = _dateTimeService.NowUtc;
             }
 
-            var entitylocationType = await _unitOfWork.LocationTypeRepo.GetByIdAsync(request.Id);
-            if (entitylocationType == null)
+            bool NameChecker = await _unitOfWork.LocationTypeRepoEF.CheckLocationTypeIsUinque(request.Name);
+            if (NameChecker == false)
             {
-                throw new NotFoundException(nameof(LocationType), request.Id);
+                return new Response<long>("Location Type is not unique.");
             }
-
             _unitOfWork.LocationTypeRepo.Insert(locationType);
             if (await _unitOfWork.SaveAsync() < 1)
             {
@@ -76,6 +75,12 @@ namespace MOCA.Services.Implementation.LocationManagment
             if (locationType.LastModifiedAt == null)
             {
                 locationType.LastModifiedAt = DateTime.UtcNow;
+            }
+
+            bool NameChecker = await _unitOfWork.LocationTypeRepoEF.CheckLocationTypeIsUinque(request.Name);
+            if (NameChecker == false)
+            {
+                return new Response<bool>("Location Type is not unique.");
             }
 
             var locationTypeEntity = await _unitOfWork.LocationTypeRepo.GetByIdAsync(request.Id);
