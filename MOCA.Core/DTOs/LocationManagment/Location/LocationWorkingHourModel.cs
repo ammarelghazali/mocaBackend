@@ -6,9 +6,9 @@ namespace MOCA.Core.DTOs.LocationManagment.Location
     {
         public long Id { get; set; }
         [Required]
-        public TimeSpan StartWorkingHour { get; set; }
+        public string StartWorkingHour { get; set; }
         [Required]
-        public TimeSpan EndWorkingHour { get; set; }
+        public string EndWorkingHour { get; set; }
         [Required]
         public string DayFrom { get; set; }
         [Required]
