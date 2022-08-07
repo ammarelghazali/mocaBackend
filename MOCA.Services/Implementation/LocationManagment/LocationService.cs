@@ -146,9 +146,9 @@ namespace MOCA.Services.Implementation.LocationManagment
             #endregion
 
             #region Add Location Bank Account
-            var locationBankAccount = _mapper.Map<List<LocationBankAccount>>(request.LocationBankAccount);
-            locationBankAccount.ForEach(c => { c.LocationId = location.Id; });
-            _unitOfWork.LocationBankAccountRepo.InsertRang(locationBankAccount);
+            var locationBankAccount = _mapper.Map<LocationBankAccount>(request.LocationBankAccount);
+            locationBankAccount.LocationId = location.Id;
+            _unitOfWork.LocationBankAccountRepo.Insert(locationBankAccount);
             if (await _unitOfWork.SaveAsync() < 1)
             {
                 return new Response<long>("Cannot Add LocationBankAccount right now");
@@ -283,9 +283,9 @@ namespace MOCA.Services.Implementation.LocationManagment
             #endregion
 
             #region Delete Old Location Bank Account Add New One
-            var locationBankAccount = _mapper.Map<List<LocationBankAccount>>(request.LocationBankAccount);
+            var locationBankAccount = _mapper.Map<LocationBankAccount>(request.LocationBankAccount);
             _unitOfWork.LocationBankAccountRepoEF.DeleteByLocationID(request.Id);
-            _unitOfWork.LocationBankAccountRepo.InsertRang(locationBankAccount);
+            _unitOfWork.LocationBankAccountRepo.Insert(locationBankAccount);
             if (await _unitOfWork.SaveAsync() < 1)
             {
                 return new Response<long>("Cannot Update LocationBankAccount right now");
@@ -586,7 +586,7 @@ namespace MOCA.Services.Implementation.LocationManagment
 
                 #region LocationBankAccount
                 var locationBankAccount = await _unitOfWork.LocationBankAccountRepoEF.GetByLocationID(locationDetails[i].Id);
-                locationDetails[i].LocationBankAccount = _mapper.Map<List<LocationBankAccountModel>>(locationBankAccount);
+                locationDetails[i].LocationBankAccount = _mapper.Map<LocationBankAccountModel>(locationBankAccount);
                 #endregion
 
                 #region locationInclusion
@@ -648,7 +648,7 @@ namespace MOCA.Services.Implementation.LocationManagment
 
                 #region LocationBankAccount
                 var locationBankAccount = await _unitOfWork.LocationBankAccountRepoEF.GetByLocationID(locationDetails[i].Id);
-                locationDetails[i].LocationBankAccount = _mapper.Map<List<LocationBankAccountModel>>(locationBankAccount);
+                locationDetails[i].LocationBankAccount = _mapper.Map<LocationBankAccountModel>(locationBankAccount);
                 #endregion
 
                 #region locationInclusion
