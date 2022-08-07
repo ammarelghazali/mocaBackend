@@ -7,8 +7,7 @@ namespace MOCA.Core.Interfaces.MeetingSpaceReservations.Services
 {
     public interface IMeetingSpaceReservationsServices
     {
-        Task<PagedResponse<List<MeetingReservation>>> GetAllSubmissionsWithPagination(GetAllMeetingsSubmissionsDto getAllMeetingsSubmissionsDto);
-        Task<Response<List<MeetingReservation>>> GetAllSubmissionsWithoutPagination();
-
+        Task<PagedResponse<List<GetAllMeetingSubmissionsResponseDto>>> GetAllSubmissionsWithPagination();
+        Task<Response<List<GetAllMeetingSubmissionsResponseDto>>> GetAllSubmissionsWithoutPagination();
     }
 }

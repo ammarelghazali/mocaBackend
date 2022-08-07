@@ -15,23 +15,11 @@ namespace MOCA.Services.Implementation.MeetingSpaceReservations
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<PagedResponse<List<MeetingReservation>>> GetAllSubmissionsWithPagination(GetAllMeetingsSubmissionsDto getAllMeetingsSubmissionsDto)
-        {
-            var allSubmissions = await _unitOfWork.MeetingSpaceReservationRepository.GetAllSubmissions();
-            var allData = await allSubmissions.Skip((getAllMeetingsSubmissionsDto.PageNumber - 1)
-                * getAllMeetingsSubmissionsDto.PageSize).Take(getAllMeetingsSubmissionsDto.PageSize).ToListAsync();
-            // mapping
-            return new PagedResponse<List<MeetingReservation>>(null, getAllMeetingsSubmissionsDto.PageNumber
-                , getAllMeetingsSubmissionsDto.PageSize, allData.Count);
-        }
+       
 
-        public async Task<Response<List<MeetingReservation>>> GetAllSubmissionsWithoutPagination()
-        {
-            var allSubmissions = await _unitOfWork.MeetingSpaceReservationRepository.GetAllSubmissions();
-            var allData = await allSubmissions.ToListAsync();
-            // mapping
-            return new PagedResponse<List<MeetingReservation>>(null, 0, 0);
-        }
+
+       
+
 
         public async Task<Response<MeetingReservation>> GetMeetingReservationById(long id)
         {

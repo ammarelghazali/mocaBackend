@@ -53,7 +53,7 @@ namespace MOCA.Presistence.Repositories.MeetingSpaceReservations
                                   .ReservationDetails
                                   .Select(d => d.EndDateTime)
                                   .FirstOrDefault(),
-                    //Status = get
+                    // Status = GetStatus(x.MeetingReservationTransaction.ReservationTransaction)
                 });
 
             return allSubmissions;
