@@ -3,6 +3,7 @@ using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
 using MOCA.Core.Entities.Shared.Reservations;
 using MOCA.Core.Entities.WorkSpaceReservations;
+using MOCA.Core.Interfaces.Shared.Services;
 using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
 using MOCA.Presistence.Contexts;
 using MOCA.Presistence.Repositories.Base;
@@ -12,10 +13,12 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
     public class WorkSpaceReservationHourlyRepo : GenericRepository<WorkSpaceReservationHourly>, IWorkSpaceReservationHourlyRepo
     {
         private readonly ApplicationDbContext _context;
+        private readonly IReservationsStatusService _reservationsStatusService;
 
-        public WorkSpaceReservationHourlyRepo(ApplicationDbContext context) : base(context)
+        public WorkSpaceReservationHourlyRepo(ApplicationDbContext context, IReservationsStatusService reservationsStatusService) : base(context)
         {
             _context = context;
+            _reservationsStatusService = reservationsStatusService;
         }
 
         public async Task<IQueryable<GetAllWorkSpaceReservationsResponse>> GetAllWorkSpaceSubmissions(GetAllWorkSpaceReservationsDto request)
@@ -27,6 +30,8 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
                                                                   .Include(r => r.WorkSpaceHourlyTransactions)
                                                                   .ThenInclude(r => r.ReservationTransaction)
                                                                   .ThenInclude(r => r.ReservationDetails)
+                                                                  .Include(r => r.WorkSpaceHourlyCancellation)
+                                                                  .ThenInclude(r => r.CancelReservation)
                                                                   .Select(r => new GetAllWorkSpaceReservationsResponse
                                                                   {
                                                                       Id = r.Id,
@@ -61,7 +66,11 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
                                                                       ScanOut = r.WorkSpaceHourlyTransactions.ReservationTransaction
                                                                                  .ReservationDetails.OrderByDescending(r => r.Id)
                                                                                  .Select(r => r.EndDateTime).FirstOrDefault(),
-                                                                      Status = getStatus(r.WorkSpaceHourlyTransactions.ReservationTransaction)
+
+                                                                      Status = _reservationsStatusService.GetStatus(r.WorkSpaceHourlyTransactions
+                                                                                                                     .ReservationTransaction, 
+                                                                                                                     r.WorkSpaceHourlyCancellation
+                                                                                                                      .CancelReservation)
 
                                                                   });
 
@@ -91,30 +100,5 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
                                                             .Include(r => r.BasicUser).FirstOrDefaultAsync();
         }
 
-        private string getStatus(ReservationTransaction reservation)
-        {
-            string status = string.Empty;
-
-            var expiryDate = reservation.ExtendExpiryDate ?? null;
-
-            if (expiryDate is null)
-            {
-                return status;
-            }
-
-            var isExpired = DateTime.Compare(DateTime.UtcNow, expiryDate.Value);
-
-            if (isExpired > 0 || isExpired == 0)
-                status = "Closed";
-
-            else
-            {
-                var isScannedIn = reservation.ReservationDetails.Count > 0;
-
-                status = isScannedIn ? "Open" : "New";
-            }
-
-            return status;
-        }
     }
 }

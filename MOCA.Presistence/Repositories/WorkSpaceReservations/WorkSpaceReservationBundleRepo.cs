@@ -3,6 +3,7 @@ using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
 using MOCA.Core.Entities.Shared.Reservations;
 using MOCA.Core.Entities.WorkSpaceReservations;
+using MOCA.Core.Interfaces.Shared.Services;
 using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
 using MOCA.Presistence.Contexts;
 using MOCA.Presistence.Repositories.Base;
@@ -12,10 +13,12 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
     public class WorkSpaceReservationBundleRepo : GenericRepository<WorkSpaceReservationBundle>, IWorkSpaceReservationBundleRepo
     {
         private readonly ApplicationDbContext _context;
+        private readonly IReservationsStatusService _reservationsStatusService;
 
-        public WorkSpaceReservationBundleRepo(ApplicationDbContext context) : base(context)
+        public WorkSpaceReservationBundleRepo(ApplicationDbContext context, IReservationsStatusService reservationsStatusService) : base(context)
         {
             _context = context;
+            _reservationsStatusService = reservationsStatusService;
         }
 
         public async Task<IQueryable<GetAllWorkSpaceReservationsResponse>> GetAllWorkSpaceSubmissions(GetAllWorkSpaceReservationsDto request)
@@ -26,6 +29,8 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
                                                                   .Include(r => r.WorkSpaceBundleTransactions)
                                                                   .ThenInclude(r => r.ReservationTransaction)
                                                                   .ThenInclude(r => r.ReservationDetails)
+                                                                  .Include(r => r.WorkSpaceBundleCancellation)
+                                                                  .ThenInclude(r => r.CancelReservation)
                                                                   .Select(r => new GetAllWorkSpaceReservationsResponse
                                                                   {
                                                                      Id = r.Id,
@@ -61,6 +66,11 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
                                                                       ScanOut = r.WorkSpaceBundleTransactions.ReservationTransaction
                                                                                  .ReservationDetails.OrderByDescending(r => r.Id)
                                                                                  .Select(r => r.EndDateTime).FirstOrDefault(),
+
+                                                                      Status = _reservationsStatusService.GetStatus(r.WorkSpaceBundleTransactions
+                                                                                                                     .ReservationTransaction,
+                                                                                                                     r.WorkSpaceBundleCancellation
+                                                                                                                      .CancelReservation)
                                                                   });
 
             return reservations;

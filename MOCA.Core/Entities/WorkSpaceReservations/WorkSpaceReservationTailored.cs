@@ -22,6 +22,6 @@ namespace MOCA.Core.Entities.WorkSpaceReservations
         public ICollection<WorkSpaceTailoredTopUp> TopUps { get; set; } 
 
         public WorkSpaceTailoredTransactions WorkSpaceTailoredTransactions { get; set; }
-
+        public WorkSpaceTailoredCancellation WorkSpaceTailoredCancellation { get; set; }
     }
 }
