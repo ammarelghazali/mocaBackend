@@ -113,7 +113,7 @@ namespace LocationManagement.API.Controllers
         /// <response code="200">Returns the Buildings List</response>
         /// <response code="400">something goes wrong in backend</response>
         [HttpGet("GetAllBuildingsWithPagination")]
-        public async Task<IActionResult> GetAllBuildings([FromQuery] RequestParameter filter)
+        public async Task<IActionResult> GetAllBuildingsWithPagination([FromQuery] RequestParameter filter)
         {
             var response = await _buildingService.GetAllBuildingPaginated(filter);
 
@@ -131,7 +131,7 @@ namespace LocationManagement.API.Controllers
         /// <response code="200">Returns the Buildings List</response>
         /// <response code="400">something goes wrong in backend</response>
         [HttpPost("GetAllFilterBuildingsWithPagination")]
-        public async Task<IActionResult> GetAllBuildings([FromBody] GetPaginatedBuildingFilterParameter filter)
+        public async Task<IActionResult> GetAllFilterBuildingsWithPagination([FromBody] GetPaginatedBuildingFilterParameter filter)
         {
             var response = await _buildingService.GetAllFilterBuildingPaginated(filter);
 
@@ -165,8 +165,8 @@ namespace LocationManagement.API.Controllers
         /// <param name="filter">an object holds the filter data</param>
         /// <response code="200">Returns the Buildings List</response>
         /// <response code="400">something goes wrong in backend</response>
-        [HttpPost("GetAllFilterBuildingsWithoutPagination")]
-        public async Task<IActionResult> GetAllBuildings([FromBody] GetWithoutPaginatedBuildingFilterParameter filter)
+        [HttpPost("GetAllFilterBuildingsWithPagination")]
+        public async Task<IActionResult> GetAllFilterBuildingsWithPagination([FromBody] GetWithoutPaginatedBuildingFilterParameter filter)
         {
             var response = await _buildingService.GetAllFilterBuildingWithoutPagination(filter);
 
