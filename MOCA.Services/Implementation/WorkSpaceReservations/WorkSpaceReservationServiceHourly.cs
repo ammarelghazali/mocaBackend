@@ -2,15 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using MOCA.Core;
 using MOCA.Core.DTOs.Shared.Responses;
+using MOCA.Core.DTOs.WorkSpaceReservation;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
+using MOCA.Core.Entities.WorkSpaceReservations;
+using MOCA.Core.Enums.Shared;
 using MOCA.Core.Interfaces.Shared.Services;
 using MOCA.Core.Interfaces.WorkSpaceReservations.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MOCA.Services.Implementation.WorkSpaceReservations
 {
@@ -25,6 +23,62 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _dateTimeService = dateTimeService;
+        }
+
+        public async Task<Response<SharedCreationResponse>> CreateTopUp(CreateWorkSpaceTopUp topUp)
+        {
+            throw new NotImplementedException();
+
+            var reservation = await _unitOfWork.WorkSpaceReservationHourlyRepo.GetReservationById(topUp.WorkspaceReservationId);
+
+            // check if it exceeds the available hours and Availability
+
+            int reservationDay = (int)Enum.Parse(typeof(WeekDays), Convert.ToDateTime(reservation.Date).DayOfWeek.ToString());
+
+            List<int> listOfHours = new List<int> { 1, 2, 4, 6, 8 };
+
+            foreach (var item in reservation.Location.LocationWorkingHours)
+            {
+                int dayFrom = (int)Enum.Parse(typeof(WeekDays), item.DayFrom);
+                int dayTo = (int)Enum.Parse(typeof(WeekDays), item.DayTo);
+
+                for (int day = dayFrom; day <= dayTo; day++)
+                {
+                    if (reservationDay == day)
+                    {
+                        //get remaining Hours and the maximum hours that can be Topped Up
+
+                        TimeSpan remainingHours = Convert.ToDateTime(item.EndWorkingHour) - DateTime.Now;
+
+                        int remainingHoursBeforeClosing = Convert.ToInt32(remainingHours.Hours);
+
+                        int closest = listOfHours.Aggregate((x, y) => Math.Abs(x - remainingHoursBeforeClosing) < Math.Abs(y - remainingHoursBeforeClosing) ? x : y);
+                        
+                        if (topUp.NumberOfHours > closest)
+                            return new Response<SharedCreationResponse>("Maximum hours are " + closest);
+
+                        break;
+                    }
+                }
+
+            }
+
+            // get the calculated price
+
+
+            // add the top up
+            var reservationTopUp = new WorkSpaceHourlyTopUp
+            {
+                Description = topUp.Description,
+                HourId = topUp.HourId ?? 0,
+                // HourlyTotalPrice = calculated price
+                WorkSpaceReservationHourlyId = topUp.WorkspaceReservationId,
+            };
+
+            _unitOfWork.WorkSpaceHourlyTopUpRepo.Insert(reservationTopUp);
+
+            // update  remaining hours with calculating the price using LoungqLocationPrice
+
         }
 
         public async Task<List<GetAllWorkSpaceReservationsResponse>> GetAllWorkSpaceReservations(GetAllWorkSpaceReservationsDto request)

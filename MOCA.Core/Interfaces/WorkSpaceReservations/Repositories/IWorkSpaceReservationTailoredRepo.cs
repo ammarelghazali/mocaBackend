@@ -8,6 +8,7 @@ namespace MOCA.Core.Interfaces.WorkSpaceReservations.Repositories
     public interface IWorkSpaceReservationTailoredRepo : IGenericRepository<WorkSpaceReservationTailored>
     {
         Task<WorkSpaceReservationTailored> GetReservationInfo(long id);
+        Task<WorkSpaceReservationTailored> GetReservationById(long id);
         Task<IQueryable<GetAllWorkSpaceReservationsResponse>> GetAllWorkSpaceSubmissions(GetAllWorkSpaceReservationsDto request);
     }
 }

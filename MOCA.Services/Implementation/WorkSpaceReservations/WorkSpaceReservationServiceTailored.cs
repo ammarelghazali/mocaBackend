@@ -2,8 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using MOCA.Core;
 using MOCA.Core.DTOs.Shared.Responses;
+using MOCA.Core.DTOs.WorkSpaceReservation;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
+using MOCA.Core.Entities.WorkSpaceReservations;
 using MOCA.Core.Interfaces.Shared.Services;
 using MOCA.Core.Interfaces.WorkSpaceReservations.Services;
 using System;
@@ -25,6 +27,40 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _dateTimeService = dateTimeService;
+        }
+
+        public async Task<Response<SharedCreationResponse>> CreateTopUp(CreateWorkSpaceTopUp topUp)
+        {
+            throw new NotImplementedException();
+
+            var reservation = await _unitOfWork.WorkSpaceReservationTailoredRepo.GetReservationById(topUp.WorkspaceReservationId);
+
+            // Check if it exceeds Availability
+
+            // check if it exceeds the maximum available hours
+
+            if (reservation.TailoredHours + topUp.TailoredHours > 160)
+                return new Response<SharedCreationResponse>("The Maximum Hours is 160 hours");
+
+            var remainingDays = (Convert.ToDateTime(reservation.TailoredEndDate) - DateTime.Now).Days;
+
+            //  int countWorkingHours = (Convert.ToDateTime(itm.WH_End) - Convert.ToDateTime(itm.WH_Start)).Hours;
+            int maxHours = (remainingDays * 8);
+
+            // add the top up
+            var reservationTopUp = new WorkSpaceTailoredTopUp
+            {
+                Description = topUp.Description,
+                TailoredHours = topUp.TailoredHours ?? 0,
+                WorkSpaceReservationTailoredId = topUp.WorkspaceReservationId,
+                //TailoredPrice = using tailored
+            };
+
+            _unitOfWork.WorkSpaceTailoredTopUpRepo.Insert(reservationTopUp);
+
+            // update  remaining hours using tailored
+
+            // get the calculated price
         }
 
         public async Task<List<GetAllWorkSpaceReservationsResponse>> GetAllWorkSpaceReservations(GetAllWorkSpaceReservationsDto request)

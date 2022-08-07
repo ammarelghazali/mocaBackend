@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using MOCA.Core;
 using MOCA.Core.DTOs.Shared.Responses;
+using MOCA.Core.DTOs.WorkSpaceReservation;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
 using MOCA.Core.Entities.Shared.Reservations;
@@ -30,7 +31,19 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
             _tailoredService = tailoredService;
         }
 
-        public IWorkSpaceReservationServiceTailored TailoredService { get; }
+        public async Task<Response<SharedCreationResponse>> CreateTopUp(CreateWorkSpaceTopUp topUp)
+        {
+            if(topUp.ReservationTypeId == 1)
+            {
+                return await _hourlyService.CreateTopUp(topUp);
+            }
+            if(topUp.ReservationTypeId == 2)
+            {
+                return await _tailoredService.CreateTopUp(topUp);
+            }
+
+            return new Response<SharedCreationResponse>("Reservation Type Id is wrong");
+        }
 
         public async Task<PagedResponse<IReadOnlyList<GetAllWorkSpaceReservationsResponse>>> GetAllWorkSpaceSubmissions(GetAllWorkSpaceReservationsDto request)
         {

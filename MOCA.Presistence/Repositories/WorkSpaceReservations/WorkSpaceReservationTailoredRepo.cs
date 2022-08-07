@@ -65,6 +65,16 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
             return reservations;
         }
 
+        public async Task<WorkSpaceReservationTailored> GetReservationById(long id)
+        {
+            return await _context.WorkSpaceReservationTailored.Where(r => r.Id == id && r.IsDeleted != true)
+                                                                .Include(r => r.Location)
+                                                                .ThenInclude(r => r.LocationWorkingHours)
+                                                                .Include(r => r.WorkSpaceTailoredTransactions)
+                                                                .ThenInclude(r => r.ReservationTransaction)
+                                                                .FirstOrDefaultAsync();
+        }
+
         public async Task<WorkSpaceReservationTailored> GetReservationInfo(long id)
         {
             return await _context.WorkSpaceReservationTailored.Where(r => r.Id == id)

@@ -1,4 +1,5 @@
 ﻿using MOCA.Core.DTOs.Shared.Responses;
+using MOCA.Core.DTOs.WorkSpaceReservation;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
 using MOCA.Core.DTOs.WorkSpaceReservation.Mobile.Request;
@@ -17,5 +18,6 @@ namespace MOCA.Core.Interfaces.WorkSpaceReservations.Services
         Task<Response<WorkSpaceReservationLocationsDropDown>> GetWorkSpaceLocationsDropDowns();
         Task<PagedResponse<IReadOnlyList<GetFilteredWorkSpaceReservationResponse>>> GetFilteredSubmissions(GetFilteredWorkSpaceReservationDto request);
         Task<Response<IReadOnlyList<GetFilteredWorkSpaceReservationNotPaginatedResponse>>> GetFilteredSubmissionsWithoutPagination(GetAllWorkSpaceReservationNotPaginated request);
+        Task<Response<SharedCreationResponse>> CreateTopUp(CreateWorkSpaceTopUp topUp);
     }
 }

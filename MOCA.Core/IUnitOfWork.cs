@@ -113,6 +113,8 @@ namespace MOCA.Core
         public IWorkSpaceReservationBundleRepo WorkSpaceReservationBundleRepo { get; }
         public IWorkSpaceReservationHourlyRepo WorkSpaceReservationHourlyRepo { get; }
         public IWorkSpaceReservationTailoredRepo WorkSpaceReservationTailoredRepo { get; }
+        public IWorkSpaceHourlyTopUpRepo WorkSpaceHourlyTopUpRepo { get; }
+        public IWorkSpaceTailoredTopUpRepo WorkSpaceTailoredTopUpRepo { get; }
         #endregion
 
         #region MeetingSpaceReservations
