@@ -26,5 +26,31 @@ namespace MOCA.Presistence.Repositories.LocationManagment
 
             return false;
         }
+
+        public async Task<bool> DeleteBuildingFloorByBuildingId(long BuildingId)
+        {
+            var buildingFloor = _context.BuildingFloors.Where(x => x.BuildingId == BuildingId && x.IsDeleted != true).ToList();
+            if (buildingFloor.Count != 0)
+            {
+                _context.BuildingFloors.RemoveRange(buildingFloor);
+            }
+            
+            return true;
+        }
+
+        public async Task<List<BuildingFloor>> GetAllBuildingFloorByBuildingId(long BuildingId)
+        {
+            if (BuildingId <= 0)
+                return new List<BuildingFloor>();
+
+            var BuildingFloor = _context.BuildingFloors.Where(x => x.BuildingId == BuildingId && x.IsDeleted != true).ToList();
+            return new List<BuildingFloor>(BuildingFloor);
+        }
+
+        public async Task<int> CountBuildingFloorByBuildingId(long BuildingId)
+        {
+            var countBuildingFloor = _context.BuildingFloors.Where(x => x.BuildingId == BuildingId && x.IsDeleted != true).Count();
+            return countBuildingFloor;
+        }
     }
 }

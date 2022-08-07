@@ -96,6 +96,7 @@ builder.Services.AddScoped<ILocationFileService, LocationFileService>();
 builder.Services.AddScoped<ILocationImageService, LocationImageService>();
 builder.Services.AddScoped<ILocationInclusionService, LocationInclusionService>();
 builder.Services.AddScoped<ILocationWorkingHourService, LocationWorkingHourService>();
+builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddScoped<IServiceFeePaymentsDueDateService, ServiceFeePaymentsDueDateService>();
 builder.Services.AddScoped<IFavouriteLocationService, FavouriteLocationService>();
 builder.Services.AddScoped<IBuildingService, BuildingService>();

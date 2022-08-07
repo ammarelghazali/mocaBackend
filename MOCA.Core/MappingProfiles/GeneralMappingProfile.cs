@@ -232,6 +232,9 @@ namespace MOCA.Core.MappingProfiles
 
             CreateMap<BuildingFloorModel, BuildingFloor>();
             CreateMap<BuildingFloor, BuildingFloorModel>();
+
+            CreateMap<BuildingModelByLocationId, Building>();
+            CreateMap<Building, BuildingModelByLocationId>();
             #endregion
 
             #region Events
