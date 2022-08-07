@@ -31,7 +31,18 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
 
             var reservation = await _unitOfWork.WorkSpaceReservationHourlyRepo.GetReservationById(topUp.WorkspaceReservationId);
 
-            // check if it exceeds the available hours and Availability
+            // check if it exceeds the available hours and Available occupancy
+
+            // get the maximum occupancy of the work space
+
+            // get the time of the ending of the current reservation by
+            // 1. reservation.date + hours (of hourId)
+            // 2. ExpiryEndDate from reservationTransaction
+
+            // get the number of reservations of the workspace in the time of the top up houlry, tailored, bundle
+            //  the time of the ending of the current reservation +  TopUpHours (of hourId)
+
+            //  maximum occupancy - number of reservations if <= 0 then refuse it
 
             int reservationDay = (int)Enum.Parse(typeof(WeekDays), Convert.ToDateTime(reservation.Date).DayOfWeek.ToString());
 

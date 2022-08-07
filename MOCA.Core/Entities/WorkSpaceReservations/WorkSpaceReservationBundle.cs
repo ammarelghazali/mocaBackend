@@ -21,5 +21,6 @@ namespace MOCA.Core.Entities.WorkSpaceReservations
         public decimal? PackageDiscount { get; set; }
 
         public WorkSpaceBundleTransactions WorkSpaceBundleTransactions { get; set; }
+        public WorkSpaceBundleCancellation WorkSpaceBundleCancellation { get; set; }
     }
 }
