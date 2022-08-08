@@ -84,7 +84,9 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
                                                             .Include(r => r.WorkSpaceBundleTransactions)
                                                             .ThenInclude(r => r.ReservationTransaction)
                                                             .ThenInclude(r => r.ReservationDetails)
-                                                            .Include(r => r.BasicUser).FirstOrDefaultAsync();
+                                                            .Include(r => r.BasicUser)
+                                                            .Include(r => r.WorkSpaceBundleCancellation)
+                                                            .ThenInclude(r => r.CancelReservation).FirstOrDefaultAsync();
         }
     }
 }
