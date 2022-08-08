@@ -268,6 +268,11 @@ namespace MOCA.Presistence.Contexts
             builder.Entity<WorkSpaceTailoredTransactions>()
                 .HasKey(p => new { p.WorkSpaceReservationTailoredId, p.ReservationTransactionId });
             #endregion
+
+            #region Meetingspace Reservation
+            builder.Entity<MeetingReservationTransaction>()
+                .HasKey(p => new { p.MeetingReservationId, p.ReservationTransactionId });
+            #endregion
         }
     }
 }
