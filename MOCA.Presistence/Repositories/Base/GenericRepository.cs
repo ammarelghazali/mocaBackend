@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Microsoft.EntityFrameworkCore;
+using MOCA.Core.Entities.BaseEntities;
 using MOCA.Core.Interfaces.Base;
 using MOCA.Presistence.Contexts;
 using System.Data;
@@ -8,7 +9,7 @@ using System.Linq.Expressions;
 
 namespace MOCA.Presistence.Repositories.Base
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity, new ()
     {
         private readonly ApplicationDbContext _context;
         public DbSet<T> dbSet;
@@ -17,24 +18,6 @@ namespace MOCA.Presistence.Repositories.Base
         {
             _context = context;
             dbSet = context.Set<T>();
-        }
-
-
-        public virtual async Task<T> GetByIdAsync(long id)
-        {
-            return await _context.Set<T>().FindAsync(id);
-        }
-
-        public async Task<IReadOnlyList<T>> GetPagedReponseAsync(int pageNumber, int pageSize)
-        {
-
-
-            return await _context
-                .Set<T>()
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-              .AsNoTracking()
-                .ToListAsync();
         }
 
         public List<TSource> OrderBy<TSource>(List<TSource> source, string propertyName)
@@ -52,89 +35,8 @@ namespace MOCA.Presistence.Repositories.Base
 
             return (List<TSource>)result;
         }
-        public async Task<T> AddAsync(T entity)
-        {
-            try
-            {
-                await _context.Set<T>().AddAsync(entity);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
 
-            return entity;
-        }
-
-        public async Task<List<T>> AddRangeAsync(List<T> entities)
-        {
-            try
-            {
-                await _context.Set<T>().AddRangeAsync(entities);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception e)
-            {
-
-            }
-
-            return entities;
-        }
-
-
-        public async Task<int> DeleteRangeAsync(List<T> entities)
-        {
-            _context.Set<T>().RemoveRange(entities);
-            return await _context.SaveChangesAsync();
-        }
-
-        public async Task<int> UpdateRangeAsync(List<T> entities)
-        {
-            _context.Set<T>().UpdateRange(entities);
-            return await _context.SaveChangesAsync();
-
-        }
-        public async Task<int> UpdateAsync(T entity)
-        {
-            _context.Entry(entity).State = EntityState.Modified;
-            return await _context.SaveChangesAsync();
-        }
-
-        public async Task<int> DeleteAsync(T entity)
-        {
-            _context.Set<T>().Remove(entity);
-            return await _context.SaveChangesAsync();
-        }
-
-        public async Task<IReadOnlyList<T>> GetAllAsync()
-        {
-            try
-            {
-                return await _context
-                                  .Set<T>().AsNoTracking()
-                                  .ToListAsync();
-            }
-
-            catch (Exception e)
-            {
-
-            }
-            return await _context
-                            .Set<T>().AsNoTracking()
-                            .ToListAsync();
-        }
-
-        public int GetTotalRecords()
-        {
-            return _context.Set<T>().Count();
-        }
-
-
-        ////////////////////////
-
-
-
+        #region StoreProcedure
         public async Task<int> ExecuteAsync(string sql, object param = null, CommandType commandType = CommandType.StoredProcedure, IDbTransaction transaction = null, CancellationToken cancellationToken = default)
         {
 
@@ -159,9 +61,45 @@ namespace MOCA.Presistence.Repositories.Base
             return await _context.Connection.QuerySingleOrDefaultAsync<T>(sql, param, transaction, commandType: commandType);
         }
 
+        #endregion
 
-        ///////////////////////
+        #region Get
+        public virtual async Task<T> GetByIdAsync(long id)
+        {
+            return await _context.Set<T>().FindAsync(id);
+        }
+        public async Task<IReadOnlyList<T>> GetPagedReponseAsync(int pageNumber, int pageSize)
+        {
 
+
+            return await _context
+                .Set<T>().Where(x => x.IsDeleted == false)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+              .AsNoTracking()
+                .ToListAsync();
+        }
+        public async Task<IReadOnlyList<T>> GetAllAsync()
+        {
+            try
+            {
+                return await _context
+                                  .Set<T>().Where(x => x.IsDeleted == false).AsNoTracking()
+                                  .ToListAsync();
+            }
+
+            catch (Exception e)
+            {
+
+            }
+            return await _context
+                            .Set<T>().Where(x => x.IsDeleted == false).AsNoTracking()
+                            .ToListAsync();
+        }
+        public int GetTotalRecords()
+        {
+            return _context.Set<T>().Where(x => x.IsDeleted == false).Count();
+        }
         public IEnumerable<T> Get(
                                 Expression<Func<T, bool>> filter = null,
                                 Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
@@ -197,7 +135,6 @@ namespace MOCA.Presistence.Repositories.Base
                     return query.Take(take.Value).ToList();
             }
         }
-
         public async Task<IEnumerable<T>> GetAsync(
                                                     Expression<Func<T, bool>> filter = null,
                                                     Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
@@ -232,15 +169,11 @@ namespace MOCA.Presistence.Repositories.Base
                     return await query.Take(take.Value).ToListAsync();
             }
         }
-
-
-
         public virtual T GetEntity()
         {
-            var _dbSet = dbSet.SingleOrDefault();
+            var _dbSet = dbSet.Where(x => x.IsDeleted == false).SingleOrDefault();
             return _dbSet;
         }
-
         public async Task<T> GetEntityAsync(Expression<Func<T, bool>> filter)
         {
             T _dbSet;
@@ -255,7 +188,6 @@ namespace MOCA.Presistence.Repositories.Base
 
             return _dbSet;
         }
-
         public virtual IEnumerable<T> GetPaged(int pageIndex, int pageCount, Expression<Func<T, bool>> filter = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
             string includeProperties = "")
@@ -298,72 +230,29 @@ namespace MOCA.Presistence.Repositories.Base
                     .Take(pageCount).ToList();
             }
         }
-
         public virtual T GetByID(object id)
         {
             var _dbSet = dbSet.Find(id);
             return _dbSet;
         }
-
         public async Task<T> GetByIdAsync(object id)
         {
             return await dbSet.FindAsync(id);
         }
-
-        public virtual void Insert(T entity)
-        {
-            dbSet.Add(entity);
-            //context.Entry(entity).State = EntityState.Detached;
-
-        }
-
-        public virtual void InsertRang(List<T> entity)
-        {
-            dbSet.AddRange(entity);
-
-        }
-
-        public virtual void Update(T entity)
-        {
-            dbSet.Update(entity);
-
-        }
-
-        public virtual void UpdateRange(List<T> entity)
-        {
-            dbSet.UpdateRange(entity);
-
-        }
-
-        public virtual void Delete(object id)
-        {
-            T entityToDelete = dbSet.Find(id);
-            Delete(entityToDelete);
-        }
-
-        public virtual void Delete(T entityToDelete)
-        {
-            if (_context.Entry(entityToDelete).State == EntityState.Detached)
-            {
-                dbSet.Attach(entityToDelete);
-            }
-            dbSet.Remove(entityToDelete);
-        }
-
         public IQueryable<T> GetAll()
         {
-            IQueryable<T> query = dbSet;
+            IQueryable<T> query = dbSet.Where(x => x.IsDeleted == false);
             return query;
         }
         public async Task<IQueryable<T>> GetAllIQueryable()
         {
-            IQueryable<T> query = dbSet;
+            IQueryable<T> query = dbSet.Where(x => x.IsDeleted == false);
             return query;
         }
 
         public IQueryable<T> GetAllWithRelatedEntities(string includeProperties = "")
         {
-            IQueryable<T> query = dbSet;
+            IQueryable<T> query = dbSet.Where(x => x.IsDeleted == false);
             foreach (var includeProperty in includeProperties.Split
                     (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
@@ -383,8 +272,104 @@ namespace MOCA.Presistence.Repositories.Base
             return dbSet.CountAsync(filter);
             //return dbSet.Where(filter).Count();
         }
+        public virtual async Task<IEnumerable<T>> GetAllWithFilterAsync(Expression<Func<T, bool>> filter)
+        {
+            return await dbSet.Where(filter).ToListAsync();
+        }
+        #endregion
 
+        #region Insert
+        public virtual void Insert(T entity)
+        {
+            dbSet.Add(entity);
+            //context.Entry(entity).State = EntityState.Detached;
 
+        }
+        public virtual void InsertRang(List<T> entity)
+        {
+            dbSet.AddRange(entity);
+
+        }
+        public async Task<T> AddAsync(T entity)
+        {
+            try
+            {
+                await _context.Set<T>().AddAsync(entity);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return entity;
+        }
+        public async Task<List<T>> AddRangeAsync(List<T> entities)
+        {
+            try
+            {
+                await _context.Set<T>().AddRangeAsync(entities);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            return entities;
+        }
+
+        #endregion
+
+        #region Update
+        public virtual void Update(T entity)
+        {
+            dbSet.Update(entity);
+
+        }
+        public virtual void UpdateRange(List<T> entity)
+        {
+            dbSet.UpdateRange(entity);
+
+        }
+        public async Task<int> UpdateRangeAsync(List<T> entities)
+        {
+            _context.Set<T>().UpdateRange(entities);
+            return await _context.SaveChangesAsync();
+
+        }
+        public async Task<int> UpdateAsync(T entity)
+        {
+            _context.Entry(entity).State = EntityState.Modified;
+            return await _context.SaveChangesAsync();
+        }
+        #endregion
+
+        #region Delete
+        public virtual void Delete(object id)
+        {
+            T entityToDelete = dbSet.Find(id);
+            Delete(entityToDelete);
+        }
+        public virtual void Delete(T entityToDelete)
+        {
+            if (_context.Entry(entityToDelete).State == EntityState.Detached)
+            {
+                dbSet.Attach(entityToDelete);
+            }
+            dbSet.Remove(entityToDelete);
+        }
+        public async Task<int> DeleteRangeAsync(List<T> entities)
+        {
+            _context.Set<T>().RemoveRange(entities);
+            return await _context.SaveChangesAsync();
+        }
+        public async Task<int> DeleteAsync(T entity)
+        {
+            _context.Set<T>().Remove(entity);
+            return await _context.SaveChangesAsync();
+        }
+        #endregion
 
         public decimal GetSum(Expression<Func<T, bool>> filter, Expression<Func<T, decimal>> property)
         {
@@ -396,14 +381,7 @@ namespace MOCA.Presistence.Repositories.Base
             int? value = dbSet.Where(filter).Sum(property);
             return value ?? 0;
         }
-
-
-        public virtual async Task<IEnumerable<T>> GetAllWithFilterAsync(Expression<Func<T, bool>> filter)
-        {
-            return await dbSet.Where(filter).ToListAsync();
-        }
-
-
+        
     }
 }
 
