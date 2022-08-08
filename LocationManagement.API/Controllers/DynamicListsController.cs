@@ -36,5 +36,42 @@ namespace LocationManagement.API.Controllers
             return Ok(data);
         }
 
+        [HttpGet("GetAllWorkSpaceCategoryWithoutPagination")]
+        public async Task<IActionResult> GetAllWorkSpaceCategoryWithoutPagination()
+        {
+            var data = await _WorkSpaceCategoryService.GetAllWorkSpaceCategoryWithoutPagination();
+            if (data.Succeeded == false)
+            {
+                return BadRequest(data);
+            }
+            return Ok(data);
+        }
+
+
+        [HttpPut("UpdateWorkCategoryWorkSpace")]
+        public async Task<IActionResult> UpdateWorkSpaceCategory([FromBody] WorkSpaceCategoryModel model)
+        {
+            var data = await _WorkSpaceCategoryService.UpdateWorkSpaceCategory(model);
+
+            if (data.Succeeded == false)
+            {
+                return BadRequest(data);
+            }
+            return Ok(data);
+
+        }
+        [HttpDelete("DeleteWorkCategoryWorkSpace")]
+        public async Task<IActionResult> DeleteWorkCategoryWorkSpace(long id)
+        {
+            var data = await _WorkSpaceCategoryService.DeleteWorkSpaceCategory(id);
+
+            if (data.Succeeded == false)
+            {
+                return BadRequest(data);
+            }
+            return Ok(data);
+        }
+
     }
 }
+
