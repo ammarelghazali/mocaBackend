@@ -14,12 +14,15 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IDateTimeService _dateTimeService;
+        private readonly IReservationsStatusService _reservationsStatusService;
 
-        public WorkSpaceReservationServiceBundle(IUnitOfWork unitOfWork, IMapper mapper, IDateTimeService dateTimeService)
+        public WorkSpaceReservationServiceBundle(IUnitOfWork unitOfWork, IMapper mapper, IDateTimeService dateTimeService,
+                                                 IReservationsStatusService reservationsStatusService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _dateTimeService = dateTimeService;
+            _reservationsStatusService = reservationsStatusService;
         }
 
         public async Task<List<GetAllWorkSpaceReservationsResponse>> GetAllWorkSpaceReservations(GetAllWorkSpaceReservationsDto request)
@@ -45,27 +48,6 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
                                                       .OrderByDescending(r => r.CreatedAt)
                                                       .FirstOrDefault().StartDateTime;
 
-            // Get Reservation Status
-            string status;
-
-            var expiryDate = reservation.WorkSpaceBundleTransactions.ReservationTransaction.ExtendExpiryDate ?? null;
-
-            if (expiryDate is null)
-            {
-                return new Response<WorkSpaceReservationHistoryResponse>("there's missing Reservation info");
-            }
-
-            var isExpired = DateTime.Compare(_dateTimeService.NowUtc, expiryDate.Value);
-
-            if (isExpired > 0 || isExpired == 0)
-                status = "Closed";
-
-            else
-            {
-                var isScannedIn = reservation.WorkSpaceBundleTransactions.ReservationTransaction.ReservationDetails.Count > 0;
-
-                status = isScannedIn ? "Open" : "New";
-            }
 
             // List of Foodics Details
 
@@ -78,13 +60,14 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
                 LastName = reservation.BasicUser.LastName,
                 Amount = reservation.PackagePrice,
                 PaymentMethod = reservation.PaymentMethodId,
-                Status = status,
+                Status = _reservationsStatusService.GetStatus(reservation.WorkSpaceBundleTransactions.ReservationTransaction, 
+                                                              reservation.WorkSpaceBundleCancellation.CancelReservation),
                 Mode = "Basic",
                 ReservationType = "Bundle",
                 ReservationTypeId = 1,
                 EntryScanTime = entryScanTime,
                 OpportunityStartDate = reservation.CreatedAt,
-                EndDate = expiryDate,
+                EndDate = reservation.WorkSpaceBundleTransactions.ReservationTransaction.ExtendExpiryDate,
                 CreditHours = reservation.WorkSpaceBundleTransactions.ReservationTransaction.RemainingHours,
                 CountryCode = reservation.BasicUser.Country.CountryCode,
                 MobileNumber = reservation.BasicUser.MobileNumber,
