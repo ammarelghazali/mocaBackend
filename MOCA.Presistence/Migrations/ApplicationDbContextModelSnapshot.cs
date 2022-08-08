@@ -78,7 +78,7 @@ namespace MOCA.Presistence.Migrations
                     b.ToTable("IdentityUserToken<string>", (string)null);
                 });
 
-            modelBuilder.Entity("MOCA.Core.Entities.DynamicLists.WorkSpaceCategory", b =>
+            modelBuilder.Entity("MOCA.Core.Entities.DynamicLists.WorkSpaceCategory.WorkSpaceCategory", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -109,44 +109,6 @@ namespace MOCA.Presistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("WorkSpaceCategory");
-                });
-
-            modelBuilder.Entity("MOCA.Core.Entities.DynamicLists.WorkSpaceType", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("WorkSpaceCategoryId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("WorkSpaceCategoryId");
-
-                    b.ToTable("WorkSpaceType");
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.EventSpaceBookings.ContactDetails", b =>
