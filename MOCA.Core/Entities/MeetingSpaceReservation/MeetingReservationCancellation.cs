@@ -4,16 +4,18 @@ using MOCA.Core.Entities.Shared.Reservations;
 
 namespace MOCA.Core.Entities.MeetingSpaceReservation
 {
-    public class MeetingReservationTransaction
+    public class MeetingReservationCancellation
     {
         [Key, Column(Order = 1)]
         public long MeetingReservationId { get; set; }
+
         [ForeignKey("MeetingReservationId")]
         public MeetingReservation MeetingReservation { get; set; }
 
         [Key, Column(Order = 2)]
-        public long ReservationTransactionId { get; set; }
-        [ForeignKey("ReservationTransactionId")]
-        public ReservationTransaction ReservationTransaction { get; set; }
+        public long CancellationId { get; set; }
+
+        [ForeignKey("CancellationId")]
+        public CancelReservation CancelReservation { get; set; }
     }
 }

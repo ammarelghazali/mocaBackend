@@ -152,6 +152,9 @@ namespace MOCA.Presistence.Contexts
         public DbSet<MeetingReservation> MeetingSpaceReservations { get; set; }
         public DbSet<MeetingAttendee> MeetingAttendees { get; set; }
         public DbSet<MeetingReservationTopUp> MeetingReservationTopUps { get; set; }
+        public DbSet<MeetingReservationTransaction> MeetingReservationTransactions { get; set; }
+        public DbSet<MeetingReservationCancellation> MeetingReservationCancellations { get; set; }
+
         #endregion
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -275,8 +278,13 @@ namespace MOCA.Presistence.Contexts
             #endregion
 
             #region Meetingspace Reservation
+           
             builder.Entity<MeetingReservationTransaction>()
                 .HasKey(p => new { p.MeetingReservationId, p.ReservationTransactionId });
+
+            builder.Entity<MeetingReservationCancellation>()
+                .HasKey(p => new { p.MeetingReservationId, p.CancellationId });
+
             #endregion
         }
     }
