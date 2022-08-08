@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MOCA.Core.Entities.BaseEntities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,11 +9,9 @@ using System.Threading.Tasks;
 
 namespace MOCA.Core.Entities.SSO
 {
-    public class Gender
+    public class Gender: BaseEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; }
+
         [Required]
         public string Name { get; set; }
     }
