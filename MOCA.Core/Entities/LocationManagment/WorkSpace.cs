@@ -1,4 +1,5 @@
-﻿using MOCA.Core.Entities.LocationManagment.Base;
+﻿using MOCA.Core.Entities.DynamicLists;
+using MOCA.Core.Entities.LocationManagment.Base;
 using MOCA.Core.Entities.WorkSpaceReservations;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
