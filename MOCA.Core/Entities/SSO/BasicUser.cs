@@ -8,11 +8,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MOCA.Core.Entities.SSO
 {
-    public class BasicUser 
+    public class BasicUser : BaseEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; }
+       
         [Required]
         public string FirstName { get; set; }
 
