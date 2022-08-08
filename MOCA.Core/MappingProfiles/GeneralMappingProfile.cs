@@ -47,6 +47,8 @@ using MOCA.Core.DTOs.Events.EventTypeDtos.Response;
 using MOCA.Core.DTOs.Events.Response;
 using MOCA.Core.Entities.EventSpaceBookings;
 using MOCA.Core.DTOs.MocaSettings.PolicyTypesDtos.Request;
+using MOCA.Core.DTOs.DynamicLists.WorkSpaceCategory;
+using MOCA.Core.Entities.DynamicLists;
 
 namespace MOCA.Core.MappingProfiles
 {
@@ -190,6 +192,11 @@ namespace MOCA.Core.MappingProfiles
             CreateMap<IndustryModel, Industry>();
             CreateMap<Industry, IndustryModel>();
 
+            #endregion
+
+            #region Dynamic Lists
+            CreateMap<WorkSpaceCategoryModel, WorkSpaceCategory>();
+            CreateMap<WorkSpaceCategory, WorkSpaceCategoryModel>();
             #endregion
 
             #region Events
