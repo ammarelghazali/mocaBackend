@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MOCA.Core.Entities.BaseEntities;
+using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Entities.EventSpaceBookings;
 using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Entities.MeetingSpaceReservation;
@@ -89,6 +90,9 @@ namespace MOCA.Presistence.Contexts
 
         #region Shared
         public DbSet<MemberType> MemberTypes { get; set; }
+        #endregion
+        #region Dynamic Lists
+        public DbSet<WorkSpaceCategory> WorkSpaceCategories { get; set; }
         #endregion
 
         #region EventSpaceBookings
