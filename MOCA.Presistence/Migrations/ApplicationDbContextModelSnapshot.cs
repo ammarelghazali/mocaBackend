@@ -2813,6 +2813,8 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("MeetingSpaceHourlyPricingId");
 
+                    b.HasIndex("MeetingSpaceHourlyPricingId");
+
                     b.HasIndex("PaymentMethodId");
 
                     b.ToTable("MeetingReservationTopUp");
