@@ -84,6 +84,7 @@ namespace MOCA.Presistence.Contexts
         public DbSet<WorkSpaceType> WorkSpaceTypes { get; set; }
         public DbSet<MarketingImages> MarketingImages { get; set; }
         public DbSet<VenueSetup> VenueSetups { get; set; }
+        public DbSet<EventSpaceOccupancy> EventSpaceOccupancies { get; set; }
         #endregion
 
         #region Shared
@@ -246,6 +247,26 @@ namespace MOCA.Presistence.Contexts
                     .ToList()
                     .ForEach(fk => fk.DeleteBehavior = DeleteBehavior.Restrict);
             }
+            #endregion
+
+            #region Workspace Reservation
+            builder.Entity<WorkSpaceBundleCancellation>()
+                .HasKey(p => new { p.WorkSpaceBundleReservationId, p.CancellationId });
+
+            builder.Entity<WorkSpaceBundleTransactions>()
+                .HasKey(p => new { p.WorkSpaceReservationBundleId, p.ReservationTransactionId });
+
+            builder.Entity<WorkSpaceHourlyCancellation>()
+                .HasKey(p => new { p.WorkSpaceHourlyReservationId, p.CancellationId });
+            
+            builder.Entity<WorkSpaceHourlyTransactions>()
+                .HasKey(p => new { p.WorkSpaceReservationHourlyId, p.ReservationTransactionId });
+
+            builder.Entity<WorkSpaceTailoredCancellation>()
+                .HasKey(p => new { p.WorkSpaceTailoredReservationId, p.CancellationId });
+            
+            builder.Entity<WorkSpaceTailoredTransactions>()
+                .HasKey(p => new { p.WorkSpaceReservationTailoredId, p.ReservationTransactionId });
             #endregion
         }
     }
