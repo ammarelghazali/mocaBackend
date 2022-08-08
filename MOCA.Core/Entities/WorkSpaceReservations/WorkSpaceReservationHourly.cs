@@ -13,7 +13,11 @@ namespace MOCA.Core.Entities.WorkSpaceReservations
         //TODO: Add Relation With LoungeLocationPricing
 
         [Required]
-        public decimal Price { get; set; }
+        public decimal Price { get; set; }  
         public decimal? HourlyDiscount { get; set; }
+
+        public ICollection<WorkSpaceHourlyTopUp> TopUps { get; set; }
+        public WorkSpaceHourlyTransactions WorkSpaceHourlyTransactions { get; set; }
+        public WorkSpaceHourlyCancellation WorkSpaceHourlyCancellation { get; set; }
     }
 }

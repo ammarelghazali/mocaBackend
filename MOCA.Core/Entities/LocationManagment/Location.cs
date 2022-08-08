@@ -28,6 +28,8 @@ namespace MOCA.Core.Entities.LocationManagment
         public DateTime ContractStartDate { get; set; }
         [Required]
         public DateTime ContractEndDate { get; set; }
+        [Required]
+        public DateTime LaunchDate { get; set; }
         [Range(1,5)]
         public int? PaymentMethod { get; set; }
         [Range(1, 4)]
@@ -54,16 +56,11 @@ namespace MOCA.Core.Entities.LocationManagment
         public string TaxIdFile { get; set; }
         [Required]
         public string CommercialName { get; set; }
-
-        public long? LocationBankAccountId { get; set; }
-        [ForeignKey("LocationBankAccountId")]
-        public virtual LocationBankAccount LocationBankAccount { get; set; }
         public decimal? ServiceFeesPriceSqm { get; set; }
         public decimal? ServiceFeesTotalFees { get; set; }
         public decimal? ServiceFeesAnnualIncrease { get; set; }
         public string Url360Tour { set; get; }
         public string VenuesBrochureURL { set; get; }
-        public string WorkspaceContract { get; set; }
         public string EventspaceContract { get; set; }
         public string About { get; set; }
         public string Terms { set; get; }
@@ -87,7 +84,7 @@ namespace MOCA.Core.Entities.LocationManagment
         public string TaxIdNumber { get; set; }
         public string CommercialRegisterNumber { get; set; }
         public bool IsPublish { get; set; }
-
+        public int LocationBankAccountType { get; set; }
         public ICollection<EventSpaceBooking> EventSpaceBookings { get; set; }
         public ICollection<IssueReport> IssueReports { get; set; }
         public ICollection<Building> Buildings { get; set; }

@@ -5,16 +5,15 @@ using MOCA.Core.Entities.BaseEntities;
 using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Entities.EventSpaceBookings;
 using MOCA.Core.Entities.LocationManagment;
+using MOCA.Core.Entities.MeetingSpaceReservation;
 using MOCA.Core.Entities.MocaSetting;
+using MOCA.Core.Entities.Shared;
+using MOCA.Core.Entities.Shared.Reservations;
 using MOCA.Core.Entities.SSO;
 using MOCA.Core.Entities.SSO.Identity;
+using MOCA.Core.Entities.WorkSpaceReservations;
 using MOCA.Core.Interfaces.Shared.Services;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MOCA.Presistence.Contexts
 {
@@ -58,7 +57,6 @@ namespace MOCA.Presistence.Contexts
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<District> Districts { get; set; }
         public DbSet<Feature> Features { get; set; }
-        public DbSet<FloorUnit> FloorUnits { get; set; }
         public DbSet<Inclusion> Inclusions { get; set; }
         public DbSet<Industry> Industries { get; set; }
         public DbSet<Location> Locations { get; set; }
@@ -73,8 +71,25 @@ namespace MOCA.Presistence.Contexts
         public DbSet<LocationType> LocationTypes { get; set; }
         public DbSet<LocationWorkingHour> LocationWorkingHours { get; set; }
         public DbSet<ServiceFeePaymentsDueDate> ServiceFeePaymentsDueDates { get; set; }
+        public DbSet<FavouriteLocation> FavouriteLocations { get; set; }
+        public DbSet<Amenity> Amenities { get; set; }
+        public DbSet<SpaceAmenity> SpaceAmenities { get; set; }
+        public DbSet<EventSpace> EventSpaces { get; set; }
+        public DbSet<EventSpaceHourlyPricing> EventSpaceHourlyPricings { get; set; }
+        public DbSet<FurnishingType> FurnishingTypes { get; set; }
+        public DbSet<Furnishing> Furnishings { get; set; }
+        public DbSet<MeetingSpace> MeetingSpaces { get; set; }
+        public DbSet<MeetingSpaceHourlyPricing> MeetingSpaceHourlyPricings { get; set; }
+        public DbSet<WorkSpace> WorkSpaces { get; set; }
+        public DbSet<WorkSpaceCategory> WorkSpaceCategories { get; set; }
+        public DbSet<WorkSpaceType> WorkSpaceTypes { get; set; }
+        public DbSet<MarketingImages> MarketingImages { get; set; }
+        public DbSet<VenueSetup> VenueSetups { get; set; }
         #endregion
 
+        #region Shared
+        public DbSet<MemberType> MemberTypes { get; set; }
+        #endregion
         #region Dynamic Lists
         public DbSet<WorkSpaceCategory> WorkSpaceCategories { get; set; }
         #endregion
@@ -103,11 +118,38 @@ namespace MOCA.Presistence.Contexts
         public DbSet<Admin> Admins { get; set; }
             public DbSet<BasicUser> BasicUsers { get; set; }
             public DbSet<ClientDevice> ClientDevices { get; set; }
-
             public DbSet<MemberShipMainCategories> MemberShipMainCategories { get; set; }
             public DbSet<MemberShipBenefitsTypes> MemberShipBenefitsTypes { get; set; }
             public DbSet<MemberShipTypes> MemberShipTypes { get; set; }
             public DbSet<MemberShipCategories> MemberShipCategories { get; set; }
+        #endregion
+
+        #region ReservationShared
+        public DbSet<CancelReservation> CancelReservations { get; set; }
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public DbSet<ReservationDetail> ReservationDetails { get; set; }
+        public DbSet<ReservationTransaction> ReservationTransactions { get; set; }
+        public DbSet<ReservationType> ReservationTypes { get; set; }
+        #endregion
+
+        #region WorkSpaceReservations
+        public DbSet<WorkSpaceReservationHourly> WorkSpaceReservationHourly { get; set; }
+        public DbSet<WorkSpaceReservationTailored> WorkSpaceReservationTailored { get; set; }
+        public DbSet<WorkSpaceReservationBundle> WorkSpaceReservationBundle { get; set; }
+        public DbSet<WorkSpaceHourlyTopUp> WorkSpaceHourlyTopUps { get; set; }
+        public DbSet<WorkSpaceTailoredTopUp> WorkSpaceTailoredTopUps { get; set; }
+        public DbSet<WorkSpaceHourlyTransactions> WorkSpaceHourlyTransactions { get; set; }
+        public DbSet<WorkSpaceTailoredTransactions> WorkSpaceTailoredTransactions { get; set; }
+        public DbSet<WorkSpaceBundleTransactions> WorkSpaceBundleTransactions { get; set; }
+        public DbSet<WorkSpaceHourlyCancellation> WorkSpaceHourlyCancellations { get; set; }
+        public DbSet<WorkSpaceTailoredCancellation> WorkSpaceTailoredCancellations { get; set; }
+        public DbSet<WorkSpaceBundleCancellation> WorkSpaceBundleCancellations { get; set; }
+        #endregion
+
+        #region MeetingSpaceReservations
+        public DbSet<MeetingReservation> MeetingSpaceReservations { get; set; }
+        public DbSet<MeetingAttendee> MeetingAttendees { get; set; }
+        public DbSet<MeetingReservationTopUp> MeetingReservationTopUps { get; set; }
         #endregion
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

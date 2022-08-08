@@ -47,6 +47,10 @@ using MOCA.Core.DTOs.Events.EventTypeDtos.Response;
 using MOCA.Core.DTOs.Events.Response;
 using MOCA.Core.Entities.EventSpaceBookings;
 using MOCA.Core.DTOs.MocaSettings.PolicyTypesDtos.Request;
+using MOCA.Core.DTOs.LocationManagment.Location;
+using MOCA.Core.DTOs.LocationManagment.FavouriteLocation;
+using MOCA.Core.DTOs.LocationManagment.Building;
+using MOCA.Core.DTOs.LocationManagment.BuildingFloor;
 using MOCA.Core.DTOs.DynamicLists.WorkSpaceCategory;
 using MOCA.Core.Entities.DynamicLists;
 
@@ -192,6 +196,47 @@ namespace MOCA.Core.MappingProfiles
             CreateMap<IndustryModel, Industry>();
             CreateMap<Industry, IndustryModel>();
 
+            CreateMap<LocationBankAccountModel, LocationBankAccount>();
+            CreateMap<LocationBankAccount, LocationBankAccountModel>();
+
+            CreateMap<LocationContactModel, LocationContact>();
+            CreateMap<LocationContact, LocationContactModel>();
+
+            CreateMap<LocationCurrencyModel, LocationCurrency>();
+            CreateMap<LocationCurrency, LocationCurrencyModel>();
+
+            CreateMap<LocationFileModel, LocationFile>();
+            CreateMap<LocationFile, LocationFileModel>();
+
+            CreateMap<LocationImageModel, LocationImage>();
+            CreateMap<LocationImage, LocationImageModel>();
+
+            CreateMap<LocationInclusionModel, LocationInclusion>();
+            CreateMap<LocationInclusion, LocationInclusionModel>();
+
+            CreateMap<LocationWorkingHourModel, LocationWorkingHour>();
+            CreateMap<LocationWorkingHour, LocationWorkingHourModel>();
+
+            CreateMap<ServiceFeePaymentsDueDateModel, ServiceFeePaymentsDueDate>();
+            CreateMap<ServiceFeePaymentsDueDate, ServiceFeePaymentsDueDateModel>();
+
+            CreateMap<LocationModel, Location>();
+            CreateMap<Location, LocationModel>();
+
+            CreateMap<LocationModel, LocationDetailsModel>();
+            CreateMap<LocationDetailsModel, LocationModel>();
+
+            CreateMap<FavouriteLocationModel, FavouriteLocation>();
+            CreateMap<FavouriteLocation, FavouriteLocationModel>();
+
+            CreateMap<BuildingModel, Building>();
+            CreateMap<Building, BuildingModel>();
+
+            CreateMap<BuildingFloorModel, BuildingFloor>();
+            CreateMap<BuildingFloor, BuildingFloorModel>();
+
+            CreateMap<BuildingModelByLocationId, Building>();
+            CreateMap<Building, BuildingModelByLocationId>();
             #endregion
 
             #region Dynamic Lists
@@ -259,8 +304,6 @@ namespace MOCA.Core.MappingProfiles
 
             // Email Templete
             CreateMap<EmailTemplate, GetEmailTempleteEventOpportunitylViewModelDto>().ReverseMap();
-
-
             #endregion
 
         }

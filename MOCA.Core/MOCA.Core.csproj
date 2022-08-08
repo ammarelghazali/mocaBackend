@@ -17,11 +17,10 @@
     <Folder Include="DTOs\MocaSettings\" />
     <Folder Include="DTOs\SSO\" />
     <Folder Include="Interfaces\DynamicLists\WorkspaceCategory\Services\" />
+    <Folder Include="Interfaces\MeetingSpaceReservations\Services\" />
     <Folder Include="Interfaces\MocaSettings\Repositories\" />
     <Folder Include="Interfaces\MocaSettings\Services\" />
     <Folder Include="Interfaces\MocaSettings\Services\" />
-    <Folder Include="Interfaces\SSO\Repositories\" />
-    <Folder Include="Interfaces\SSO\Services\" />
   </ItemGroup>
 
   <ItemGroup>

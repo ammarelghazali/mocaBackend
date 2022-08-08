@@ -64,6 +64,7 @@ builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 // Shared Services
 builder.Services.AddTransient<IDateTimeService, DateTimeService>();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
+builder.Services.AddScoped<IReservationsStatusService, ReservationsStatusService>();
 
 // AutoMapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

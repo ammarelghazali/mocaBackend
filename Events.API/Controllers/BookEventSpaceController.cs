@@ -76,5 +76,19 @@ namespace Events.API.Controllers
             return Ok(response);
         }
 
+
+
+        [HttpPost("FilterWithoutPagination")]
+        public async Task<IActionResult> FilterWithoutPagination([FromBody] FilterWithoutPaginationDto filterWithoutPaginationDto)
+        {
+            var response = await _eventSpaceService.FilterWithoutPagination(filterWithoutPaginationDto);
+            if(response.Succeeded == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+
     }
 }

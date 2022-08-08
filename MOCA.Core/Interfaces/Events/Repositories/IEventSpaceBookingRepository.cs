@@ -25,5 +25,6 @@ namespace MOCA.Core.Interfaces.Events.Repositories
         Task<bool> CheckEventOpportunitiyExistenceByID(long id);
         Task<bool> UpdateEventOpportunitiyStageReportId(long id, long opportunityStageId);
         Task<List<EventSpaceBooking>> GetBookedEventSpaceByIdAsync(long locationTypeId, int pageNumber, int pageSize);
+
     }
 }

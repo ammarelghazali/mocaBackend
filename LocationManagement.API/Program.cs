@@ -34,6 +34,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "LocationManagement.Api", Version = "v1" });
 
+    // Enables Swagger Documentation
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
@@ -73,9 +74,10 @@ builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 #region Service Layer
 
 // Shared Services
-builder.Services.AddTransient<IDateTimeService, DateTimeService>();
 //Auth Would Be Change 
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
+builder.Services.AddScoped<IReservationsStatusService, ReservationsStatusService>();
+builder.Services.AddTransient<IDateTimeService, DateTimeService>();
 //-------------------------
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -88,6 +90,18 @@ builder.Services.AddScoped<ILocationTypeService, LocationTypeService>();
 builder.Services.AddScoped<IFeatureService, FeatureService>();
 builder.Services.AddScoped<IInclusionService, InclusionService>();
 builder.Services.AddScoped<IIndustryService, IndustryService>();
+builder.Services.AddScoped<ILocationBankAccountService, LocationBankAccountService>();
+builder.Services.AddScoped<ILocationContactService, LocationContactService>();
+builder.Services.AddScoped<ILocationCurrencyService, LocationCurrencyService>();
+builder.Services.AddScoped<ILocationFileService, LocationFileService>();
+builder.Services.AddScoped<ILocationImageService, LocationImageService>();
+builder.Services.AddScoped<ILocationInclusionService, LocationInclusionService>();
+builder.Services.AddScoped<ILocationWorkingHourService, LocationWorkingHourService>();
+builder.Services.AddScoped<ILocationService, LocationService>();
+builder.Services.AddScoped<IServiceFeePaymentsDueDateService, ServiceFeePaymentsDueDateService>();
+builder.Services.AddScoped<IFavouriteLocationService, FavouriteLocationService>();
+builder.Services.AddScoped<IBuildingService, BuildingService>();
+builder.Services.AddScoped<IBuildingFloorService, BuildingFloorService>();
 
 #endregion
 

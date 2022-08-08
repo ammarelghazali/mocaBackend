@@ -170,14 +170,14 @@ namespace MOCA.Services.Implementation.Events
                 EventOpportunityDetails = new EventOpportunityDetails_SendViewModel
                 {
                     Opportunity_ID = item.Id,
-                    SubmissionDate = (DateTime)item.SubmissionDate,
-                    OpportunityOwner = _authenticatedUser.UserName,
+                    SubmissionDate = item.CreatedAt,
+                    OpportunityOwner = "Name",
                     Initiated = new Initiated
                     {
                         Id = initiat.Id,
                         Name = initiat.Name,
                     },
-                    EventRequester_ID = (long)item.EventRequesterId,
+                    EventRequester_ID = item.EventRequesterId == null ? 0 : item.EventRequesterId.Value,
                     CompanyName = item.CompanyName,
                     EventRequester_Name = EventRequest.Name,
                     ContactDetails = _mapper.Map<List<EventOpportunityContactDetailsViewModel>>(ContactDetails),
@@ -653,11 +653,21 @@ namespace MOCA.Services.Implementation.Events
                 emailStringBuilder.Append($"</body>");
                 emailStringBuilder.Append($"</html>");
 
-                var SentEmail = new SendEmail();
                 foreach (var item in request.ToUsers)
                 {
                     var contact = await _unitOfWork.ContactDetailsRepo.GetContact_DetailByEmail(item);
+                    if(contact == null)
+                    {
+                        return new Response<bool>(false, $"not all users' emails are in contact details!");
+                    }
+                }
 
+                var SentEmail = new SendEmail();
+                foreach (var item in request.ToUsers)
+                {
+
+                    var contact = await _unitOfWork.ContactDetailsRepo.GetContact_DetailByEmail(item);
+                    
                     var emailRequest = new EmailRequest();
                     if (request.IsUser != 1)
                     {
@@ -694,7 +704,7 @@ namespace MOCA.Services.Implementation.Events
                         Body = emailStringBuilder.ToString(),
                         ContactDetailId = contact.Id,
                         BookATourId = null,
-                        //EventsOpportunitiesId = request.EventsOpportunities_ID,
+                        EventSpaceBookingId = request.EventsOpportunitiesId,
                         EmailTemplateId = emailTemplate.Id,
                         CreatedAt = _dateTimeService.NowUtc,
                     };

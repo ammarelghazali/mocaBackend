@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MOCA.Core.Entities.EventSpaceBookings;
 using MOCA.Core.Interfaces.Base;
 using MOCA.Core.Interfaces.Events;
@@ -6,6 +6,10 @@ using MOCA.Core.Interfaces.Events.Repositories;
 using MOCA.Core.Interfaces.MocaSettings.Repositories;
 using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Interfaces.LocationManagment.Repositories;
+using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
+using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
+using MOCA.Core.Interfaces.SSO.Repositories;
+using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
 
 namespace MOCA.Core
 {
@@ -63,6 +67,31 @@ namespace MOCA.Core
         IInclusionRepository InclusionRepoEF { get; }
         IGenericRepository<Industry> IndustryRepo { get; }
         IIndustryRepository IndustryRepoEF { get; }
+        IGenericRepository<LocationBankAccount> LocationBankAccountRepo { get; }
+        ILocationBankAccountRepository LocationBankAccountRepoEF { get; }
+        IGenericRepository<LocationContact> LocationContactRepo { get; }
+        ILocationContactRepository LocationContactRepoEF { get; }
+        IGenericRepository<LocationCurrency> LocationCurrencyRepo { get; }
+        ILocationCurrencyRepository LocationCurrencyRepoEF { get; }
+        IGenericRepository<LocationFile> LocationFileRepo { get; }
+        ILocationFileRepository LocationFileRepoEF { get; }
+        IGenericRepository<LocationImage> LocationImageRepo { get; }
+        ILocationImageRepository LocationImageRepoEF { get; }
+        IGenericRepository<LocationInclusion> LocationInclusionRepo { get; }
+        ILocationInclusionRepository LocationInclusionRepoEF { get; }
+        IGenericRepository<LocationWorkingHour> LocationWorkingHourRepo { get; }
+        ILocationWorkingHourRepository LocationWorkingHourRepoEF { get; }
+        IGenericRepository<ServiceFeePaymentsDueDate> ServiceFeePaymentsDueDateRepo { get; }
+        IServiceFeePaymentsDueDateRepository ServiceFeePaymentsDueDateRepoEF { get; }
+        IGenericRepository<Location> LocationRepo { get; }
+        ILocationRepository LocationRepoEF { get; }
+        IGenericRepository<FavouriteLocation> FavouriteLocationRepo { get; }
+        IFavouriteLocationRepository FavouriteLocationRepoEF { get; }
+        IGenericRepository<Building> BuildingRepo { get; }
+        IBuildingRepository BuildingRepoEF { get; }
+        IGenericRepository<BuildingFloor> BuildingFloorRepo { get; }
+        IBuildingFloorRepository BuildingFloorRepoEF { get; }
+
         #endregion
 
         #region Events
@@ -85,6 +114,38 @@ namespace MOCA.Core
 
         #endregion
 
+        #region SSO
+
+        IBasicUserRepository BasicUserRepository { get; }
+
+        IBasicUserStatusHistoryRepository BasicUserStatusHistoryRepository { get; }
+
+        IClientDeviceRepository ClientDeviceRepository { get; }
+
+        IMemberShipTypesRepository MemberShipTypesRepository { get; }
+
+        IMemberShipMainCategoriesRepository  MemberShipMainCategoriesRepository { get; }
+
+        IMemberShipCategoriesRepository MemberShipCategoriesRepository { get; }
+
+        IMemberShipBenefitsTypesRepository MemberShipBenefitsTypesRepository { get; }
+
+        IGenderRepository GenderRepository { get; }
+
+        #endregion 
+
+        #region WorkSpaceReservations
+        public IWorkSpaceReservationsRepositoryCRM WorkSpaceReservationsRepositoryCRM { get; }
+        public IWorkSpaceReservationBundleRepo WorkSpaceReservationBundleRepo { get; }
+        public IWorkSpaceReservationHourlyRepo WorkSpaceReservationHourlyRepo { get; }
+        public IWorkSpaceReservationTailoredRepo WorkSpaceReservationTailoredRepo { get; }
+        public IWorkSpaceHourlyTopUpRepo WorkSpaceHourlyTopUpRepo { get; }
+        public IWorkSpaceTailoredTopUpRepo WorkSpaceTailoredTopUpRepo { get; }
+        #endregion
+
+        #region MeetingSpaceReservations
+        public IMeetingSpaceReservationRepository MeetingSpaceReservationRepository { get; }
+        #endregion  
         void Save();
         Task<int> SaveAsync();
         DateTime? GetServerDate();
