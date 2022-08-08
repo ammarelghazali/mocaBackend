@@ -1,8 +1,9 @@
 ﻿using MOCA.Core.Entities.BaseEntities;
+using MOCA.Core.Entities.LocationManagment;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MOCA.Core.Entities.LocationManagment
+namespace MOCA.Core.Entities.DynamicLists
 {
     public class WorkSpaceType : BaseEntity
     {
@@ -13,7 +14,7 @@ namespace MOCA.Core.Entities.LocationManagment
         public long WorkSpaceCategoryId { get; set; }
 
         [ForeignKey("WorkSpaceCategoryId")]
-        public WorkSpaceCategory WorkSpaceCategory { get; set; }    
+        public WorkSpaceCategory WorkSpaceCategory { get; set; }
 
         public ICollection<WorkSpace> WorkSpaces { get; set; }
     }

@@ -81,8 +81,6 @@ namespace MOCA.Presistence.Contexts
         public DbSet<MeetingSpace> MeetingSpaces { get; set; }
         public DbSet<MeetingSpaceHourlyPricing> MeetingSpaceHourlyPricings { get; set; }
         public DbSet<WorkSpace> WorkSpaces { get; set; }
-        public DbSet<WorkSpaceCategory> WorkSpaceCategories { get; set; }
-        public DbSet<WorkSpaceType> WorkSpaceTypes { get; set; }
         public DbSet<MarketingImages> MarketingImages { get; set; }
         public DbSet<VenueSetup> VenueSetups { get; set; }
         public DbSet<EventSpaceOccupancy> EventSpaceOccupancies { get; set; }
@@ -91,8 +89,11 @@ namespace MOCA.Presistence.Contexts
         #region Shared
         public DbSet<MemberType> MemberTypes { get; set; }
         #endregion
+
         #region Dynamic Lists
         public DbSet<WorkSpaceCategory> WorkSpaceCategories { get; set; }
+        public DbSet<WorkSpaceType> WorkSpaceTypes { get; set; }
+
         #endregion
 
         #region EventSpaceBookings
