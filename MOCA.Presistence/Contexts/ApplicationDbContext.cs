@@ -137,8 +137,11 @@ namespace MOCA.Presistence.Contexts
         public DbSet<WorkSpaceHourlyTransactions> WorkSpaceHourlyTransactions { get; set; }
         public DbSet<WorkSpaceTailoredTransactions> WorkSpaceTailoredTransactions { get; set; }
         public DbSet<WorkSpaceBundleTransactions> WorkSpaceBundleTransactions { get; set; }
+        public DbSet<WorkSpaceHourlyCancellation> WorkSpaceHourlyCancellations { get; set; }
+        public DbSet<WorkSpaceTailoredCancellation> WorkSpaceTailoredCancellations { get; set; }
+        public DbSet<WorkSpaceBundleCancellation> WorkSpaceBundleCancellations { get; set; }
         #endregion
-        
+
         #region MeetingSpaceReservations
         public DbSet<MeetingReservation> MeetingSpaceReservations { get; set; }
         public DbSet<MeetingAttendee> MeetingAttendees { get; set; }
