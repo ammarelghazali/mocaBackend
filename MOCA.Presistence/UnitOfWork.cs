@@ -21,6 +21,8 @@ using MOCA.Presistence.Repositories.MeetingSpaceReservations;
 using MOCA.Core.Interfaces.SSO.Repositories;
 using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
 using MOCA.Presistence.Repositories.MeetingSpaceReservations;
+using MOCA.Core.Entities.DynamicLists;
+using MOCA.Core.Interfaces.DynamicLists.Repositories;
 
 namespace MOCA.Presistence
 {
@@ -322,6 +324,29 @@ namespace MOCA.Presistence
             }
         }
 
+
+        #endregion
+
+        #region Dynamic Lists
+
+        private IGenericRepository<WorkSpaceCategory> _WorkSpaceCategoryRepo;
+        public IGenericRepository<WorkSpaceCategory> WorkSpaceCategoryRepo
+        {
+            get
+            {
+                return _WorkSpaceCategoryRepo = _WorkSpaceCategoryRepo ?? new GenericRepository<WorkSpaceCategory>(_context);
+            }
+        }
+
+
+        private IWorkSpaceCategoryRepository _WorkSpaceCategoryRepoEF;
+        public IWorkSpaceCategoryRepository WorkSpaceCategoryRepoEF
+        {
+            get
+            {
+                return _WorkSpaceCategoryRepoEF = _WorkSpaceCategoryRepoEF ?? new WorkSpaceCategoryRepository(_context);
+            }
+        }
 
         #endregion
 
@@ -781,7 +806,8 @@ namespace MOCA.Presistence
 
         public IGenderRepository GenderRepository { get; }
 
-        #endregion 
+
+        #endregion
 
 
         public DateTime ConvertToLocalDate(DateTime dateInEasternTimeZone)

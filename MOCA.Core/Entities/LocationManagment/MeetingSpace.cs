@@ -6,10 +6,10 @@ namespace MOCA.Core.Entities.LocationManagment
     public class MeetingSpace : BaseSpaceEntity
     {
         [Required]
-        public int GrossArea { get; set; }
+        public decimal GrossArea { get; set; }
 
         [Required]
-        public int NetArea { get; set; }
+        public decimal NetArea { get; set; }
 
         [Required]
         public string VenueName { get; set; }

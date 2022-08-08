@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MOCA.Core.Entities.BaseEntities;
+using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Entities.EventSpaceBookings;
 using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Entities.MeetingSpaceReservation;
@@ -24,7 +25,7 @@ namespace MOCA.Presistence.Contexts
                                     IDateTimeService dateTime,
                                     IAuthenticatedUserService authenticatedUser) : base(options)
         {
-            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+           ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             _dateTime = dateTime;
             _authenticatedUser = authenticatedUser;
         }
@@ -80,14 +81,19 @@ namespace MOCA.Presistence.Contexts
         public DbSet<MeetingSpace> MeetingSpaces { get; set; }
         public DbSet<MeetingSpaceHourlyPricing> MeetingSpaceHourlyPricings { get; set; }
         public DbSet<WorkSpace> WorkSpaces { get; set; }
-        public DbSet<WorkSpaceCategory> WorkSpaceCategories { get; set; }
-        public DbSet<WorkSpaceType> WorkSpaceTypes { get; set; }
         public DbSet<MarketingImages> MarketingImages { get; set; }
         public DbSet<VenueSetup> VenueSetups { get; set; }
+        public DbSet<EventSpaceOccupancy> EventSpaceOccupancies { get; set; }
         #endregion
 
         #region Shared
         public DbSet<MemberType> MemberTypes { get; set; }
+        #endregion
+
+        #region Dynamic Lists
+        public DbSet<WorkSpaceCategory> WorkSpaceCategories { get; set; }
+        public DbSet<WorkSpaceType> WorkSpaceTypes { get; set; }
+
         #endregion
 
         #region EventSpaceBookings
@@ -246,6 +252,31 @@ namespace MOCA.Presistence.Contexts
                     .ToList()
                     .ForEach(fk => fk.DeleteBehavior = DeleteBehavior.Restrict);
             }
+            #endregion
+
+            #region Workspace Reservation
+            builder.Entity<WorkSpaceBundleCancellation>()
+                .HasKey(p => new { p.WorkSpaceBundleReservationId, p.CancellationId });
+
+            builder.Entity<WorkSpaceBundleTransactions>()
+                .HasKey(p => new { p.WorkSpaceReservationBundleId, p.ReservationTransactionId });
+
+            builder.Entity<WorkSpaceHourlyCancellation>()
+                .HasKey(p => new { p.WorkSpaceHourlyReservationId, p.CancellationId });
+            
+            builder.Entity<WorkSpaceHourlyTransactions>()
+                .HasKey(p => new { p.WorkSpaceReservationHourlyId, p.ReservationTransactionId });
+
+            builder.Entity<WorkSpaceTailoredCancellation>()
+                .HasKey(p => new { p.WorkSpaceTailoredReservationId, p.CancellationId });
+            
+            builder.Entity<WorkSpaceTailoredTransactions>()
+                .HasKey(p => new { p.WorkSpaceReservationTailoredId, p.ReservationTransactionId });
+            #endregion
+
+            #region Meetingspace Reservation
+            builder.Entity<MeetingReservationTransaction>()
+                .HasKey(p => new { p.MeetingReservationId, p.ReservationTransactionId });
             #endregion
         }
     }

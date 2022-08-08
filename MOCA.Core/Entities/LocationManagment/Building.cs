@@ -18,7 +18,7 @@ namespace MOCA.Core.Entities.LocationManagment
         public decimal NetArea { get; set; }
         public int MaleRestroomCount { get; set; }
         public int FemaleRestroomCount { get; set; }
-
+        public bool InstallAccessPoint { get; set; }
         public ICollection<BuildingFloor> BuildingFloors { get; set; }
     }
 }
