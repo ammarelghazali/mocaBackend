@@ -34,6 +34,17 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
 
             var reservation = await _unitOfWork.WorkSpaceReservationHourlyRepo.GetReservationById(topUp.WorkspaceReservationId);
 
+
+            // 1. get availability of working hours by computing (endWorking hour - (EndTimeDate + TopUpHour))
+
+
+            // 2. get count of active tailoreds
+               // get count of active Bundle
+               // get count of active hourly
+
+            // 3. max occupancy > TotalCount
+
+
             // check if it exceeds the available hours and Available occupancy
 
             // get the maximum occupancy of the work space
