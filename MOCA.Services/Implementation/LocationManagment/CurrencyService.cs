@@ -25,6 +25,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _dateTimeService = dateTimeService ?? throw new ArgumentNullException(nameof(dateTimeService));
+            _authenticatedUserService = authenticatedUserService ?? throw new ArgumentNullException(nameof(authenticatedUserService));
         }
 
         public async Task<Response<long>> AddCurrency(CurrencyModel request)
