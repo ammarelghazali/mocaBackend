@@ -11,10 +11,10 @@ namespace MOCA.Core.Entities.LocationManagment.Base
         public int Hours { get; set; }
 
         [Required]
-        public int PricePerHour { get; set; }
+        public decimal PricePerHour { get; set; }
 
         [Required]
-        public int TotalPrice { get; set; }
+        public decimal TotalPrice { get; set; }
 
         [Required]
         public long MemberTypeId { get; set; }
