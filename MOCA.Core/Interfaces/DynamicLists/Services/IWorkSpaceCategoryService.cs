@@ -10,7 +10,7 @@ namespace MOCA.Core.Interfaces.DynamicLists.Services
 {
     public interface IWorkSpaceCategoryService
     {
-         Task<Response<long>> AddWorkSpaceCategory(WorkSpaceCategoryModel request);
+        Task<Response<long>> AddWorkSpaceCategory(WorkSpaceCategoryModel request);
         Task<Response<bool>> UpdateWorkSpaceCategory(WorkSpaceCategoryModel request);
         
         

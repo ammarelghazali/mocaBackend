@@ -252,6 +252,31 @@ namespace MOCA.Presistence.Contexts
                     .ForEach(fk => fk.DeleteBehavior = DeleteBehavior.Restrict);
             }
             #endregion
+
+            #region Workspace Reservation
+            builder.Entity<WorkSpaceBundleCancellation>()
+                .HasKey(p => new { p.WorkSpaceBundleReservationId, p.CancellationId });
+
+            builder.Entity<WorkSpaceBundleTransactions>()
+                .HasKey(p => new { p.WorkSpaceReservationBundleId, p.ReservationTransactionId });
+
+            builder.Entity<WorkSpaceHourlyCancellation>()
+                .HasKey(p => new { p.WorkSpaceHourlyReservationId, p.CancellationId });
+
+            builder.Entity<WorkSpaceHourlyTransactions>()
+                .HasKey(p => new { p.WorkSpaceReservationHourlyId, p.ReservationTransactionId });
+
+            builder.Entity<WorkSpaceTailoredCancellation>()
+                .HasKey(p => new { p.WorkSpaceTailoredReservationId, p.CancellationId });
+
+            builder.Entity<WorkSpaceTailoredTransactions>()
+                .HasKey(p => new { p.WorkSpaceReservationTailoredId, p.ReservationTransactionId });
+            #endregion
+
+            #region Meetingspace Reservation
+            builder.Entity<MeetingReservationTransaction>()
+                .HasKey(p => new { p.MeetingReservationId, p.ReservationTransactionId });
+            #endregion
         }
     }
 }
