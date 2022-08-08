@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="DTOs\DynamicLists\" />
     <Folder Include="DTOs\MocaSettings\" />
     <Folder Include="DTOs\MocaSettings\" />
     <Folder Include="DTOs\SSO\" />
