@@ -8,5 +8,6 @@ namespace MOCA.Core.Entities.DynamicLists
         [Required]
         public string Name { get; set; }
 
+        public ICollection<WorkSpaceType> WorkSpaceTypes { get; set; }
     }
 }

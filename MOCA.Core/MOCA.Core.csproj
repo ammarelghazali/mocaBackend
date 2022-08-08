@@ -13,10 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="DTOs\DynamicLists\" />
     <Folder Include="DTOs\MocaSettings\" />
     <Folder Include="DTOs\MocaSettings\" />
     <Folder Include="DTOs\SSO\" />
-    <Folder Include="Interfaces\DynamicLists\WorkspaceCategory\Services\" />
+    <Folder Include="Interfaces\DynamicLists\" />
     <Folder Include="Interfaces\MeetingSpaceReservations\Services\" />
     <Folder Include="Interfaces\MocaSettings\Repositories\" />
     <Folder Include="Interfaces\MocaSettings\Services\" />
