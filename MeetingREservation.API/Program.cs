@@ -95,6 +95,16 @@ builder.Services.AddTransient<IDateTimeService, DateTimeService>();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 builder.Services.AddTransient<IEmailService, EmailService>();
 builder.Services.AddScoped<IReservationsStatusService, ReservationsStatusService>();
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+// Shared Services
+builder.Services.AddTransient<IDateTimeService, DateTimeService>();
+builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
+builder.Services.AddTransient<IEmailService, EmailService>();
+builder.Services.AddScoped<IReservationsStatusService, ReservationsStatusService>();
 
 // Settings
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
