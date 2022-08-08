@@ -12,6 +12,8 @@ namespace MOCA.Core.Entities.WorkSpaceReservations.Base
         [Required]
         public long WorkSpaceId { get; set; }
         //TODO: Add Relation To WorkSpace
-      
+
+        [ForeignKey("WorkSpaceId")]
+        public WorkSpace WorkSpace { get; set; }
     }
 }

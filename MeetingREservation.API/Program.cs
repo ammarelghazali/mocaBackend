@@ -1,5 +1,7 @@
 using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
+using MOCA.Core.Interfaces.Shared.Services;
 using MOCA.Presistence.Repositories.MeetingSpaceReservations;
+using MOCA.Services.Implementation.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IMeetingSpaceReservationRepository, MeetingSpaceReservationsRepository>();
+builder.Services.AddScoped<IReservationsStatusService, ReservationsStatusService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -3,13 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MOCA.Core.Entities.LocationManagment
 {
-    public class Feature : BaseEntity
+    public class FurnishingType : BaseEntity
     {
         [Required]
         public string Name { get; set; }
 
         public ICollection<Furnishing> Furnishings { get; set; }
-        public ICollection<SpaceAmenity> SpaceAmenities { get; set; }
-        public ICollection<MarketingImages> MarketingImages { get; set; }
     }
 }
