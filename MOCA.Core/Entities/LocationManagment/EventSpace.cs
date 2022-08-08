@@ -6,10 +6,10 @@ namespace MOCA.Core.Entities.LocationManagment
     public class EventSpace : BaseSpaceEntity
     {
         [Required]
-        public int GrossArea { get; set; }
+        public decimal GrossArea { get; set; }
 
         [Required]
-        public int NetArea { get; set; }
+        public decimal NetArea { get; set; }
 
         [Required]
         public int Type { get; set; }
@@ -26,5 +26,6 @@ namespace MOCA.Core.Entities.LocationManagment
         public int? RestRoomFemaleOccupancy { get; set; }
 
         public ICollection<EventSpaceHourlyPricing> EventSpaceHourlyPricings { get; set; }
+        public ICollection<EventSpaceOccupancy> EventSpaceOccupancies { get; set; }
     }
 }

@@ -7,9 +7,9 @@ namespace MOCA.Core.Entities.LocationManagment
 {
     public class WorkSpace : BaseSpaceEntity
     {
-        public int? GrossArea { get; set; }
+        public decimal? GrossArea { get; set; }
 
-        public int? NetArea { get; set; }
+        public decimal? NetArea { get; set; }
 
         [Required]
         public long WorkSpaceTypeId { get; set; }
