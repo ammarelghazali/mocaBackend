@@ -54,6 +54,7 @@ using MOCA.Core.DTOs.LocationManagment.BuildingFloor;
 using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.DTOs.DynamicLists;
 
+
 namespace MOCA.Core.MappingProfiles
 {
     public class GeneralMappingProfile : Profile
@@ -240,8 +241,7 @@ namespace MOCA.Core.MappingProfiles
             #endregion
 
             #region Dynamic Lists
-            CreateMap<WorkSpaceCategoryModel, WorkSpaceCategory>();
-            CreateMap<WorkSpaceCategory, WorkSpaceCategoryModel>();
+            
             #endregion
 
             #region Events
