@@ -51,8 +51,8 @@ using MOCA.Core.DTOs.LocationManagment.Location;
 using MOCA.Core.DTOs.LocationManagment.FavouriteLocation;
 using MOCA.Core.DTOs.LocationManagment.Building;
 using MOCA.Core.DTOs.LocationManagment.BuildingFloor;
+using MOCA.Core.DTOs.DynamicLists.WorkSpaceCategory;
 using MOCA.Core.Entities.DynamicLists;
-using MOCA.Core.DTOs.DynamicLists;
 
 
 namespace MOCA.Core.MappingProfiles
@@ -241,8 +241,7 @@ namespace MOCA.Core.MappingProfiles
             #endregion
 
             #region Dynamic Lists
-            CreateMap<WorkSpaceCategoryModel, WorkSpaceCategory>();
-            CreateMap<WorkSpaceCategory, WorkSpaceCategoryModel>();
+            
             #endregion
 
             #region Events
