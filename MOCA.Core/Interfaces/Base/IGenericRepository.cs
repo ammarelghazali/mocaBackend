@@ -1,10 +1,11 @@
-﻿using System.Data;
+﻿using MOCA.Core.Entities.BaseEntities;
+using System.Data;
 using System.Linq.Expressions;
 
 
 namespace MOCA.Core.Interfaces.Base
 {
-    public interface IGenericRepository<T> where T : class
+    public interface IGenericRepository<T> where T : BaseEntity
     {
         Task<IQueryable<T>> GetAllIQueryable();
         Task<T> GetByIdAsync(long id);
