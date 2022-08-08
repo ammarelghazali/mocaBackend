@@ -10,6 +10,8 @@ using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
 using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
 using MOCA.Core.Interfaces.SSO.Repositories;
 using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
+using MOCA.Core.Entities.DynamicLists;
+using MOCA.Core.Interfaces.DynamicLists.Repositories;
 
 namespace MOCA.Core
 {
@@ -145,7 +147,14 @@ namespace MOCA.Core
 
         #region MeetingSpaceReservations
         public IMeetingSpaceReservationRepository MeetingSpaceReservationRepository { get; }
-        #endregion  
+        #endregion
+
+
+        #region Dynamic Lists
+        IGenericRepository<WorkSpaceCategory> WorkSpaceCategoryRepo { get; }
+        IWorkSpaceCategoryRepository WorkSpaceCategoryRepoEF { get; }
+
+        #endregion
         void Save();
         Task<int> SaveAsync();
         DateTime? GetServerDate();

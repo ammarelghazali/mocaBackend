@@ -5,11 +5,13 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MOCA.Core;
 using MOCA.Core.DTOs.Shared.Responses;
+using MOCA.Core.Interfaces.DynamicLists.Services;
 using MOCA.Core.Interfaces.LocationManagment.Services;
 using MOCA.Core.Interfaces.Shared.Services;
 using MOCA.Presistence;
 using MOCA.Presistence.Contexts;
 using MOCA.Services;
+using MOCA.Services.Implementation.DynamicLists;
 using MOCA.Services.Implementation.LocationManagment;
 using MOCA.Services.Implementation.Shared;
 using Newtonsoft.Json;
@@ -102,6 +104,7 @@ builder.Services.AddScoped<IServiceFeePaymentsDueDateService, ServiceFeePayments
 builder.Services.AddScoped<IFavouriteLocationService, FavouriteLocationService>();
 builder.Services.AddScoped<IBuildingService, BuildingService>();
 builder.Services.AddScoped<IBuildingFloorService, BuildingFloorService>();
+builder.Services.AddScoped<IWorkSpaceCategoryService, WorkSpaceCategoryService>();
 
 #endregion
 

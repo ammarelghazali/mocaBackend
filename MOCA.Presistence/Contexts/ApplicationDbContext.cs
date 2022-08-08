@@ -25,7 +25,7 @@ namespace MOCA.Presistence.Contexts
                                     IDateTimeService dateTime,
                                     IAuthenticatedUserService authenticatedUser) : base(options)
         {
-            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+           ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             _dateTime = dateTime;
             _authenticatedUser = authenticatedUser;
         }
