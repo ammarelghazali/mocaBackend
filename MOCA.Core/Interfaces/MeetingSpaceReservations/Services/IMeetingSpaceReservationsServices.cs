@@ -7,9 +7,13 @@ namespace MOCA.Core.Interfaces.MeetingSpaceReservations.Services
 {
     public interface IMeetingSpaceReservationsServices
     {
-        Task<PagedResponse<List<GetAllMeetingSubmissionsResponseDto>>> GetAllSubmissionsWithPagination(int pageNumber, int pageSize);
-        Task<Response<List<GetAllMeetingSubmissionsResponseDto>>> GetAllSubmissionsWithoutPagination();
-        Task<Response<List<GetAllMeetingReservationLocationsDto>>> GetAllMeetingReservationLocations();
+        Task<PagedResponse<List<MeetingReservationResponseDto>>> GetAllSubmissionsWithPagination(int pageNumber, int pageSize);
+        Task<Response<List<MeetingReservationResponseDto>>> GetAllSubmissionsWithoutPagination();
+        Task<PagedResponse<List<MeetingReservationResponseDto>>> GetAllMeetingReservationsWithFilter(
+            GetAllMeetingReservationsWithFilterRequestDto dto);
+        Task<Response<MeetingReservationResponseDto>> GetMeetingReservationById(long id);
+
+        Task<Response<List<MeetingReservationLocationsDto>>> GetAllMeetingReservationLocations();
 
     }
 }

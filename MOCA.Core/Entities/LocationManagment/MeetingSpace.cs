@@ -1,4 +1,5 @@
 ﻿using MOCA.Core.Entities.LocationManagment.Base;
+using MOCA.Core.Entities.MeetingSpaceReservation;
 using System.ComponentModel.DataAnnotations;
 
 namespace MOCA.Core.Entities.LocationManagment
@@ -31,5 +32,6 @@ namespace MOCA.Core.Entities.LocationManagment
         public string UnitEBrochure { get; set; }   
 
         public ICollection<MeetingSpaceHourlyPricing> MeetingSpaceHourlyPricings { get; set; }
+        public ICollection<MeetingReservation> MeetingReservations { get; set; }
     }
 }
