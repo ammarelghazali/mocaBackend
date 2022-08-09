@@ -1,4 +1,6 @@
-﻿using MOCA.Core.Entities.DynamicLists;
+﻿using Microsoft.EntityFrameworkCore;
+using MOCA.Core.DTOs.DynamicLists;
+using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Interfaces.DynamicLists.Repositories;
 using MOCA.Presistence.Contexts;
 using MOCA.Presistence.Repositories.Base;
@@ -20,13 +22,20 @@ namespace MOCA.Presistence.Repositories.LocationManagment
 
         public async Task<bool> DeleteWorkSpaceCategory(long Id)
         {
-            var workSpaceCategory = _context.WorkSpaceCategories.Where(x => x.Id == Id && x.IsDeleted != true).FirstOrDefault();
+            var workSpaceCategory =  _context.WorkSpaceCategories.Where(x => x.Id == Id && x.IsDeleted == false).FirstOrDefault();
             if (workSpaceCategory == null)
             {
                 return false;
             }
             _context.WorkSpaceCategories.Remove(workSpaceCategory);
             return true;
+        }
+
+        public async Task<IReadOnlyList<WorkSpaceCategory>> GetWorkSpaceCategoryById(long id)
+        {
+            return await _context.WorkSpaceCategories.Where(x => x.Id == id && x.IsDeleted == false).AsNoTracking().ToArrayAsync();
+           
+
         }
 
         public async Task<bool> IsUniqueNameAsync(string workSpaceName)
@@ -37,9 +46,8 @@ namespace MOCA.Presistence.Repositories.LocationManagment
                 return false;
             }
             return true;
-                
-
-
         }
+
+      
     }
 }

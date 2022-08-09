@@ -1,5 +1,6 @@
 ﻿using MOCA.Core.DTOs.DynamicLists;
 using MOCA.Core.DTOs.Shared.Responses;
+using MOCA.Core.Entities.DynamicLists;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace MOCA.Core.Interfaces.DynamicLists.Services
 
         Task<Response<WorkSpaceCategoryModel>> GetWorkSpaceCategoryByID(long Id);
         Task<Response<List<WorkSpaceCategoryModel>>> GetAllWorkSpaceCategoryWithoutPagination();
+        Task<Response<List<WorkSpaceCategory>>> AddListOfWorkSpaceCategory(List<WorkSpaceCategoryModel> request);
 
     }
 }

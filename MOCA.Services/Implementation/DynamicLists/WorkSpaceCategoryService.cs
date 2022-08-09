@@ -59,26 +59,7 @@ namespace MOCA.Services.Implementation.DynamicLists
 
         }
 
-        public async Task<Response<bool>> DeleteWorkSpaceCategory(long Id)
-        {
-            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
-            {
-                throw new UnauthorizedAccessException("User is not authorized");
-            }
-            var workSpaceEntity = await _unitOfWork.WorkSpaceCategoryRepo.GetByIdAsync(Id);
-
-            if (workSpaceEntity == null) { throw new NotFoundException(nameof(WorkSpaceCategory), Id); }
-
-            await _unitOfWork.WorkSpaceCategoryRepoEF.DeleteWorkSpaceCategory(Id);
-
-            if (await _unitOfWork.SaveAsync() < 1)
-            {
-                return new Response<bool>("Cannot Delete Work Space Category right now");
-            }
-
-            return new Response<bool>(true, "Work Space Category Deleted Successfully.");
-
-        }
+      
 
         public async Task<Response<List<WorkSpaceCategoryModel>>> GetAllWorkSpaceCategoryWithoutPagination()
         {
@@ -96,24 +77,7 @@ namespace MOCA.Services.Implementation.DynamicLists
             return new Response<List<WorkSpaceCategoryModel>>(Res);
         }
 
-        public async Task<Response<WorkSpaceCategoryModel>> GetWorkSpaceCategoryByID(long Id)
-        {
-            //if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
-            //{
-            //    throw new UnauthorizedAccessException("User is not authorized");
-            //}
-            //if (Id == null || Id <= 0) 
-            //{ 
-            //    throw new ValidationException();
-            //}
-            //var data = await _unitOfWork.WorkSpaceCategoryRepo.GetByIdAsync(Id);
-            //var res = _mapper.Map<List<WorkSpaceCategoryModel>>(data);
-
-            //return new Response<List<WorkSpaceCategoryModel>>(res);
-            throw new Exception();
-
-
-        }
+       
 
         public async Task<Response<bool>> UpdateWorkSpaceCategory(WorkSpaceCategoryModel request)
         {
@@ -149,5 +113,92 @@ namespace MOCA.Services.Implementation.DynamicLists
             return new Response<bool>(true, " Work Space Category Updated Successfully.");
 
         }
+        public async Task<Response<bool>> DeleteWorkSpaceCategory(long Id)
+        {
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
+            var workSpaceEntity = await _unitOfWork.WorkSpaceCategoryRepo.GetByIdAsync(Id);
+
+            if (workSpaceEntity == null) { throw new NotFoundException(nameof(WorkSpaceCategory), Id); }
+
+            await _unitOfWork.WorkSpaceCategoryRepoEF.DeleteWorkSpaceCategory(Id);
+
+            if (await _unitOfWork.SaveAsync() < 1)
+            {
+                return new Response<bool>("Cannot Delete Work Space Category right now");
+            }
+
+            return new Response<bool>(true, "Work Space Category Deleted Successfully.");
+
+        }
+
+        public async Task<Response<List<WorkSpaceCategory>>> AddListOfWorkSpaceCategory(List<WorkSpaceCategoryModel> request)
+        {
+            
+
+            var  workSpace = _mapper.Map<List<WorkSpaceCategory>>(request);
+
+            foreach (var item in workSpace)
+            {
+                if (string.IsNullOrWhiteSpace(item.CreatedBy))
+                {
+                    if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+                    {
+                        throw new UnauthorizedAccessException("User is not authorized");
+                    }
+                    else
+                    { item.CreatedBy = _authenticatedUserService.UserId; }
+                }
+                if (item.CreatedAt == null || item.CreatedAt == default)
+                {
+                    item.CreatedAt = _dateTimeService.NowUtc;
+                }
+            }
+
+            foreach (var r in request)
+            {
+                var workSpaceEntity = await _unitOfWork.WorkSpaceCategoryRepoEF.IsUniqueNameAsync(r.Name.ToString());
+                if (workSpaceEntity == null)
+                {
+                    throw new InvalidOperationException("This Work Space Category is already exist");
+                }
+            }
+
+            _unitOfWork.WorkSpaceCategoryRepo.InsertRang(workSpace);
+
+
+
+            if (await _unitOfWork.SaveAsync() < 1)
+            {
+                return new Response<List<WorkSpaceCategory>>("Cannot Add WorkSpaceCategory right now");
+            }
+
+
+            return new  Response<List<WorkSpaceCategory>>(workSpace, "WorkSpaceCategory Added Successfully");
+
+        }
+
+        public async Task<Response<WorkSpaceCategoryModel>> GetWorkSpaceCategoryByID(long Id)
+        {
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
+
+            if (Id <= 0)
+            {
+                return new Response<WorkSpaceCategoryModel>("ID must be greater than zero.");
+            }
+            var workSpace = await _unitOfWork.WorkSpaceCategoryRepo.GetByIdAsync(Id);
+            if (workSpace == null)
+            {
+                return new Response<WorkSpaceCategoryModel>(null, "No Category Found With This ID.");
+            }
+            return new Response<WorkSpaceCategoryModel>(_mapper.Map<WorkSpaceCategoryModel>(workSpace));
+        }
+
+        
     }
 }
