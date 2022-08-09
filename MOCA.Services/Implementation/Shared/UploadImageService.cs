@@ -40,7 +40,7 @@ namespace MOCA.Services.Implementation.Shared
                         {
                             Image pic = Image.FromStream(ms);
 
-                            string renameFile = DateTime.UtcNow.Ticks + "_" + "Location" + "." + pic.RawFormat.ToString();
+                            string renameFile = DateTime.UtcNow.Ticks + "_" + pathType + "." + pic.RawFormat.ToString();
                             var fullPath = Path.Combine(pathToSave, renameFile);
                             dbPath = Path.Combine(folderName, renameFile);
 
