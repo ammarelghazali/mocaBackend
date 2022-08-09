@@ -45,9 +45,9 @@ namespace MOCA.Services.Implementation.LocationManagment
                 currency.CreatedAt = _dateTimeService.NowUtc;
             }
             var entityCurrency = await _unitOfWork.CurrencyRepo.GetByIdAsync(request.Id);
-            if (entityCurrency == null)
+            if (entityCurrency != null)
             {
-                throw new NotFoundException(nameof(Currency), request.Id);
+                return new Response<long>("Currency Exists Before.");
             }
 
             _unitOfWork.CurrencyRepo.Insert(currency);
