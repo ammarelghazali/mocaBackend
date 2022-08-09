@@ -18,11 +18,12 @@ namespace LocationManagement.API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IWorkSpaceCategoryService _WorkSpaceCategoryService;
-
-        public DynamicListsController(IMapper mapper, IWorkSpaceCategoryService WorkSpaceCategoryService)
+        private readonly IWorkSpaceTypeService _WorkSpaceTypeService;
+        public DynamicListsController(IMapper mapper, IWorkSpaceCategoryService WorkSpaceCategoryService, IWorkSpaceTypeService WorkSpaceTypeService)
         {
             _mapper = mapper;
             _WorkSpaceCategoryService = WorkSpaceCategoryService;
+            _WorkSpaceTypeService = WorkSpaceTypeService;
         }
 
 
@@ -98,6 +99,20 @@ namespace LocationManagement.API.Controllers
                 return BadRequest(response);
             }
             return Ok(response);
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+
+        [HttpPost("AddWorkSpaceType")]
+        public async Task<IActionResult> AddWorkSpaceType([FromBody] WorkSpaceTypeModel model)
+        {
+            var data = await _WorkSpaceTypeService.AddWorkSpaceType(model);
+
+            if (data.Succeeded == false)
+            {
+                return BadRequest(data);
+            }
+            return Ok(data);
         }
     }
 }

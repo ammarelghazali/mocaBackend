@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MOCA.Presistence.Repositories.LocationManagment
+namespace MOCA.Presistence.Repositories.DynamicLists
 {
     public class WorkSpaceCategoryRepository : GenericRepository<WorkSpaceCategory>, IWorkSpaceCategoryRepository
     {
@@ -22,7 +22,7 @@ namespace MOCA.Presistence.Repositories.LocationManagment
 
         public async Task<bool> DeleteWorkSpaceCategory(long Id)
         {
-            var workSpaceCategory =  _context.WorkSpaceCategories.Where(x => x.Id == Id && x.IsDeleted == false).FirstOrDefault();
+            var workSpaceCategory = _context.WorkSpaceCategories.Where(x => x.Id == Id && x.IsDeleted == false).FirstOrDefault();
             if (workSpaceCategory == null)
             {
                 return false;
@@ -34,7 +34,7 @@ namespace MOCA.Presistence.Repositories.LocationManagment
         public async Task<IReadOnlyList<WorkSpaceCategory>> GetWorkSpaceCategoryById(long id)
         {
             return await _context.WorkSpaceCategories.Where(x => x.Id == id && x.IsDeleted == false).AsNoTracking().ToArrayAsync();
-           
+
 
         }
 
@@ -48,6 +48,6 @@ namespace MOCA.Presistence.Repositories.LocationManagment
             return true;
         }
 
-      
+
     }
 }

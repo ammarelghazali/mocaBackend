@@ -23,6 +23,7 @@ using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
 using MOCA.Presistence.Repositories.MeetingSpaceReservations;
 using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Interfaces.DynamicLists.Repositories;
+using MOCA.Presistence.Repositories.DynamicLists;
 
 namespace MOCA.Presistence
 {
@@ -345,6 +346,25 @@ namespace MOCA.Presistence
             get
             {
                 return _WorkSpaceCategoryRepoEF = _WorkSpaceCategoryRepoEF ?? new WorkSpaceCategoryRepository(_context);
+            }
+        }
+
+
+        private IGenericRepository<WorkSpaceType> _WorkSpaceTypeRepo;
+        public IGenericRepository<WorkSpaceType> WorkSpaceTypeRepo
+        {
+            get
+            {
+                return _WorkSpaceTypeRepo = _WorkSpaceTypeRepo ?? new GenericRepository<WorkSpaceType>(_context);
+            }
+        }
+
+        private IWorkSpaceTypeRepository _WorkSpaceTypeRepoEF;
+        public IWorkSpaceTypeRepository WorkSpaceTypeRepoEF
+        {
+            get
+            {
+                return _WorkSpaceTypeRepoEF = _WorkSpaceTypeRepoEF ?? new WorkSpaceTypeRepository(_context);
             }
         }
 

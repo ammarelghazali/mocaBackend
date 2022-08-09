@@ -154,6 +154,9 @@ namespace MOCA.Core
         IGenericRepository<WorkSpaceCategory> WorkSpaceCategoryRepo { get; }
         IWorkSpaceCategoryRepository WorkSpaceCategoryRepoEF { get; }
 
+        IGenericRepository<WorkSpaceType> WorkSpaceTypeRepo { get; }
+        IWorkSpaceTypeRepository WorkSpaceTypeRepoEF { get; }
+
         #endregion
         void Save();
         Task<int> SaveAsync();

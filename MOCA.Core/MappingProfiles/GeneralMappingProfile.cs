@@ -242,6 +242,9 @@ namespace MOCA.Core.MappingProfiles
             #region Dynamic Lists
             CreateMap<WorkSpaceCategoryModel, WorkSpaceCategory>();
             CreateMap<WorkSpaceCategory, WorkSpaceCategoryModel>();
+
+            CreateMap<WorkSpaceTypeModel, WorkSpaceType>();
+            CreateMap<WorkSpaceType, WorkSpaceTypeModel>();
             #endregion
 
             #region Events
