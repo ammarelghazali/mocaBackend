@@ -10,8 +10,6 @@ namespace MOCA.Core.DTOs.LocationManagment.Location
         [Required]
         public string Name { get; set; }
         [Required]
-        public string Title { get; set; }
-        [Required]
         public string Mobile { get; set; }
         [Required]
         public string Email { get; set; }
