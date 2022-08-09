@@ -6,8 +6,8 @@ namespace MOCA.Core.Entities.MeetingSpaceReservation
 {
     public class MeetingReservation : BaseReservationEntity
     {
-        public DateTime Date { set; get; }
-        public TimeSpan Time { set; get; }
+        public string Date { set; get; }
+        public string Time { set; get; }
         public int NumOfAttendees { set; get; }
         public long MeetingSpaceId { set; get; }
         [ForeignKey("MeetingSpaceId")]

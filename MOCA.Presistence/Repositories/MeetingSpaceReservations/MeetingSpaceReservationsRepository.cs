@@ -149,6 +149,14 @@ namespace MOCA.Presistence.Repositories.MeetingSpaceReservations
             return allSubmissions;
         }
 
+        public async Task<int> GetMeetingsWithinPeriodOfTime(string date, string fromTime, string toTime)
+        {
+            return _context.MeetingSpaceReservations.Where(x => x.IsDeleted != true 
+                                                           && String.Compare(date, x.Date) == 0
+                                                           && String.Compare(fromTime, x.Time) >= 0
+                                                           && String.Compare(toTime, x.Time) <= 0
+                                                           ).Count();
+        }
 
     }
 }

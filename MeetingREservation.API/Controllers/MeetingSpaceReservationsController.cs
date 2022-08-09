@@ -16,13 +16,15 @@ namespace MeetingREservation.API.Controllers
         {
             _meetingSpaceReservationsServices = meetingSpaceReservationsServices;
         }
-      
+
+        #region CRM
+
         /// <summary>
         /// Gets all meeting reservations with pagination sent in DTO
         /// </summary>
         /// <param name="dto"></param>
         /// <response code="200"> returns all paged meeting reservations with details or null if not found data</response>
-        
+
         [HttpGet("GetAllSubmissionsWithPagination")]
         public async Task<IActionResult> GetAllSubmissionsWithPagination([FromQuery] GetAllMeetingsSubmissionsDto dto)
         {
@@ -81,6 +83,23 @@ namespace MeetingREservation.API.Controllers
             var response = await _meetingSpaceReservationsServices.GetAllMeetingReservationLocations();
             return Ok(response);
         }
+
+        #endregion
+
+        #region Mobile
+
+        [HttpPost("BookMeetingReservation")]
+        public async Task<IActionResult> BookMeetingReservation(BookMeetingReservationRequestDto dto)
+        {
+            var response = _meetingSpaceReservationsServices.BookMeetingReservation(dto);
+            if(!response.Sucsseded)
+            {
+                return BadRequest();
+            }
+            return Ok();
+        }
+
+        #endregion
 
     }
 }
