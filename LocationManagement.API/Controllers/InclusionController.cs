@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using MOCA.Core.DTOs.LocationManagment.Inclusion;
 using MOCA.Core.DTOs.Shared;
 using MOCA.Core.Interfaces.LocationManagment.Services;
+using MOCA.Core.Interfaces.Shared.Services;
 using MOCA.Core.Settings;
 using System.Net.Http.Headers;
 
@@ -18,11 +19,13 @@ namespace LocationManagement.API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IInclusionService _inclusionService;
+        private readonly IUploadImageService _uploadImageService;
         private readonly FileSettings _fileSettings;
-        public InclusionController(IMapper mapper, IInclusionService inclusionService, IOptions<FileSettings> fileSettings)
+        public InclusionController(IMapper mapper, IInclusionService inclusionService, IOptions<FileSettings> fileSettings, IUploadImageService uploadImageService)
         {
             _mapper = mapper;
             _inclusionService = inclusionService;
+            _uploadImageService = uploadImageService;
             _fileSettings = fileSettings.Value;
         }
 
@@ -127,48 +130,14 @@ namespace LocationManagement.API.Controllers
         }
 
         [HttpPost("UploadIcon")]
-        [Authorize]
-        public async Task<IActionResult> UploadIcon()
+        public async Task<IActionResult> UploadIcon([FromBody] ImageUpload image)
         {
-            try
+            var response = await _uploadImageService.Uploading(image, _fileSettings.Inclusion_IconPath, "Inclusion");
+            if (response.Succeeded == false)
             {
-                var formCollection = await Request.ReadFormAsync();
-                List<string> lstFileNames = new List<string>();
-                var folderName = _fileSettings.Inclusion_IconPath;
-                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                Directory.CreateDirectory(pathToSave);
-                foreach (var file in formCollection.Files)
-                {
-                    if (file.Length > 0)
-                    {
-                        if (((file.Length / 1024) / 1024) <= (_fileSettings.MaxSizeInMega * 1024))
-                        {
-                            var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                            var fileNameWithoutExtention = Path.GetFileNameWithoutExtension(fileName);
-                            var extension = Path.GetExtension(fileName);
-                            Random rnd = new Random();
-                            string randomNumber = (rnd.Next(1000, 9999)).ToString();
-                            string renameFile = fileNameWithoutExtention + "_" + randomNumber + extension;
-
-                            var fullPath = Path.Combine(pathToSave, renameFile);
-                            var dbPath = Path.Combine(folderName, renameFile);
-                            using (var stream = new FileStream(fullPath, FileMode.Create))
-                            {
-                                file.CopyTo(stream);
-                            }
-                            return Ok(new { dbPath });
-
-                        }
-
-                    }
-
-                }
-                return Ok(lstFileNames);
+                return BadRequest(response);
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex}");
-            }
+            return Ok(response);
         }
     }
 }
