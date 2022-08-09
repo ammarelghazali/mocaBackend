@@ -142,7 +142,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             var Res = _mapper.Map<List<CurrencyModel>>(data);
             if (Res.Count == 0)
             {
-                return new Response<List<CurrencyModel>>(null);
+                return new Response<List<CurrencyModel>>(null, "Not Data Found");
             }
             return new Response<List<CurrencyModel>>(Res);
         }
