@@ -39,7 +39,6 @@ namespace MOCA.Core.Entities.LocationManagment
         public decimal GrossArea { get; set; }
         [Required]
         public decimal NetArea { get; set; }
-        public string CountryCode { get; set; }
         public string Phone { get; set; }
         [Required]
         public DateTime LaunchDate { get; set; }
@@ -62,7 +61,7 @@ namespace MOCA.Core.Entities.LocationManagment
         public decimal? PreOperationFee { get; set; }
         public decimal? GracePeriod { get; set; }
         public decimal? RampUpPeriod { get; set; }
-        public decimal? Percentage { get; set; }
+        public decimal? UtilizationPercentage { get; set; }
         public decimal? MinPaymentPerMonth { get; set; }
         public decimal? MinPaymentPercentage { get; set; }
         public decimal? EstimatedRampUpAmount { get; set; }
