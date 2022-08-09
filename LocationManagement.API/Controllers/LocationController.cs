@@ -6,6 +6,7 @@ using MOCA.Core.DTOs.LocationManagment.FavouriteLocation;
 using MOCA.Core.DTOs.LocationManagment.Location;
 using MOCA.Core.DTOs.Shared;
 using MOCA.Core.Interfaces.LocationManagment.Services;
+using MOCA.Core.Interfaces.Shared.Services;
 using MOCA.Core.Settings;
 using System.Net.Http.Headers;
 
@@ -21,12 +22,14 @@ namespace LocationManagement.API.Controllers
         private readonly ILocationService _locationService;
         private readonly IFavouriteLocationService _favouriteLocationService;
         private readonly FileSettings _fileSettings;
-        public LocationController(IMapper mapper, ILocationService locationService, IFavouriteLocationService favouriteLocationService, IOptions<FileSettings> fileSettings)
+        private readonly IUploadImageService _uploadImageService;
+        public LocationController(IMapper mapper, ILocationService locationService, IFavouriteLocationService favouriteLocationService, IOptions<FileSettings> fileSettings, IUploadImageService uploadImageService)
         {
             _mapper = mapper;
             _locationService = locationService;
             _favouriteLocationService = favouriteLocationService;
             _fileSettings = fileSettings.Value;
+            _uploadImageService = uploadImageService;
         }
 
         /// <summary>
@@ -128,49 +131,14 @@ namespace LocationManagement.API.Controllers
         /// <response code="200">Location Images Uploaded</response>
         /// <response code="400">Location Images Not Uploaded, or there is error while saving</response>
         [HttpPost("UploadLocationImages")]
-        public async Task<IActionResult> UploadLocationImages([FromQuery] string AlbumName)
+        public async Task<IActionResult> UploadLocationImages([FromBody] ImageUpload image)
         {
-            try
+            var response = await _uploadImageService.Uploading(image, _fileSettings.Location_FilePath, "Location");
+            if (response.Succeeded == false)
             {
-                var formCollection = await Request.ReadFormAsync();
-
-                var folderName = _fileSettings.Location_FilePath + "//" + AlbumName.ToLower();
-                if (!Directory.Exists(folderName))
-                {
-                    Directory.CreateDirectory(folderName);
-                }
-
-                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                List<string> lstFileNames = new List<string>();
-                foreach (var file in formCollection.Files)
-                {
-                    if (file.Length > 0)
-                    {
-                        if (((file.Length / 1024) / 1024) <= (_fileSettings.MaxSizeInMega * 1024))
-                        {
-                            var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                            var fileNameWithoutExtention = Path.GetFileNameWithoutExtension(fileName);
-                            var extension = Path.GetExtension(fileName);
-                            Random rnd = new Random();
-                            string randomNumber = (rnd.Next(1000, 9999)).ToString();
-                            string renameFile = fileNameWithoutExtention + "_" + randomNumber + extension;
-
-                            var fullPath = Path.Combine(pathToSave, renameFile);
-                            var dbPath = Path.Combine(folderName, renameFile);
-                            using (var stream = new FileStream(fullPath, FileMode.Create))
-                            {
-                                file.CopyTo(stream);
-                            }
-                            lstFileNames.Add(dbPath);
-                        }
-                    }
-                }
-                return Ok(lstFileNames);
+                return BadRequest(response);
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex}");
-            }
+            return Ok(response);
         }
 
         /// <summary>

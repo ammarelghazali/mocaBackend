@@ -71,7 +71,7 @@ namespace MOCA.Core.DTOs.LocationManagment.Location
         public decimal? ServiceFeesPriceSqm { get; set; }
         public decimal? ServiceFeesTotalFees { get; set; }
         public decimal? ServiceFeesAnnualIncrease { get; set; }
-        public string UploadContract { get; set; }
+        public string EventspaceLeaseContract { get; set; }
         public string CommercialRegisterFile { get; set; }
         public string CommercialRegisterNumber { get; set; }
         public string TaxIdFile { get; set; }
