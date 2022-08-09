@@ -88,7 +88,7 @@ namespace MOCA.Core.Entities.LocationManagment
         public decimal? ServiceFeesAnnualIncrease { get; set; }
 
         //Legal Documents
-        public string UploadContract { get; set; }
+        public string EventspaceLeaseContract { get; set; }
         public string CommercialRegisterFile { get; set; }
         public string CommercialRegisterNumber { get; set; }
         public string TaxIdFile { get; set; }
