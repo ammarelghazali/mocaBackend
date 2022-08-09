@@ -20,7 +20,6 @@ namespace MOCA.Core.Entities.LocationManagment
         public string Title { get; set; }
         [Required]
         public string Mobile { get; set; }
-        [Required]
         public string Email { get; set; }
         [Required]
         public string Department { get; set; }
