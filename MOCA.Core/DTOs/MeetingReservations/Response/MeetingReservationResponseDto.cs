@@ -1,6 +1,8 @@
-﻿namespace MOCA.Core.DTOs.MeetingReservations.Response
+﻿using MOCA.Core.Entities.MeetingSpaceReservation;
+
+namespace MOCA.Core.DTOs.MeetingReservations.Response
 {
-    public class GetAllMeetingSubmissionsResponseDto
+    public class MeetingReservationResponseDto
     {
         public long Id { get; set; }
         public DateTime SubmissionDate { get; set; }
@@ -17,9 +19,15 @@
         public DateTime? ScanOutDate { get; set; }
         public int Hourse { get; set; }
         public int NumOfGuests { get; set; }
-        public Decimal Amount { get; set; }
+        public decimal Amount { get; set; }
         public string Status { get; set; }
         public bool HasTopUp { get; set; }
+        public decimal RemainingHours { get; set; }
+
+        public ICollection<MeetingReservationTopUp> TopUps { get; set; }
+        public ICollection<MeetingAttendee> Attendees { get; set; }
+
+
     }
 }
 

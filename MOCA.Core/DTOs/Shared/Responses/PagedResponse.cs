@@ -22,5 +22,9 @@ namespace MOCA.Core.DTOs.Shared.Responses
             Errors = null;
             this.pg_total = pg_total;
         }
+        public PagedResponse(string message) : base(message)
+        {
+
+        }
     }
 }

@@ -20,6 +20,7 @@ namespace MOCA.Core.Entities.MeetingSpaceReservation
         public ICollection<MeetingAttendee> MeetingAttendees { set; get; }
         public ICollection<MeetingReservationTopUp> MeetingReservationTopUps { get; set; }
         public MeetingReservationTransaction MeetingReservationTransaction { get; set; }
+        public MeetingReservationCancellation MeetingReservationCancellation { get; set; }
 
     }
 }
