@@ -608,7 +608,7 @@ namespace MOCA.Services.Implementation.LocationManagment
 
             if (data.Count() == 0)
             {
-                return new Response<List<LocationModel>>(null);
+                return new Response<List<LocationModel>>(null, "Not Data Found");
             }
 
             List<LocationModel> locationDetails = new List<LocationModel>();
@@ -734,7 +734,7 @@ namespace MOCA.Services.Implementation.LocationManagment
 
             if (data.Count == 0)
             {
-                return new Response<List<LocationGetAllModel>>(null);
+                return new Response<List<LocationGetAllModel>>(null, "Not Data Found");
             }
             return new Response<List<LocationGetAllModel>>(data);
         }
@@ -821,7 +821,7 @@ namespace MOCA.Services.Implementation.LocationManagment
 
             if (data.Count == 0)
             {
-                return new Response<List<LocationGetAllFilterModel>>(null);
+                return new Response<List<LocationGetAllFilterModel>>(null, "Not Data Found");
             }
             return new Response<List<LocationGetAllFilterModel>>(data.ToList());
         }

@@ -141,7 +141,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             var Res = _mapper.Map<List<IndustryModel>>(data);
             if (Res.Count == 0)
             {
-                return new Response<List<IndustryModel>>(null);
+                return new Response<List<IndustryModel>>(null, "Not Data Found");
             }
             return new Response<List<IndustryModel>>(Res);
         }
