@@ -6,6 +6,7 @@ using MOCA.Core.DTOs.LocationManagment.Inclusion;
 using MOCA.Core.DTOs.Shared;
 using MOCA.Core.Interfaces.LocationManagment.Services;
 using MOCA.Core.Settings;
+using System.Net.Http.Headers;
 
 namespace LocationManagement.API.Controllers
 {
@@ -133,14 +134,14 @@ namespace LocationManagement.API.Controllers
             {
                 var formCollection = await Request.ReadFormAsync();
                 List<string> lstFileNames = new List<string>();
-                var folderName = fileSettings.Inclusion_IconPath;
+                var folderName = _fileSettings.Inclusion_IconPath;
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
                 Directory.CreateDirectory(pathToSave);
                 foreach (var file in formCollection.Files)
                 {
                     if (file.Length > 0)
                     {
-                        if (((file.Length / 1024) / 1024) <= (fileSettings.MaxSizeInMega * 1024))
+                        if (((file.Length / 1024) / 1024) <= (_fileSettings.MaxSizeInMega * 1024))
                         {
                             var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
                             var fileNameWithoutExtention = Path.GetFileNameWithoutExtension(fileName);
@@ -157,7 +158,6 @@ namespace LocationManagement.API.Controllers
                             }
                             return Ok(new { dbPath });
 
-                            //lstFileNames.Add(dbPath);
                         }
 
                     }
