@@ -46,8 +46,11 @@ namespace MOCA.Services.Implementation.DynamicLists
             {
                 workSpace.CreatedAt = _dateTimeService.NowUtc;
             }
+            var workSpaceEntity = await _unitOfWork.WorkSpaceCategoryRepoEF.IsUniqueNameAsync(request.Name);
 
+            if (!workSpaceEntity)
             {
+                return new Response<long>("This Work Space Category is already exist");
             }
 
             _unitOfWork.WorkSpaceCategoryRepo.Insert(workSpace);

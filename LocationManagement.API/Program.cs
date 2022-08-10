@@ -8,6 +8,7 @@ using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.Interfaces.DynamicLists.Services;
 using MOCA.Core.Interfaces.LocationManagment.Services;
 using MOCA.Core.Interfaces.Shared.Services;
+using MOCA.Core.Settings;
 using MOCA.Presistence;
 using MOCA.Presistence.Contexts;
 using MOCA.Services;
@@ -110,6 +111,13 @@ builder.Services.AddScoped<IWorkSpaceTypeService, WorkSpaceTypeService>();
 
 builder.Services.AddScoped<IWorkSpaceCategoryService, WorkSpaceCategoryService>();
 
+#endregion
+
+
+#region Settings
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.Configure<JWTSettings>(builder.Configuration.GetSection("JWTSettings"));
+builder.Services.Configure<FileSettings>(builder.Configuration.GetSection("FileSettings"));
 #endregion
 
 #region JWT Authentication

@@ -33,290 +33,305 @@ namespace MOCA.Services.Implementation.LocationManagment
 
         public async Task<Response<long>> AddLocation(LocationModel request)
         {
-            var location = _mapper.Map<Location>(request);
-            if (string.IsNullOrWhiteSpace(location.CreatedBy))
+            try
             {
-                if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+                var location = _mapper.Map<Location>(request);
+                if (string.IsNullOrWhiteSpace(location.CreatedBy))
                 {
-                    throw new UnauthorizedAccessException("User is not authorized");
+                    if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+                    {
+                        throw new UnauthorizedAccessException("User is not authorized");
+                    }
+                    else
+                    { location.CreatedBy = _authenticatedUserService.UserId; }
                 }
-                else
-                { location.CreatedBy = _authenticatedUserService.UserId; }
-            }
-            if (location.CreatedAt == null || location.CreatedAt == default)
-            {
-                location.CreatedAt = _dateTimeService.NowUtc;
-            }
-
-            #region Validation
-            if (request.LocationWorkingHours.Count == 0)
-            {
-                return new Response<long>("You Must enter Working Hours for location.");
-            }
-
-            bool NameChecker = await _unitOfWork.LocationRepoEF.CheckLocationNameIsUinque(request.Name);
-            if (NameChecker == false)
-            {
-                return new Response<long>("Location Name is not unique.");
-            }
-
-            var DistrictChecker = await _unitOfWork.DistrictRepo.GetByIdAsync(request.DistrictId);
-            if (DistrictChecker == null)
-            {
-                return new Response<long>("Location District is not found.");
-            }
-
-            var CurrencyChecker = await _unitOfWork.CurrencyRepo.GetByIdAsync(request.CurrencyId);
-            if (CurrencyChecker == null)
-            {
-                return new Response<long>("Currency is not found.");
-            }
-
-            var LocationTypeChecker = await _unitOfWork.LocationTypeRepo.GetByIdAsync(request.LocationTypeId);
-            if (LocationTypeChecker == null)
-            {
-                return new Response<long>("Location Type is not found.");
-            }
-            #endregion
-
-             _unitOfWork.LocationRepo.Insert(location);
-            if (await _unitOfWork.SaveAsync() < 1)
-            {
-                return new Response<long>("Cannot Add Location right now");
-            }
-
-            #region Add Service Fee Payments Due Date
-            var serviceFeePaymentsDueDate = _mapper.Map<List<ServiceFeePaymentsDueDate>>(request.ServiceFeePaymentsDueDates);
-            serviceFeePaymentsDueDate.ForEach(c => { c.LocationId = location.Id; });
-            _unitOfWork.ServiceFeePaymentsDueDateRepo.InsertRang(serviceFeePaymentsDueDate);
-            if (await _unitOfWork.SaveAsync() < 1)
-            {
-                return new Response<long>("Cannot Add ServiceFeePaymentsDueDate right now");
-            }
-            #endregion
-
-            #region Add Location Contact
-            var locationContact = _mapper.Map<List<LocationContact>>(request.LocationContacts);
-            locationContact.ForEach(c => { c.LocationId = location.Id; });
-            _unitOfWork.LocationContactRepo.InsertRang(locationContact);
-            if (await _unitOfWork.SaveAsync() < 1)
-            {
-                return new Response<long>("Cannot Add LocationContact right now");
-            }
-            #endregion
-
-            #region Add Location Image
-            var locationImage = _mapper.Map<List<LocationImage>>(request.LocationImages);
-            locationImage.ForEach(c => { c.LocationId = location.Id; });
-            _unitOfWork.LocationImageRepo.InsertRang(locationImage);
-            if (await _unitOfWork.SaveAsync() < 1)
-            {
-                return new Response<long>("Cannot Add LocationImage right now");
-            }
-            #endregion
-
-            #region Add Location Currency
-            var locationCurrency = _mapper.Map<List<LocationCurrency>>(request.LocationCurrencies);
-            foreach (var item in locationCurrency)
-            {
-                var checker = await _unitOfWork.LocationCurrencyRepoEF.CheckLocationCurrencyIsUinque(location.Id, item.CurrencyId);
-                if (checker == false)
+                if (location.CreatedAt == null || location.CreatedAt == default)
                 {
-                    return new Response<long>("Location Currency Exsists Before.");
+                    location.CreatedAt = _dateTimeService.NowUtc;
                 }
-            }
-            locationCurrency.ForEach(c => { c.LocationId = location.Id; });
-            _unitOfWork.LocationCurrencyRepo.InsertRang(locationCurrency);
-            if (await _unitOfWork.SaveAsync() < 1)
-            {
-                return new Response<long>("Cannot Add LocationCurrency right now");
-            }
-            #endregion
 
-            #region Add Location File
-            if(request.LocationFiles.Count != 0)
-            {
-                var locationFile = _mapper.Map<List<LocationFile>>(request.LocationFiles);
-                locationFile.ForEach(c => { c.LocationId = location.Id; });
-                _unitOfWork.LocationFileRepo.InsertRang(locationFile);
+                #region Validation
+                if (request.LocationWorkingHours.Count == 0)
+                {
+                    return new Response<long>("You Must enter Working Hours for location.");
+                }
+
+                bool NameChecker = await _unitOfWork.LocationRepoEF.CheckLocationNameIsUinque(request.Name);
+                if (NameChecker == false)
+                {
+                    return new Response<long>("Location Name is not unique.");
+                }
+
+                var DistrictChecker = await _unitOfWork.DistrictRepo.GetByIdAsync(request.DistrictId);
+                if (DistrictChecker == null)
+                {
+                    return new Response<long>("Location District is not found.");
+                }
+
+                var CurrencyChecker = await _unitOfWork.CurrencyRepo.GetByIdAsync(request.CurrencyId);
+                if (CurrencyChecker == null)
+                {
+                    return new Response<long>("Currency is not found.");
+                }
+
+                var LocationTypeChecker = await _unitOfWork.LocationTypeRepo.GetByIdAsync(request.LocationTypeId);
+                if (LocationTypeChecker == null)
+                {
+                    return new Response<long>("Location Type is not found.");
+                }
+                #endregion
+
+                _unitOfWork.LocationRepo.Insert(location);
                 if (await _unitOfWork.SaveAsync() < 1)
                 {
-                    return new Response<long>("Cannot Add LocationFile right now");
+                    return new Response<long>("Cannot Add Location right now");
                 }
-            }
-            #endregion
 
-            #region Add Location Working Hour
-            var locationWorkingHour = _mapper.Map<List<LocationWorkingHour>>(request.LocationWorkingHours);
-            locationWorkingHour.ForEach(c => { c.LocationId = location.Id; });
-            _unitOfWork.LocationWorkingHourRepo.InsertRang(locationWorkingHour);
-            if (await _unitOfWork.SaveAsync() < 1)
+                #region Add Service Fee Payments Due Date
+                var serviceFeePaymentsDueDate = _mapper.Map<List<ServiceFeePaymentsDueDate>>(request.ServiceFeePaymentsDueDates);
+                serviceFeePaymentsDueDate.ForEach(c => { c.LocationId = location.Id; });
+                _unitOfWork.ServiceFeePaymentsDueDateRepo.InsertRang(serviceFeePaymentsDueDate);
+                if (await _unitOfWork.SaveAsync() < 1)
+                {
+                    return new Response<long>("Cannot Add ServiceFeePaymentsDueDate right now");
+                }
+                #endregion
+
+                #region Add Location Contact
+                var locationContact = _mapper.Map<List<LocationContact>>(request.LocationContacts);
+                locationContact.ForEach(c => { c.LocationId = location.Id; });
+                _unitOfWork.LocationContactRepo.InsertRang(locationContact);
+                if (await _unitOfWork.SaveAsync() < 1)
+                {
+                    return new Response<long>("Cannot Add LocationContact right now");
+                }
+                #endregion
+
+                #region Add Location Image
+                var locationImage = _mapper.Map<List<LocationImage>>(request.LocationImages);
+                locationImage.ForEach(c => { c.LocationId = location.Id; });
+                _unitOfWork.LocationImageRepo.InsertRang(locationImage);
+                if (await _unitOfWork.SaveAsync() < 1)
+                {
+                    return new Response<long>("Cannot Add LocationImage right now");
+                }
+                #endregion
+
+                #region Add Location Currency
+                var locationCurrency = _mapper.Map<List<LocationCurrency>>(request.LocationCurrencies);
+                foreach (var item in locationCurrency)
+                {
+                    var checker = await _unitOfWork.LocationCurrencyRepoEF.CheckLocationCurrencyIsUinque(location.Id, item.CurrencyId);
+                    if (checker == false)
+                    {
+                        return new Response<long>("Location Currency Exsists Before.");
+                    }
+                }
+                locationCurrency.ForEach(c => { c.LocationId = location.Id; });
+                _unitOfWork.LocationCurrencyRepo.InsertRang(locationCurrency);
+                if (await _unitOfWork.SaveAsync() < 1)
+                {
+                    return new Response<long>("Cannot Add LocationCurrency right now");
+                }
+                #endregion
+
+                #region Add Location File
+                if (request.LocationFiles.Count != 0)
+                {
+                    var locationFile = _mapper.Map<List<LocationFile>>(request.LocationFiles);
+                    locationFile.ForEach(c => { c.LocationId = location.Id; });
+                    _unitOfWork.LocationFileRepo.InsertRang(locationFile);
+                    if (await _unitOfWork.SaveAsync() < 1)
+                    {
+                        return new Response<long>("Cannot Add LocationFile right now");
+                    }
+                }
+                #endregion
+
+                #region Add Location Working Hour
+                var locationWorkingHour = _mapper.Map<List<LocationWorkingHour>>(request.LocationWorkingHours);
+                locationWorkingHour.ForEach(c => { c.LocationId = location.Id; });
+                _unitOfWork.LocationWorkingHourRepo.InsertRang(locationWorkingHour);
+                if (await _unitOfWork.SaveAsync() < 1)
+                {
+                    return new Response<long>("Cannot Add LocationWorkingHour right now");
+                }
+                #endregion
+
+                #region Add Location Bank Account
+                var locationBankAccount = _mapper.Map<LocationBankAccount>(request.LocationBankAccount);
+                locationBankAccount.LocationId = location.Id;
+                _unitOfWork.LocationBankAccountRepo.Insert(locationBankAccount);
+                if (await _unitOfWork.SaveAsync() < 1)
+                {
+                    return new Response<long>("Cannot Add LocationBankAccount right now");
+                }
+                #endregion
+
+                #region Add Location Inclusion
+                var locationInclusion = _mapper.Map<List<LocationInclusion>>(request.LocationInclusions);
+                locationInclusion.ForEach(c => { c.LocationId = location.Id; });
+                _unitOfWork.LocationInclusionRepo.InsertRang(locationInclusion);
+                if (await _unitOfWork.SaveAsync() < 1)
+                {
+                    return new Response<long>("Cannot Add LocationInclusion right now");
+                }
+                #endregion
+
+                return new Response<long>(location.Id, "Location Added Successfully.");
+            }
+            catch (Exception ex)
             {
-                return new Response<long>("Cannot Add LocationWorkingHour right now");
+                return new Response<long>($"error while add location. ERROR : {ex}.");
             }
-            #endregion
-
-            #region Add Location Bank Account
-            var locationBankAccount = _mapper.Map<LocationBankAccount>(request.LocationBankAccount);
-            locationBankAccount.LocationId = location.Id;
-            _unitOfWork.LocationBankAccountRepo.Insert(locationBankAccount);
-            if (await _unitOfWork.SaveAsync() < 1)
-            {
-                return new Response<long>("Cannot Add LocationBankAccount right now");
-            }
-            #endregion
-
-            #region Add Location Inclusion
-            var locationInclusion = _mapper.Map<List<LocationInclusion>>(request.LocationInclusions);
-            locationInclusion.ForEach(c => { c.LocationId = location.Id; });
-            _unitOfWork.LocationInclusionRepo.InsertRang(locationInclusion);
-            if (await _unitOfWork.SaveAsync() < 1)
-            {
-                return new Response<long>("Cannot Add LocationInclusion right now");
-            }
-            #endregion
-
-            return new Response<long>(location.Id, "Location Added Successfully.");
+            
         }
 
         public async Task<Response<long>> UpdateLocation(LocationModel request)
         {
-            var location = _mapper.Map<Location>(request);
-            if (string.IsNullOrWhiteSpace(location.CreatedBy))
+            try
             {
-                if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+                var location = _mapper.Map<Location>(request);
+                if (string.IsNullOrWhiteSpace(location.CreatedBy))
                 {
-                    throw new UnauthorizedAccessException("User is not authorized");
+                    if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+                    {
+                        throw new UnauthorizedAccessException("User is not authorized");
+                    }
+                    else
+                    { location.CreatedBy = _authenticatedUserService.UserId; }
                 }
-                else
-                { location.CreatedBy = _authenticatedUserService.UserId; }
-            }
-            if (location.CreatedAt == null || location.CreatedAt == default)
-            {
-                location.CreatedAt = _dateTimeService.NowUtc;
-            }
+                if (location.CreatedAt == null || location.CreatedAt == default)
+                {
+                    location.CreatedAt = _dateTimeService.NowUtc;
+                }
 
-            #region Validation
-            if (request.LocationWorkingHours.Count == 0)
-            {
-                return new Response<long>("You Must enter Working Hours for location.");
-            }
+                #region Validation
+                if (request.LocationWorkingHours.Count == 0)
+                {
+                    return new Response<long>("You Must enter Working Hours for location.");
+                }
 
-            bool NameChecker = await _unitOfWork.LocationRepoEF.CheckLocationNameIsUinque(request.Name);
-            if (NameChecker == false)
-            {
-                return new Response<long>("Location Name is not unique.");
-            }
+                bool NameChecker = await _unitOfWork.LocationRepoEF.CheckLocationNameIsUinque(request.Name);
+                if (NameChecker == false)
+                {
+                    return new Response<long>("Location Name is not unique.");
+                }
 
-            var DistrictChecker = await _unitOfWork.DistrictRepo.GetByIdAsync(request.DistrictId);
-            if (DistrictChecker == null)
-            {
-                return new Response<long>("Location District is not found.");
-            }
+                var DistrictChecker = await _unitOfWork.DistrictRepo.GetByIdAsync(request.DistrictId);
+                if (DistrictChecker == null)
+                {
+                    return new Response<long>("Location District is not found.");
+                }
 
-            var CurrencyChecker = await _unitOfWork.CurrencyRepo.GetByIdAsync(request.CurrencyId);
-            if (CurrencyChecker == null)
-            {
-                return new Response<long>("Currency is not found.");
-            }
+                var CurrencyChecker = await _unitOfWork.CurrencyRepo.GetByIdAsync(request.CurrencyId);
+                if (CurrencyChecker == null)
+                {
+                    return new Response<long>("Currency is not found.");
+                }
 
-            var LocationTypeChecker = await _unitOfWork.LocationTypeRepo.GetByIdAsync(request.LocationTypeId);
-            if (LocationTypeChecker == null)
-            {
-                return new Response<long>("Location Type is not found.");
-            }
-            #endregion
+                var LocationTypeChecker = await _unitOfWork.LocationTypeRepo.GetByIdAsync(request.LocationTypeId);
+                if (LocationTypeChecker == null)
+                {
+                    return new Response<long>("Location Type is not found.");
+                }
+                #endregion
 
-            _unitOfWork.LocationRepo.Update(location);
-            if (await _unitOfWork.SaveAsync() < 1)
-            {
-                return new Response<long>("Cannot Updated Location right now");
-            }
-
-            #region Delete Old Service Fee Payments Due Date And Add New One
-            var serviceFeePaymentsDueDate = _mapper.Map<List<ServiceFeePaymentsDueDate>>(request.ServiceFeePaymentsDueDates);
-            _unitOfWork.ServiceFeePaymentsDueDateRepoEF.DeleteAllServiceFeePaymentsDueDateByLocationID(request.Id);
-            _unitOfWork.ServiceFeePaymentsDueDateRepo.InsertRang(serviceFeePaymentsDueDate);
-            if (await _unitOfWork.SaveAsync() < 1)
-            {
-                return new Response<long>("Cannot Update ServiceFeePaymentsDueDate right now");
-            }
-            #endregion
-
-            #region Delete Old Location Contact And Add New One
-            var locationContact = _mapper.Map<List<LocationContact>>(request.LocationContacts);
-            _unitOfWork.LocationContactRepoEF.DeleteAllLocationContactByLocationID(request.Id);
-            _unitOfWork.LocationContactRepo.InsertRang(locationContact);
-            if (await _unitOfWork.SaveAsync() < 1)
-            {
-                return new Response<long>("Cannot Update LocationContact right now");
-            }
-            #endregion
-
-            #region Delete Old Location Image And Add New One
-            var locationImage = _mapper.Map<List<LocationImage>>(request.LocationImages);
-            _unitOfWork.LocationImageRepoEF.DeleteAllLocationImageByLocationID(request.Id);
-            _unitOfWork.LocationImageRepo.InsertRang(locationImage);
-            if (await _unitOfWork.SaveAsync() < 1)
-            {
-                return new Response<long>("Cannot Update LocationImage right now");
-            }
-            #endregion
-
-            #region Delete Old Location Currency Add New One
-            var locationCurrency = _mapper.Map<List<LocationCurrency>>(request.LocationCurrencies);
-            _unitOfWork.LocationCurrencyRepoEF.DeleteByLocationID(request.Id);
-            _unitOfWork.LocationCurrencyRepo.InsertRang(locationCurrency);
-            if (await _unitOfWork.SaveAsync() < 1)
-            {
-                return new Response<long>("Cannot Update LocationCurrency right now");
-            }
-            #endregion
-
-            #region Delete Old Location File Add New One
-            if (request.LocationFiles.Count != 0)
-            {
-                var locationFile = _mapper.Map<List<LocationFile>>(request.LocationFiles);
-                _unitOfWork.LocationFileRepoEF.DeleteAllLocationFileByLocationID(request.Id);
-                _unitOfWork.LocationFileRepo.InsertRang(locationFile);
+                _unitOfWork.LocationRepo.Update(location);
                 if (await _unitOfWork.SaveAsync() < 1)
                 {
-                    return new Response<long>("Cannot Update LocationFile right now");
+                    return new Response<long>("Cannot Updated Location right now");
                 }
-            }
-            #endregion
 
-            #region Delete Old Location Working Hour Add New One
-            var locationWorkingHour = _mapper.Map<List<LocationWorkingHour>>(request.LocationWorkingHours);
-            _unitOfWork.LocationWorkingHourRepoEF.DeleteAllLocationWorkingHourByLocationID(request.Id);
-            _unitOfWork.LocationWorkingHourRepo.InsertRang(locationWorkingHour);
-            if (await _unitOfWork.SaveAsync() < 1)
+                #region Delete Old Service Fee Payments Due Date And Add New One
+                var serviceFeePaymentsDueDate = _mapper.Map<List<ServiceFeePaymentsDueDate>>(request.ServiceFeePaymentsDueDates);
+                _unitOfWork.ServiceFeePaymentsDueDateRepoEF.DeleteAllServiceFeePaymentsDueDateByLocationID(request.Id);
+                _unitOfWork.ServiceFeePaymentsDueDateRepo.InsertRang(serviceFeePaymentsDueDate);
+                if (await _unitOfWork.SaveAsync() < 1)
+                {
+                    return new Response<long>("Cannot Update ServiceFeePaymentsDueDate right now");
+                }
+                #endregion
+
+                #region Delete Old Location Contact And Add New One
+                var locationContact = _mapper.Map<List<LocationContact>>(request.LocationContacts);
+                _unitOfWork.LocationContactRepoEF.DeleteAllLocationContactByLocationID(request.Id);
+                _unitOfWork.LocationContactRepo.InsertRang(locationContact);
+                if (await _unitOfWork.SaveAsync() < 1)
+                {
+                    return new Response<long>("Cannot Update LocationContact right now");
+                }
+                #endregion
+
+                #region Delete Old Location Image And Add New One
+                var locationImage = _mapper.Map<List<LocationImage>>(request.LocationImages);
+                _unitOfWork.LocationImageRepoEF.DeleteAllLocationImageByLocationID(request.Id);
+                _unitOfWork.LocationImageRepo.InsertRang(locationImage);
+                if (await _unitOfWork.SaveAsync() < 1)
+                {
+                    return new Response<long>("Cannot Update LocationImage right now");
+                }
+                #endregion
+
+                #region Delete Old Location Currency Add New One
+                var locationCurrency = _mapper.Map<List<LocationCurrency>>(request.LocationCurrencies);
+                _unitOfWork.LocationCurrencyRepoEF.DeleteByLocationID(request.Id);
+                _unitOfWork.LocationCurrencyRepo.InsertRang(locationCurrency);
+                if (await _unitOfWork.SaveAsync() < 1)
+                {
+                    return new Response<long>("Cannot Update LocationCurrency right now");
+                }
+                #endregion
+
+                #region Delete Old Location File Add New One
+                if (request.LocationFiles.Count != 0)
+                {
+                    var locationFile = _mapper.Map<List<LocationFile>>(request.LocationFiles);
+                    _unitOfWork.LocationFileRepoEF.DeleteAllLocationFileByLocationID(request.Id);
+                    _unitOfWork.LocationFileRepo.InsertRang(locationFile);
+                    if (await _unitOfWork.SaveAsync() < 1)
+                    {
+                        return new Response<long>("Cannot Update LocationFile right now");
+                    }
+                }
+                #endregion
+
+                #region Delete Old Location Working Hour Add New One
+                var locationWorkingHour = _mapper.Map<List<LocationWorkingHour>>(request.LocationWorkingHours);
+                _unitOfWork.LocationWorkingHourRepoEF.DeleteAllLocationWorkingHourByLocationID(request.Id);
+                _unitOfWork.LocationWorkingHourRepo.InsertRang(locationWorkingHour);
+                if (await _unitOfWork.SaveAsync() < 1)
+                {
+                    return new Response<long>("Cannot Update LocationWorkingHour right now");
+                }
+                #endregion
+
+                #region Delete Old Location Bank Account Add New One
+                var locationBankAccount = _mapper.Map<LocationBankAccount>(request.LocationBankAccount);
+                _unitOfWork.LocationBankAccountRepoEF.DeleteByLocationID(request.Id);
+                _unitOfWork.LocationBankAccountRepo.Insert(locationBankAccount);
+                if (await _unitOfWork.SaveAsync() < 1)
+                {
+                    return new Response<long>("Cannot Update LocationBankAccount right now");
+                }
+                #endregion
+
+                #region Delete Old Location Inclusion Add New One
+                var locationInclusion = _mapper.Map<List<LocationInclusion>>(request.LocationInclusions);
+                _unitOfWork.LocationInclusionRepoEF.DeleteAllLocationInclusionByLocationID(request.Id);
+                _unitOfWork.LocationInclusionRepo.InsertRang(locationInclusion);
+                if (await _unitOfWork.SaveAsync() < 1)
+                {
+                    return new Response<long>("Cannot Update LocationInclusion right now");
+                }
+                #endregion
+
+                return new Response<long>(location.Id, "Location updated Successfully.");
+            }
+            catch (Exception ex)
             {
-                return new Response<long>("Cannot Update LocationWorkingHour right now");
+                return new Response<long>($"error while update location. ERROR : {ex}.");
             }
-            #endregion
-
-            #region Delete Old Location Bank Account Add New One
-            var locationBankAccount = _mapper.Map<LocationBankAccount>(request.LocationBankAccount);
-            _unitOfWork.LocationBankAccountRepoEF.DeleteByLocationID(request.Id);
-            _unitOfWork.LocationBankAccountRepo.Insert(locationBankAccount);
-            if (await _unitOfWork.SaveAsync() < 1)
-            {
-                return new Response<long>("Cannot Update LocationBankAccount right now");
-            }
-            #endregion
-
-            #region Delete Old Location Inclusion Add New One
-            var locationInclusion = _mapper.Map<List<LocationInclusion>>(request.LocationInclusions);
-            _unitOfWork.LocationInclusionRepoEF.DeleteAllLocationInclusionByLocationID(request.Id);
-            _unitOfWork.LocationInclusionRepo.InsertRang(locationInclusion);
-            if (await _unitOfWork.SaveAsync() < 1)
-            {
-                return new Response<long>("Cannot Update LocationInclusion right now");
-            }
-            #endregion
-
-            return new Response<long>(location.Id, "Location updated Successfully.");
         }
 
         public async Task<Response<bool>> DeleteLocation(long LocationId)
