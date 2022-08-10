@@ -45,7 +45,7 @@ namespace MOCA.Services.Implementation.DynamicLists
 
             if (!workSpaceEntity)
             {
-                return new Response<long>("This Work Space Category is already exist");
+                return new Response<long>(workSpace.Id,"This Work Space Category is already exist");
             }
 
             _unitOfWork.WorkSpaceCategoryRepo.Insert(workSpace);

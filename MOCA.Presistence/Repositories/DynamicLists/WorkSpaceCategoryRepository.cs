@@ -31,6 +31,8 @@ namespace MOCA.Presistence.Repositories.DynamicLists
             return true;
         }
 
+ 
+
         public async Task<IReadOnlyList<WorkSpaceCategory>> GetWorkSpaceCategoryById(long id)
         {
             return await _context.WorkSpaceCategories.Where(x => x.Id == id && x.IsDeleted == false).AsNoTracking().ToArrayAsync();

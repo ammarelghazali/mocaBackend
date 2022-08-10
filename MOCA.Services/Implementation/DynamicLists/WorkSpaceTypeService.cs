@@ -125,10 +125,27 @@ namespace MOCA.Services.Implementation.DynamicLists
             return new Response<bool>(true, "Work Space type  Deleted Successfully.");
         }
 
-        public Task<PagedResponse<List<WorkSpaceTypeModel>>> GetAllWorkSpaceTypePaginated(RequestParameter filter)
+        public async Task<PagedResponse<List<WorkSpaceTypeModel>>> GetAllWorkSpaceTypePaginated(RequestParameter filter)
         {
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
 
-            throw new NotImplementedException();
+            int pg_total = await _unitOfWork.WorkSpaceTypeRepo.GetCountAsync(x => x.IsDeleted == false);
+
+            var data = _unitOfWork.WorkSpaceTypeRepo.GetPaged(filter.PageNumber,
+                filter.PageSize,
+                f => f.IsDeleted == false,
+                q => q.OrderBy(o => o.Name));
+
+            var Res = _mapper.Map<List<WorkSpaceTypeModel>>(data);
+            if (Res.Count == 0)
+            {
+                return new PagedResponse<List<WorkSpaceTypeModel>>(null, filter.PageNumber, filter.PageSize);
+            }
+            return new PagedResponse<List<WorkSpaceTypeModel>>(Res, filter.PageNumber, filter.PageSize, pg_total);
+
         }
 
         public async Task<Response<WorkSpaceTypeModel>> GetWorkSpaceTypeById(long Id)
@@ -145,14 +162,27 @@ namespace MOCA.Services.Implementation.DynamicLists
             var workSpace = await _unitOfWork.WorkSpaceTypeRepo.GetByIdAsync(Id);
             if (workSpace == null)
             {
-                return new Response<WorkSpaceTypeModel>(null, "No Work Space Type Found With This ID.");
+                return new Response<WorkSpaceTypeModel>("No Work Space Type Found With This ID.");
             }
-            return new Response<WorkSpaceTypeModel>(_mapper.Map<WorkSpaceTypeModel>(workSpace));
+            var res = _mapper.Map<WorkSpaceTypeModel>(workSpace);
+            return new Response<WorkSpaceTypeModel>(res);
         }
 
         public async Task<Response<List<WorkSpaceTypeModel>>> GetWorkSpaceTypesWithoutPagination()
         {
-            return new Response<List<WorkSpaceTypeModel>>();
+
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
+            var data = _unitOfWork.WorkSpaceTypeRepo.GetAll().ToList();
+            var Res = _mapper.Map<List<WorkSpaceTypeModel>>(data);
+
+            if (Res.Count == 0)
+            {
+                return new Response<List<WorkSpaceTypeModel>>(null,"Cannot Get Work Space Types");
+            }
+            return new Response<List<WorkSpaceTypeModel>>(Res);
         }
 
         public async Task<Response<bool>> UpdateWorkSpaceType(WorkSpaceTypeModel request)
@@ -172,14 +202,11 @@ namespace MOCA.Services.Implementation.DynamicLists
             {
                 workSpace.LastModifiedAt = DateTime.UtcNow;
             }
-            var workSpaceEntity = await _unitOfWork.WorkSpaceTypeRepoEF.GetByIdAsync(request.Id);
+
+            var workSpaceEntity = await _unitOfWork.WorkSpaceTypeRepo.GetByIdAsync(request.Id);
 
 
-            if (workSpaceEntity == null) 
-            {
-               // throw new NotFoundException(nameof(WorkSpaceCategory), request.Id);
-                return new Response<bool>(false, "This ID is not found");
-            }
+            if (workSpaceEntity == null) { return new Response<bool>(false, "This Workspace type is exits before "); }
 
             workSpace.CreatedBy = workSpaceEntity.CreatedBy;
             workSpace.CreatedAt = workSpaceEntity.CreatedAt;
@@ -187,10 +214,10 @@ namespace MOCA.Services.Implementation.DynamicLists
             _unitOfWork.WorkSpaceTypeRepo.Update(workSpace);
             if (await _unitOfWork.SaveAsync() < 1)
             {
-                return new Response<bool>(false,"Cannot Update Work Space type right now");
+                return new Response<bool>("Cannot Update Work Space type right now");
             }
 
-            return new Response<bool>(true," Work Space type Updated Successfully.");
+            return new Response<bool>(true, " Work Space type Updated Successfully.");
         }
     }
 }

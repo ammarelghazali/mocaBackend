@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MOCA.Core.DTOs;
 using MOCA.Core.DTOs.DynamicLists;
 using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.Entities.DynamicLists;
@@ -175,6 +176,17 @@ namespace LocationManagement.API.Controllers
 
         }
 
+        [HttpGet("GetAllWorkSpaceTypesPagination")]
+        public async Task<IActionResult> GetAllWorkSpaceTypesPagination([FromQuery] RequestParameter filter)
+        {
+            var response = await _WorkSpaceTypeService.GetAllWorkSpaceTypePaginated(filter);
+
+            if (response.Succeeded == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
 
     }
 }

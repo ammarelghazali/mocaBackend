@@ -20,23 +20,27 @@ namespace MOCA.Presistence.Repositories.DynamicLists
 
         public async Task<bool> DeleteWorkSpaceType(long Id)
         {
-            var workSpaceCategory = _context.WorkSpaceTypes.Where(x => x.Id == Id && x.IsDeleted == false).FirstOrDefault();
-            if (workSpaceCategory == null)
+            var workSpaceType = _context.WorkSpaceTypes.Where(x => x.Id == Id && x.IsDeleted == false).FirstOrDefault();
+            if (workSpaceType == null)
             {
                 return false;
             }
-            _context.WorkSpaceTypes.Remove(workSpaceCategory);
+            _context.WorkSpaceTypes.Remove(workSpaceType);
             return true;
         }
 
+       
+
         public async Task<bool> IsUniqueNameAsync(string workSpaceName)
         {
-            var workSpaceCategory = _context.WorkSpaceTypes.Where(x => x.Name.Equals(workSpaceName) && x.IsDeleted != true).FirstOrDefault();
-            if (workSpaceCategory == null)
+            var workSpaceType = _context.WorkSpaceTypes.Where(x => x.Name.Equals(workSpaceName) && x.IsDeleted != true).FirstOrDefault();
+            if (workSpaceType == null)
             {
                 return true;
             }
             return false;
         }
+
+       
     }
 }
