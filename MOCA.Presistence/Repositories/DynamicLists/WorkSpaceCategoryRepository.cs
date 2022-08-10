@@ -1,4 +1,6 @@
-﻿using MOCA.Core.Entities.DynamicLists;
+﻿using Microsoft.EntityFrameworkCore;
+using MOCA.Core.DTOs.DynamicLists;
+using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Interfaces.DynamicLists.Repositories;
 using MOCA.Presistence.Contexts;
 using MOCA.Presistence.Repositories.Base;
@@ -8,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MOCA.Presistence.Repositories.LocationManagment
+namespace MOCA.Presistence.Repositories.DynamicLists
 {
     public class WorkSpaceCategoryRepository : GenericRepository<WorkSpaceCategory>, IWorkSpaceCategoryRepository
     {
@@ -20,7 +22,7 @@ namespace MOCA.Presistence.Repositories.LocationManagment
 
         public async Task<bool> DeleteWorkSpaceCategory(long Id)
         {
-            var workSpaceCategory = _context.WorkSpaceCategories.Where(x => x.Id == Id && x.IsDeleted != true).FirstOrDefault();
+            var workSpaceCategory = _context.WorkSpaceCategories.Where(x => x.Id == Id && x.IsDeleted == false).FirstOrDefault();
             if (workSpaceCategory == null)
             {
                 return false;
@@ -29,16 +31,23 @@ namespace MOCA.Presistence.Repositories.LocationManagment
             return true;
         }
 
+ 
+
+        public async Task<IReadOnlyList<WorkSpaceCategory>> GetWorkSpaceCategoryById(long id)
+        {
+            return await _context.WorkSpaceCategories.Where(x => x.Id == id && x.IsDeleted == false).AsNoTracking().ToArrayAsync();
+
+
+        }
+
         public async Task<bool> IsUniqueNameAsync(string workSpaceName)
         {
-
-            var workSpaceType = _context.WorkSpaceTypes.Where(x => x.Name.Equals(workSpaceName) && x.IsDeleted != true).FirstOrDefault();
-            if (workSpaceType == null)
+            var workSpaceCategory = _context.WorkSpaceCategories.Where(x => x.Name.Equals(workSpaceName) && x.IsDeleted != true).FirstOrDefault();
+            if (workSpaceCategory == null)
             {
                 return true;
             }
             return false;
-
         }
 
 
