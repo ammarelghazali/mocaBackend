@@ -1,4 +1,6 @@
 ﻿using MOCA.Core.Entities.LocationManagment.Base;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MOCA.Core.Entities.LocationManagment
 {
