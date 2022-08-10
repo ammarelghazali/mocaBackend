@@ -51,8 +51,9 @@ using MOCA.Core.DTOs.LocationManagment.Location;
 using MOCA.Core.DTOs.LocationManagment.FavouriteLocation;
 using MOCA.Core.DTOs.LocationManagment.Building;
 using MOCA.Core.DTOs.LocationManagment.BuildingFloor;
+using MOCA.Core.DTOs.DynamicLists.WorkSpaceCategory;
 using MOCA.Core.Entities.DynamicLists;
-using MOCA.Core.DTOs.DynamicLists;
+
 
 namespace MOCA.Core.MappingProfiles
 {
@@ -205,6 +206,12 @@ namespace MOCA.Core.MappingProfiles
             CreateMap<LocationCurrencyModel, LocationCurrency>();
             CreateMap<LocationCurrency, LocationCurrencyModel>();
 
+            CreateMap<LocationCurrencyModelGetMultiSelect, LocationCurrency>();
+            CreateMap<LocationCurrency, LocationCurrencyModelGetMultiSelect>();
+
+            CreateMap<LocationInclusionModelGetMultiSelect, LocationInclusion>();
+            CreateMap<LocationInclusion, LocationInclusionModelGetMultiSelect>();
+
             CreateMap<LocationFileModel, LocationFile>();
             CreateMap<LocationFile, LocationFileModel>();
 
@@ -213,6 +220,7 @@ namespace MOCA.Core.MappingProfiles
 
             CreateMap<LocationInclusionModel, LocationInclusion>();
             CreateMap<LocationInclusion, LocationInclusionModel>();
+            
 
             CreateMap<LocationWorkingHourModel, LocationWorkingHour>();
             CreateMap<LocationWorkingHour, LocationWorkingHourModel>();

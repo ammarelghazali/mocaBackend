@@ -475,7 +475,7 @@ namespace MOCA.Services.Implementation.LocationManagment
 
             #region LocationCurrency
             var locationCurrency = await _unitOfWork.LocationCurrencyRepoEF.GetByLocationID(Id);
-            locationDetails.LocationCurrencies = _mapper.Map<List<LocationCurrencyModel>>(locationCurrency);
+            locationDetails.LocationCurrencies = _mapper.Map<List<LocationCurrencyModelGetMultiSelect>>(locationCurrency);
             #endregion
 
             #region LocationFile
@@ -495,7 +495,7 @@ namespace MOCA.Services.Implementation.LocationManagment
 
             #region locationInclusion
             var locationInclusion = await _unitOfWork.LocationInclusionRepoEF.GetAllLocationInclusionByLocationID(Id);
-            locationDetails.LocationInclusions = _mapper.Map<List<LocationInclusionModel>>(locationInclusion);
+            locationDetails.LocationInclusions = _mapper.Map<List<LocationInclusionModelGetMultiSelect>>(locationInclusion);
             #endregion
 
             #region District
