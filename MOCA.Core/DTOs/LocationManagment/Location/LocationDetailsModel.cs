@@ -50,6 +50,7 @@ namespace MOCA.Core.DTOs.LocationManagment.Location
         public decimal? MinPaymentPerMonth { get; set; }
         public decimal? MinPaymentPercentage { get; set; }
         public decimal? FullOccupancyMonthlyPayment { get; set; }
+        public decimal? EstimatedRampUpAmount { get; set; }
         public decimal? EstimatedAnnualizedAmount { get; set; }
         public decimal? EstimatedContractAmount { get; set; }
         public decimal? LandlordShares { get; set; }
@@ -79,10 +80,10 @@ namespace MOCA.Core.DTOs.LocationManagment.Location
         public List<ServiceFeePaymentsDueDateModel> ServiceFeePaymentsDueDates { get; set; }
         public List<LocationContactModel> LocationContacts { get; set; }
         public List<LocationImageModel> LocationImages { get; set; }
-        public List<LocationCurrencyModel> LocationCurrencies { get; set; }
+        public List<LocationCurrencyModelGetMultiSelect> LocationCurrencies { get; set; }
         public List<LocationFileModel> LocationFiles { get; set; }
         public List<LocationWorkingHourModel> LocationWorkingHours { get; set; }
         public LocationBankAccountModel LocationBankAccount { get; set; }
-        public List<LocationInclusionModel> LocationInclusions { get; set; }
+        public List<LocationInclusionModelGetMultiSelect> LocationInclusions { get; set; }
     }
 }
