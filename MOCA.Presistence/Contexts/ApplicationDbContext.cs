@@ -85,6 +85,14 @@ namespace MOCA.Presistence.Contexts
         public DbSet<VenueSetup> VenueSetups { get; set; }
         public DbSet<EventSpaceOccupancy> EventSpaceOccupancies { get; set; }
         public DbSet<Coworking> Coworkings { get; set; }
+        public DbSet<CoWorkingSpaceHourlyPricing> CoWorkingSpaceHourlyPricings { get; set; }
+        public DbSet<CoworkingSpaceTailoredPricing> CoworkingSpaceTailoredPricings { get; set; }
+        public DbSet<CoworkingSpaceBundlePricing> CoworkingSpaceBundlePricings { get; set; }
+        public DbSet<WorkSpaceBundlePricing> WorkSpaceBundlePricings { get; set; }
+        public DbSet<WorkSpaceTailoredPricing> WorkSpaceTailoredPricings { get; set; }
+        public DbSet<WorkSpaceHourlyPricing> WorkSpaceHourlyPricings { get; set; }
+        public DbSet<WorkSpaceBundleMemberType> WorkSpaceBundleMemberTypes { get; set; }
+        public DbSet<CoworkingSpaceBundleMemberType> CoworkingSpaceBundleMemberTypes { get; set; }
         #endregion
 
         #region Shared
@@ -286,6 +294,14 @@ namespace MOCA.Presistence.Contexts
             builder.Entity<MeetingReservationCancellation>()
                 .HasKey(p => new { p.MeetingReservationId, p.CancellationId });
 
+            #endregion
+
+            #region LocationManagement
+            builder.Entity<WorkSpaceBundleMemberType>()
+               .HasKey(p => new { p.WorkSpaceBundleId, p.MemberTypeId });
+
+            builder.Entity<CoworkingSpaceBundleMemberType>()
+              .HasKey(p => new { p.CoworkSpaceBundleId, p.MemberTypeId });
             #endregion
         }
     }
