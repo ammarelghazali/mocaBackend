@@ -142,7 +142,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             var Res = _mapper.Map<List<InclusionModel>>(data);
             if (Res.Count == 0)
             {
-                return new Response<List<InclusionModel>>(null);
+                return new Response<List<InclusionModel>>(null,"Not Found Data");
             }
             return new Response<List<InclusionModel>>(Res);
         }

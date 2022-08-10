@@ -23,7 +23,7 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
 
         public async Task<IQueryable<GetAllWorkSpaceReservationsResponse>> GetAllWorkSpaceSubmissions(GetAllWorkSpaceReservationsDto request)
         {
-            var reservations = _context.WorkSpaceReservationBundle.OrderByDescending(r => r.CreatedAt)
+            var reservations = _context.WorkSpaceReservationBundle.Where(r => r.IsDeleted != true).OrderByDescending(r => r.CreatedAt)
                                                                   .Include(r => r.BasicUser)
                                                                   .Include(r => r.Location)
                                                                   .Include(r => r.WorkSpaceBundleTransactions)
@@ -78,13 +78,15 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
 
         public async Task<WorkSpaceReservationBundle> GetReservationInfo(long id)
         {
-            return await _context.WorkSpaceReservationBundle.Where(r => r.Id == id)
+            return await _context.WorkSpaceReservationBundle.Where(r => r.Id == id && r.IsDeleted != true)
                                                             .Include(r => r.Location)
                                                             .ThenInclude(r => r.LocationType)
                                                             .Include(r => r.WorkSpaceBundleTransactions)
                                                             .ThenInclude(r => r.ReservationTransaction)
                                                             .ThenInclude(r => r.ReservationDetails)
-                                                            .Include(r => r.BasicUser).FirstOrDefaultAsync();
+                                                            .Include(r => r.BasicUser)
+                                                            .Include(r => r.WorkSpaceBundleCancellation)
+                                                            .ThenInclude(r => r.CancelReservation).FirstOrDefaultAsync();
         }
     }
 }

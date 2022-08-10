@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
-using MOCA.Core.Entities.Shared.Reservations;
 using MOCA.Core.Entities.WorkSpaceReservations;
 using MOCA.Core.Interfaces.Shared.Services;
 using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
@@ -23,7 +22,7 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
 
         public async Task<IQueryable<GetAllWorkSpaceReservationsResponse>> GetAllWorkSpaceSubmissions(GetAllWorkSpaceReservationsDto request)
         {
-            var reservations = _context.WorkSpaceReservationTailored.OrderByDescending(r => r.CreatedAt)
+            var reservations = _context.WorkSpaceReservationTailored.Where(r => r.IsDeleted != true).OrderByDescending(r => r.CreatedAt)
                                                                               .Include(r => r.BasicUser)
                                                                               .Include(r => r.Location)
                                                                               .Include(r => r.WorkSpaceTailoredTransactions)
@@ -88,14 +87,16 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
 
         public async Task<WorkSpaceReservationTailored> GetReservationInfo(long id)
         {
-            return await _context.WorkSpaceReservationTailored.Where(r => r.Id == id)
+            return await _context.WorkSpaceReservationTailored.Where(r => r.Id == id && r.IsDeleted != true)
                                                             .Include(r => r.Location)
                                                             .ThenInclude(r => r.LocationType)
                                                             .Include(r => r.TopUps)
                                                             .Include(r => r.WorkSpaceTailoredTransactions)
                                                             .ThenInclude(r => r.ReservationTransaction)
                                                             .ThenInclude(r => r.ReservationDetails)
-                                                            .Include(r => r.BasicUser).FirstOrDefaultAsync();
+                                                            .Include(r => r.BasicUser)
+                                                            .Include(r => r.WorkSpaceTailoredCancellation)
+                                                            .ThenInclude(r => r.CancelReservation).FirstOrDefaultAsync();
         }
     }
 }

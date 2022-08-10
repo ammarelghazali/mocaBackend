@@ -1,26 +1,25 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using MOCA.Core.Entities.BaseEntities;
+using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Entities.Shared.Reservations;
 
 namespace MOCA.Core.Entities.MeetingSpaceReservation
 {
     public class MeetingReservationTopUp : BaseEntity
     {
-        public long MeetingSpaceReservationId { set; get; }
-        [ForeignKey("MeetingSpaceReservationId")]
-        public MeetingReservation MeetingSpaceReservation { set; get; }
+        public string Description { set; get; }
+
+        public long MeetingReservationId { set; get; }
+        [ForeignKey("MeetingReservationId")]
+        public MeetingReservation MeetingReservation { set; get; }
         
 
         public long? PaymentMethodId { get; set; }
         [ForeignKey("PaymentMethodId")]
         public PaymentMethod PaymentMethod { get; set; }
-        
 
-        public long MeetingRoomTimePriceId { set; get; }
-        //[ForeignKey("MeetingRoomTimePriceId")]
-        //public MeetingRoomTimePrice MeetingRoomTimePrice { get; set; }
-        
-        public string Description { set; get; }
-
+        public long MeetingSpaceHourlyPricingId { set; get; }
+        [ForeignKey("MeetingSpaceHourlyPricingId")]
+        public MeetingSpaceHourlyPricing MeetingSpaceHourlyPricing { get; set; }
     }
 }

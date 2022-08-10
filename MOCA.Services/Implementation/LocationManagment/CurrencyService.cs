@@ -25,6 +25,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _dateTimeService = dateTimeService ?? throw new ArgumentNullException(nameof(dateTimeService));
+            _authenticatedUserService = authenticatedUserService ?? throw new ArgumentNullException(nameof(authenticatedUserService));
         }
 
         public async Task<Response<long>> AddCurrency(CurrencyModel request)
@@ -44,9 +45,9 @@ namespace MOCA.Services.Implementation.LocationManagment
                 currency.CreatedAt = _dateTimeService.NowUtc;
             }
             var entityCurrency = await _unitOfWork.CurrencyRepo.GetByIdAsync(request.Id);
-            if (entityCurrency == null)
+            if (entityCurrency != null)
             {
-                throw new NotFoundException(nameof(Currency), request.Id);
+                return new Response<long>("Currency Exists Before.");
             }
 
             _unitOfWork.CurrencyRepo.Insert(currency);
@@ -141,7 +142,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             var Res = _mapper.Map<List<CurrencyModel>>(data);
             if (Res.Count == 0)
             {
-                return new Response<List<CurrencyModel>>(null);
+                return new Response<List<CurrencyModel>>(null, "Not Data Found");
             }
             return new Response<List<CurrencyModel>>(Res);
         }

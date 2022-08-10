@@ -141,7 +141,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             var Res = _mapper.Map<List<FeatureModel>>(data);
             if (Res.Count == 0)
             {
-                return new Response<List<FeatureModel>>(null);
+                return new Response<List<FeatureModel>>(null, "Not Data Found");
             }
             return new Response<List<FeatureModel>>(Res);
         }

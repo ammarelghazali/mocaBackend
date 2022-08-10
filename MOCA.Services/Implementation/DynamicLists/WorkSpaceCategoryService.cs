@@ -7,6 +7,11 @@ using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Interfaces.DynamicLists.Services;
 using MOCA.Core.Interfaces.Shared.Services;
 using System.ComponentModel.DataAnnotations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace MOCA.Services.Implementation.DynamicLists
 {
@@ -41,11 +46,8 @@ namespace MOCA.Services.Implementation.DynamicLists
             {
                 workSpace.CreatedAt = _dateTimeService.NowUtc;
             }
-            var workSpaceEntity = await _unitOfWork.WorkSpaceCategoryRepoEF.IsUniqueNameAsync(request.Name);
 
-            if (!workSpaceEntity)
             {
-                return new Response<long>(workSpace.Id,"This Work Space Category is already exist");
             }
 
             _unitOfWork.WorkSpaceCategoryRepo.Insert(workSpace);
@@ -128,7 +130,7 @@ namespace MOCA.Services.Implementation.DynamicLists
             if (await _unitOfWork.SaveAsync() < 1)
             {
                 return new Response<bool>("Cannot Delete Work Space Category right now");
-            }
+        }
 
             return new Response<bool>(true, "Work Space Category Deleted Successfully.");
 
@@ -157,47 +159,13 @@ namespace MOCA.Services.Implementation.DynamicLists
                 }
             }
 
-            foreach (var r in request)
-            {
-                var workSpaceEntity = await _unitOfWork.WorkSpaceCategoryRepoEF.IsUniqueNameAsync(r.Name.ToString());
-                if (!workSpaceEntity)
-                { 
-                    return new Response<List<WorkSpaceCategory>>("This Work Space Category is already exist");
-                    
-                }
-            }
-
-            _unitOfWork.WorkSpaceCategoryRepo.InsertRang(workSpace);
-
-
-
-            if (await _unitOfWork.SaveAsync() < 1)
-            {
-                return new Response<List<WorkSpaceCategory>>("Cannot Add WorkSpaceCategory right now");
-            }
-
-
-            return new  Response<List<WorkSpaceCategory>>(workSpace, "WorkSpaceCategory Added Successfully");
-
+        {
         }
 
-        public async Task<Response<WorkSpaceCategoryModel>> GetWorkSpaceCategoryByID(long Id)
         {
-            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
-            {
-                throw new UnauthorizedAccessException("User is not authorized");
-            }
+        }
 
-            if (Id <= 0)
-            {
-                return new Response<WorkSpaceCategoryModel>("ID must be greater than zero.");
-            }
-            var workSpace = await _unitOfWork.WorkSpaceCategoryRepo.GetByIdAsync(Id);
-            if (workSpace == null)
-            {
-                return new Response<WorkSpaceCategoryModel>(null, "No Category Found With This ID.");
-            }
-            return new Response<WorkSpaceCategoryModel>(_mapper.Map<WorkSpaceCategoryModel>(workSpace));
+        {
         }
 
         

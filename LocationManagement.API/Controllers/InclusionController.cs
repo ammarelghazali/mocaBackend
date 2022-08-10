@@ -1,9 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using MOCA.Core.DTOs.LocationManagment.Inclusion;
 using MOCA.Core.DTOs.Shared;
 using MOCA.Core.Interfaces.LocationManagment.Services;
+using MOCA.Core.Interfaces.Shared.Services;
+using MOCA.Core.Settings;
+using System.Net.Http.Headers;
 
 namespace LocationManagement.API.Controllers
 {
@@ -15,11 +19,14 @@ namespace LocationManagement.API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IInclusionService _inclusionService;
-
-        public InclusionController(IMapper mapper, IInclusionService inclusionService)
+        private readonly IUploadImageService _uploadImageService;
+        private readonly FileSettings _fileSettings;
+        public InclusionController(IMapper mapper, IInclusionService inclusionService, IOptions<FileSettings> fileSettings, IUploadImageService uploadImageService)
         {
             _mapper = mapper;
             _inclusionService = inclusionService;
+            _uploadImageService = uploadImageService;
+            _fileSettings = fileSettings.Value;
         }
 
         /// <summary>
@@ -115,6 +122,17 @@ namespace LocationManagement.API.Controllers
         public async Task<IActionResult> DeleteInclusion([FromQuery] long Id)
         {
             var response = await _inclusionService.DeleteInclusion(Id);
+            if (response.Succeeded == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        [HttpPost("UploadIcon")]
+        public async Task<IActionResult> UploadIcon([FromBody] ImageUpload image)
+        {
+            var response = await _uploadImageService.Uploading(image, _fileSettings.Inclusion_IconPath, "Inclusion");
             if (response.Succeeded == false)
             {
                 return BadRequest(response);

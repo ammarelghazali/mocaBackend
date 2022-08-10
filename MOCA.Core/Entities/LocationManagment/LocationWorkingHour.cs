@@ -12,7 +12,6 @@ namespace MOCA.Core.Entities.LocationManagment
         public string EndWorkingHour { get; set; }
         [Required]
         public string DayFrom { get; set; }
-        [Required]
         public string DayTo { get; set; }
         public long LocationId { get; set; }
         [ForeignKey("LocationId")]

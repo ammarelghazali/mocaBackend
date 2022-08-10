@@ -83,6 +83,7 @@ namespace MOCA.Presistence.Contexts
         public DbSet<WorkSpace> WorkSpaces { get; set; }
         public DbSet<MarketingImages> MarketingImages { get; set; }
         public DbSet<VenueSetup> VenueSetups { get; set; }
+        public DbSet<EventSpaceOccupancy> EventSpaceOccupancies { get; set; }
         #endregion
 
         #region Shared
@@ -151,6 +152,9 @@ namespace MOCA.Presistence.Contexts
         public DbSet<MeetingReservation> MeetingSpaceReservations { get; set; }
         public DbSet<MeetingAttendee> MeetingAttendees { get; set; }
         public DbSet<MeetingReservationTopUp> MeetingReservationTopUps { get; set; }
+        public DbSet<MeetingReservationTransaction> MeetingReservationTransactions { get; set; }
+        public DbSet<MeetingReservationCancellation> MeetingReservationCancellations { get; set; }
+
         #endregion
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -262,20 +266,25 @@ namespace MOCA.Presistence.Contexts
 
             builder.Entity<WorkSpaceHourlyCancellation>()
                 .HasKey(p => new { p.WorkSpaceHourlyReservationId, p.CancellationId });
-
+            
             builder.Entity<WorkSpaceHourlyTransactions>()
                 .HasKey(p => new { p.WorkSpaceReservationHourlyId, p.ReservationTransactionId });
 
             builder.Entity<WorkSpaceTailoredCancellation>()
                 .HasKey(p => new { p.WorkSpaceTailoredReservationId, p.CancellationId });
-
+            
             builder.Entity<WorkSpaceTailoredTransactions>()
                 .HasKey(p => new { p.WorkSpaceReservationTailoredId, p.ReservationTransactionId });
             #endregion
 
             #region Meetingspace Reservation
+           
             builder.Entity<MeetingReservationTransaction>()
                 .HasKey(p => new { p.MeetingReservationId, p.ReservationTransactionId });
+
+            builder.Entity<MeetingReservationCancellation>()
+                .HasKey(p => new { p.MeetingReservationId, p.CancellationId });
+
             #endregion
         }
     }

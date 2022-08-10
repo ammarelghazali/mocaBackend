@@ -80,6 +80,7 @@ builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 builder.Services.AddScoped<IReservationsStatusService, ReservationsStatusService>();
 builder.Services.AddTransient<IDateTimeService, DateTimeService>();
+builder.Services.AddTransient<IUploadImageService, UploadImageService>();
 //-------------------------
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -107,6 +108,7 @@ builder.Services.AddScoped<IBuildingFloorService, BuildingFloorService>();
 builder.Services.AddScoped<IWorkSpaceCategoryService, WorkSpaceCategoryService>();
 builder.Services.AddScoped<IWorkSpaceTypeService, WorkSpaceTypeService>();
 
+builder.Services.AddScoped<IWorkSpaceCategoryService, WorkSpaceCategoryService>();
 
 #endregion
 

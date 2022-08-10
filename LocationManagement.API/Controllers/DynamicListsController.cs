@@ -21,6 +21,8 @@ namespace LocationManagement.API.Controllers
         private readonly IWorkSpaceCategoryService _WorkSpaceCategoryService;
         private readonly IWorkSpaceTypeService _WorkSpaceTypeService;
         public DynamicListsController(IMapper mapper, IWorkSpaceCategoryService WorkSpaceCategoryService, IWorkSpaceTypeService WorkSpaceTypeService)
+
+        public DynamicListsController(IMapper mapper, IWorkSpaceCategoryService WorkSpaceCategoryService)
         {
             _mapper = mapper;
             _WorkSpaceCategoryService = WorkSpaceCategoryService;
@@ -63,7 +65,7 @@ namespace LocationManagement.API.Controllers
             }
             return Ok(data);
 
-        }
+    }
 
         [HttpDelete("DeleteWorkCategoryWorkSpace")]
         public async Task<IActionResult> DeleteWorkCategoryWorkSpace(long id)
@@ -112,7 +114,7 @@ namespace LocationManagement.API.Controllers
             if (data.Succeeded == false)
             {
                 return BadRequest(data);
-            }
+}
             return Ok(data);
         }
 
