@@ -1,4 +1,4 @@
-﻿using MOCA.Core.Entities.WorkSpaceReservations;
+﻿using MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces;
 
 namespace MOCA.Core.Entities.LocationManagment
 {
