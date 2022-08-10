@@ -117,6 +117,14 @@ namespace MOCA.Services.Implementation.LocationManagment
 
             #region Add Location Currency
             var locationCurrency = _mapper.Map<List<LocationCurrency>>(request.LocationCurrencies);
+            foreach (var item in locationCurrency)
+            {
+                var checker = await _unitOfWork.LocationCurrencyRepoEF.CheckLocationCurrencyIsUinque(location.Id, item.CurrencyId);
+                if (checker == false)
+                {
+                    return new Response<long>("Location Currency Exsists Before.");
+                }
+            }
             locationCurrency.ForEach(c => { c.LocationId = location.Id; });
             _unitOfWork.LocationCurrencyRepo.InsertRang(locationCurrency);
             if (await _unitOfWork.SaveAsync() < 1)
