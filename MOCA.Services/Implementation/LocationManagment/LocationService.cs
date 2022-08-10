@@ -79,7 +79,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             }
             #endregion
 
-            _unitOfWork.LocationRepo.Insert(location);
+             _unitOfWork.LocationRepo.Insert(location);
             if (await _unitOfWork.SaveAsync() < 1)
             {
                 return new Response<long>("Cannot Add Location right now");
@@ -126,12 +126,15 @@ namespace MOCA.Services.Implementation.LocationManagment
             #endregion
 
             #region Add Location File
-            var locationFile = _mapper.Map<List<LocationFile>>(request.LocationFiles);
-            locationFile.ForEach(c => { c.LocationId = location.Id; });
-            _unitOfWork.LocationFileRepo.InsertRang(locationFile);
-            if (await _unitOfWork.SaveAsync() < 1)
+            if(request.LocationFiles.Count != 0)
             {
-                return new Response<long>("Cannot Add LocationFile right now");
+                var locationFile = _mapper.Map<List<LocationFile>>(request.LocationFiles);
+                locationFile.ForEach(c => { c.LocationId = location.Id; });
+                _unitOfWork.LocationFileRepo.InsertRang(locationFile);
+                if (await _unitOfWork.SaveAsync() < 1)
+                {
+                    return new Response<long>("Cannot Add LocationFile right now");
+                }
             }
             #endregion
 
@@ -263,12 +266,15 @@ namespace MOCA.Services.Implementation.LocationManagment
             #endregion
 
             #region Delete Old Location File Add New One
-            var locationFile = _mapper.Map<List<LocationFile>>(request.LocationFiles);
-            _unitOfWork.LocationFileRepoEF.DeleteAllLocationFileByLocationID(request.Id);
-            _unitOfWork.LocationFileRepo.InsertRang(locationFile);
-            if (await _unitOfWork.SaveAsync() < 1)
+            if (request.LocationFiles.Count != 0)
             {
-                return new Response<long>("Cannot Update LocationFile right now");
+                var locationFile = _mapper.Map<List<LocationFile>>(request.LocationFiles);
+                _unitOfWork.LocationFileRepoEF.DeleteAllLocationFileByLocationID(request.Id);
+                _unitOfWork.LocationFileRepo.InsertRang(locationFile);
+                if (await _unitOfWork.SaveAsync() < 1)
+                {
+                    return new Response<long>("Cannot Update LocationFile right now");
+                }
             }
             #endregion
 
