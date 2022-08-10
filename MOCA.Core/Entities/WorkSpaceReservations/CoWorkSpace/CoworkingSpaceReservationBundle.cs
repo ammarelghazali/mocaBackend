@@ -3,15 +3,15 @@ using MOCA.Core.Entities.WorkSpaceReservations.Base;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces
+namespace MOCA.Core.Entities.WorkSpaceReservations.CoWorkSpace
 {
-    public class WorkSpaceReservationBundle : BaseWorkSpaceReservation
+    public class CoworkingSpaceReservationBundle : BaseCoworkSpaceReservation
     {
-        [Required]
+        [Required]  
         public long BundleId { get; set; }
-        
+
         [ForeignKey("BundleId")]
-        public WorkSpaceBundlePricing WorkSpaceBundlePricing { get; set; }
+        public CoworkingSpaceBundlePricing CoworkingSpaceBundlePricing { get; set; }
 
         [Required]
         public decimal BundlePrice { get; set; }
@@ -21,8 +21,5 @@ namespace MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces
 
         [Required]
         public DateTime BundleEndDate { get; set; }
-
-        public WorkSpaceBundleTransactions WorkSpaceBundleTransactions { get; set; }
-        public WorkSpaceBundleCancellation WorkSpaceBundleCancellation { get; set; }
     }
 }
