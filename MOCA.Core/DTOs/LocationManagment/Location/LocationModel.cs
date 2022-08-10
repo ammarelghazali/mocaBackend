@@ -70,13 +70,13 @@ namespace MOCA.Core.DTOs.LocationManagment.Location
         public decimal? ServiceFeesPriceSqm { get; set; }
         public decimal? ServiceFeesTotalFees { get; set; }
         public decimal? ServiceFeesAnnualIncrease { get; set; }
-        public string EventspaceLeaseContract { get; set; }
-        public string CommercialRegisterFile { get; set; }
-        public string CommercialRegisterNumber { get; set; }
-        public string TaxIdFile { get; set; }
-        public string TaxIdNumber { get; set; }
-        public string About { get; set; }
-        public string Terms { set; get; }
+        public string? EventspaceLeaseContract { get; set; }
+        public string? CommercialRegisterFile { get; set; }
+        public string? CommercialRegisterNumber { get; set; }
+        public string? TaxIdFile { get; set; }
+        public string? TaxIdNumber { get; set; }
+        public string? About { get; set; }
+        public string? Terms { set; get; }
         public bool IsPublish { get; set; }
         public int LocationBankAccountType { get; set; }
         public List<ServiceFeePaymentsDueDateModel> ServiceFeePaymentsDueDates { get; set; }
