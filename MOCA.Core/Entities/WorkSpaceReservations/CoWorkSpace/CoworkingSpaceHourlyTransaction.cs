@@ -2,15 +2,15 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces
+namespace MOCA.Core.Entities.WorkSpaceReservations.CoWorkSpace
 {
-    public class WorkSpaceBundleTransactions
+    public class CoworkingSpaceHourlyTransaction
     {
         [Key, Column(Order = 1)]
-        public long WorkSpaceReservationBundleId { get; set; }
+        public long CoworkingSpaceReservationHourlyId { get; set; }
 
-        [ForeignKey("WorkSpaceReservationBundleId")]
-        public WorkSpaceReservationBundle WorkSpaceReservationBundle { get; set; }
+        [ForeignKey("CoworkingSpaceReservationHourlyId")]
+        public CoworkingSpaceReservationHourly CoworkingSpaceReservationHourly { get; set; }
 
         [Key, Column(Order = 2)]
         public long ReservationTransactionId { get; set; }

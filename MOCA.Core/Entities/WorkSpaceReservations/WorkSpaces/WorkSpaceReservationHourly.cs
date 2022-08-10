@@ -1,5 +1,7 @@
-﻿using MOCA.Core.Entities.WorkSpaceReservations.Base;
+﻿using MOCA.Core.Entities.LocationManagment;
+using MOCA.Core.Entities.WorkSpaceReservations.Base;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces
 {
@@ -10,14 +12,19 @@ namespace MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces
 
         [Required]
         public long HourId { get; set; }
-        //TODO: Add Relation With LoungeLocationPricing
+
+        [ForeignKey("HourId")]
+        public WorkSpaceHourlyPricing WorkSpaceHourlyPricing { get; set; }
 
         [Required]
         public decimal Price { get; set; }
         public decimal? HourlyDiscount { get; set; }
 
+        [Required]
+        public bool IsDay { get; set; }
+
         public ICollection<WorkSpaceHourlyTopUp> TopUps { get; set; }
-        public WorkSpaceHourlyTransactions WorkSpaceHourlyTransactions { get; set; }
+        public WorkSpaceHourlyTransaction WorkSpaceHourlyTransactions { get; set; }
         public WorkSpaceHourlyCancellation WorkSpaceHourlyCancellation { get; set; }
     }
 }

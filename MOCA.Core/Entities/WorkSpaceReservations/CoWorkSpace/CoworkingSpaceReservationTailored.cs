@@ -1,9 +1,9 @@
 ﻿using MOCA.Core.Entities.WorkSpaceReservations.Base;
 using System.ComponentModel.DataAnnotations;
 
-namespace MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces
+namespace MOCA.Core.Entities.WorkSpaceReservations.CoWorkSpace
 {
-    public class WorkSpaceReservationTailored : BaseWorkSpaceReservation
+    public class CoworkingSpaceReservationTailored : BaseCoworkSpaceReservation
     {
         [Required]
         public DateTime TailoredStartDate { get; set; }
@@ -19,8 +19,8 @@ namespace MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces
 
         public decimal? TailoredDiscount { get; set; }
 
-        public ICollection<WorkSpaceTailoredTopUp> TopUps { get; set; }
-        public WorkSpaceTailoredTransaction WorkSpaceTailoredTransactions { get; set; }
-        public WorkSpaceTailoredCancellation WorkSpaceTailoredCancellation { get; set; }
+        public ICollection<CoworkingSpaceTailoredTopUp> TopUps { get; set; }
+        public CoworkingSpaceTailoredTransaction CoworkingSpaceTailoredTransaction { get; set; }
+        public CoworkingSpaceTailoredCancellation CoworkingSpaceTailoredCancellation { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MOCA.Core.Entities.BaseEntities;
+using MOCA.Core.Entities.WorkSpaceReservations.CoWorkSpace;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -13,6 +14,10 @@ namespace MOCA.Core.Entities.LocationManagment
         public virtual Location Location { get; set; }
         public int Occupancy { get; set; }
         public int RemainingOccupancy { get; set; }
+
+        public ICollection<CoworkingSpaceReservationHourly> CoworkingSpaceReservationHourlies { get; set; }
+        public ICollection<CoworkingSpaceReservationTailored> CoworkingSpaceReservationTailoreds { get; set; }
+        public ICollection<CoworkingSpaceReservationBundle> CoworkingSpaceReservationBundles { get; set; }
 
         public ICollection<CoWorkingSpaceHourlyPricing> CoWorkingSpaceHourlyPricings { get; set; }
         public ICollection<CoworkingSpaceTailoredPricing> CoworkingSpaceTailoredPricings { get; set; }
