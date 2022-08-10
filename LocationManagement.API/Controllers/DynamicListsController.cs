@@ -33,6 +33,7 @@ namespace LocationManagement.API.Controllers
         public async Task<IActionResult> AddWorkSpaceCategory([FromBody] WorkSpaceCategoryModel model)
         {
             var data = await _WorkSpaceCategoryService.AddWorkSpaceCategory(model);
+
             if (data.Succeeded == false)
             {
                 return BadRequest(data);
