@@ -162,6 +162,12 @@ namespace MOCA.Presistence.Contexts
         public DbSet<CoworkingSpaceReservationHourly> CoworkingSpaceReservationHourlies { get; set; }
         public DbSet<CoworkingSpaceReservationTailored> CoworkingSpaceReservationTailoreds { get; set; }
         public DbSet<CoworkingSpaceReservationBundle> CoworkingSpaceReservationBundles { get; set; }
+        public DbSet<CoworkingSpaceHourlyTransaction> CoworkingSpaceHourlyTransactions { get; set; }
+        public DbSet<CoworkingSpaceTailoredTransaction> CoworkingSpaceTailoredTransactions { get; set; }
+        public DbSet<CoworkingSpaceBundleTransaction> CoworkingSpaceBundleTransactions { get; set; }
+        public DbSet<CoworkingSpaceHourlyCancellation> CoworkingSpaceHourlyCancellations { get; set; }
+        public DbSet<CoworkingSpaceTailoredCancellation> CoworkingSpaceTailoredCancellations { get; set; }
+        public DbSet<CoworkingSpaceBundleCancellation> CoworkingSpaceBundleCancellations { get; set; }
         #endregion  
 
         #region MeetingSpaceReservations
