@@ -22,7 +22,7 @@ namespace MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces
         [Required]
         public DateTime BundleEndDate { get; set; }
 
-        public WorkSpaceBundleTransactions WorkSpaceBundleTransactions { get; set; }
+        public WorkSpaceBundleTransaction WorkSpaceBundleTransactions { get; set; }
         public WorkSpaceBundleCancellation WorkSpaceBundleCancellation { get; set; }
     }
 }

@@ -20,8 +20,7 @@ namespace MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces
         public decimal? TailoredDiscount { get; set; }
 
         public ICollection<WorkSpaceTailoredTopUp> TopUps { get; set; }
-
-        public WorkSpaceTailoredTransactions WorkSpaceTailoredTransactions { get; set; }
+        public WorkSpaceTailoredTransaction WorkSpaceTailoredTransactions { get; set; }
         public WorkSpaceTailoredCancellation WorkSpaceTailoredCancellation { get; set; }
     }
 }

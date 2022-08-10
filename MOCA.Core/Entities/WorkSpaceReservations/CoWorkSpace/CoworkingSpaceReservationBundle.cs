@@ -21,5 +21,8 @@ namespace MOCA.Core.Entities.WorkSpaceReservations.CoWorkSpace
 
         [Required]
         public DateTime BundleEndDate { get; set; }
+
+        public CoworkingSpaceBundleTransaction CoworkingSpaceBundleTransaction { get; set; }
+        public CoworkingSpaceBundleCancellation CoworkingSpaceBundleCancellation { get; set; }
     }
 }

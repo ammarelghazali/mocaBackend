@@ -17,7 +17,14 @@ namespace MOCA.Core.Entities.WorkSpaceReservations.CoWorkSpace
         public CoWorkingSpaceHourlyPricing CoWorkingSpaceHourlyPricing { get; set; }
 
         [Required]
+        public bool IsDay { get; set; }
+
+        [Required]
         public decimal Price { get; set; }
         public decimal? HourlyDiscount { get; set; }
+
+        public ICollection<CoworkingSpaceHourlyTop> TopUps { get; set; }
+        public CoworkingSpaceHourlyTransaction CoworkingSpaceHourlyTransaction { get; set; }
+        public CoworkingSpaceHourlyCancellation CoworkingSpaceHourlyCancellation { get; set; }
     }
 }
