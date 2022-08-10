@@ -4,6 +4,7 @@ using MOCA.Presistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MOCA.Presistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220810121331_locationNullable")]
+    partial class locationNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2801,8 +2803,6 @@ namespace MOCA.Presistence.Migrations
                     b.HasIndex("BasicUserId");
 
                     b.HasIndex("MeetingReservationId");
-
-                    b.HasIndex("MeetingSpaceHourlyPricingId");
 
                     b.HasIndex("MeetingSpaceHourlyPricingId");
 
