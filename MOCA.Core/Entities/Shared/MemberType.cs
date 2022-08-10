@@ -9,6 +9,7 @@ namespace MOCA.Core.Entities.Shared
         [Required]
         public string Name { get; set; }
 
-        public ICollection<WorkSpaceBundleMembership> WorkSpaceBundleMemberships { get; set; }
+        public ICollection<WorkSpaceBundleMemberType> WorkSpaceBundleMemberships { get; set; }
+        public ICollection<CoworkingSpaceBundleMemberType> CoworkingSpaceBundleMemberTypes { get; set; }
     }
 }

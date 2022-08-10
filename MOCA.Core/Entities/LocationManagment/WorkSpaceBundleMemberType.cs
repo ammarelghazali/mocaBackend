@@ -4,15 +4,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MOCA.Core.Entities.LocationManagment
 {
-    public class WorkSpaceBundleMembership
+    public class WorkSpaceBundleMemberType
     {
-        [Required]
+        [Key, Column(Order = 1)]
         public long WorkSpaceBundleId { get; set; }
 
         [ForeignKey("WorkSpaceBundleId")]
         public WorkSpaceBundlePricing WorkSpaceBundlePricing { get; set; }
 
-        [Required]
+        [Key, Column(Order = 2)]
         public long MemberTypeId { get; set; }
 
         [ForeignKey("MemberTypeId")]
