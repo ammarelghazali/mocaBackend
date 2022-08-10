@@ -1,7 +1,7 @@
 ﻿using MOCA.Core.Entities.WorkSpaceReservations.Base;
 using System.ComponentModel.DataAnnotations;
 
-namespace MOCA.Core.Entities.WorkSpaceReservations
+namespace MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces
 {
     public class WorkSpaceReservationHourly : BaseWorkSpaceReservation
     {
@@ -13,7 +13,7 @@ namespace MOCA.Core.Entities.WorkSpaceReservations
         //TODO: Add Relation With LoungeLocationPricing
 
         [Required]
-        public decimal Price { get; set; }  
+        public decimal Price { get; set; }
         public decimal? HourlyDiscount { get; set; }
 
         public ICollection<WorkSpaceHourlyTopUp> TopUps { get; set; }

@@ -1,7 +1,6 @@
 ﻿using MOCA.Core.Entities.BaseEntities;
 using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Entities.Shared.Reservations;
-using MOCA.Core.Entities.SSO;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
