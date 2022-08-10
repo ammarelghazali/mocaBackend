@@ -788,11 +788,39 @@ namespace MOCA.Presistence
         #endregion
 
         #region Dynamic Lists
-        public IGenericRepository<WorkSpaceCategory> WorkSpaceCategoryRepo { get; }
-        public IWorkSpaceCategoryRepository WorkSpaceCategoryRepoEF { get; }
+        public IGenericRepository<WorkSpaceCategory> _workSpaceCategoryRepo;
+        public IGenericRepository<WorkSpaceCategory> WorkSpaceCategoryRepo
+        {
+            get
+            {
+                return _workSpaceCategoryRepo = _workSpaceCategoryRepo ?? new GenericRepository<WorkSpaceCategory>(_context);
+            }
+        }
+        public IWorkSpaceCategoryRepository _workSpaceCategoryRepoEF;
+        public IWorkSpaceCategoryRepository WorkSpaceCategoryRepoEF
+        {
+            get
+            {
+                return _workSpaceCategoryRepoEF = _workSpaceCategoryRepoEF ?? new WorkSpaceCategoryRepository(_context);
+            }
+        }
 
-        public IGenericRepository<WorkSpaceType> WorkSpaceTypeRepo { get; }
-        public IWorkSpaceTypeRepository WorkSpaceTypeRepoEF { get; }
+        public IGenericRepository<WorkSpaceType> _workSpaceTypeRepo;
+        public IGenericRepository<WorkSpaceType> WorkSpaceTypeRepo
+        {
+            get
+            {
+                return _workSpaceTypeRepo = _workSpaceTypeRepo ?? new GenericRepository<WorkSpaceType>(_context);
+            }
+        }
+        public IWorkSpaceTypeRepository _workSpaceTypeRepoEF;
+        public IWorkSpaceTypeRepository WorkSpaceTypeRepoEF
+        {
+            get
+            {
+                return _workSpaceTypeRepoEF = _workSpaceTypeRepoEF ?? new WorkSpaceTypeRepository(_context);
+            }
+        }
 
         #endregion
 
