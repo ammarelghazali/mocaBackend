@@ -19,9 +19,9 @@ namespace MOCA.Core.DTOs.LocationManagment.Location
         public string MocaBankAccountSwift { get; set; }
         public string MocaBankAccountIBAN { get; set; }
 
-        public string SharedBankAccountName { get; set; }
+        public string? SharedBankAccountName { get; set; }
         public long? SharedBankAccountNumber { get; set; }
-        public string SharedBankAccountSwift { get; set; }
-        public string SharedBankAccountIBAN { get; set; }
+        public string? SharedBankAccountSwift { get; set; }
+        public string? SharedBankAccountIBAN { get; set; }
     }
 }

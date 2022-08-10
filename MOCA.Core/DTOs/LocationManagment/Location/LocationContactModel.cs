@@ -16,7 +16,7 @@ namespace MOCA.Core.DTOs.LocationManagment.Location
         [Required]
         public string Department { get; set; }
         //[Required]
-        public string CountryCode { get; set; }
+        //public string CountryCode { get; set; }
         [Required]
         public string Position { get; set; }
     }
