@@ -490,7 +490,7 @@ namespace MOCA.Services.Implementation.LocationManagment
 
             #region LocationBankAccount
             var locationBankAccount = await _unitOfWork.LocationBankAccountRepoEF.GetByLocationID(Id);
-            locationDetails.LocationBankAccount = _mapper.Map<List<LocationBankAccountModel>>(locationBankAccount);
+            locationDetails.LocationBankAccount = _mapper.Map<LocationBankAccountModel>(locationBankAccount);
             #endregion
 
             #region locationInclusion
