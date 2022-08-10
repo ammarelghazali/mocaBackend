@@ -1,4 +1,8 @@
-﻿using MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces;
+using MOCA.Core.Entities.DynamicLists;
+using MOCA.Core.Entities.LocationManagment.Base;
+using MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MOCA.Core.Entities.LocationManagment
 {
