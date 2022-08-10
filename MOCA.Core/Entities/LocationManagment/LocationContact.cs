@@ -21,8 +21,8 @@ namespace MOCA.Core.Entities.LocationManagment
         public string Email { get; set; }
         [Required]
         public string Department { get; set; }
-        [Required]
-        public string CountryCode { get; set; }
+        //[Required]
+        //public string CountryCode { get; set; }
         [Required]
         public string Position { get; set; }
     }

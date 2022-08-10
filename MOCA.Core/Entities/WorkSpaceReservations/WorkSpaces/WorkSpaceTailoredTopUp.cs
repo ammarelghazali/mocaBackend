@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MOCA.Core.Entities.WorkSpaceReservations
+namespace MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces
 {
     public class WorkSpaceTailoredTopUp : BaseWorkSpaceTopUp
     {

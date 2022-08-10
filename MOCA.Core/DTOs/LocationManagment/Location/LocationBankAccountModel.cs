@@ -6,7 +6,7 @@ namespace MOCA.Core.DTOs.LocationManagment.Location
     public class LocationBankAccountModel
     {
         public long Id { get; set; }
-        [Range(1, long.MaxValue, ErrorMessage = "Location Id Cannot Be 0")]
+        //[Range(1, long.MaxValue, ErrorMessage = "Location Id Cannot Be 0")]
         public long LocationId { get; set; }
 
         public string LandlordBankAccountName { get; set; }
@@ -19,9 +19,9 @@ namespace MOCA.Core.DTOs.LocationManagment.Location
         public string MocaBankAccountSwift { get; set; }
         public string MocaBankAccountIBAN { get; set; }
 
-        public string SharedBankAccountName { get; set; }
+        public string? SharedBankAccountName { get; set; }
         public long? SharedBankAccountNumber { get; set; }
-        public string SharedBankAccountSwift { get; set; }
-        public string SharedBankAccountIBAN { get; set; }
+        public string? SharedBankAccountSwift { get; set; }
+        public string? SharedBankAccountIBAN { get; set; }
     }
 }

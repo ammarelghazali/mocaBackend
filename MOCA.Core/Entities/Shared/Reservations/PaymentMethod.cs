@@ -1,7 +1,7 @@
 ﻿using MOCA.Core.Entities.BaseEntities;
-using MOCA.Core.Entities.WorkSpaceReservations;
 using MOCA.Core.Entities.MeetingSpaceReservation;
 using System.ComponentModel.DataAnnotations;
+using MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces;
 
 namespace MOCA.Core.Entities.Shared.Reservations
 {

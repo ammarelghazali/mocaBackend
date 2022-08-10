@@ -11,7 +11,7 @@ using MOCA.Core.Entities.Shared;
 using MOCA.Core.Entities.Shared.Reservations;
 using MOCA.Core.Entities.SSO;
 using MOCA.Core.Entities.SSO.Identity;
-using MOCA.Core.Entities.WorkSpaceReservations;
+using MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces;
 using MOCA.Core.Interfaces.Shared.Services;
 using System.Data;
 
@@ -185,12 +185,12 @@ namespace MOCA.Presistence.Contexts
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
-            //All Decimals will have 18,3 Range
+            //All Decimals will have 18,2 Range
             foreach (var property in builder.Model.GetEntityTypes()
             .SelectMany(t => t.GetProperties())
             .Where(p => p.ClrType == typeof(decimal) || p.ClrType == typeof(decimal?)))
             {
-                property.SetColumnType("decimal(18,3)");
+                property.SetColumnType("decimal(18,2)");
             }
             base.OnModelCreating(builder); // test
 
