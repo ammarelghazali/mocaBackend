@@ -7,5 +7,6 @@ namespace MOCA.Core.Interfaces.LocationManagment.Repositories
     {
         Task<bool> DeleteByLocationID(long LocationID);
         Task<List<LocationCurrency>> GetByLocationID(long LocationID);
+        Task<bool> CheckLocationCurrencyIsUinque(long LocationId, long CurrencyId);
     }
 }
