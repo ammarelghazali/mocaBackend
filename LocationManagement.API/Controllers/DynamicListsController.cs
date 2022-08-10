@@ -20,9 +20,8 @@ namespace LocationManagement.API.Controllers
         private readonly IMapper _mapper;
         private readonly IWorkSpaceCategoryService _WorkSpaceCategoryService;
         private readonly IWorkSpaceTypeService _WorkSpaceTypeService;
-        public DynamicListsController(IMapper mapper, IWorkSpaceCategoryService WorkSpaceCategoryService, IWorkSpaceTypeService WorkSpaceTypeService)
 
-        public DynamicListsController(IMapper mapper, IWorkSpaceCategoryService WorkSpaceCategoryService)
+        public DynamicListsController(IMapper mapper, IWorkSpaceCategoryService WorkSpaceCategoryService,IWorkSpaceTypeService WorkSpaceTypeService)
         {
             _mapper = mapper;
             _WorkSpaceCategoryService = WorkSpaceCategoryService;

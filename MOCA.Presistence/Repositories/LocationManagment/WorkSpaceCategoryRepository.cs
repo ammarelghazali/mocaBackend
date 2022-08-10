@@ -28,5 +28,19 @@ namespace MOCA.Presistence.Repositories.LocationManagment
             _context.WorkSpaceCategories.Remove(workSpaceCategory);
             return true;
         }
+
+        public async Task<bool> IsUniqueNameAsync(string workSpaceName)
+        {
+
+            var workSpaceType = _context.WorkSpaceTypes.Where(x => x.Name.Equals(workSpaceName) && x.IsDeleted != true).FirstOrDefault();
+            if (workSpaceType == null)
+            {
+                return true;
+            }
+            return false;
+
+        }
+
+
     }
 }

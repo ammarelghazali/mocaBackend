@@ -787,6 +787,15 @@ namespace MOCA.Presistence
 
         #endregion
 
+        #region Dynamic Lists
+        public IGenericRepository<WorkSpaceCategory> WorkSpaceCategoryRepo { get; }
+        public IWorkSpaceCategoryRepository WorkSpaceCategoryRepoEF { get; }
+
+        public IGenericRepository<WorkSpaceType> WorkSpaceTypeRepo { get; }
+        public IWorkSpaceTypeRepository WorkSpaceTypeRepoEF { get; }
+
+        #endregion
+
 
         public DateTime ConvertToLocalDate(DateTime dateInEasternTimeZone)
         {
