@@ -1,7 +1,7 @@
 ﻿using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
 using MOCA.Core.Entities.Shared.Reservations;
-using MOCA.Core.Entities.WorkSpaceReservations;
+using MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces;
 using MOCA.Core.Interfaces.Base;
 using System;
 using System.Collections.Generic;

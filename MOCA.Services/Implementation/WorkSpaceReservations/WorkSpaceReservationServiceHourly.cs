@@ -5,7 +5,7 @@ using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.DTOs.WorkSpaceReservation;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
-using MOCA.Core.Entities.WorkSpaceReservations;
+using MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces;
 using MOCA.Core.Enums.Shared;
 using MOCA.Core.Interfaces.Shared.Services;
 using MOCA.Core.Interfaces.WorkSpaceReservations.Services;

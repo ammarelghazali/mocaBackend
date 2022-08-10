@@ -2,7 +2,7 @@
 using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Entities.MeetingSpaceReservation;
 using MOCA.Core.Entities.Shared.Reservations;
-using MOCA.Core.Entities.WorkSpaceReservations;
+using MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

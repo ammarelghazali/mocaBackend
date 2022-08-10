@@ -1,4 +1,4 @@
-﻿using MOCA.Core.Entities.WorkSpaceReservations;
+﻿using MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces;
 using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
 using MOCA.Presistence.Contexts;
 using MOCA.Presistence.Repositories.Base;
