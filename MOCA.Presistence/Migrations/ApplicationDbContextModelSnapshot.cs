@@ -4742,6 +4742,17 @@ namespace MOCA.Presistence.Migrations
                     b.Navigation("WorkSpaceCategory");
                 });
 
+            modelBuilder.Entity("MOCA.Core.Entities.DynamicLists.WorkSpaceType", b =>
+                {
+                    b.HasOne("MOCA.Core.Entities.DynamicLists.WorkSpaceCategory", "WorkSpaceCategory")
+                        .WithMany("WorkSpaceTypes")
+                        .HasForeignKey("WorkSpaceCategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("WorkSpaceCategory");
+                });
+
             modelBuilder.Entity("MOCA.Core.Entities.EventSpaceBookings.ContactDetails", b =>
                 {
                     b.HasOne("MOCA.Core.Entities.EventSpaceBookings.EventSpaceBooking", "EventSpaceBooking")
@@ -5352,25 +5363,6 @@ namespace MOCA.Presistence.Migrations
                     b.Navigation("MeetingSpaceHourlyPricing");
 
                     b.Navigation("PaymentMethod");
-                });
-
-            modelBuilder.Entity("MOCA.Core.Entities.MeetingSpaceReservation.MeetingReservationCancellation", b =>
-                {
-                    b.HasOne("MOCA.Core.Entities.Shared.Reservations.CancelReservation", "CancelReservation")
-                        .WithMany()
-                        .HasForeignKey("CancellationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("MOCA.Core.Entities.MeetingSpaceReservation.MeetingReservation", "MeetingReservation")
-                        .WithOne("MeetingReservationCancellation")
-                        .HasForeignKey("MOCA.Core.Entities.MeetingSpaceReservation.MeetingReservationCancellation", "MeetingReservationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("CancelReservation");
-
-                    b.Navigation("MeetingReservation");
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.MeetingSpaceReservation.MeetingReservationTopUp", b =>

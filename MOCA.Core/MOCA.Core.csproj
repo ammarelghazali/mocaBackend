@@ -18,7 +18,6 @@
     <Folder Include="DTOs\SSO\" />
     <Folder Include="Entities\WorkSpaceReservations\CoWorkSpace\" />
     <Folder Include="Interfaces\MeetingSpaceReservations\Services\" />
-    <Folder Include="Interfaces\DynamicLists\WorkspaceCategory\Services\" />
     <Folder Include="Interfaces\MocaSettings\Repositories\" />
     <Folder Include="Interfaces\MocaSettings\Services\" />
     <Folder Include="Interfaces\MocaSettings\Services\" />

@@ -84,6 +84,7 @@ namespace MOCA.Presistence.Contexts
         public DbSet<MarketingImages> MarketingImages { get; set; }
         public DbSet<VenueSetup> VenueSetups { get; set; }
         public DbSet<EventSpaceOccupancy> EventSpaceOccupancies { get; set; }
+        public DbSet<Coworking> Coworkings { get; set; }
         #endregion
 
         #region Shared

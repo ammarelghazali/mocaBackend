@@ -84,6 +84,7 @@ namespace MOCA.Core.DTOs.LocationManagment.Location
         public List<LocationFileModel> LocationFiles { get; set; }
         public List<LocationWorkingHourModel> LocationWorkingHours { get; set; }
         public LocationBankAccountModel LocationBankAccount { get; set; }
+        public List<LocationInclusionModel> LocationInclusions { get; set; }
         public List<LocationInclusionModelGetMultiSelect> LocationInclusions { get; set; }
     }
 }
