@@ -33,7 +33,7 @@ namespace MOCA.Core.Settings
         public string Winfi_Base_Url { get; set; }
         public string WorkSpace_Furnitures_ImagePath { get; set; }
         public int MaxSizeInMega { get; set; }
-        public string Inclusion_IconPath { get; set; }
+        public string Aminity_IconPath { get; set; }
         public string Occupancy_IconPath { get; set; }
         public string Email_Path { get; set; }
         public string SenderName { get; set; }
