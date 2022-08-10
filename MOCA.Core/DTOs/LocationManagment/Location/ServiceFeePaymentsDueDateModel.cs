@@ -9,7 +9,7 @@ namespace MOCA.Core.DTOs.LocationManagment.Location
         public DateTime DueDate { get; set; }
         [Required]
         public decimal Amount { get; set; }
-        [Range(1, long.MaxValue, ErrorMessage = "Location Id Cannot Be 0")]
+        //[Range(1, long.MaxValue, ErrorMessage = "Location Id Cannot Be 0")]
         public long LocationId { get; set; }
     }
 }
