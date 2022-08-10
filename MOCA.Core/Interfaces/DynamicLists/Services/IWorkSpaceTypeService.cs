@@ -10,7 +10,7 @@ namespace MOCA.Core.Interfaces.DynamicLists.Services
     {
         Task<Response<long>> AddWorkSpaceType(WorkSpaceTypeModel request);
         Task<Response<List<WorkSpaceType>>> AddListOfWorkSpaceTypes(List<WorkSpaceTypeModel> request);
-        Task<Response<long>> UpdateWorkSpaceType(WorkSpaceTypeModel request);
+        Task<Response<bool>> UpdateWorkSpaceType(WorkSpaceTypeModel request);
 
         Task<PagedResponse<List<WorkSpaceTypeModel>>> GetAllWorkSpaceTypePaginated(RequestParameter filter);
 

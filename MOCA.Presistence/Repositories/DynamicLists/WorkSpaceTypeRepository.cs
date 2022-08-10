@@ -18,14 +18,25 @@ namespace MOCA.Presistence.Repositories.DynamicLists
             _context = context;
         }
 
+        public async Task<bool> DeleteWorkSpaceType(long Id)
+        {
+            var workSpaceCategory = _context.WorkSpaceTypes.Where(x => x.Id == Id && x.IsDeleted == false).FirstOrDefault();
+            if (workSpaceCategory == null)
+            {
+                return false;
+            }
+            _context.WorkSpaceTypes.Remove(workSpaceCategory);
+            return true;
+        }
+
         public async Task<bool> IsUniqueNameAsync(string workSpaceName)
         {
             var workSpaceCategory = _context.WorkSpaceTypes.Where(x => x.Name.Equals(workSpaceName) && x.IsDeleted != true).FirstOrDefault();
             if (workSpaceCategory == null)
             {
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
     }
 }

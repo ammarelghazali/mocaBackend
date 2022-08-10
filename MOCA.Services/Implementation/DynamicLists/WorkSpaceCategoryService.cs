@@ -43,9 +43,9 @@ namespace MOCA.Services.Implementation.DynamicLists
             }
             var workSpaceEntity = await _unitOfWork.WorkSpaceCategoryRepoEF.IsUniqueNameAsync(request.Name);
 
-            if (workSpaceEntity != null)
+            if (!workSpaceEntity)
             {
-                throw new InvalidOperationException("This Work Space Category is already exist");
+                return new Response<long>("This Work Space Category is already exist");
             }
 
             _unitOfWork.WorkSpaceCategoryRepo.Insert(workSpace);
@@ -160,9 +160,10 @@ namespace MOCA.Services.Implementation.DynamicLists
             foreach (var r in request)
             {
                 var workSpaceEntity = await _unitOfWork.WorkSpaceCategoryRepoEF.IsUniqueNameAsync(r.Name.ToString());
-                if (workSpaceEntity == null)
-                {
-                    throw new InvalidOperationException("This Work Space Category is already exist");
+                if (!workSpaceEntity)
+                { 
+                    return new Response<List<WorkSpaceCategory>>("This Work Space Category is already exist");
+                    
                 }
             }
 

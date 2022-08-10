@@ -43,9 +43,9 @@ namespace MOCA.Presistence.Repositories.DynamicLists
             var workSpaceCategory = _context.WorkSpaceCategories.Where(x => x.Name.Equals(workSpaceName) && x.IsDeleted != true).FirstOrDefault();
             if (workSpaceCategory == null)
             {
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
 
 

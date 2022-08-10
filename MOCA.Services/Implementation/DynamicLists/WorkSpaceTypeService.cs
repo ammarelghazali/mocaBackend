@@ -3,6 +3,7 @@ using AutoMapper;
 using MOCA.Core;
 using MOCA.Core.DTOs;
 using MOCA.Core.DTOs.DynamicLists;
+using MOCA.Core.DTOs.Shared.Exceptions;
 using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Interfaces.DynamicLists.Services;
@@ -23,9 +24,48 @@ namespace MOCA.Services.Implementation.DynamicLists
             _dateTimeService = dateTimeService ?? throw new ArgumentNullException(nameof(dateTimeService));
             _authenticatedUserService = authenticatedUserService ?? throw new ArgumentNullException(nameof(authenticatedUserService));
         }
-        public Task<Response<List<WorkSpaceType>>> AddListOfWorkSpaceTypes(List<WorkSpaceTypeModel> request)
+        public async Task<Response<List<WorkSpaceType>>> AddListOfWorkSpaceTypes(List<WorkSpaceTypeModel> request)
         {
-            throw new NotImplementedException();
+            var workSpace = _mapper.Map<List<WorkSpaceType>>(request);
+
+            foreach (var item in workSpace)
+            {
+                if (string.IsNullOrWhiteSpace(item.CreatedBy))
+                {
+                    if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+                    {
+                        throw new UnauthorizedAccessException("User is not authorized");
+                    }
+                    else
+                    { item.CreatedBy = _authenticatedUserService.UserId; }
+                }
+                if (item.CreatedAt == null || item.CreatedAt == default)
+                {
+                    item.CreatedAt = _dateTimeService.NowUtc;
+                }
+            }
+
+            foreach (var r in request)
+            {
+                var workSpaceEntity = await _unitOfWork.WorkSpaceTypeRepoEF.IsUniqueNameAsync(r.Name.ToString());
+                if (!workSpaceEntity)
+                {
+                    return new Response<List<WorkSpaceType>>("This Work Space type is already exist");
+
+                }
+            }
+
+            _unitOfWork.WorkSpaceTypeRepoEF.InsertRang(workSpace);
+
+
+
+            if (await _unitOfWork.SaveAsync() < 1)
+            {
+                return new Response<List<WorkSpaceType>>("Cannot Add WorkSpaceCategory right now");
+            }
+
+
+            return new Response<List<WorkSpaceType>>(workSpace, "Work Space type Added Successfully");
         }
 
         public async Task<Response<long>> AddWorkSpaceType(WorkSpaceTypeModel request)
@@ -47,9 +87,9 @@ namespace MOCA.Services.Implementation.DynamicLists
             }
             var workSpaceEntity = await _unitOfWork.WorkSpaceTypeRepoEF.IsUniqueNameAsync(request.Name);
 
-            if (workSpaceEntity == null)
+            if (!workSpaceEntity)
             {
-                throw new InvalidOperationException("This Work Space Category is already exist");
+                return new Response<long>("This Work Space Category is already exist");
             }
 
             _unitOfWork.WorkSpaceTypeRepo.Insert(workSpace);
@@ -62,29 +102,95 @@ namespace MOCA.Services.Implementation.DynamicLists
             return new Response<long>(workSpace.Id, "WorkSpaceType Added Successfully.");
         }
 
-        public Task<Response<bool>> DeleteWorkSpaceType(long Id)
+        public async Task<Response<bool>> DeleteWorkSpaceType(long Id)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
+            var workSpaceEntity = await _unitOfWork.WorkSpaceTypeRepoEF.GetByIdAsync(Id);
+
+            if (workSpaceEntity == null) {
+               // throw new NotFoundException(nameof(WorkSpaceCategory), Id);
+                return new Response<bool>("This work Space is not exist");
+            }
+
+            await _unitOfWork.WorkSpaceTypeRepoEF.DeleteWorkSpaceType(Id);
+
+            if (await _unitOfWork.SaveAsync() < 1)
+            {
+                return new Response<bool>("Cannot Delete Work Space type right now");
+            }
+
+            return new Response<bool>(true, "Work Space type  Deleted Successfully.");
         }
 
         public Task<PagedResponse<List<WorkSpaceTypeModel>>> GetAllWorkSpaceTypePaginated(RequestParameter filter)
         {
+
             throw new NotImplementedException();
         }
 
-        public Task<Response<WorkSpaceTypeModel>> GetWorkSpaceTypeById(long Id)
+        public async Task<Response<WorkSpaceTypeModel>> GetWorkSpaceTypeById(long Id)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
+
+            if (Id <= 0)
+            {
+                return new Response<WorkSpaceTypeModel>("ID must be greater than zero.");
+            }
+            var workSpace = await _unitOfWork.WorkSpaceTypeRepo.GetByIdAsync(Id);
+            if (workSpace == null)
+            {
+                return new Response<WorkSpaceTypeModel>(null, "No Work Space Type Found With This ID.");
+            }
+            return new Response<WorkSpaceTypeModel>(_mapper.Map<WorkSpaceTypeModel>(workSpace));
         }
 
-        public Task<Response<List<WorkSpaceTypeModel>>> GetWorkSpaceTypesWithoutPagination()
+        public async Task<Response<List<WorkSpaceTypeModel>>> GetWorkSpaceTypesWithoutPagination()
         {
-            throw new NotImplementedException();
+            return new Response<List<WorkSpaceTypeModel>>();
         }
 
-        public Task<Response<long>> UpdateWorkSpaceType(WorkSpaceTypeModel request)
+        public async Task<Response<bool>> UpdateWorkSpaceType(WorkSpaceTypeModel request)
         {
-            throw new NotImplementedException();
+            var workSpace = _mapper.Map<WorkSpaceType>(request);
+
+            if (string.IsNullOrWhiteSpace(workSpace.LastModifiedBy))
+            {
+                if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+                {
+                    throw new UnauthorizedAccessException("Last Modified By UserID is required");
+                }
+                else
+                { workSpace.LastModifiedBy = _authenticatedUserService.UserId; }
+            }
+            if (workSpace.LastModifiedAt == null)
+            {
+                workSpace.LastModifiedAt = DateTime.UtcNow;
+            }
+            var workSpaceEntity = await _unitOfWork.WorkSpaceTypeRepoEF.GetByIdAsync(request.Id);
+
+
+            if (workSpaceEntity == null) 
+            {
+               // throw new NotFoundException(nameof(WorkSpaceCategory), request.Id);
+                return new Response<bool>(false, "This ID is not found");
+            }
+
+            workSpace.CreatedBy = workSpaceEntity.CreatedBy;
+            workSpace.CreatedAt = workSpaceEntity.CreatedAt;
+
+            _unitOfWork.WorkSpaceTypeRepo.Update(workSpace);
+            if (await _unitOfWork.SaveAsync() < 1)
+            {
+                return new Response<bool>(false,"Cannot Update Work Space type right now");
+            }
+
+            return new Response<bool>(true," Work Space type Updated Successfully.");
         }
     }
 }

@@ -114,6 +114,68 @@ namespace LocationManagement.API.Controllers
             }
             return Ok(data);
         }
+
+        [HttpPost("AddListOfWorkSpaceType")]
+        public async Task<IActionResult> AddListOfWorkSpaceType([FromBody] List<WorkSpaceTypeModel> model)
+        {
+            var data = await _WorkSpaceTypeService.AddListOfWorkSpaceTypes(model);
+
+            if (data.Succeeded == false)
+            {
+                return BadRequest(data);
+            }
+            return Ok(data);
+        }
+
+        [HttpDelete("DeleteWorkTypeWorkSpace")]
+        public async Task<IActionResult> DeleteWorkSpaceType(long id)
+        {
+            var data = await _WorkSpaceTypeService.DeleteWorkSpaceType(id);
+
+            if (data.Succeeded == false)
+            {
+                return BadRequest(data);
+            }
+            return Ok(data);
+        }
+
+        [HttpGet("GetWorkSpaceTypeByID")]
+        public async Task<IActionResult> GetWorkSpaceTypebyID([FromHeader] long Id)
+        {
+            var response = await _WorkSpaceTypeService.GetWorkSpaceTypeById(Id);
+
+            if (response.Succeeded == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        [HttpGet("GetAllWorkSpaceTypeWithoutPagination")]
+        public async Task<IActionResult> GetAllWorkSpaceTypeWithoutPagination()
+        {
+            var data = await _WorkSpaceTypeService.GetWorkSpaceTypesWithoutPagination();
+            if (data.Succeeded == false)
+            {
+                return BadRequest(data);
+            }
+            return Ok(data);
+        }
+
+        [HttpPut("UpdateWorkTypeWorkSpace")]
+        public async Task<IActionResult> UpdateWorkSpaceType([FromBody] WorkSpaceTypeModel model)
+        {
+            var data = await _WorkSpaceTypeService.UpdateWorkSpaceType(model);
+
+            if (data.Succeeded == false)
+            {
+                return BadRequest(data);
+            }
+            return Ok(data);
+
+        }
+
+
     }
 }
 

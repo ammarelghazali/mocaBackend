@@ -6,6 +6,7 @@ namespace MOCA.Core.Interfaces.DynamicLists.Repositories
     public interface IWorkSpaceTypeRepository : IGenericRepository<WorkSpaceType>
     {
         Task<bool> IsUniqueNameAsync(string workSpaceName);
+        Task<bool> DeleteWorkSpaceType(long Id);
 
     }
 }
