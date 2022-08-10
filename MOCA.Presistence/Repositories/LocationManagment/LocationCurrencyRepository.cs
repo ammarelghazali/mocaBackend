@@ -33,5 +33,15 @@ namespace MOCA.Presistence.Repositories.LocationManagment
             }
             return locationCurrencies;
         }
+
+        public async Task<bool> CheckLocationCurrencyIsUinque(long LocationId, long CurrencyId)
+        {
+            var locationName = _context.LocationCurrencies.Where(x => x.LocationId == LocationId && x.CurrencyId == CurrencyId && x.IsDeleted != true).FirstOrDefault();
+            if (locationName == null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

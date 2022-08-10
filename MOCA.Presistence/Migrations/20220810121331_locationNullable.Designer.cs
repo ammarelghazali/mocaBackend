@@ -4,6 +4,7 @@ using MOCA.Presistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MOCA.Presistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220810121331_locationNullable")]
+    partial class locationNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -982,7 +984,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("GrossArea")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<bool>("InstallAccessPoint")
                         .HasColumnType("bit");
@@ -1007,7 +1009,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("NetArea")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.HasKey("Id");
 
@@ -1041,7 +1043,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("GrossArea")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<bool>("InstallAccessPoint")
                         .HasColumnType("bit");
@@ -1059,7 +1061,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("NetArea")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.HasKey("Id");
 
@@ -1244,7 +1246,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("GrossArea")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<bool>("InstallAccessPoint")
                         .HasColumnType("bit");
@@ -1259,7 +1261,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("NetArea")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<int?>("RestRoomFemaleOccupancy")
                         .HasColumnType("int");
@@ -1326,10 +1328,10 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("PricePerHour")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.HasKey("Id");
 
@@ -1638,7 +1640,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("AnnualIncrease")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<int?>("BuildYear")
                         .HasColumnType("int");
@@ -1662,7 +1664,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal?>("CopolitanShares")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<long>("CountryId")
                         .HasColumnType("bigint");
@@ -1678,31 +1680,31 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<decimal?>("DirectCost")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<long>("DistrictId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal?>("EstimatedAnnualizedAmount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<decimal?>("EstimatedContractAmount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<decimal?>("EstimatedRampUpAmount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<string>("EventspaceLeaseContract")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("FullOccupancyMonthlyPayment")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<decimal?>("GracePeriod")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<decimal>("GrossArea")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -1719,7 +1721,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("LandlordShares")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<DateTime?>("LastModifiedAt")
                         .HasColumnType("datetime2");
@@ -1749,26 +1751,26 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("MinPaymentPerMonth")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<decimal?>("MinPaymentPercentage")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<decimal?>("MonthlyRentAmount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<decimal?>("MonthlyRevenue")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("NetArea")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<decimal?>("Overhead")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<int>("PartentershipType")
                         .HasColumnType("int");
@@ -1784,19 +1786,19 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("PreOperationFee")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<decimal?>("RampUpPeriod")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<decimal?>("ServiceFeesAnnualIncrease")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<decimal?>("ServiceFeesPriceSqm")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<decimal?>("ServiceFeesTotalFees")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<string>("TaxIdFile")
                         .HasColumnType("nvarchar(max)");
@@ -1809,10 +1811,10 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("TotalAfterDeductions")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<decimal?>("UtilizationPercentage")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.HasKey("Id");
 
@@ -2344,7 +2346,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("GrossArea")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<bool>("InstallAccessPoint")
                         .HasColumnType("bit");
@@ -2365,7 +2367,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("NetArea")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<string>("TermsOfUse")
                         .HasColumnType("nvarchar(max)");
@@ -2427,10 +2429,10 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("PricePerHour")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.HasKey("Id");
 
@@ -2450,7 +2452,7 @@ namespace MOCA.Presistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -2582,7 +2584,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("GrossArea")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<bool>("InstallAccessPoint")
                         .HasColumnType("bit");
@@ -2603,7 +2605,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal?>("NetArea")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<string>("UnitNumber")
                         .IsRequired()
@@ -3844,7 +3846,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("WalletBalance")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.HasKey("Id");
 
@@ -4350,7 +4352,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("HourlyTotalPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -4434,7 +4436,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<decimal?>("PackageDiscount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<DateTime>("PackageEndDate")
                         .HasColumnType("datetime2");
@@ -4443,7 +4445,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("PackagePrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<DateTime>("PackageStartDate")
                         .HasColumnType("datetime2");
@@ -4497,7 +4499,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<decimal?>("HourlyDiscount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -4516,7 +4518,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<long>("WorkSpaceId")
                         .HasColumnType("bigint");
@@ -4573,7 +4575,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<decimal?>("TailoredDiscount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<DateTime>("TailoredEndDate")
                         .HasColumnType("datetime2");
@@ -4582,7 +4584,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("TailoredPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<DateTime>("TailoredStartDate")
                         .HasColumnType("datetime2");
@@ -4662,7 +4664,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("TailoredPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<long>("WorkSpaceReservationTailoredId")
                         .HasColumnType("bigint");
