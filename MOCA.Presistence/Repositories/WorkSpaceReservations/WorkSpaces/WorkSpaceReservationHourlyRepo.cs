@@ -41,7 +41,7 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations.WorkSpaces
                                                                       MobileNumber = r.BasicUser.MobileNumber,
                                                                       LocationName = r.Location.Name,
                                                                       ReservationType = "Hourly",
-                                                                      DateTime = r.Date,
+                                                                      StartDate = r.Date,
                                                                       Amount = r.Price,
                                                                       ReservationTypeId = 1,
                                                                       Mode = r.TopUps.Count > 0 ? "TopUp" : "Basic",

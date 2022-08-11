@@ -41,7 +41,7 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations.WorkSpaces
                                                                                   MobileNumber = r.BasicUser.MobileNumber,
                                                                                   LocationName = r.Location.Name,
                                                                                   ReservationType = "Tailored",
-                                                                                  DateTime = r.TailoredStartDate,
+                                                                                  StartDate = r.TailoredStartDate,
                                                                                   Amount = r.TailoredPrice,
                                                                                   ReservationTypeId = 2,
                                                                                   Mode = r.TopUps.Count > 0 ? "TopUp" : "Basic",

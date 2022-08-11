@@ -1,14 +1,11 @@
-﻿using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
-using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
-using MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces;
+﻿using MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces;
 using MOCA.Core.Interfaces.Base;
+using MOCA.Core.Interfaces.WorkSpaceReservations.BaseRepos;
 
 namespace MOCA.Core.Interfaces.WorkSpaceReservations.WorkSpaces.Repositories
 {
-    public interface IWorkSpaceReservationTailoredRepo : IGenericRepository<WorkSpaceReservationTailored>
+    public interface IWorkSpaceReservationTailoredRepo : IBaseWorkSpaceReservationPlansRepo<WorkSpaceReservationTailored>, IGenericRepository<WorkSpaceReservationTailored>
     {
-        Task<WorkSpaceReservationTailored> GetReservationInfo(long id);
         Task<WorkSpaceReservationTailored> GetReservationById(long id);
-        Task<IQueryable<GetAllWorkSpaceReservationsResponse>> GetAllWorkSpaceSubmissions(GetAllWorkSpaceReservationsDto request);
     }
 }

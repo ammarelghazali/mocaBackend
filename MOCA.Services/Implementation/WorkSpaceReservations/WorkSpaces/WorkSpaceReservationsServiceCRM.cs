@@ -29,7 +29,7 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations.WorkSpaces
             _tailoredService = tailoredService;
         }
 
-        public async Task<Response<SharedCreationResponse>> CreateTopUp(CreateWorkSpaceTopUp topUp)
+        public async Task<Response<SharedCreationResponse>> AddGiftedHours(CreateWorkSpaceTopUp topUp)
         {
             if (topUp.ReservationTypeId == 1)
             {

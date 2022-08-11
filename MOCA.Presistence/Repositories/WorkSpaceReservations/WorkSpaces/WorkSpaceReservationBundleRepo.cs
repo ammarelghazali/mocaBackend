@@ -40,7 +40,7 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations.WorkSpaces
                                                                       MobileNumber = r.BasicUser.MobileNumber,
                                                                       LocationName = r.Location.Name,
                                                                       ReservationType = "Bundle",
-                                                                      DateTime = r.BundleStartDate,
+                                                                      StartDate = r.BundleStartDate,
                                                                       Amount = r.BundlePrice,
                                                                       ReservationTypeId = 3,
                                                                       Mode = "basic",
