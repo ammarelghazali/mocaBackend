@@ -65,6 +65,7 @@ namespace MOCA.Core.Entities.LocationManagment
         public decimal? MinPaymentPerMonth { get; set; }
         public decimal? MinPaymentPercentage { get; set; }
         public decimal? EstimatedRampUpAmount { get; set; }
+        public decimal? FullRampUpRevenue { get; set; }
         public decimal? FullOccupancyMonthlyPayment { get; set; }
         public decimal? EstimatedAnnualizedAmount { get; set; }
         public decimal? EstimatedContractAmount { get; set; }
@@ -75,7 +76,9 @@ namespace MOCA.Core.Entities.LocationManagment
         [Range(1, 4)]
         public int? PaymentTerm { get; set; }
         public decimal? MonthlyRentAmount { get; set; }
+        public decimal? PricePerMeter { get; set; }
         public decimal? AnnualIncrease { get; set; }
+        public decimal? LandlordAdditionalRevenue { get; set; }
         public decimal? MonthlyRevenue { get; set; }
         public decimal? DirectCost { get; set; }
         public decimal? Overhead { get; set; }
