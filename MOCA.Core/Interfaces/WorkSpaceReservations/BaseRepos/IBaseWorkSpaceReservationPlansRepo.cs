@@ -7,6 +7,6 @@ namespace MOCA.Core.Interfaces.WorkSpaceReservations.BaseRepos
     public interface IBaseWorkSpaceReservationPlansRepo<T> where T : BaseEntity
     {
         Task<T> GetReservationInfo(long id);
-        Task<IQueryable<GetAllWorkSpaceReservationsResponse>> GetAllWorkSpaceSubmissions(GetAllWorkSpaceReservationsDto request);
+        IQueryable<GetAllWorkSpaceReservationsResponse> GetAllWorkSpaceSubmissions(GetAllWorkSpaceReservationsDto request);
     }
 }

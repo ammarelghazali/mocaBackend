@@ -20,7 +20,7 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations.WorkSpaces
             _reservationsStatusService = reservationsStatusService;
         }
 
-        public async Task<IQueryable<GetAllWorkSpaceReservationsResponse>> GetAllWorkSpaceSubmissions(GetAllWorkSpaceReservationsDto request)
+        public IQueryable<GetAllWorkSpaceReservationsResponse> GetAllWorkSpaceSubmissions(GetAllWorkSpaceReservationsDto request)
         {
             var reservations = _context.WorkSpaceReservationTailored.Where(r => r.IsDeleted != true).OrderByDescending(r => r.CreatedAt)
                                                                               .Include(r => r.BasicUser)
@@ -77,11 +77,14 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations.WorkSpaces
 
         public async Task<WorkSpaceReservationTailored> GetReservationById(long id)
         {
-            return await _context.WorkSpaceReservationTailored.Where(r => r.Id == id && r.IsDeleted != true)
+            return await _context.WorkSpaceReservationTailored.Where(r => r.Id == id && r.IsDeleted != true && 
+                                                                     r.WorkSpaceTailoredCancellation.CancelReservation == null)
                                                                 .Include(r => r.Location)
                                                                 .ThenInclude(r => r.LocationWorkingHours)
                                                                 .Include(r => r.WorkSpaceTailoredTransactions)
                                                                 .ThenInclude(r => r.ReservationTransaction)
+                                                                .Include(r => r.WorkSpaceTailoredCancellation)
+                                                                .ThenInclude(r => r.CancelReservation)
                                                                 .FirstOrDefaultAsync();
         }
 

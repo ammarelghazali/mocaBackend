@@ -12,6 +12,7 @@ using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
 using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Interfaces.DynamicLists.Repositories;
 using MOCA.Core.Interfaces.WorkSpaceReservations.WorkSpaces.Repositories;
+using MOCA.Core.Interfaces.WorkSpaceReservations.CoworkSpace.Repositories;
 
 namespace MOCA.Core
 {
@@ -143,6 +144,15 @@ namespace MOCA.Core
         public IWorkSpaceReservationTailoredRepo WorkSpaceReservationTailoredRepo { get; }
         public IWorkSpaceHourlyTopUpRepo WorkSpaceHourlyTopUpRepo { get; }
         public IWorkSpaceTailoredTopUpRepo WorkSpaceTailoredTopUpRepo { get; }
+        #endregion
+
+        #region CoworkingSpaceReservations
+        public ICoworkSpaceReservationsRepositoryCRM CoworkSpaceReservationsRepositoryCRM { get; }
+        public ICoworkSpaceReservationBundleRepo CoworkSpaceReservationBundleRepo { get; }
+        public ICoworkSpaceReservationHourlyRepo CoworkSpaceReservationHourlyRepo { get; }
+        public ICoworkSpaceReservationTailoredRepo CoworkSpaceReservationTailoredRepo { get; }
+        public ICoworkSpaceHourlyTopUpRepo CoworkSpaceHourlyTopUpRepo { get; }
+        public ICoworkSpaceTailoredTopUpRepo CoworkSpaceTailoredTopUpRepo { get; }
         #endregion
 
         #region MeetingSpaceReservations

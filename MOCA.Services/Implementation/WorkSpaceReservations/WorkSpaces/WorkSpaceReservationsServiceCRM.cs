@@ -45,9 +45,9 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations.WorkSpaces
 
         public async Task<PagedResponse<IReadOnlyList<GetAllWorkSpaceReservationsResponse>>> GetAllWorkSpaceSubmissions(GetAllWorkSpaceReservationsDto request)
         {
-            var hourlyReservations = await _unitOfWork.WorkSpaceReservationHourlyRepo.GetAllWorkSpaceSubmissions(request);
-            var tailoredReservations = await _unitOfWork.WorkSpaceReservationTailoredRepo.GetAllWorkSpaceSubmissions(request);
-            var bundleReservations = await _unitOfWork.WorkSpaceReservationBundleRepo.GetAllWorkSpaceSubmissions(request);
+            var hourlyReservations = _unitOfWork.WorkSpaceReservationHourlyRepo.GetAllWorkSpaceSubmissions(request);
+            var tailoredReservations = _unitOfWork.WorkSpaceReservationTailoredRepo.GetAllWorkSpaceSubmissions(request);
+            var bundleReservations = _unitOfWork.WorkSpaceReservationBundleRepo.GetAllWorkSpaceSubmissions(request);
 
             var allReservations = hourlyReservations.Union(tailoredReservations)
                                                      .Union(bundleReservations)

@@ -22,6 +22,8 @@ using MOCA.Core.Interfaces.DynamicLists.Repositories;
 using MOCA.Presistence.Repositories.DynamicLists;
 using MOCA.Core.Interfaces.WorkSpaceReservations.WorkSpaces.Repositories;
 using MOCA.Presistence.Repositories.WorkSpaceReservations.WorkSpaces;
+using MOCA.Core.Interfaces.WorkSpaceReservations.CoworkSpace.Repositories;
+using MOCA.Presistence.Repositories.WorkSpaceReservations.CoworkSpace;
 
 namespace MOCA.Presistence
 {
@@ -381,6 +383,65 @@ namespace MOCA.Presistence
             get
             {
                 return _workSpaceTailoredTopUpRepo ?? new WorkSpaceTailoredTopUpRepo(_context);
+            }
+        }
+        #endregion
+
+        #region CoworkingSpaceReservations
+        private ICoworkSpaceReservationsRepositoryCRM _coworkSpaceReservationCRM;
+        public ICoworkSpaceReservationsRepositoryCRM CoworkSpaceReservationsRepositoryCRM
+        {
+            get
+            {
+                return _coworkSpaceReservationCRM ?? new CoworkSpaceReservationsRepositoryCRM(_context, _dateTimeService);
+            }
+        }
+
+        private ICoworkSpaceReservationBundleRepo _coworkSpaceReservationBundleRepo;
+
+        public ICoworkSpaceReservationBundleRepo CoworkSpaceReservationBundleRepo
+        {
+            get
+            {
+                return _coworkSpaceReservationBundleRepo ?? new CoworkSpaceReservationBundleRepo(_context, _reservationsStatusService);
+
+            }
+        }
+
+        private ICoworkSpaceReservationHourlyRepo _coworkSpaceReservationHourlyRepo;
+        public ICoworkSpaceReservationHourlyRepo CoworkSpaceReservationHourlyRepo
+        {
+            get
+            {
+                return _coworkSpaceReservationHourlyRepo ?? new CoworkSpaceReservationHourlyRepo(_context, _reservationsStatusService);
+
+            }
+        }
+
+        private ICoworkSpaceReservationTailoredRepo _coworkSpaceReservationTailoredRepo;
+        public ICoworkSpaceReservationTailoredRepo CoworkSpaceReservationTailoredRepo
+        {
+            get
+            {
+                return _coworkSpaceReservationTailoredRepo ?? new CoworkSpaceReservationTailoredRepo(_context, _reservationsStatusService);
+            }
+        }
+
+        private ICoworkSpaceHourlyTopUpRepo _coworkSpaceHourlyTopUpRepo;
+        public ICoworkSpaceHourlyTopUpRepo CoworkSpaceHourlyTopUpRepo
+        {
+            get
+            {
+                return _coworkSpaceHourlyTopUpRepo ?? new CoworkSpaceHourlyTopUpRepo(_context);
+            }
+        }
+
+        private ICoworkSpaceTailoredTopUpRepo _coworkSpaceTailoredTopUpRepo;
+        public ICoworkSpaceTailoredTopUpRepo CoworkSpaceTailoredTopUpRepo
+        {
+            get
+            {
+                return _coworkSpaceTailoredTopUpRepo ?? new CoworkSpaceTailoredTopUpRepo(_context);
             }
         }
         #endregion

@@ -20,7 +20,7 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations.WorkSpaces
             _reservationsStatusService = reservationsStatusService;
         }
 
-        public async Task<IQueryable<GetAllWorkSpaceReservationsResponse>> GetAllWorkSpaceSubmissions(GetAllWorkSpaceReservationsDto request)
+        public IQueryable<GetAllWorkSpaceReservationsResponse> GetAllWorkSpaceSubmissions(GetAllWorkSpaceReservationsDto request)
         {
             var reservations = _context.WorkSpaceReservationHourly.Where(r => r.IsDeleted != true).OrderByDescending(r => r.CreatedAt)
                                                                   .Include(r => r.BasicUser)

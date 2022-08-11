@@ -27,7 +27,7 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations.WorkSpaces
 
         public async Task<List<GetAllWorkSpaceReservationsResponse>> GetAllWorkSpaceReservations(GetAllWorkSpaceReservationsDto request)
         {
-            var bundleReservations = await _unitOfWork.WorkSpaceReservationBundleRepo.GetAllWorkSpaceSubmissions(request);
+            var bundleReservations = _unitOfWork.WorkSpaceReservationBundleRepo.GetAllWorkSpaceSubmissions(request);
 
             return await bundleReservations.Skip(request.pageSize * (request.pageNumber - 1)).Take(request.pageSize).ToListAsync();
         }

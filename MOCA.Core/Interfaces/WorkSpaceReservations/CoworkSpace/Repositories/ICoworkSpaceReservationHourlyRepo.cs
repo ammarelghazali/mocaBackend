@@ -6,5 +6,6 @@ namespace MOCA.Core.Interfaces.WorkSpaceReservations.CoworkSpace.Repositories
 {
     public interface ICoworkSpaceReservationHourlyRepo : IBaseWorkSpaceReservationPlansRepo<CoworkingSpaceReservationHourly>, IGenericRepository<CoworkingSpaceReservationHourly>
     {
+        Task<CoworkingSpaceReservationHourly> GetReservationById(long id);
     }
 }
