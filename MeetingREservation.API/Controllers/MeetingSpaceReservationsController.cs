@@ -123,6 +123,16 @@ namespace MeetingREservation.API.Controllers
             return Ok(response);
         }
 
+        [HttpGet("GetAllOccupiedTimeInDay")]
+        public async Task<IActionResult> GetAllOccupiedTimeInDay(string Day, long meetingSpaceId)
+        {
+            var response = await _meetingSpaceReservationsServices.GetAllOccupiedTimeInDay(Day, meetingSpaceId);
+            if (!response.Succeeded)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
 
         #endregion
 

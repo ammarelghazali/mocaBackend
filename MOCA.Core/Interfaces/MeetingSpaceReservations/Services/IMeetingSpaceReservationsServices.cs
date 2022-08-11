@@ -20,6 +20,8 @@ namespace MOCA.Core.Interfaces.MeetingSpaceReservations.Services
         Task<Response<bool>> BookMeetingReservation(BookMeetingReservationRequestDto dto);
         Task<Response<bool>> AddAttendees(List<MeetingAttendeeDto> dto);
         Task<Response<bool>> UpdatePaymentMethod(long meetingReservationId, long paymentMethodId);
+        Task<Response<List<OccupiedTimesDto>>> GetAllOccupiedTimeInDay(string Day, long meetingSpaceId);
+
 
         #endregion
 

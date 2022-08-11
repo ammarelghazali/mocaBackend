@@ -13,6 +13,7 @@ namespace MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories
         Task<IQueryable<MeetingReservationResponseDto>> GetAllSubmissionsWithFilter(
             GetAllMeetingReservationsWithFilterRequestDto dto);
         Task<bool> GetMeetingsWithinPeriodOfTime(DateTime fromDate, DateTime toDate, long meetingSpaceId);
+        Task<List<OccupiedTimesDto>> GetMeetingsInDay(string Day, long meetingSpaceId);
 
     }
 }

@@ -156,8 +156,27 @@ namespace MOCA.Presistence.Repositories.MeetingSpaceReservations
                                                                                 && x.DateAndTime >= fromDate 
                                                                                 && x.DateAndTime <= toDate
                                                                                ).Count();
-            return meetingReservations == 0;
+            return meetingReservations > 0;
         }
 
+
+
+        public async Task<List<OccupiedTimesDto>> GetMeetingsInDay(string Day, long meetingSpaceId)
+        {
+            var meetingReservations = await _context.MeetingSpaceReservations
+                .Where(x => x.IsDeleted != true
+                    && x.MeetingSpaceId == meetingSpaceId
+                    && x.DateAndTime.ToShortDateString() == Day
+                    )
+                    .Include(x => x.MeetingSpaceHourlyPricing)
+                    .ThenInclude(x => x.Hours)
+                    .Select(x => new OccupiedTimesDto
+                    {
+                        fromDate = x.DateAndTime,
+                        toDate = x.DateAndTime.AddHours(x.MeetingSpaceHourlyPricing.Hours)
+                    }).ToListAsync();
+
+            return meetingReservations;
+        }
     }
 }

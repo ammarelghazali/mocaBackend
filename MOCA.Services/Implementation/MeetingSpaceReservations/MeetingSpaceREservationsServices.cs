@@ -151,8 +151,6 @@ namespace MOCA.Services.Implementation.MeetingSpaceReservations
             }
         }
 
-
-
         public async Task<Response<bool>> AddAttendees(List<MeetingAttendeeDto> dto)
         {
             try
@@ -167,7 +165,6 @@ namespace MOCA.Services.Implementation.MeetingSpaceReservations
             }
 
         }
-
 
         public async Task<Response<bool>> UpdatePaymentMethod(long meetingReservationId, long paymentMethodId)
         {
@@ -196,6 +193,16 @@ namespace MOCA.Services.Implementation.MeetingSpaceReservations
 
         }
 
+        public async Task<Response<List<OccupiedTimesDto>>> GetAllOccupiedTimeInDay(string Day, long meetingSpaceId)
+        {
+            if(await _unitOfWork.MeetingSpaceRepository.GetByIdAsync(meetingSpaceId) == null)
+            {
+                return new Response<List<OccupiedTimesDto>>("meeting space not found!");
+            }
+            // validate string day
+            var allMeetingTimesInDay = await _unitOfWork.MeetingSpaceReservationRepository.GetMeetingsInDay(Day, meetingSpaceId);
+            return new Response<List<OccupiedTimesDto>>(allMeetingTimesInDay);
+        }
 
         #endregion
     }
