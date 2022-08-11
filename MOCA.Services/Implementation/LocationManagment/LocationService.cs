@@ -121,13 +121,10 @@ namespace MOCA.Services.Implementation.LocationManagment
                 if (request.LocationCurrencies.Count > 0)
                 {
                     var locationCurrency = _mapper.Map<List<LocationCurrency>>(request.LocationCurrencies);
-                    foreach (var item in locationCurrency)
+                    var checker = locationCurrency.Select(x => x.CurrencyId).Distinct();
+                    if (locationCurrency.Count != checker.Count())
                     {
-                        var checker = await _unitOfWork.LocationCurrencyRepoEF.CheckLocationCurrencyIsUinque(location.Id, item.CurrencyId);
-                        if (checker == false)
-                        {
-                            return new Response<long>("Location Currency Exsists Before.");
-                        }
+                        return new Response<long>("Can not duplicate same currency for same location");
                     }
                     locationCurrency.ForEach(c => { c.LocationId = location.Id; });
                     _unitOfWork.LocationCurrencyRepo.InsertRang(locationCurrency);
