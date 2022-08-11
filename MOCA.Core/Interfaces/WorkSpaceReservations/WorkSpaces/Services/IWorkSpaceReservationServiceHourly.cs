@@ -3,7 +3,7 @@ using MOCA.Core.DTOs.WorkSpaceReservation;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
 
-namespace MOCA.Core.Interfaces.WorkSpaceReservations.Services
+namespace MOCA.Core.Interfaces.WorkSpaceReservations.WorkSpaces.Services
 {
     public interface IWorkSpaceReservationServiceHourly
     {

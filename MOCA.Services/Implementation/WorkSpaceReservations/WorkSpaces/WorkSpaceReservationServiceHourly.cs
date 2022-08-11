@@ -8,9 +8,9 @@ using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
 using MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces;
 using MOCA.Core.Enums.Shared;
 using MOCA.Core.Interfaces.Shared.Services;
-using MOCA.Core.Interfaces.WorkSpaceReservations.Services;
+using MOCA.Core.Interfaces.WorkSpaceReservations.WorkSpaces.Services;
 
-namespace MOCA.Services.Implementation.WorkSpaceReservations
+namespace MOCA.Services.Implementation.WorkSpaceReservations.WorkSpaces
 {
     public class WorkSpaceReservationServiceHourly : IWorkSpaceReservationServiceHourly
     {
@@ -19,7 +19,7 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
         private readonly IDateTimeService _dateTimeService;
         private readonly IReservationsStatusService _reservationsStatusService;
 
-        public WorkSpaceReservationServiceHourly(IUnitOfWork unitOfWork, IMapper mapper, IDateTimeService dateTimeService, 
+        public WorkSpaceReservationServiceHourly(IUnitOfWork unitOfWork, IMapper mapper, IDateTimeService dateTimeService,
                                                  IReservationsStatusService reservationsStatusService)
         {
             _unitOfWork = unitOfWork;
@@ -39,8 +39,8 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
 
 
             // 2. get count of active tailoreds
-               // get count of active Bundle
-               // get count of active hourly
+            // get count of active Bundle
+            // get count of active hourly
 
             // 3. max occupancy > TotalCount
 
@@ -78,7 +78,7 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
                         int remainingHoursBeforeClosing = Convert.ToInt32(remainingHours.Hours);
 
                         int closest = listOfHours.Aggregate((x, y) => Math.Abs(x - remainingHoursBeforeClosing) < Math.Abs(y - remainingHoursBeforeClosing) ? x : y);
-                        
+
                         if (topUp.NumberOfHours > closest)
                             return new Response<SharedCreationResponse>("Maximum hours are " + closest);
 
@@ -129,7 +129,7 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
                                                       .OrderByDescending(r => r.CreatedAt)
                                                       .FirstOrDefault().StartDateTime;
 
-        
+
             // List of Foodics Details
 
             // Set top ups history, and Gifted Hours
@@ -171,7 +171,7 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
                 LastName = reservation.BasicUser.LastName,
                 Amount = reservation.Price,
                 PaymentMethod = reservation.PaymentMethodId,
-                Status = _reservationsStatusService.GetStatus(reservation.WorkSpaceHourlyTransactions.ReservationTransaction, 
+                Status = _reservationsStatusService.GetStatus(reservation.WorkSpaceHourlyTransactions.ReservationTransaction,
                                                               reservation.WorkSpaceHourlyCancellation.CancelReservation),
                 Mode = reservation.TopUps.Count == 0 ? "Basic" : "TopUp",
                 ReservationType = "Hourly",

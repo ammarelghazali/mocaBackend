@@ -1,10 +1,10 @@
 ﻿using MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces;
-using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
+using MOCA.Core.Interfaces.WorkSpaceReservations.WorkSpaces.Repositories;
 using MOCA.Presistence.Contexts;
 using MOCA.Presistence.Repositories.Base;
 
 
-namespace MOCA.Presistence.Repositories.WorkSpaceReservations
+namespace MOCA.Presistence.Repositories.WorkSpaceReservations.WorkSpaces
 {
     public class WorkSpaceHourlyTopUpRepo : GenericRepository<WorkSpaceHourlyTopUp>, IWorkSpaceHourlyTopUpRepo
     {

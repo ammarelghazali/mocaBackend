@@ -1,14 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
-using MOCA.Core.Entities.Shared.Reservations;
 using MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces;
 using MOCA.Core.Interfaces.Shared.Services;
-using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
+using MOCA.Core.Interfaces.WorkSpaceReservations.WorkSpaces.Repositories;
 using MOCA.Presistence.Contexts;
 using MOCA.Presistence.Repositories.Base;
 
-namespace MOCA.Presistence.Repositories.WorkSpaceReservations
+namespace MOCA.Presistence.Repositories.WorkSpaceReservations.WorkSpaces
 {
     public class WorkSpaceReservationBundleRepo : GenericRepository<WorkSpaceReservationBundle>, IWorkSpaceReservationBundleRepo
     {
@@ -33,27 +32,27 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
                                                                   .ThenInclude(r => r.CancelReservation)
                                                                   .Select(r => new GetAllWorkSpaceReservationsResponse
                                                                   {
-                                                                     Id = r.Id,
-                                                                     BasicUserId = r.BasicUserId,
-                                                                     OpportunityStartDate = r.CreatedAt,
-                                                                     FirstName = r.BasicUser.FirstName,
-                                                                     LastName = r.BasicUser.LastName,
-                                                                     MobileNumber = r.BasicUser.MobileNumber,
-                                                                     LocationName = r.Location.Name,
-                                                                     ReservationType = "Bundle",
-                                                                     DateTime = r.BundleStartDate,
-                                                                     Amount = r.BundlePrice,
-                                                                     ReservationTypeId = 3,
-                                                                     Mode = "basic",
-                                                                     TopUpsLink = "resources/templates/unchecked.png",
+                                                                      Id = r.Id,
+                                                                      BasicUserId = r.BasicUserId,
+                                                                      OpportunityStartDate = r.CreatedAt,
+                                                                      FirstName = r.BasicUser.FirstName,
+                                                                      LastName = r.BasicUser.LastName,
+                                                                      MobileNumber = r.BasicUser.MobileNumber,
+                                                                      LocationName = r.Location.Name,
+                                                                      ReservationType = "Bundle",
+                                                                      DateTime = r.BundleStartDate,
+                                                                      Amount = r.BundlePrice,
+                                                                      ReservationTypeId = 3,
+                                                                      Mode = "basic",
+                                                                      TopUpsLink = "resources/templates/unchecked.png",
 
-                                                                     CreditHours = r.WorkSpaceBundleTransactions.ReservationTransaction
+                                                                      CreditHours = r.WorkSpaceBundleTransactions.ReservationTransaction
                                                                                                                  .RemainingHours,
 
                                                                       EndDate = r.WorkSpaceBundleTransactions.ReservationTransaction
                                                                                                              .ExtendExpiryDate,
 
-                                                          
+
 
                                                                       EntryScanTime = r.WorkSpaceBundleTransactions
                                                                                        .ReservationTransaction.ReservationDetails

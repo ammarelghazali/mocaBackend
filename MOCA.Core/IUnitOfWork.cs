@@ -6,12 +6,12 @@ using MOCA.Core.Interfaces.Events.Repositories;
 using MOCA.Core.Interfaces.MocaSettings.Repositories;
 using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Interfaces.LocationManagment.Repositories;
-using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
 using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
 using MOCA.Core.Interfaces.SSO.Repositories;
 using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
 using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Interfaces.DynamicLists.Repositories;
+using MOCA.Core.Interfaces.WorkSpaceReservations.WorkSpaces.Repositories;
 
 namespace MOCA.Core
 {

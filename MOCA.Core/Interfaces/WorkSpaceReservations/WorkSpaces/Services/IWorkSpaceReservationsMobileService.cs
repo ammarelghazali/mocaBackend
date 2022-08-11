@@ -2,7 +2,7 @@
 using MOCA.Core.DTOs.WorkSpaceReservation.Mobile.Request;
 using MOCA.Core.DTOs.WorkSpaceReservation.Mobile.Response;
 
-namespace MOCA.Core.Interfaces.WorkSpaceReservations.Services
+namespace MOCA.Core.Interfaces.WorkSpaceReservations.WorkSpaces.Services
 {
     public interface IWorkSpaceReservationsMobileService
     {

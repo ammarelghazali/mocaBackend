@@ -3,11 +3,11 @@ using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
 using MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces;
 using MOCA.Core.Interfaces.Shared.Services;
-using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
+using MOCA.Core.Interfaces.WorkSpaceReservations.WorkSpaces.Repositories;
 using MOCA.Presistence.Contexts;
 using MOCA.Presistence.Repositories.Base;
 
-namespace MOCA.Presistence.Repositories.WorkSpaceReservations
+namespace MOCA.Presistence.Repositories.WorkSpaceReservations.WorkSpaces
 {
     public class WorkSpaceReservationTailoredRepo : GenericRepository<WorkSpaceReservationTailored>, IWorkSpaceReservationTailoredRepo
     {

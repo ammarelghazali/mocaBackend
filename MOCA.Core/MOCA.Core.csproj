@@ -20,6 +20,8 @@
     <Folder Include="Interfaces\MocaSettings\Repositories\" />
     <Folder Include="Interfaces\MocaSettings\Services\" />
     <Folder Include="Interfaces\MocaSettings\Services\" />
+    <Folder Include="Interfaces\WorkSpaceReservations\CoworkSpace\Services\" />
+    <Folder Include="Interfaces\WorkSpaceReservations\CoworkSpace\Repositories\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,9 +1,9 @@
 ﻿using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.DTOs.WorkSpaceReservation.Mobile.Request;
 using MOCA.Core.DTOs.WorkSpaceReservation.Mobile.Response;
-using MOCA.Core.Interfaces.WorkSpaceReservations.Services;
+using MOCA.Core.Interfaces.WorkSpaceReservations.WorkSpaces.Services;
 
-namespace MOCA.Services.Implementation.WorkSpaceReservations
+namespace MOCA.Services.Implementation.WorkSpaceReservations.WorkSpaces
 {
     public class WorkSpaceReservationsMobileService : IWorkSpaceReservationsMobileService
     {

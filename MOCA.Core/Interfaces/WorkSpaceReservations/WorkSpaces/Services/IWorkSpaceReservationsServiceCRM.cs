@@ -2,14 +2,8 @@
 using MOCA.Core.DTOs.WorkSpaceReservation;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
-using MOCA.Core.DTOs.WorkSpaceReservation.Mobile.Request;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MOCA.Core.Interfaces.WorkSpaceReservations.Services
+namespace MOCA.Core.Interfaces.WorkSpaceReservations.WorkSpaces.Services
 {
     public interface IWorkSpaceReservationsServiceCRM
     {

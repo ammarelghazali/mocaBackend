@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using MOCA.Core.DTOs.Shared;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
-using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
+using MOCA.Core.Interfaces.WorkSpaceReservations.WorkSpaces.Repositories;
 using MOCA.Presistence.Contexts;
 
-namespace MOCA.Presistence.Repositories.WorkSpaceReservations
+namespace MOCA.Presistence.Repositories.WorkSpaceReservations.WorkSpaces
 {
     public class WorkSpaceReservationsRepositoryCRM : IWorkSpaceReservationsRepositoryCRM
     {
@@ -71,8 +71,8 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
             parms.Add("@PlanDay_Type", request.PlanDayType);
             parms.Add("@Client_Id", request.ClientId);
 
-            var data = await _context.Connection.QueryAsync<GetFilteredWorkSpaceReservationNotPaginatedResponse>("[dbo].[SP_Work_n_Munch_Workspace_Submissions_GetAll_CRM_WithoutPagination]", parms, null, (int) System.Data.CommandType.StoredProcedure);
-                
+            var data = await _context.Connection.QueryAsync<GetFilteredWorkSpaceReservationNotPaginatedResponse>("[dbo].[SP_Work_n_Munch_Workspace_Submissions_GetAll_CRM_WithoutPagination]", parms, null, (int)System.Data.CommandType.StoredProcedure);
+
             return data.AsList();
         }
 

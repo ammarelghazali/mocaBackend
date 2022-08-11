@@ -5,9 +5,9 @@ using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
 using MOCA.Core.Interfaces.Shared.Services;
-using MOCA.Core.Interfaces.WorkSpaceReservations.Services;
+using MOCA.Core.Interfaces.WorkSpaceReservations.WorkSpaces.Services;
 
-namespace MOCA.Services.Implementation.WorkSpaceReservations
+namespace MOCA.Services.Implementation.WorkSpaceReservations.WorkSpaces
 {
     public class WorkSpaceReservationServiceBundle : IWorkSpaceReservationServiceBundle
     {
@@ -60,7 +60,7 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
                 LastName = reservation.BasicUser.LastName,
                 Amount = reservation.BundlePrice,
                 PaymentMethod = reservation.PaymentMethodId,
-                Status = _reservationsStatusService.GetStatus(reservation.WorkSpaceBundleTransactions.ReservationTransaction, 
+                Status = _reservationsStatusService.GetStatus(reservation.WorkSpaceBundleTransactions.ReservationTransaction,
                                                               reservation.WorkSpaceBundleCancellation.CancelReservation),
                 Mode = "Basic",
                 ReservationType = "Bundle",

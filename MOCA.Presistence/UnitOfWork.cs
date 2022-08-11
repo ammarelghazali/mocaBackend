@@ -14,16 +14,14 @@ using MOCA.Presistence.Repositories.Base;
 using MOCA.Presistence.Repositories.Events;
 using MOCA.Presistence.Repositories.LocationManagment;
 using MOCA.Presistence.Repositories.MocaSettings;
-using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
-using MOCA.Presistence.Repositories.WorkSpaceReservations;
 using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
 using MOCA.Presistence.Repositories.MeetingSpaceReservations;
 using MOCA.Core.Interfaces.SSO.Repositories;
-using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
-using MOCA.Presistence.Repositories.MeetingSpaceReservations;
 using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Interfaces.DynamicLists.Repositories;
 using MOCA.Presistence.Repositories.DynamicLists;
+using MOCA.Core.Interfaces.WorkSpaceReservations.WorkSpaces.Repositories;
+using MOCA.Presistence.Repositories.WorkSpaceReservations.WorkSpaces;
 
 namespace MOCA.Presistence
 {

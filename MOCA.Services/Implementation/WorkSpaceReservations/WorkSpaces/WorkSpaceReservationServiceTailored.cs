@@ -7,9 +7,9 @@ using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
 using MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces;
 using MOCA.Core.Interfaces.Shared.Services;
-using MOCA.Core.Interfaces.WorkSpaceReservations.Services;
+using MOCA.Core.Interfaces.WorkSpaceReservations.WorkSpaces.Services;
 
-namespace MOCA.Services.Implementation.WorkSpaceReservations
+namespace MOCA.Services.Implementation.WorkSpaceReservations.WorkSpaces
 {
     public class WorkSpaceReservationServiceTailored : IWorkSpaceReservationServiceTailored
     {
@@ -18,7 +18,7 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
         private readonly IDateTimeService _dateTimeService;
         private readonly IReservationsStatusService _reservationsStatusService;
 
-        public WorkSpaceReservationServiceTailored(IUnitOfWork unitOfWork, IMapper mapper, IDateTimeService dateTimeService, 
+        public WorkSpaceReservationServiceTailored(IUnitOfWork unitOfWork, IMapper mapper, IDateTimeService dateTimeService,
                                                    IReservationsStatusService reservationsStatusService)
         {
             _unitOfWork = unitOfWork;
@@ -43,7 +43,7 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
             var remainingDays = (Convert.ToDateTime(reservation.TailoredEndDate) - DateTime.Now).Days;
 
             //  int countWorkingHours = (Convert.ToDateTime(itm.WH_End) - Convert.ToDateTime(itm.WH_Start)).Hours;
-            int maxHours = (remainingDays * 8);
+            int maxHours = remainingDays * 8;
 
             // add the top up
             var reservationTopUp = new WorkSpaceTailoredTopUp
@@ -85,7 +85,7 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
             var entryScanTime = reservation.WorkSpaceTailoredTransactions.ReservationTransaction.ReservationDetails
                                                       .OrderByDescending(r => r.CreatedAt)
                                                       .FirstOrDefault().StartDateTime;
-            
+
             // List of Foodics Details
 
             // Set top ups history, and Gifted Hours
@@ -127,7 +127,7 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
                 LastName = reservation.BasicUser.LastName,
                 Amount = reservation.TailoredPrice,
                 PaymentMethod = reservation.PaymentMethodId,
-                Status = _reservationsStatusService.GetStatus(reservation.WorkSpaceTailoredTransactions.ReservationTransaction, 
+                Status = _reservationsStatusService.GetStatus(reservation.WorkSpaceTailoredTransactions.ReservationTransaction,
                                                               reservation.WorkSpaceTailoredCancellation.CancelReservation),
                 Mode = reservation.TopUps.Count == 0 ? "Basic" : "TopUp",
                 ReservationType = "Tailored",

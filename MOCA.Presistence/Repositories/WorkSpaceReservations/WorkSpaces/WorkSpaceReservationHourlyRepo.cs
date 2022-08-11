@@ -1,14 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
-using MOCA.Core.Entities.Shared.Reservations;
 using MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces;
 using MOCA.Core.Interfaces.Shared.Services;
-using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
+using MOCA.Core.Interfaces.WorkSpaceReservations.WorkSpaces.Repositories;
 using MOCA.Presistence.Contexts;
 using MOCA.Presistence.Repositories.Base;
 
-namespace MOCA.Presistence.Repositories.WorkSpaceReservations
+namespace MOCA.Presistence.Repositories.WorkSpaceReservations.WorkSpaces
 {
     public class WorkSpaceReservationHourlyRepo : GenericRepository<WorkSpaceReservationHourly>, IWorkSpaceReservationHourlyRepo
     {
@@ -52,7 +51,7 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
                                                                       EndDate = r.WorkSpaceHourlyTransactions.ReservationTransaction
                                                                                                              .ExtendExpiryDate,
 
-                                                                      TopUpsLink = r.TopUps.Count > 0 ? "resources/templates/check.png" : 
+                                                                      TopUpsLink = r.TopUps.Count > 0 ? "resources/templates/check.png" :
                                                                                                         "resources/templates/unchecked.png",
 
                                                                       EntryScanTime = r.WorkSpaceHourlyTransactions
@@ -68,7 +67,7 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
                                                                                  .Select(r => r.EndDateTime).FirstOrDefault(),
 
                                                                       Status = _reservationsStatusService.GetStatus(r.WorkSpaceHourlyTransactions
-                                                                                                                     .ReservationTransaction, 
+                                                                                                                     .ReservationTransaction,
                                                                                                                      r.WorkSpaceHourlyCancellation
                                                                                                                       .CancelReservation)
 
@@ -79,7 +78,7 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
 
         public async Task<WorkSpaceReservationHourly> GetReservationById(long id)
         {
-            return await _context.WorkSpaceReservationHourly.Where(r => r.Id == id && r.IsDeleted != true && 
+            return await _context.WorkSpaceReservationHourly.Where(r => r.Id == id && r.IsDeleted != true &&
                                                                         r.WorkSpaceHourlyCancellation.CancelReservation == null)
                                                                 .Include(r => r.Location)
                                                                 .ThenInclude(r => r.LocationWorkingHours)

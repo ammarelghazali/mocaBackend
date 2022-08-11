@@ -3,12 +3,12 @@ using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
 using MOCA.Core.Entities.Shared.Reservations;
 using MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces;
 using MOCA.Core.Interfaces.Base;
-namespace MOCA.Core.Interfaces.WorkSpaceReservations.Repositories
+
+namespace MOCA.Core.Interfaces.WorkSpaceReservations.WorkSpaces.Repositories
 {
-    public interface IWorkSpaceReservationTailoredRepo : IGenericRepository<WorkSpaceReservationTailored>
+    public interface IWorkSpaceReservationBundleRepo : IGenericRepository<WorkSpaceReservationBundle>
     {
-        Task<WorkSpaceReservationTailored> GetReservationInfo(long id);
-        Task<WorkSpaceReservationTailored> GetReservationById(long id);
+        Task<WorkSpaceReservationBundle> GetReservationInfo(long id);
         Task<IQueryable<GetAllWorkSpaceReservationsResponse>> GetAllWorkSpaceSubmissions(GetAllWorkSpaceReservationsDto request);
     }
 }

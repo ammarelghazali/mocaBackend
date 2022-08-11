@@ -5,9 +5,9 @@ using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.DTOs.WorkSpaceReservation;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
-using MOCA.Core.Interfaces.WorkSpaceReservations.Services;
+using MOCA.Core.Interfaces.WorkSpaceReservations.WorkSpaces.Services;
 
-namespace MOCA.Services.Implementation.WorkSpaceReservations
+namespace MOCA.Services.Implementation.WorkSpaceReservations.WorkSpaces
 {
     public class WorkSpaceReservationsServiceCRM : IWorkSpaceReservationsServiceCRM
     {
@@ -17,7 +17,7 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
         private readonly IWorkSpaceReservationServiceBundle _bundleService;
         private readonly IWorkSpaceReservationServiceTailored _tailoredService;
 
-        public WorkSpaceReservationsServiceCRM(IUnitOfWork unitOfWork, IMapper mapper, 
+        public WorkSpaceReservationsServiceCRM(IUnitOfWork unitOfWork, IMapper mapper,
                                                IWorkSpaceReservationServiceHourly hourlyService,
                                                IWorkSpaceReservationServiceTailored tailoredService,
                                                IWorkSpaceReservationServiceBundle bundleService)
@@ -31,11 +31,11 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
 
         public async Task<Response<SharedCreationResponse>> CreateTopUp(CreateWorkSpaceTopUp topUp)
         {
-            if(topUp.ReservationTypeId == 1)
+            if (topUp.ReservationTypeId == 1)
             {
                 return await _hourlyService.CreateTopUp(topUp);
             }
-            if(topUp.ReservationTypeId == 2)
+            if (topUp.ReservationTypeId == 2)
             {
                 return await _tailoredService.CreateTopUp(topUp);
             }
@@ -49,11 +49,11 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
             var tailoredReservations = await _unitOfWork.WorkSpaceReservationTailoredRepo.GetAllWorkSpaceSubmissions(request);
             var bundleReservations = await _unitOfWork.WorkSpaceReservationBundleRepo.GetAllWorkSpaceSubmissions(request);
 
-            var allReservations =  hourlyReservations.Union(tailoredReservations)
+            var allReservations = hourlyReservations.Union(tailoredReservations)
                                                      .Union(bundleReservations)
                                                      .OrderByDescending(r => r.OpportunityStartDate);
-                                                        
-            var paginatedReservationTask =  allReservations.Skip(request.pageSize * (request.pageNumber - 1))
+
+            var paginatedReservationTask = allReservations.Skip(request.pageSize * (request.pageNumber - 1))
                                                       .Take(request.pageSize).ToListAsync();
 
             var countReservationTask = allReservations.CountAsync();
@@ -75,11 +75,11 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
 
             if (paginatedReservations.Count > 0)
             {
-                return new PagedResponse<IReadOnlyList<GetAllWorkSpaceReservationsResponse>>(paginatedReservations, 
-                                                                                             request.pageNumber, 
-                                                                                             request.pageSize, 
+                return new PagedResponse<IReadOnlyList<GetAllWorkSpaceReservationsResponse>>(paginatedReservations,
+                                                                                             request.pageNumber,
+                                                                                             request.pageSize,
                                                                                              (int)Math.Ceiling((double)countReservations /
-                                                                                                                       request.pageSize) );
+                                                                                                                       request.pageSize));
             }
             return new PagedResponse<IReadOnlyList<GetAllWorkSpaceReservationsResponse>>(null, request.pageNumber, request.pageSize);
         }
@@ -90,7 +90,7 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
 
             if (data.Count > 0)
             {
-                return new PagedResponse<IReadOnlyList<GetFilteredWorkSpaceReservationResponse>>(data, request.pageNumber, request.pageSize, 
+                return new PagedResponse<IReadOnlyList<GetFilteredWorkSpaceReservationResponse>>(data, request.pageNumber, request.pageSize,
                                                                                                  data.Count);
 
             }
@@ -127,11 +127,11 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations
             {
                 return await _hourlyService.GetReservationInfo(request);
             }
-            else if(request.ReservationTypeId == 2)
+            else if (request.ReservationTypeId == 2)
             {
                 return await _tailoredService.GetReservationInfo(request);
             }
-            else if(request.ReservationTypeId == 3)
+            else if (request.ReservationTypeId == 3)
             {
                 return await _bundleService.GetReservationInfo(request);
             }
