@@ -81,6 +81,7 @@ namespace MOCA.Core.DTOs.LocationManagment.Location
         public string? About { get; set; }
         public string? Terms { set; get; }
         public bool IsPublish { get; set; }
+        public bool InstallAccessPoint { get; set; }
         public int LocationBankAccountType { get; set; }
         public List<ServiceFeePaymentsDueDateModel> ServiceFeePaymentsDueDates { get; set; }
         public List<LocationContactModel> LocationContacts { get; set; }
