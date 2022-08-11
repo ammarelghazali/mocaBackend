@@ -86,7 +86,16 @@ namespace MOCA.Services.Implementation.LocationManagment
                 {
                     return new Response<long>("Cannot Add Location right now");
                 }
-                
+
+                #region Add Location Bank Account
+                var locationBankAccount = _mapper.Map<LocationBankAccount>(request.LocationBankAccount);
+                locationBankAccount.LocationId = location.Id;
+                _unitOfWork.LocationBankAccountRepo.Insert(locationBankAccount);
+                if (await _unitOfWork.SaveAsync() < 1)
+                {
+                    return new Response<long>("Cannot Add LocationBankAccount right now");
+                }
+                #endregion
                 return new Response<long>(location.Id, "Location Added Successfully.");
             }
             catch (Exception ex)
