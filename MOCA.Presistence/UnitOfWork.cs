@@ -748,6 +748,24 @@ namespace MOCA.Presistence
                 return _buildingFloorRepoEF = _buildingFloorRepoEF ?? new BuildingFloorRepository(_context);
             }
         }
+
+        public IGenericRepository<Amenity> _AmenityRepo;
+        public IGenericRepository<Amenity> AmenityRepo
+        {
+            get
+            {
+                return _AmenityRepo = _AmenityRepo ?? new GenericRepository<Amenity>(_context);
+            }
+        }
+        public IAmenityRepository _AmenityRepoEF;
+        public IAmenityRepository AmenityRepoEF
+        {
+            get
+            {
+                return _AmenityRepoEF = _AmenityRepoEF ?? new AmenityRepository(_context);
+            }
+        }
+
         #endregion
 
 

@@ -4,10 +4,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MOCA.Core.DTOs;
 using MOCA.Core.DTOs.DynamicLists;
-using MOCA.Core.DTOs.Shared.Responses;
+using MOCA.Core.DTOs.LocationManagment.Amenity;
+using MOCA.Core.DTOs.Shared;
 using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Interfaces.DynamicLists.Services;
 using MOCA.Core.Interfaces.LocationManagment.Services;
+using MOCA.Core.Interfaces.Shared.Services;
+using MOCA.Core.Settings;
+using RequestParameter = MOCA.Core.DTOs.RequestParameter;
 
 namespace LocationManagement.API.Controllers
 {
@@ -20,13 +24,20 @@ namespace LocationManagement.API.Controllers
         private readonly IMapper _mapper;
         private readonly IWorkSpaceCategoryService _WorkSpaceCategoryService;
         private readonly IWorkSpaceTypeService _WorkSpaceTypeService;
+        private readonly IAmenityService _AmenityService;
+        private readonly IUploadImageService _UploadImageService;
+        private readonly FileSettings _fileSettings;
 
-        public DynamicListsController(IMapper mapper, IWorkSpaceCategoryService WorkSpaceCategoryService,IWorkSpaceTypeService WorkSpaceTypeService)
+        public DynamicListsController(IMapper mapper, IWorkSpaceCategoryService WorkSpaceCategoryService,
+            IWorkSpaceTypeService WorkSpaceTypeService, IAmenityService amenityService, IUploadImageService uploadImageService)
         {
             _mapper = mapper;
             _WorkSpaceCategoryService = WorkSpaceCategoryService;
             _WorkSpaceTypeService = WorkSpaceTypeService;
+            _AmenityService = amenityService;
+            _UploadImageService = uploadImageService;
         }
+        ///////////////////WORK SPACE CATEGORY///////////////////WORK SPACE CATEGORY///////////////////WORK SPACE CATEGORY///////////////////
 
 
         [HttpPost("AddWorkSpaceCategory")]
@@ -64,7 +75,7 @@ namespace LocationManagement.API.Controllers
             }
             return Ok(data);
 
-    }
+        }
 
         [HttpDelete("DeleteWorkCategoryWorkSpace")]
         public async Task<IActionResult> DeleteWorkCategoryWorkSpace(long id)
@@ -103,7 +114,7 @@ namespace LocationManagement.API.Controllers
             return Ok(response);
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////WORK SPACE TYPE///////////////////WORK SPACE TYPE///////////////////WORK SPACE TYPE///////////////////
 
         [HttpPost("AddWorkSpaceType")]
         public async Task<IActionResult> AddWorkSpaceType([FromBody] WorkSpaceTypeModel model)
@@ -113,7 +124,7 @@ namespace LocationManagement.API.Controllers
             if (data.Succeeded == false)
             {
                 return BadRequest(data);
-}
+            }
             return Ok(data);
         }
 
@@ -188,6 +199,34 @@ namespace LocationManagement.API.Controllers
             }
             return Ok(response);
         }
+
+        ///////////////////AMENITY///////////////////AMENITY///////////////////AMENITY///////////////////AMENITY//////////////////////////
+        [HttpPost("AddAmenity")]
+        public async Task<IActionResult> AddAmenity([FromBody] AmenityModel model)
+        {
+            var amenity = await _AmenityService.AddAmenity(model);
+       
+
+            if (amenity.Succeeded == false)
+            {
+                return BadRequest(amenity);
+            }
+            return Ok(amenity);
+
+        }
+
+        [HttpPost("UploadLocationImages")]
+        public async Task<IActionResult> UploadLocationImages([FromBody] ImageUpload image)
+        {
+            var response = await _UploadImageService.Uploading(image, _fileSettings.Location_FilePath, "Amenity");
+            if (response.Succeeded == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+
 
     }
 }

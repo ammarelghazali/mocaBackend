@@ -93,6 +93,9 @@ namespace MOCA.Core
         IBuildingRepository BuildingRepoEF { get; }
         IGenericRepository<BuildingFloor> BuildingFloorRepo { get; }
         IBuildingFloorRepository BuildingFloorRepoEF { get; }
+        IGenericRepository<Amenity> AmenityRepo { get; }
+
+        IAmenityRepository AmenityRepoEF { get; }
 
         #endregion
 
@@ -126,7 +129,7 @@ namespace MOCA.Core
 
         IMemberShipTypesRepository MemberShipTypesRepository { get; }
 
-        IMemberShipMainCategoriesRepository  MemberShipMainCategoriesRepository { get; }
+        IMemberShipMainCategoriesRepository MemberShipMainCategoriesRepository { get; }
 
         IMemberShipCategoriesRepository MemberShipCategoriesRepository { get; }
 
