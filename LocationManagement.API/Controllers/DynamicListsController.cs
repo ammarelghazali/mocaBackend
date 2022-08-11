@@ -206,17 +206,15 @@ namespace LocationManagement.API.Controllers
         {
             var amenity = await _AmenityService.AddAmenity(model);
        
-
             if (amenity.Succeeded == false)
             {
                 return BadRequest(amenity);
             }
             return Ok(amenity);
-
         }
 
-        [HttpPost("UploadLocationImages")]
-        public async Task<IActionResult> UploadLocationImages([FromBody] ImageUpload image)
+        [HttpPost("UploadAmenityIcon")]
+        public async Task<IActionResult> UploadAmenityIcon([FromBody] ImageUpload image)
         {
             var response = await _UploadImageService.Uploading(image, _fileSettings.Location_FilePath, "Amenity");
             if (response.Succeeded == false)
@@ -226,7 +224,76 @@ namespace LocationManagement.API.Controllers
             return Ok(response);
         }
 
+        [HttpPost("AddListOfAmenity")]
+        public async Task<IActionResult> AddListOfAmenity([FromBody] List<AmenityModel> model)
+        {
+            var data = await _AmenityService.AddListOfAmenity(model);
 
+            if (data.Succeeded == false)
+            {
+                return BadRequest(data);
+            }
+            return Ok(data);
+        }
+
+        [HttpDelete("DeleteWorkAmenity")]
+        public async Task<IActionResult> DeleteWorkAmenity(long id)
+        {
+            var data = await _AmenityService.DeleteAmenity(id);
+
+            if (data.Succeeded == false)
+            {
+                return BadRequest(data);
+            }
+            return Ok(data);
+        }
+
+        [HttpGet("GetAllAmenityPagination")]
+        public async Task<IActionResult> GetAllAmenityPagination([FromQuery] RequestParameter filter)
+        {
+            var response = await _AmenityService.GetAllAmenityPaginated(filter);
+
+            if (response.Succeeded == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        [HttpGet("GetAmenityByID")]
+        public async Task<IActionResult> GetAmenityByID([FromHeader] long Id)
+        {
+            var response = await _AmenityService.GetAmenityById(Id);
+
+            if (response.Succeeded == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        [HttpGet("GetAllAmenityWithoutPagination")]
+        public async Task<IActionResult> GetAllAmenityWithoutPagination()
+        {
+            var data = await _AmenityService.GetAmenityWithoutPagination();
+            if (data.Succeeded == false)
+            {
+                return BadRequest(data);
+            }
+            return Ok(data);
+        }
+
+        [HttpPut("UpdateAmenity")]
+        public async Task<IActionResult> UpdateAmenity([FromBody] AmenityModel model)
+        {
+            var data = await _AmenityService.UpdateAmenity(model);
+            if (data.Succeeded == false)
+            {
+                return BadRequest(data);
+            }
+            return Ok(data);
+
+        }
 
     }
 }

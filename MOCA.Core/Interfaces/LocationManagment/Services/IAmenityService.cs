@@ -3,13 +3,14 @@
 using MOCA.Core.DTOs;
 using MOCA.Core.DTOs.LocationManagment.Amenity;
 using MOCA.Core.DTOs.Shared.Responses;
+using MOCA.Core.Entities.LocationManagment;
 
 namespace MOCA.Core.Interfaces.LocationManagment.Services
 {
     public interface IAmenityService
     {
         Task<Response<long>> AddAmenity(AmenityModel request);
-        Task<Response<List<AmenityModel>>> AddListOfAmenity(List<AmenityModel> request);
+        Task<Response<List<Amenity>>> AddListOfAmenity(List<AmenityModel> request);
         Task<Response<bool>> UpdateAmenity(AmenityModel request);
 
         Task<PagedResponse<List<AmenityModel>>> GetAllAmenityPaginated(RequestParameter filter);

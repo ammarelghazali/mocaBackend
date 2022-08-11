@@ -20,12 +20,22 @@ namespace MOCA.Presistence.Repositories.LocationManagment
 
         public async Task<bool> IsUniqueNameAsync(string amenityName)
         {
-            var workSpaceType = _context.WorkSpaceTypes.Where(x => x.Name.Equals(amenityName) && x.IsDeleted != true).FirstOrDefault();
+            var workSpaceType = _context.Amenities.Where(x => x.Name.Equals(amenityName) && x.IsDeleted != true).FirstOrDefault();
             if (workSpaceType == null)
             {
                 return true;
             }
             return false;
+        }
+        public async Task<bool> DeleteAmenity(long Id)
+        {
+            var amenity = _context.Amenities.Where(x => x.Id == Id && x.IsDeleted == false).FirstOrDefault();
+            if (amenity == null)
+            {
+                return false;
+            }
+            _context.Amenities.Remove(amenity);
+            return true;
         }
     }
 }
