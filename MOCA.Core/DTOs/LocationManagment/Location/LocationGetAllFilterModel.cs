@@ -15,6 +15,7 @@
         public DateTime ContractStartDate { get; set; }
         public int ContractLength { get; set; }
         public bool IsPublish { get; set; }
+        public bool InstallAccessPoint { get; set; }
         public long pgTotal { get; set; }
     }
 }

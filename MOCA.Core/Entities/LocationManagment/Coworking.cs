@@ -15,7 +15,7 @@ namespace MOCA.Core.Entities.LocationManagment
         public int Occupancy { get; set; }
         public int RemainingOccupancy { get; set; }
         public int TailoredPercentage { get; set; }
-
+        public bool InstallAccessPoint { get; set; }
         public ICollection<CoworkingSpaceReservationHourly> CoworkingSpaceReservationHourlies { get; set; }
         public ICollection<CoworkingSpaceReservationTailored> CoworkingSpaceReservationTailoreds { get; set; }
         public ICollection<CoworkingSpaceReservationBundle> CoworkingSpaceReservationBundles { get; set; }
