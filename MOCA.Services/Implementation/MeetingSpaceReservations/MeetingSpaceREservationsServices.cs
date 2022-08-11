@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MOCA.Core;
 using MOCA.Core.DTOs.MeetingReservations.Request;
 using MOCA.Core.DTOs.MeetingReservations.Response;
@@ -13,10 +14,12 @@ namespace MOCA.Services.Implementation.MeetingSpaceReservations
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthenticatedUserService _authenticatedUserService;
-        public MeetingSpaceREservationsServices(IUnitOfWork unitOfWork, IAuthenticatedUserService authenticatedUserService)
+        private readonly IMapper _mapper;
+        public MeetingSpaceREservationsServices(IUnitOfWork unitOfWork, IAuthenticatedUserService authenticatedUserService, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _authenticatedUserService = authenticatedUserService ?? throw new ArgumentNullException(nameof(authenticatedUserService));
+            _mapper = mapper;
         }
 
         #region CRM
@@ -146,8 +149,31 @@ namespace MOCA.Services.Implementation.MeetingSpaceReservations
             {
                 return new Response<bool>("UnExpected error happened");
             }
+        }
+
+
+
+        public async Task<Response<bool>> AddAttendees(List<MeetingAttendeeDto> dto)
+        {
+            try
+            {
+                var attendees = _mapper.Map<List<MeetingAttendee>>(dto);
+                var addedAttendees = await _unitOfWork.MeetingAttendeesRepository.AddRangeAsync(attendees);
+                return new Response<bool>(true, "Attendees added successfully :D");
+            }
+            catch(Exception ex)
+            {
+                return new Response<bool>("Unexpected error happened!");
+            }
 
         }
+
+
+        public async Task<Response<bool>> UpdatePaymentMethod(long meetingReservationId, long paymentMethodId)
+        {
+            throw new NotImplementedException();
+        }
+
 
         #endregion
     }

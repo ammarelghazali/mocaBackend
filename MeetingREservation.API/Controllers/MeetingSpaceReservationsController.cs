@@ -100,6 +100,30 @@ namespace MeetingREservation.API.Controllers
         }
 
 
+        [HttpPost("AddAttendees")]
+        public async Task<IActionResult> AddAttendees(List<MeetingAttendeeDto> dto)
+        {
+            var response = await _meetingSpaceReservationsServices.AddAttendees(dto);
+            if (!response.Succeeded)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+
+        [HttpPut("UpdatePaymentMethod")]
+        public async Task<IActionResult> UpdatePaymentMethod(long meetingReservationId, long paymentMethodId)
+        {
+            var response = await _meetingSpaceReservationsServices.UpdatePaymentMethod(meetingReservationId, paymentMethodId);
+            if (!response.Succeeded)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+
         #endregion
 
     }

@@ -18,6 +18,8 @@ namespace MOCA.Core.Interfaces.MeetingSpaceReservations.Services
 
         #region Mobile
         Task<Response<bool>> BookMeetingReservation(BookMeetingReservationRequestDto dto);
+        Task<Response<bool>> AddAttendees(List<MeetingAttendeeDto> dto);
+        Task<Response<bool>> UpdatePaymentMethod(long meetingReservationId, long paymentMethodId);
 
         #endregion
 

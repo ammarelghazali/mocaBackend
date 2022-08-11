@@ -148,6 +148,7 @@ namespace MOCA.Core
 
         #region MeetingSpaceReservations
         public IMeetingSpaceReservationRepository MeetingSpaceReservationRepository { get; }
+        public IMeetingAttendeesRepository MeetingAttendeesRepository { get; }
         #endregion
 
 

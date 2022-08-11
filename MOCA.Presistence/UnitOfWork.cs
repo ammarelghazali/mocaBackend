@@ -783,7 +783,14 @@ namespace MOCA.Presistence
             }
         }
 
-
+        private IMeetingAttendeesRepository _meetingAttendeesRepository;
+        public IMeetingAttendeesRepository MeetingAttendeesRepository
+        {
+            get
+            {
+                return _meetingAttendeesRepository = _meetingAttendeesRepository ?? new MeetingAttendeesRepository(_context);
+            }
+        }
         #endregion
 
 
