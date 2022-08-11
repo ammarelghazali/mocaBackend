@@ -94,6 +94,8 @@ namespace MOCA.Presistence.Contexts
         public DbSet<WorkSpaceHourlyPricing> WorkSpaceHourlyPricings { get; set; }
         public DbSet<WorkSpaceBundleMemberType> WorkSpaceBundleMemberTypes { get; set; }
         public DbSet<CoworkingSpaceBundleMemberType> CoworkingSpaceBundleMemberTypes { get; set; }
+        public DbSet<CoworkingWorkspaceFurnishing> CoworkingWorkspaceFurnishings { get; set; }
+        public DbSet<CoworkingWorkSpaceMarketingImage> CoworkingWorkSpaceMarketingImages { get; set; }
         #endregion
 
         #region Shared
@@ -335,6 +337,12 @@ namespace MOCA.Presistence.Contexts
 
             builder.Entity<CoworkingSpaceBundleMemberType>()
               .HasKey(p => new { p.CoworkSpaceBundleId, p.MemberTypeId });
+
+            builder.Entity<CoworkingWorkspaceFurnishing>()
+                .HasKey(p => new { p.CoworkingWorkSpaceId, p.FurnishingId });
+
+            builder.Entity<CoworkingWorkSpaceMarketingImage>()
+                .HasKey(p => new { p.LocationId, p.MarketingImagesId });
             #endregion
         }
     }

@@ -6,13 +6,6 @@ namespace MOCA.Core.Entities.LocationManagment
 {
     public class Furnishing : BaseEntity
     {
-
-        [Required]
-        public long FeatureId { get; set; }
-
-        [ForeignKey("FeatureId")]
-        public Feature Feature { get; set; }
-
         [Required]
         public long FurnishingTypeId { get; set; }
 
@@ -30,8 +23,5 @@ namespace MOCA.Core.Entities.LocationManagment
         public string? SerialNumber { get; set; }
 
         public string? Picture { get; set; }
-
-        [Required]
-        public long SpaceId { get; set; }
     }
 }
