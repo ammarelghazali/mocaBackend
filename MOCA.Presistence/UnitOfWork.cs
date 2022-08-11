@@ -24,6 +24,8 @@ using MOCA.Presistence.Repositories.MeetingSpaceReservations;
 using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Interfaces.DynamicLists.Repositories;
 using MOCA.Presistence.Repositories.DynamicLists;
+using MOCA.Core.Interfaces.Shared.Reservations;
+using MOCA.Presistence.Repositories.Shered.Reservations;
 
 namespace MOCA.Presistence
 {
@@ -791,6 +793,17 @@ namespace MOCA.Presistence
                 return _meetingAttendeesRepository = _meetingAttendeesRepository ?? new MeetingAttendeesRepository(_context);
             }
         }
+
+        private IPaymentMethodRepository _paymentMethodRepository;
+        public IPaymentMethodRepository PaymentMethodRepository
+        {
+            get
+            {
+                return _paymentMethodRepository = _paymentMethodRepository ?? new PaymentMethodRepository(_context);
+            }
+        }
+
+
         #endregion
 
 

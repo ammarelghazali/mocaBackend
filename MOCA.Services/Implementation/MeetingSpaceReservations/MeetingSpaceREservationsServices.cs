@@ -171,7 +171,29 @@ namespace MOCA.Services.Implementation.MeetingSpaceReservations
 
         public async Task<Response<bool>> UpdatePaymentMethod(long meetingReservationId, long paymentMethodId)
         {
-            throw new NotImplementedException();
+            if (await _unitOfWork.PaymentMethodRepository.GetByIdAsync(paymentMethodId) == null)
+            {
+                return new Response<bool>("Payment method not found");
+            }
+
+            var meetingReservation = await _unitOfWork.MeetingSpaceReservationRepository.GetByIdAsync(meetingReservationId);
+            if(meetingReservation == null)
+            {
+                return new Response<bool>("Meeting reservation not found");
+            }
+
+
+            try
+            {
+                meetingReservation.PaymentMethodId = paymentMethodId;
+                _unitOfWork.MeetingSpaceReservationRepository.Update(meetingReservation);
+                return new Response<bool>(true, "Updated Successfully :D");
+            }
+            catch(Exception ex)
+            {
+                return new Response<bool>("Unexpected error happened!");
+            }
+
         }
 
 
