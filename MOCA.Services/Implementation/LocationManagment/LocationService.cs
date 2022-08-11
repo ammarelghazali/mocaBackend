@@ -118,21 +118,25 @@ namespace MOCA.Services.Implementation.LocationManagment
                 #endregion
 
                 #region Add Location Currency
-                var locationCurrency = _mapper.Map<List<LocationCurrency>>(request.LocationCurrencies);
-                foreach (var item in locationCurrency)
+                if (request.LocationCurrencies.Count > 0)
                 {
-                    var checker = await _unitOfWork.LocationCurrencyRepoEF.CheckLocationCurrencyIsUinque(location.Id, item.CurrencyId);
-                    if (checker == false)
+                    var locationCurrency = _mapper.Map<List<LocationCurrency>>(request.LocationCurrencies);
+                    foreach (var item in locationCurrency)
                     {
-                        return new Response<long>("Location Currency Exsists Before.");
+                        var checker = await _unitOfWork.LocationCurrencyRepoEF.CheckLocationCurrencyIsUinque(location.Id, item.CurrencyId);
+                        if (checker == false)
+                        {
+                            return new Response<long>("Location Currency Exsists Before.");
+                        }
+                    }
+                    locationCurrency.ForEach(c => { c.LocationId = location.Id; });
+                    _unitOfWork.LocationCurrencyRepo.InsertRang(locationCurrency);
+                    if (await _unitOfWork.SaveAsync() < 1)
+                    {
+                        return new Response<long>("Cannot Add LocationCurrency right now");
                     }
                 }
-                locationCurrency.ForEach(c => { c.LocationId = location.Id; });
-                _unitOfWork.LocationCurrencyRepo.InsertRang(locationCurrency);
-                if (await _unitOfWork.SaveAsync() < 1)
-                {
-                    return new Response<long>("Cannot Add LocationCurrency right now");
-                }
+                
                 #endregion
 
                 #region Add Location File
