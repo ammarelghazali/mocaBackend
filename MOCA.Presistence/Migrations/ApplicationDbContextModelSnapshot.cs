@@ -108,7 +108,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("WorkSpaceCategory");
+                    b.ToTable("WorkSpaceCategory", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.DynamicLists.WorkSpaceType", b =>
@@ -146,7 +146,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("WorkSpaceCategoryId");
 
-                    b.ToTable("WorkSpaceType");
+                    b.ToTable("WorkSpaceType", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.EventSpaceBookings.ContactDetails", b =>
@@ -198,7 +198,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("EventSpaceBookingId");
 
-                    b.ToTable("ContactDetails");
+                    b.ToTable("ContactDetails", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.EventSpaceBookings.EmailTemplate", b =>
@@ -248,7 +248,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("EmailTemplateTypeID");
 
-                    b.ToTable("EmailTemplate");
+                    b.ToTable("EmailTemplate", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.EventSpaceBookings.EmailTemplateType", b =>
@@ -281,7 +281,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EmailTemplateType");
+                    b.ToTable("EmailTemplateType", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.EventSpaceBookings.EventAttendance", b =>
@@ -315,7 +315,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EventAttendance");
+                    b.ToTable("EventAttendance", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.EventSpaceBookings.EventCategory", b =>
@@ -349,7 +349,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EventCategory");
+                    b.ToTable("EventCategory", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.EventSpaceBookings.EventOpportunityStatus", b =>
@@ -383,7 +383,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EventOpportunityStatus");
+                    b.ToTable("EventOpportunityStatus", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.EventSpaceBookings.EventReccurance", b =>
@@ -417,7 +417,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EventReccurance");
+                    b.ToTable("EventReccurance", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.EventSpaceBookings.EventRequester", b =>
@@ -451,7 +451,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EventRequester");
+                    b.ToTable("EventRequester", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.EventSpaceBookings.EventSpaceBooking", b =>
@@ -625,7 +625,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("OpportunityStageId");
 
-                    b.ToTable("EventSpaceBooking");
+                    b.ToTable("EventSpaceBooking", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.EventSpaceBookings.EventSpaceTime", b =>
@@ -674,7 +674,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("EventSpaceBookingId");
 
-                    b.ToTable("EventSpaceTime");
+                    b.ToTable("EventSpaceTime", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.EventSpaceBookings.EventSpaceVenues", b =>
@@ -713,7 +713,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("EventSpaceBookingId");
 
-                    b.ToTable("EventSpaceVenues");
+                    b.ToTable("EventSpaceVenues", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.EventSpaceBookings.EventType", b =>
@@ -747,7 +747,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EventType");
+                    b.ToTable("EventType", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.EventSpaceBookings.Initiated", b =>
@@ -781,7 +781,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Initiated");
+                    b.ToTable("Initiated", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.EventSpaceBookings.OpportunityStage", b =>
@@ -815,7 +815,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OpportunityStage");
+                    b.ToTable("OpportunityStage", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.EventSpaceBookings.OpportunityStageReport", b =>
@@ -864,7 +864,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("OpportunityStageId");
 
-                    b.ToTable("OpportunityStageReport");
+                    b.ToTable("OpportunityStageReport", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.EventSpaceBookings.SendEmail", b =>
@@ -927,7 +927,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("EventSpaceBookingId");
 
-                    b.ToTable("SendEmail");
+                    b.ToTable("SendEmail", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.Amenity", b =>
@@ -960,7 +960,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Amenity");
+                    b.ToTable("Amenity", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.Building", b =>
@@ -1013,7 +1013,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("Building");
+                    b.ToTable("Building", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.BuildingFloor", b =>
@@ -1065,7 +1065,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("BuildingId");
 
-                    b.ToTable("BuildingFloor");
+                    b.ToTable("BuildingFloor", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.City", b =>
@@ -1103,7 +1103,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("City");
+                    b.ToTable("City", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.Country", b =>
@@ -1144,7 +1144,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Country");
+                    b.ToTable("Country", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.Coworking", b =>
@@ -1187,7 +1187,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("Coworking");
+                    b.ToTable("Coworking", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.CoworkingSpaceBundleMemberType", b =>
@@ -1204,7 +1204,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("MemberTypeId");
 
-                    b.ToTable("CoworkingSpaceBundleMemberType");
+                    b.ToTable("CoworkingSpaceBundleMemberType", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.CoworkingSpaceBundlePricing", b =>
@@ -1263,7 +1263,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("CoworkingId");
 
-                    b.ToTable("CoworkingSpaceBundlePricing");
+                    b.ToTable("CoworkingSpaceBundlePricing", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.CoWorkingSpaceHourlyPricing", b =>
@@ -1312,7 +1312,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("CoworkingId");
 
-                    b.ToTable("CoWorkingSpaceHourlyPricing");
+                    b.ToTable("CoWorkingSpaceHourlyPricing", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.CoworkingSpaceTailoredPricing", b =>
@@ -1361,7 +1361,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("CoworkingId");
 
-                    b.ToTable("CoworkingSpaceTailoredPricing");
+                    b.ToTable("CoworkingSpaceTailoredPricing", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.Currency", b =>
@@ -1398,7 +1398,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Currency");
+                    b.ToTable("Currency", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.District", b =>
@@ -1436,7 +1436,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("District");
+                    b.ToTable("District", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.EventSpace", b =>
@@ -1511,7 +1511,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("EventSpace");
+                    b.ToTable("EventSpace", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.EventSpaceHourlyPricing", b =>
@@ -1559,7 +1559,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("MemberTypeId");
 
-                    b.ToTable("EventSpaceHourlyPricing");
+                    b.ToTable("EventSpaceHourlyPricing", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.EventSpaceOccupancy", b =>
@@ -1604,7 +1604,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("VenueSetupId");
 
-                    b.ToTable("EventSpaceOccupancy");
+                    b.ToTable("EventSpaceOccupancy", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.FavouriteLocation", b =>
@@ -1643,7 +1643,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("FavouriteLocation");
+                    b.ToTable("FavouriteLocation", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.Feature", b =>
@@ -1676,7 +1676,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Feature");
+                    b.ToTable("Feature", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.Furnishing", b =>
@@ -1737,7 +1737,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("FurnishingTypeId");
 
-                    b.ToTable("Furnishing");
+                    b.ToTable("Furnishing", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.FurnishingType", b =>
@@ -1770,7 +1770,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FurnishingType");
+                    b.ToTable("FurnishingType", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.Inclusion", b =>
@@ -1807,7 +1807,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Inclusion");
+                    b.ToTable("Inclusion", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.Industry", b =>
@@ -1840,7 +1840,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Industry");
+                    b.ToTable("Industry", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.Location", b =>
@@ -2057,7 +2057,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("LocationTypeId");
 
-                    b.ToTable("Location");
+                    b.ToTable("Location", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.LocationBankAccount", b =>
@@ -2136,7 +2136,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("LocationBankAccount");
+                    b.ToTable("LocationBankAccount", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.LocationContact", b =>
@@ -2190,7 +2190,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("LocationContact");
+                    b.ToTable("LocationContact", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.LocationCurrency", b =>
@@ -2229,7 +2229,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("LocationCurrency");
+                    b.ToTable("LocationCurrency", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.LocationFeature", b =>
@@ -2268,7 +2268,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("LocationFeature");
+                    b.ToTable("LocationFeature", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.LocationFile", b =>
@@ -2306,7 +2306,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("LocationFile");
+                    b.ToTable("LocationFile", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.LocationImage", b =>
@@ -2344,7 +2344,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("LocationImage");
+                    b.ToTable("LocationImage", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.LocationInclusion", b =>
@@ -2383,7 +2383,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("LocationInclusion");
+                    b.ToTable("LocationInclusion", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.LocationIndustry", b =>
@@ -2423,7 +2423,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("LocationIndustry");
+                    b.ToTable("LocationIndustry", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.LocationType", b =>
@@ -2456,7 +2456,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LocationType");
+                    b.ToTable("LocationType", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.LocationWorkingHour", b =>
@@ -2506,7 +2506,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("LocationWorkingHour");
+                    b.ToTable("LocationWorkingHour", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.MarketingImages", b =>
@@ -2547,7 +2547,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("FeatureId");
 
-                    b.ToTable("MarketingImages");
+                    b.ToTable("MarketingImages", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.MeetingSpace", b =>
@@ -2626,7 +2626,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("MeetingSpace");
+                    b.ToTable("MeetingSpace", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.MeetingSpaceHourlyPricing", b =>
@@ -2674,7 +2674,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("MemberTypeId");
 
-                    b.ToTable("MeetingSpaceHourlyPricing");
+                    b.ToTable("MeetingSpaceHourlyPricing", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.ServiceFeePaymentsDueDate", b =>
@@ -2714,7 +2714,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("ServiceFeePaymentsDueDate");
+                    b.ToTable("ServiceFeePaymentsDueDate", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.SpaceAmenity", b =>
@@ -2756,7 +2756,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("FeatureId");
 
-                    b.ToTable("SpaceAmenity");
+                    b.ToTable("SpaceAmenity", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.VenueSetup", b =>
@@ -2793,7 +2793,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VenueSetup");
+                    b.ToTable("VenueSetup", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.WorkSpace", b =>
@@ -2864,7 +2864,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("WorkSpaceTypeId");
 
-                    b.ToTable("WorkSpace");
+                    b.ToTable("WorkSpace", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.WorkSpaceBundleMemberType", b =>
@@ -2881,7 +2881,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("MemberTypeId");
 
-                    b.ToTable("WorkSpaceBundleMemberType");
+                    b.ToTable("WorkSpaceBundleMemberType", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.WorkSpaceBundlePricing", b =>
@@ -2940,7 +2940,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("WorkSpaceId");
 
-                    b.ToTable("WorkSpaceBundlePricing");
+                    b.ToTable("WorkSpaceBundlePricing", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.WorkSpaceHourlyPricing", b =>
@@ -2989,7 +2989,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("WorkSpaceId");
 
-                    b.ToTable("WorkSpaceHourlyPricing");
+                    b.ToTable("WorkSpaceHourlyPricing", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.WorkSpaceTailoredPricing", b =>
@@ -3038,7 +3038,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("WorkSpaceId");
 
-                    b.ToTable("WorkSpaceTailoredPricing");
+                    b.ToTable("WorkSpaceTailoredPricing", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.MeetingSpaceReservation.MeetingAttendee", b =>
@@ -3084,7 +3084,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("MeetingSpaceReservationId");
 
-                    b.ToTable("MeetingAttendee");
+                    b.ToTable("MeetingAttendee", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.MeetingSpaceReservation.MeetingReservation", b =>
@@ -3152,7 +3152,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("PaymentMethodId");
 
-                    b.ToTable("MeetingReservation");
+                    b.ToTable("MeetingReservation", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.MeetingSpaceReservation.MeetingReservationCancellation", b =>
@@ -3172,7 +3172,7 @@ namespace MOCA.Presistence.Migrations
                     b.HasIndex("MeetingReservationId")
                         .IsUnique();
 
-                    b.ToTable("MeetingReservationCancellation");
+                    b.ToTable("MeetingReservationCancellation", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.MeetingSpaceReservation.MeetingReservationTopUp", b =>
@@ -3226,7 +3226,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("PaymentMethodId");
 
-                    b.ToTable("MeetingReservationTopUp");
+                    b.ToTable("MeetingReservationTopUp", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.MeetingSpaceReservation.MeetingReservationTransaction", b =>
@@ -3246,7 +3246,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("ReservationTransactionId");
 
-                    b.ToTable("MeetingReservationTransaction");
+                    b.ToTable("MeetingReservationTransaction", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.MocaSetting.CaseType", b =>
@@ -3280,7 +3280,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CaseType");
+                    b.ToTable("CaseType", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.MocaSetting.Category", b =>
@@ -3322,7 +3322,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("LobSpaceTypeId");
 
-                    b.ToTable("Category");
+                    b.ToTable("Category", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.MocaSetting.Faq", b =>
@@ -3372,7 +3372,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("LobSpaceTypeId");
 
-                    b.ToTable("Faq");
+                    b.ToTable("Faq", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.MocaSetting.IssueCaseStage", b =>
@@ -3407,7 +3407,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("LobSpaceTypeId");
 
-                    b.ToTable("IssueCaseStage");
+                    b.ToTable("IssueCaseStage", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.MocaSetting.IssueReport", b =>
@@ -3493,7 +3493,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("IssueReport");
+                    b.ToTable("IssueReport", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.MocaSetting.Plan", b =>
@@ -3549,7 +3549,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("TypeId");
 
-                    b.ToTable("Plan");
+                    b.ToTable("Plan", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.MocaSetting.PlanType", b =>
@@ -3588,7 +3588,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PlanType");
+                    b.ToTable("PlanType", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.MocaSetting.Policy", b =>
@@ -3632,7 +3632,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("PolicyTypeId");
 
-                    b.ToTable("Policy");
+                    b.ToTable("Policy", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.MocaSetting.PolicyType", b =>
@@ -3671,7 +3671,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PolicyType");
+                    b.ToTable("PolicyType", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.MocaSetting.Priority", b =>
@@ -3705,7 +3705,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Priority");
+                    b.ToTable("Priority", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.MocaSetting.Severity", b =>
@@ -3739,7 +3739,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Severity");
+                    b.ToTable("Severity", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.MocaSetting.Status", b =>
@@ -3773,7 +3773,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Status");
+                    b.ToTable("Status", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.MocaSetting.TopUp", b =>
@@ -3817,7 +3817,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("TopUpTypeId");
 
-                    b.ToTable("TopUp");
+                    b.ToTable("TopUp", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.MocaSetting.TopUpType", b =>
@@ -3856,7 +3856,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TopUpType");
+                    b.ToTable("TopUpType", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.MocaSetting.Wifi", b =>
@@ -3895,7 +3895,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("LobSpaceTypeId");
 
-                    b.ToTable("Wifi");
+                    b.ToTable("Wifi", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.Shared.MemberType", b =>
@@ -3928,7 +3928,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MemberType");
+                    b.ToTable("MemberType", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.Shared.Reservations.CancelReservation", b =>
@@ -3982,7 +3982,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("ReservationTypeId");
 
-                    b.ToTable("CancelReservation");
+                    b.ToTable("CancelReservation", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.Shared.Reservations.PaymentMethod", b =>
@@ -4016,7 +4016,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PaymentMethod");
+                    b.ToTable("PaymentMethod", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.Shared.Reservations.ReservationDetail", b =>
@@ -4061,7 +4061,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("ReservationTransactionId");
 
-                    b.ToTable("ReservationDetail");
+                    b.ToTable("ReservationDetail", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.Shared.Reservations.ReservationTransaction", b =>
@@ -4117,7 +4117,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("ReservationTypeId");
 
-                    b.ToTable("ReservationTransaction");
+                    b.ToTable("ReservationTransaction", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.Shared.Reservations.ReservationType", b =>
@@ -4151,7 +4151,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ReservationType");
+                    b.ToTable("ReservationType", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.SSO.BasicUser", b =>
@@ -4343,7 +4343,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ClientDevice");
+                    b.ToTable("ClientDevice", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.SSO.Gender", b =>
@@ -4376,7 +4376,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Gender");
+                    b.ToTable("Gender", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.SSO.Identity.Admin", b =>
@@ -4569,7 +4569,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MemberShipBenefitsTypes");
+                    b.ToTable("MemberShipBenefitsTypes", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.SSO.MemberShipCategories", b =>
@@ -4615,7 +4615,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("MainCategoryId");
 
-                    b.ToTable("MemberShipCategories");
+                    b.ToTable("MemberShipCategories", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.SSO.MemberShipMainCategories", b =>
@@ -4648,7 +4648,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MemberShipMainCategories");
+                    b.ToTable("MemberShipMainCategories", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.SSO.MemberShipTypes", b =>
@@ -4681,7 +4681,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MemberShipTypes");
+                    b.ToTable("MemberShipTypes", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces.WorkSpaceBundleCancellation", b =>
@@ -4701,7 +4701,7 @@ namespace MOCA.Presistence.Migrations
                     b.HasIndex("WorkSpaceBundleReservationId")
                         .IsUnique();
 
-                    b.ToTable("WorkSpaceBundleCancellation");
+                    b.ToTable("WorkSpaceBundleCancellation", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces.WorkSpaceBundleTransactions", b =>
@@ -4721,7 +4721,7 @@ namespace MOCA.Presistence.Migrations
                     b.HasIndex("WorkSpaceReservationBundleId")
                         .IsUnique();
 
-                    b.ToTable("WorkSpaceBundleTransactions");
+                    b.ToTable("WorkSpaceBundleTransactions", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces.WorkSpaceHourlyCancellation", b =>
@@ -4741,7 +4741,7 @@ namespace MOCA.Presistence.Migrations
                     b.HasIndex("WorkSpaceHourlyReservationId")
                         .IsUnique();
 
-                    b.ToTable("WorkSpaceHourlyCancellation");
+                    b.ToTable("WorkSpaceHourlyCancellation", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces.WorkSpaceHourlyTopUp", b =>
@@ -4796,7 +4796,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("WorkSpaceReservationHourlyId");
 
-                    b.ToTable("WorkSpaceHourlyTopUp");
+                    b.ToTable("WorkSpaceHourlyTopUp", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces.WorkSpaceHourlyTransactions", b =>
@@ -4816,7 +4816,7 @@ namespace MOCA.Presistence.Migrations
                     b.HasIndex("WorkSpaceReservationHourlyId")
                         .IsUnique();
 
-                    b.ToTable("WorkSpaceHourlyTransactions");
+                    b.ToTable("WorkSpaceHourlyTransactions", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces.WorkSpaceReservationBundle", b =>
@@ -4885,7 +4885,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("WorkSpaceId");
 
-                    b.ToTable("WorkSpaceReservationBundle");
+                    b.ToTable("WorkSpaceReservationBundle", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces.WorkSpaceReservationHourly", b =>
@@ -4951,7 +4951,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("WorkSpaceId");
 
-                    b.ToTable("WorkSpaceReservationHourly");
+                    b.ToTable("WorkSpaceReservationHourly", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces.WorkSpaceReservationTailored", b =>
@@ -5020,7 +5020,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("WorkSpaceId");
 
-                    b.ToTable("WorkSpaceReservationTailored");
+                    b.ToTable("WorkSpaceReservationTailored", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces.WorkSpaceTailoredCancellation", b =>
@@ -5040,7 +5040,7 @@ namespace MOCA.Presistence.Migrations
                     b.HasIndex("WorkSpaceTailoredReservationId")
                         .IsUnique();
 
-                    b.ToTable("WorkSpaceTailoredCancellation");
+                    b.ToTable("WorkSpaceTailoredCancellation", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces.WorkSpaceTailoredTopUp", b =>
@@ -5095,7 +5095,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("WorkSpaceReservationTailoredId");
 
-                    b.ToTable("WorkSpaceTailoredTopUp");
+                    b.ToTable("WorkSpaceTailoredTopUp", (string)null);
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces.WorkSpaceTailoredTransactions", b =>
@@ -5115,7 +5115,7 @@ namespace MOCA.Presistence.Migrations
                     b.HasIndex("WorkSpaceReservationTailoredId")
                         .IsUnique();
 
-                    b.ToTable("WorkSpaceTailoredTransactions");
+                    b.ToTable("WorkSpaceTailoredTransactions", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>

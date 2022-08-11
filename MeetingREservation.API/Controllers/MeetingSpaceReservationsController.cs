@@ -91,13 +91,14 @@ namespace MeetingREservation.API.Controllers
         [HttpPost("BookMeetingReservation")]
         public async Task<IActionResult> BookMeetingReservation(BookMeetingReservationRequestDto dto)
         {
-            var response = _meetingSpaceReservationsServices.BookMeetingReservation(dto);
-            if(!response.Sucsseded)
+            var response = await _meetingSpaceReservationsServices.BookMeetingReservation(dto);
+            if(!response.Succeeded)
             {
                 return BadRequest();
             }
             return Ok();
         }
+
 
         #endregion
 

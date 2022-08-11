@@ -13,8 +13,8 @@ namespace MOCA.Core.DTOs.MeetingReservations.Response
         public string LastName { get; set; }
         public string MobileNumber { get; set; }
         public string VenueName { get; set; }
-        public DateTime Date { get; set; }
-        public TimeSpan Time { get; set; }
+        public string Date { get; set; }
+        public string Time { get; set; }
         public DateTime? ScanInDate { get; set; }
         public DateTime? ScanOutDate { get; set; }
         public int Hourse { get; set; }

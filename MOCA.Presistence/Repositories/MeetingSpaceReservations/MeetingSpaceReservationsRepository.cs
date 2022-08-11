@@ -105,8 +105,8 @@ namespace MOCA.Presistence.Repositories.MeetingSpaceReservations
                 .Select(x => new MeetingReservationResponseDto
                 {
                     Id = x.Id,
-                    Date = x.Date,
-                    Time = x.Time,
+                    Date = x.DateAndTime.ToShortDateString(),
+                    Time = x.DateAndTime.ToShortTimeString(),
                     UserId = x.BasicUser.Id,
                     LocationId = x.LocationId,
                     SubmissionDate = x.CreatedAt,
@@ -149,13 +149,14 @@ namespace MOCA.Presistence.Repositories.MeetingSpaceReservations
             return allSubmissions;
         }
 
-        public async Task<int> GetMeetingsWithinPeriodOfTime(string date, string fromTime, string toTime)
+        public async Task<bool> GetMeetingsWithinPeriodOfTime(DateTime fromDate, DateTime toDate, long meetingSpaceId)
         {
-            return _context.MeetingSpaceReservations.Where(x => x.IsDeleted != true 
-                                                           && String.Compare(date, x.Date) == 0
-                                                           && String.Compare(fromTime, x.Time) >= 0
-                                                           && String.Compare(toTime, x.Time) <= 0
-                                                           ).Count();
+            var meetingReservations =  _context.MeetingSpaceReservations.Where(x => x.IsDeleted != true
+                                                                                && x.MeetingSpaceId == meetingSpaceId
+                                                                                && x.DateAndTime >= fromDate 
+                                                                                && x.DateAndTime <= toDate
+                                                                               ).Count();
+            return meetingReservations > 0;
         }
 
     }

@@ -330,7 +330,7 @@ namespace MOCA.Presistence
 
         #region WorkSpaceReservations
         private IWorkSpaceReservationsRepositoryCRM _workSpaceReservationCRM;
-        public IWorkSpaceReservationsRepositoryCRM WorkSpaceReservationsRepositoryCRM 
+        public IWorkSpaceReservationsRepositoryCRM WorkSpaceReservationsRepositoryCRM
         {
             get
             {
@@ -342,7 +342,7 @@ namespace MOCA.Presistence
 
         public IWorkSpaceReservationBundleRepo WorkSpaceReservationBundleRepo
         {
-            get 
+            get
             {
                 return _workSpaceReservationBundleRepo ?? new WorkSpaceReservationBundleRepo(_context, _reservationsStatusService);
 
@@ -748,6 +748,27 @@ namespace MOCA.Presistence
                 return _buildingFloorRepoEF = _buildingFloorRepoEF ?? new BuildingFloorRepository(_context);
             }
         }
+
+
+
+        private IMeetingSpaceRepository _meetingSpaceRepository;
+        public IMeetingSpaceRepository MeetingSpaceRepository
+        {
+            get 
+            {
+                return _meetingSpaceRepository = _meetingSpaceRepository ?? new MeetingSpaceRepository(_context);
+            }
+        }
+
+        private IMeetingSpaceHourlyPricingRepository _meetingSpaceHourlyPricingRepository;
+        public IMeetingSpaceHourlyPricingRepository MeetingSpaceHourlyPricingRepository
+        {
+            get
+            {
+                return _meetingSpaceHourlyPricingRepository = _meetingSpaceHourlyPricingRepository ?? new MeetingSpaceHourlyPricingRepository(_context);
+            }
+        }
+
         #endregion
 
 
