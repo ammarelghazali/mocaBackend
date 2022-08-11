@@ -132,7 +132,7 @@ namespace LocationManagement.API.Controllers
         [HttpPost("UploadIcon")]
         public async Task<IActionResult> UploadIcon([FromBody] ImageUpload image)
         {
-            var response = await _uploadImageService.Uploading(image, _fileSettings.Aminity_IconPath, "Inclusion");
+            var response = await _uploadImageService.Uploading(image, _fileSettings.Aminity_IconPath, "Aminity");
             if (response.Succeeded == false)
             {
                 return BadRequest(response);
