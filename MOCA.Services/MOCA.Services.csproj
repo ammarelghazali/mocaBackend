@@ -14,7 +14,6 @@
     <Folder Include="Configuration\" />
     <Folder Include="Implementation\MocaSettings\" />
     <Folder Include="Implementation\Events\" />
-    <Folder Include="Implementation\WorkSpaceReservations\CoworkSpace\" />
   </ItemGroup>
 
   <ItemGroup>

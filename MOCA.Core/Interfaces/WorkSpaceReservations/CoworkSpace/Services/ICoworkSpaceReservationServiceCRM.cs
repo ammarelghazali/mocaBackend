@@ -2,7 +2,7 @@
 
 namespace MOCA.Core.Interfaces.WorkSpaceReservations.CoworkSpace.Services
 {
-    public  interface ICoworkSpaceReservationServiceCRM : IBaseWorkSpaceReservationServiceCRM
+    public interface ICoworkSpaceReservationServiceCRM : IBaseWorkSpaceReservationServiceCRM
     {
     }
 }
