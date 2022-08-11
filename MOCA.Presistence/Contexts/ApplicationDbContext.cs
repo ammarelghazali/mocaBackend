@@ -11,6 +11,7 @@ using MOCA.Core.Entities.Shared;
 using MOCA.Core.Entities.Shared.Reservations;
 using MOCA.Core.Entities.SSO;
 using MOCA.Core.Entities.SSO.Identity;
+using MOCA.Core.Entities.WorkSpaceReservations.CoWorkSpace;
 using MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces;
 using MOCA.Core.Interfaces.Shared.Services;
 using System.Data;
@@ -149,13 +150,25 @@ namespace MOCA.Presistence.Contexts
         public DbSet<WorkSpaceReservationBundle> WorkSpaceReservationBundle { get; set; }
         public DbSet<WorkSpaceHourlyTopUp> WorkSpaceHourlyTopUps { get; set; }
         public DbSet<WorkSpaceTailoredTopUp> WorkSpaceTailoredTopUps { get; set; }
-        public DbSet<WorkSpaceHourlyTransactions> WorkSpaceHourlyTransactions { get; set; }
-        public DbSet<WorkSpaceTailoredTransactions> WorkSpaceTailoredTransactions { get; set; }
-        public DbSet<WorkSpaceBundleTransactions> WorkSpaceBundleTransactions { get; set; }
+        public DbSet<WorkSpaceHourlyTransaction> WorkSpaceHourlyTransactions { get; set; }
+        public DbSet<WorkSpaceTailoredTransaction> WorkSpaceTailoredTransactions { get; set; }
+        public DbSet<WorkSpaceBundleTransaction> WorkSpaceBundleTransactions { get; set; }
         public DbSet<WorkSpaceHourlyCancellation> WorkSpaceHourlyCancellations { get; set; }
         public DbSet<WorkSpaceTailoredCancellation> WorkSpaceTailoredCancellations { get; set; }
         public DbSet<WorkSpaceBundleCancellation> WorkSpaceBundleCancellations { get; set; }
         #endregion
+
+        #region CoworkingSpaceReservations
+        public DbSet<CoworkingSpaceReservationHourly> CoworkingSpaceReservationHourlies { get; set; }
+        public DbSet<CoworkingSpaceReservationTailored> CoworkingSpaceReservationTailoreds { get; set; }
+        public DbSet<CoworkingSpaceReservationBundle> CoworkingSpaceReservationBundles { get; set; }
+        public DbSet<CoworkingSpaceHourlyTransaction> CoworkingSpaceHourlyTransactions { get; set; }
+        public DbSet<CoworkingSpaceTailoredTransaction> CoworkingSpaceTailoredTransactions { get; set; }
+        public DbSet<CoworkingSpaceBundleTransaction> CoworkingSpaceBundleTransactions { get; set; }
+        public DbSet<CoworkingSpaceHourlyCancellation> CoworkingSpaceHourlyCancellations { get; set; }
+        public DbSet<CoworkingSpaceTailoredCancellation> CoworkingSpaceTailoredCancellations { get; set; }
+        public DbSet<CoworkingSpaceBundleCancellation> CoworkingSpaceBundleCancellations { get; set; }
+        #endregion  
 
         #region MeetingSpaceReservations
         public DbSet<MeetingReservation> MeetingSpaceReservations { get; set; }
@@ -270,24 +283,44 @@ namespace MOCA.Presistence.Contexts
             builder.Entity<WorkSpaceBundleCancellation>()
                 .HasKey(p => new { p.WorkSpaceBundleReservationId, p.CancellationId });
 
-            builder.Entity<WorkSpaceBundleTransactions>()
+            builder.Entity<WorkSpaceBundleTransaction>()
                 .HasKey(p => new { p.WorkSpaceReservationBundleId, p.ReservationTransactionId });
 
             builder.Entity<WorkSpaceHourlyCancellation>()
                 .HasKey(p => new { p.WorkSpaceHourlyReservationId, p.CancellationId });
             
-            builder.Entity<WorkSpaceHourlyTransactions>()
+            builder.Entity<WorkSpaceHourlyTransaction>()
                 .HasKey(p => new { p.WorkSpaceReservationHourlyId, p.ReservationTransactionId });
 
             builder.Entity<WorkSpaceTailoredCancellation>()
                 .HasKey(p => new { p.WorkSpaceTailoredReservationId, p.CancellationId });
             
-            builder.Entity<WorkSpaceTailoredTransactions>()
+            builder.Entity<WorkSpaceTailoredTransaction>()
                 .HasKey(p => new { p.WorkSpaceReservationTailoredId, p.ReservationTransactionId });
             #endregion
 
+            #region CoworkingSpace Reservation
+            builder.Entity<CoworkingSpaceBundleCancellation>()
+               .HasKey(p => new { p.CoworkingSpaceReservationBundleId, p.CancellationId });
+
+            builder.Entity<CoworkingSpaceBundleTransaction>()
+                .HasKey(p => new { p.CoworkingSpaceReservationBundleId, p.ReservationTransactionId });
+
+            builder.Entity<CoworkingSpaceHourlyCancellation>()
+                .HasKey(p => new { p.CoworkingSpaceReservationHourlyId, p.CancellationId });
+
+            builder.Entity<CoworkingSpaceHourlyTransaction>()
+                .HasKey(p => new { p.CoworkingSpaceReservationHourlyId, p.ReservationTransactionId });
+
+            builder.Entity<CoworkingSpaceTailoredCancellation>()
+                .HasKey(p => new { p.CoworkingSpaceReservationTailoredId, p.CancellationId });
+
+            builder.Entity<CoworkingSpaceTailoredTransaction>()
+                .HasKey(p => new { p.CoworkingSpaceReservationTailoredId, p.ReservationTransactionId });
+            #endregion
+
             #region Meetingspace Reservation
-           
+
             builder.Entity<MeetingReservationTransaction>()
                 .HasKey(p => new { p.MeetingReservationId, p.ReservationTransactionId });
 

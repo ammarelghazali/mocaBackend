@@ -4,13 +4,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces
 {
-    public class WorkSpaceHourlyTransactions
+    public class WorkSpaceBundleTransaction
     {
         [Key, Column(Order = 1)]
-        public long WorkSpaceReservationHourlyId { get; set; }
+        public long WorkSpaceReservationBundleId { get; set; }
 
-        [ForeignKey("WorkSpaceReservationHourlyId")]
-        public WorkSpaceReservationHourly WorkSpaceReservationHourly { get; set; }
+        [ForeignKey("WorkSpaceReservationBundleId")]
+        public WorkSpaceReservationBundle WorkSpaceReservationBundle { get; set; }
 
         [Key, Column(Order = 2)]
         public long ReservationTransactionId { get; set; }
