@@ -1,7 +1,7 @@
 ﻿using MOCA.Core.Entities.WorkSpaceReservations.Base;
 using System.ComponentModel.DataAnnotations;
 
-namespace MOCA.Core.Entities.WorkSpaceReservations
+namespace MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces
 {
     public class WorkSpaceReservationTailored : BaseWorkSpaceReservation
     {
@@ -17,11 +17,10 @@ namespace MOCA.Core.Entities.WorkSpaceReservations
         [Required]
         public decimal TailoredPrice { get; set; }
 
-        public decimal? TailoredDiscount { get; set; }  
+        public decimal? TailoredDiscount { get; set; }
 
-        public ICollection<WorkSpaceTailoredTopUp> TopUps { get; set; } 
-
-        public WorkSpaceTailoredTransactions WorkSpaceTailoredTransactions { get; set; }
+        public ICollection<WorkSpaceTailoredTopUp> TopUps { get; set; }
+        public WorkSpaceTailoredTransaction WorkSpaceTailoredTransactions { get; set; }
         public WorkSpaceTailoredCancellation WorkSpaceTailoredCancellation { get; set; }
     }
 }

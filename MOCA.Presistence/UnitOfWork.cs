@@ -23,6 +23,7 @@ using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
 using MOCA.Presistence.Repositories.MeetingSpaceReservations;
 using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Interfaces.DynamicLists.Repositories;
+using MOCA.Presistence.Repositories.DynamicLists;
 
 namespace MOCA.Presistence
 {
@@ -324,29 +325,6 @@ namespace MOCA.Presistence
             }
         }
 
-
-        #endregion
-
-        #region Dynamic Lists
-
-        private IGenericRepository<WorkSpaceCategory> _WorkSpaceCategoryRepo;
-        public IGenericRepository<WorkSpaceCategory> WorkSpaceCategoryRepo
-        {
-            get
-            {
-                return _WorkSpaceCategoryRepo = _WorkSpaceCategoryRepo ?? new GenericRepository<WorkSpaceCategory>(_context);
-            }
-        }
-
-
-        private IWorkSpaceCategoryRepository _WorkSpaceCategoryRepoEF;
-        public IWorkSpaceCategoryRepository WorkSpaceCategoryRepoEF
-        {
-            get
-            {
-                return _WorkSpaceCategoryRepoEF = _WorkSpaceCategoryRepoEF ?? new WorkSpaceCategoryRepository(_context);
-            }
-        }
 
         #endregion
 
@@ -806,6 +784,43 @@ namespace MOCA.Presistence
 
         public IGenderRepository GenderRepository { get; }
 
+
+        #endregion
+
+        #region Dynamic Lists
+        public IGenericRepository<WorkSpaceCategory> _workSpaceCategoryRepo;
+        public IGenericRepository<WorkSpaceCategory> WorkSpaceCategoryRepo
+        {
+            get
+            {
+                return _workSpaceCategoryRepo = _workSpaceCategoryRepo ?? new GenericRepository<WorkSpaceCategory>(_context);
+            }
+        }
+        public IWorkSpaceCategoryRepository _workSpaceCategoryRepoEF;
+        public IWorkSpaceCategoryRepository WorkSpaceCategoryRepoEF
+        {
+            get
+            {
+                return _workSpaceCategoryRepoEF = _workSpaceCategoryRepoEF ?? new WorkSpaceCategoryRepository(_context);
+            }
+        }
+
+        public IGenericRepository<WorkSpaceType> _workSpaceTypeRepo;
+        public IGenericRepository<WorkSpaceType> WorkSpaceTypeRepo
+        {
+            get
+            {
+                return _workSpaceTypeRepo = _workSpaceTypeRepo ?? new GenericRepository<WorkSpaceType>(_context);
+            }
+        }
+        public IWorkSpaceTypeRepository _workSpaceTypeRepoEF;
+        public IWorkSpaceTypeRepository WorkSpaceTypeRepoEF
+        {
+            get
+            {
+                return _workSpaceTypeRepoEF = _workSpaceTypeRepoEF ?? new WorkSpaceTypeRepository(_context);
+            }
+        }
 
         #endregion
 

@@ -205,6 +205,12 @@ namespace MOCA.Core.MappingProfiles
             CreateMap<LocationCurrencyModel, LocationCurrency>();
             CreateMap<LocationCurrency, LocationCurrencyModel>();
 
+            CreateMap<LocationCurrencyModelGetMultiSelect, LocationCurrency>();
+            CreateMap<LocationCurrency, LocationCurrencyModelGetMultiSelect>();
+
+            CreateMap<LocationInclusionModelGetMultiSelect, LocationInclusion>();
+            CreateMap<LocationInclusion, LocationInclusionModelGetMultiSelect>();
+
             CreateMap<LocationFileModel, LocationFile>();
             CreateMap<LocationFile, LocationFileModel>();
 
@@ -213,6 +219,7 @@ namespace MOCA.Core.MappingProfiles
 
             CreateMap<LocationInclusionModel, LocationInclusion>();
             CreateMap<LocationInclusion, LocationInclusionModel>();
+            
 
             CreateMap<LocationWorkingHourModel, LocationWorkingHour>();
             CreateMap<LocationWorkingHour, LocationWorkingHourModel>();
@@ -242,6 +249,9 @@ namespace MOCA.Core.MappingProfiles
             #region Dynamic Lists
             CreateMap<WorkSpaceCategoryModel, WorkSpaceCategory>();
             CreateMap<WorkSpaceCategory, WorkSpaceCategoryModel>();
+
+            CreateMap<WorkSpaceTypeModel, WorkSpaceType>();
+            CreateMap<WorkSpaceType, WorkSpaceTypeModel>();
             #endregion
 
             #region Events

@@ -45,9 +45,9 @@ namespace MOCA.Services.Implementation.LocationManagment
                 feature.CreatedAt = _dateTimeService.NowUtc;
             }
             var entityFeature = await _unitOfWork.FeatureRepo.GetByIdAsync(request.Id);
-            if (entityFeature == null)
+            if (entityFeature != null)
             {
-                throw new NotFoundException(nameof(Feature), request.Id);
+                return new Response<long>("Currency Exists Before.");
             }
 
             _unitOfWork.FeatureRepo.Insert(feature);
@@ -141,7 +141,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             var Res = _mapper.Map<List<FeatureModel>>(data);
             if (Res.Count == 0)
             {
-                return new Response<List<FeatureModel>>(null);
+                return new Response<List<FeatureModel>>(null, "Not Data Found");
             }
             return new Response<List<FeatureModel>>(Res);
         }

@@ -144,7 +144,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             var Res = _mapper.Map<List<DistrictModel>>(data);
             if (Res.Count == 0)
             {
-                return new Response<List<DistrictModel>>(null);
+                return new Response<List<DistrictModel>>(null, "Not Data Found");
             }
             return new Response<List<DistrictModel>>(Res);
         }

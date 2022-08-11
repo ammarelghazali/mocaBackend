@@ -8,6 +8,7 @@ using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.Interfaces.DynamicLists.Services;
 using MOCA.Core.Interfaces.LocationManagment.Services;
 using MOCA.Core.Interfaces.Shared.Services;
+using MOCA.Core.Settings;
 using MOCA.Presistence;
 using MOCA.Presistence.Contexts;
 using MOCA.Services;
@@ -80,6 +81,7 @@ builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 builder.Services.AddScoped<IReservationsStatusService, ReservationsStatusService>();
 builder.Services.AddTransient<IDateTimeService, DateTimeService>();
+builder.Services.AddTransient<IUploadImageService, UploadImageService>();
 //-------------------------
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -105,7 +107,17 @@ builder.Services.AddScoped<IFavouriteLocationService, FavouriteLocationService>(
 builder.Services.AddScoped<IBuildingService, BuildingService>();
 builder.Services.AddScoped<IBuildingFloorService, BuildingFloorService>();
 builder.Services.AddScoped<IWorkSpaceCategoryService, WorkSpaceCategoryService>();
+builder.Services.AddScoped<IWorkSpaceTypeService, WorkSpaceTypeService>();
 
+builder.Services.AddScoped<IWorkSpaceCategoryService, WorkSpaceCategoryService>();
+
+#endregion
+
+
+#region Settings
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.Configure<JWTSettings>(builder.Configuration.GetSection("JWTSettings"));
+builder.Services.Configure<FileSettings>(builder.Configuration.GetSection("FileSettings"));
 #endregion
 
 #region JWT Authentication

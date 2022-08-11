@@ -18,5 +18,10 @@ namespace MOCA.Core.Entities.LocationManagment.Base
 
         [ForeignKey("BuildingFloorId")]
         public BuildingFloor BuildingFloor { get; set; }
+        [Required]
+        public long LocationId { get; set; }
+
+        [ForeignKey("LocationId")]
+        public Location Location { get; set; }
     }
 }

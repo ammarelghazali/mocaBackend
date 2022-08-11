@@ -2,7 +2,7 @@
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Response;
 using MOCA.Core.Entities.Shared.Reservations;
-using MOCA.Core.Entities.WorkSpaceReservations;
+using MOCA.Core.Entities.WorkSpaceReservations.WorkSpaces;
 using MOCA.Core.Interfaces.Shared.Services;
 using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
 using MOCA.Presistence.Contexts;
@@ -41,8 +41,8 @@ namespace MOCA.Presistence.Repositories.WorkSpaceReservations
                                                                      MobileNumber = r.BasicUser.MobileNumber,
                                                                      LocationName = r.Location.Name,
                                                                      ReservationType = "Bundle",
-                                                                     DateTime = r.PackageStartDate,
-                                                                     Amount = r.PackagePrice,
+                                                                     DateTime = r.BundleStartDate,
+                                                                     Amount = r.BundlePrice,
                                                                      ReservationTypeId = 3,
                                                                      Mode = "basic",
                                                                      TopUpsLink = "resources/templates/unchecked.png",

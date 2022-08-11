@@ -245,7 +245,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             }
             if (Res.Count == 0)
             {
-                return new Response<List<GetBuildingModel>>(null);
+                return new Response<List<GetBuildingModel>>(null, "Not Data Found");
             }
             return new Response<List<GetBuildingModel>>(Res);
         }
@@ -292,7 +292,7 @@ namespace MOCA.Services.Implementation.LocationManagment
 
             if (data.Count == 0)
             {
-                return new Response<List<GetBuildingModel>>(null);
+                return new Response<List<GetBuildingModel>>(null, "Not Data Found");
             }
             return new Response<List<GetBuildingModel>>(data.ToList());
         }

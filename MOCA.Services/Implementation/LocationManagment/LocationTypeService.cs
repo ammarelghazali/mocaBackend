@@ -147,7 +147,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             var Res = _mapper.Map<List<LocationTypeModel>>(data);
             if (Res.Count == 0)
             {
-                return new Response<List<LocationTypeModel>>(null);
+                return new Response<List<LocationTypeModel>>(null, "Not Data Found");
             }
             return new Response<List<LocationTypeModel>>(Res);
         }
