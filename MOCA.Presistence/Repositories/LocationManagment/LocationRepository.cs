@@ -73,6 +73,7 @@ namespace MOCA.Presistence.Repositories.LocationManagment
                 GrossArea = x.GrossArea,
                 NetArea = x.NetArea,
                 IsPublish = x.IsPublish,
+                InstallAccessPoint = x.InstallAccessPoint,
                 LocationType = new DropdownViewModel
                 {
                     Id = x.LocationTypeId
@@ -102,6 +103,7 @@ namespace MOCA.Presistence.Repositories.LocationManagment
                 GrossArea = x.GrossArea,
                 NetArea = x.NetArea,
                 IsPublish = x.IsPublish,
+                InstallAccessPoint = x.InstallAccessPoint,
                 LocationType = new DropdownViewModel
                 {
                     Id = x.LocationTypeId

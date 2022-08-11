@@ -101,6 +101,7 @@ namespace MOCA.Core.Entities.LocationManagment
         public string Terms { set; get; }
 
         public bool IsPublish { get; set; }
+        public bool InstallAccessPoint { get; set; }
         public int LocationBankAccountType { get; set; }
 
         public ICollection<EventSpaceBooking> EventSpaceBookings { get; set; }

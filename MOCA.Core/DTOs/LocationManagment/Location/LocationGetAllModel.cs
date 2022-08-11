@@ -14,5 +14,6 @@ namespace MOCA.Core.DTOs.LocationManagment.Location
         public DateTime ContractStartDate { get; set; }
         public int ContractLength { get; set; }
         public bool IsPublish { get; set; }
+        public bool InstallAccessPoint { get; set; }
     }
 }
