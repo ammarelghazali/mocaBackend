@@ -67,17 +67,6 @@ namespace MOCA.Services.Implementation.MeetingSpaceReservations
 
             #region notes:
             /*
-                 DTO:
-                 public int NumOfAttendees { get; set; }
-                 public long? BasicUserId { get; set; }
-                 public DateTime Date { get; set; }
-                 public DateTime Time { get; set; }
-                 public long MeetingSpaceHourlyPricingId { set; get; }
-                 public long MeetingSpaceId { get; set; }
-                 public long LocationId { get; set; }
-            
-                --------------------------------------------------
-                
                 needed validations :
                 1. user is authorized
                 2. userId !null in DB
@@ -94,16 +83,16 @@ namespace MOCA.Services.Implementation.MeetingSpaceReservations
              */
             #endregion
 
-            //if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
-            //{
-            //    return new Response<bool>("User is not authorized");
-            //}
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                return new Response<bool>("User is not authorized");
+            }
 
-            //var user = await _unitOfWork.BasicUserRepository.getFirstBasicUserById(long.Parse(_authenticatedUserService.UserId));
-            //if(user == null)
-            //{
-            //    return new Response<bool>("user is not found!");
-            //}
+            var user = await _unitOfWork.BasicUserRepository.getFirstBasicUserById(long.Parse(_authenticatedUserService.UserId));
+            if (user == null)
+            {
+                return new Response<bool>("user is not found!");
+            }
 
             var meetingPrice = await _unitOfWork.MeetingSpaceHourlyPricingRepository.GetByIdAsync(dto.MeetingSpaceHourlyPricingId);
             if(meetingPrice == null)
@@ -128,10 +117,10 @@ namespace MOCA.Services.Implementation.MeetingSpaceReservations
                 return new Response<bool>("Location is not found!");
             }
 
-            var meetingReservations = _unitOfWork.MeetingSpaceReservationRepository.GetMeetingsWithinPeriodOfTime(
+            var meetingReservations = await _unitOfWork.MeetingSpaceReservationRepository.GetMeetingsWithinPeriodOfTime(
                 dto.DateAndTime, dto.DateAndTime.AddHours(meetingPrice.Hours), dto.MeetingSpaceId); // parse to double?
 
-            if(meetingReservations != null)
+            if(meetingReservations == false)
             {
                 return new Response<bool>("Meeting space is already occupied at the same time!");
             }
@@ -140,7 +129,7 @@ namespace MOCA.Services.Implementation.MeetingSpaceReservations
 
             var meetingReservation = new MeetingReservation
             {
-                BasicUserId = 1,//user.Id,
+                BasicUserId = user.Id,
                 DateAndTime = dto.DateAndTime,
                 NumOfAttendees = dto.NumOfAttendees,
                 MeetingSpaceId = dto.MeetingSpaceId,

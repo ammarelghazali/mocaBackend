@@ -94,9 +94,9 @@ namespace MeetingREservation.API.Controllers
             var response = await _meetingSpaceReservationsServices.BookMeetingReservation(dto);
             if(!response.Succeeded)
             {
-                return BadRequest();
+                return BadRequest(response);
             }
-            return Ok();
+            return Ok(response);
         }
 
 

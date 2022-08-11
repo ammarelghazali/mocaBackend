@@ -156,7 +156,7 @@ namespace MOCA.Presistence.Repositories.MeetingSpaceReservations
                                                                                 && x.DateAndTime >= fromDate 
                                                                                 && x.DateAndTime <= toDate
                                                                                ).Count();
-            return meetingReservations > 0;
+            return meetingReservations == 0;
         }
 
     }
