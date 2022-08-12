@@ -26,6 +26,7 @@ using MOCA.Core.Interfaces.DynamicLists.Repositories;
 using MOCA.Presistence.Repositories.DynamicLists;
 using MOCA.Presistence.Repositories.Shered.Reservations;
 using MOCA.Core.Interfaces.Shared.Reservations.Respositories;
+using MOCA.Presistence.Repositories.SSO;
 
 namespace MOCA.Presistence
 {
@@ -794,7 +795,14 @@ namespace MOCA.Presistence
             }
         }
 
-
+        private IMeetingReservationTransactionRepository _meetingReservationTransactionRepository;
+        public IMeetingReservationTransactionRepository MeetingReservationTransactionRepository
+        {
+            get
+            {
+                return (_meetingReservationTransactionRepository ?? new MeetingReservationTransactionRepository(_context));
+            }
+        }
 
         #endregion
 
@@ -823,13 +831,20 @@ namespace MOCA.Presistence
         { 
             get 
             {
-                return _reservationTypesRepository = ReservationTypesRepository ?? new ReservationTypesRepository(_context);
+                return _reservationTypesRepository = _reservationTypesRepository ?? new ReservationTypesRepository(_context);
             }
         }
         #endregion
         #region SSO
 
-        public IBasicUserRepository BasicUserRepository { get; }
+        private IBasicUserRepository _basicUserRepository;
+        public IBasicUserRepository BasicUserRepository 
+        {
+            get
+            {
+                return _basicUserRepository = _basicUserRepository ?? new BasicUserRepository(_context);
+            }
+        }
 
         public IBasicUserStatusHistoryRepository BasicUserStatusHistoryRepository { get; }
 

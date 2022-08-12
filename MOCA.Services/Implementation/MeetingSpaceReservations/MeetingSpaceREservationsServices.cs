@@ -1,13 +1,19 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using MOCA.Core;
 using MOCA.Core.DTOs.MeetingReservations.Request;
 using MOCA.Core.DTOs.MeetingReservations.Response;
 using MOCA.Core.DTOs.Shared.Responses;
+using MOCA.Core.DTOs.Shared.ThirdParty.Email;
 using MOCA.Core.Entities.MeetingSpaceReservation;
 using MOCA.Core.Entities.Shared.Reservations;
+using MOCA.Core.Entities.SSO;
 using MOCA.Core.Interfaces.MeetingSpaceReservations.Services;
 using MOCA.Core.Interfaces.Shared.Services;
+using MOCA.Core.Interfaces.Shared.Services.ThirdParty.Email;
+using MOCA.Core.Settings;
+using MOCA.Services.Implementation.MeetingSpaceReservations.Helpers;
 
 namespace MOCA.Services.Implementation.MeetingSpaceReservations
 {
@@ -16,11 +22,19 @@ namespace MOCA.Services.Implementation.MeetingSpaceReservations
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthenticatedUserService _authenticatedUserService;
         private readonly IMapper _mapper;
-        public MeetingSpaceREservationsServices(IUnitOfWork unitOfWork, IAuthenticatedUserService authenticatedUserService, IMapper mapper)
+        private readonly IGetEmailBodyForBookingMeetingSpace _getEmailBodyForBookingMeetingSpace;
+        private readonly MailSettings _mailSettings;
+        private readonly IEmailService _emailService;
+        public MeetingSpaceREservationsServices(IUnitOfWork unitOfWork, IAuthenticatedUserService authenticatedUserService,
+            IMapper mapper, IGetEmailBodyForBookingMeetingSpace getEmailBodyForBookingMeetingSpace,
+            IOptions<MailSettings> mailSettings, IEmailService emailService)
         {
-            _unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _authenticatedUserService = authenticatedUserService ?? throw new ArgumentNullException(nameof(authenticatedUserService));
-            _mapper = mapper;
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _getEmailBodyForBookingMeetingSpace = getEmailBodyForBookingMeetingSpace ?? throw new ArgumentNullException(nameof(getEmailBodyForBookingMeetingSpace));
+            _mailSettings = mailSettings.Value;
+            _emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
         }
 
         #region CRM
@@ -28,7 +42,7 @@ namespace MOCA.Services.Implementation.MeetingSpaceReservations
         {
             pageSize = pageSize > 0 ? pageSize : 10;
             pageNumber = pageNumber > 0 ? pageNumber : 1;
-            var allSubmissions =await _unitOfWork.MeetingSpaceReservationRepository.GetAllSubmissions();
+            var allSubmissions = await _unitOfWork.MeetingSpaceReservationRepository.GetAllSubmissions();
             var submissions = await allSubmissions.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
             return new PagedResponse<List<MeetingReservationResponseDto>>(submissions, pageNumber, pageSize, submissions.Count);
 
@@ -83,7 +97,7 @@ namespace MOCA.Services.Implementation.MeetingSpaceReservations
                 8. NumOfHourse in MeetingPrice <= closing hour of this meetingSpace
                 9. Occupancy of this MeetingSpace > Num Of Attendees
                 10. No other meeting reservations at the same time
-                -- TODO: Add booking in Transactions Table
+                11. validate meetingSpaceId in the right LocationId ?? 
              */
             #endregion
 
@@ -92,7 +106,7 @@ namespace MOCA.Services.Implementation.MeetingSpaceReservations
                 return new Response<bool>("User is not authorized");
             }
 
-            var user = await _unitOfWork.BasicUserRepository.getFirstBasicUserById(long.Parse(_authenticatedUserService.UserId));
+            var user = await _unitOfWork.BasicUserRepository.GetByIdAsync(long.Parse(_authenticatedUserService.UserId));
             if (user == null)
             {
                 return new Response<bool>("user is not found!");
@@ -121,43 +135,77 @@ namespace MOCA.Services.Implementation.MeetingSpaceReservations
                 return new Response<bool>("Location is not found!");
             }
 
+            // validate meetings at the ame time for the the same meeting space 
             var meetingReservations = await _unitOfWork.MeetingSpaceReservationRepository.GetMeetingsWithinPeriodOfTime(
                 dto.DateAndTime, dto.DateAndTime.AddHours(meetingPrice.Hours), dto.MeetingSpaceId); // parse to double?
-
-            if(meetingReservations == false)
+            if(meetingReservations > 0)
             {
                 return new Response<bool>("Meeting space is already occupied at the same time!");
             }
-            
-            // validate working hours of location.
 
-            var meetingReservation = new MeetingReservation
+            // validate working hours of location
+            var locationWorkingHours = await _unitOfWork.LocationWorkingHourRepoEF.GetAllLocationWorkingHourByLocationID(location.Id);
+            if(locationWorkingHours == null)
             {
-                BasicUserId = user.Id,
-                DateAndTime = dto.DateAndTime,
-                NumOfAttendees = dto.NumOfAttendees,
-                MeetingSpaceId = dto.MeetingSpaceId,
-                LocationId = dto.LocationId,
-                MeetingSpaceHourlyPricingId = dto.MeetingSpaceHourlyPricingId
-            };
+                return new Response<bool>("This Location doesn't have working hours!");
+            }
+
+            /*
+                validate working hours
+            */
 
             try
             {
+                var meetingReservation = new MeetingReservation
+                {
+                    BasicUserId = user.Id,
+                    DateAndTime = dto.DateAndTime,
+                    NumOfAttendees = dto.NumOfAttendees,
+                    MeetingSpaceId = dto.MeetingSpaceId,
+                    LocationId = dto.LocationId,
+                    MeetingSpaceHourlyPricingId = dto.MeetingSpaceHourlyPricingId
+                };
+
                 var addedMeetingReservation = await _unitOfWork.MeetingSpaceReservationRepository.AddAsync(meetingReservation);
-                
+
+                var reservationType = await _unitOfWork.ReservationTypesRepository.GetAll().Where(x => x.Name == "MeetingSpace").ToListAsync();
+                if (reservationType == null)
+                {
+                    return new Response<bool>("Meeting space type reservation not found in reservation types!");
+                }
+
                 var reservationTransacttion = new ReservationTransaction
                 {
                     ReservationTargetId = addedMeetingReservation.Id,
                     BasicUserId = user.Id,
                     LocationId = location.Id,
-                    ReservationTypeId = 1, // must be changed according to the new DB or _uniteOfWork.ReservationTypesRepo.where(x => x.name == "MeetingSpace").select(x => x.Id);
+                    ReservationTypeId = reservationType[0].Id,
                     TotalHours = meetingPrice.Hours,
                     RemainingHours = meetingPrice.Hours,
                     ExtendExpiryDate = addedMeetingReservation.DateAndTime.AddHours(meetingPrice.Hours)
                 };
 
                 var addedReservationTransaction = await _unitOfWork.ReservationTransactionRepository.AddAsync(reservationTransacttion);
-                
+
+                var meetingReservationTransaction = new MeetingReservationTransaction
+                {
+                    MeetingReservationId = addedMeetingReservation.Id,
+                    ReservationTransactionId = addedReservationTransaction.Id
+                };
+
+                var addedMeetingReservationTransaction = await _unitOfWork.MeetingReservationTransactionRepository.AddAsync(meetingReservationTransaction);
+
+                // Send Email
+                var emailRequest = new EmailRequest();
+                emailRequest = new EmailRequest()
+                {
+                    Body = _getEmailBodyForBookingMeetingSpace.GetEmailBody(location, 
+                    addedMeetingReservation, meetingSpace, user, meetingPrice),
+                    To = _mailSettings.ContactUsMoca,
+                    Subject = $"New moca Meeting Room Booking @ {location.Name}",
+                };
+                await _emailService.SendAsync(emailRequest, true);
+
                 return new Response<bool>(true, "Meeting is reserved successfully :D");
             }
             catch(Exception ex)
@@ -208,9 +256,10 @@ namespace MOCA.Services.Implementation.MeetingSpaceReservations
 
         }
 
-        public async Task<Response<List<OccupiedTimesDto>>> GetAllOccupiedTimeInDay(string Day, long meetingSpaceId)
+        public async Task<Response<List<OccupiedTimesDto>>> GetAllOccupiedTimeInDay(DateTime Day, long meetingSpaceId)
         {
-            if(await _unitOfWork.MeetingSpaceRepository.GetByIdAsync(meetingSpaceId) == null)
+            var meetingSpace = await _unitOfWork.MeetingSpaceRepository.GetByIdAsync(meetingSpaceId);
+            if (meetingSpace == null)
             {
                 return new Response<List<OccupiedTimesDto>>("meeting space not found!");
             }

@@ -124,7 +124,7 @@ namespace MeetingREservation.API.Controllers
         }
 
         [HttpGet("GetAllOccupiedTimeInDay")]
-        public async Task<IActionResult> GetAllOccupiedTimeInDay(string Day, long meetingSpaceId)
+        public async Task<IActionResult> GetAllOccupiedTimeInDay(DateTime Day, long meetingSpaceId)
         {
             var response = await _meetingSpaceReservationsServices.GetAllOccupiedTimeInDay(Day, meetingSpaceId);
             if (!response.Succeeded)
