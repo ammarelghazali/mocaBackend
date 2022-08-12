@@ -5,9 +5,9 @@ using MOCA.Presistence.Repositories.Base;
 
 namespace MOCA.Presistence.Repositories.Shered.Reservations
 {
-    public class PaymentMethodRepository : GenericRepository<PaymentMethod>, IPaymentMethodRepository
+    public class ReservationTypesRepository : GenericRepository<ReservationType>, IReservationTypesRepository
     {
-        public PaymentMethodRepository(ApplicationDbContext context) : base(context)
+        public ReservationTypesRepository(ApplicationDbContext context) : base(context)
         {
         }
     }

@@ -5,6 +5,7 @@ using MOCA.Core.DTOs.MeetingReservations.Request;
 using MOCA.Core.DTOs.MeetingReservations.Response;
 using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.Entities.MeetingSpaceReservation;
+using MOCA.Core.Entities.Shared.Reservations;
 using MOCA.Core.Interfaces.MeetingSpaceReservations.Services;
 using MOCA.Core.Interfaces.Shared.Services;
 
@@ -143,6 +144,20 @@ namespace MOCA.Services.Implementation.MeetingSpaceReservations
             try
             {
                 var addedMeetingReservation = await _unitOfWork.MeetingSpaceReservationRepository.AddAsync(meetingReservation);
+                
+                var reservationTransacttion = new ReservationTransaction
+                {
+                    ReservationTargetId = addedMeetingReservation.Id,
+                    BasicUserId = user.Id,
+                    LocationId = location.Id,
+                    ReservationTypeId = 1, // must be changed according to the new DB or _uniteOfWork.ReservationTypesRepo.where(x => x.name == "MeetingSpace").select(x => x.Id);
+                    TotalHours = meetingPrice.Hours,
+                    RemainingHours = meetingPrice.Hours,
+                    ExtendExpiryDate = addedMeetingReservation.DateAndTime.AddHours(meetingPrice.Hours)
+                };
+
+                var addedReservationTransaction = await _unitOfWork.ReservationTransactionRepository.AddAsync(reservationTransacttion);
+                
                 return new Response<bool>(true, "Meeting is reserved successfully :D");
             }
             catch(Exception ex)

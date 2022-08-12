@@ -24,8 +24,8 @@ using MOCA.Presistence.Repositories.MeetingSpaceReservations;
 using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Interfaces.DynamicLists.Repositories;
 using MOCA.Presistence.Repositories.DynamicLists;
-using MOCA.Core.Interfaces.Shared.Reservations;
 using MOCA.Presistence.Repositories.Shered.Reservations;
+using MOCA.Core.Interfaces.Shared.Reservations.Respositories;
 
 namespace MOCA.Presistence
 {
@@ -794,6 +794,12 @@ namespace MOCA.Presistence
             }
         }
 
+
+
+        #endregion
+
+        #region Shared Reservations Repositories
+
         private IPaymentMethodRepository _paymentMethodRepository;
         public IPaymentMethodRepository PaymentMethodRepository
         {
@@ -803,10 +809,24 @@ namespace MOCA.Presistence
             }
         }
 
+        private IReservationTransactionRepository _reservationTransactionRepository;
+        public IReservationTransactionRepository ReservationTransactionRepository
+        {
+            get
+            {
+                return _reservationTransactionRepository = _reservationTransactionRepository ?? new ReservationTransactionRepository(_context);
+            }
+        }
 
+        private IReservationTypesRepository _reservationTypesRepository;
+        public IReservationTypesRepository ReservationTypesRepository 
+        { 
+            get 
+            {
+                return _reservationTypesRepository = ReservationTypesRepository ?? new ReservationTypesRepository(_context);
+            }
+        }
         #endregion
-
-
         #region SSO
 
         public IBasicUserRepository BasicUserRepository { get; }

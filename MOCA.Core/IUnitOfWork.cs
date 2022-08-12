@@ -11,7 +11,7 @@ using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
 using MOCA.Core.Interfaces.SSO.Repositories;
 using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Interfaces.DynamicLists.Repositories;
-using MOCA.Core.Interfaces.Shared.Reservations;
+using MOCA.Core.Interfaces.Shared.Reservations.Respositories;
 
 namespace MOCA.Core
 {
@@ -150,9 +150,14 @@ namespace MOCA.Core
         #region MeetingSpaceReservations
         public IMeetingSpaceReservationRepository MeetingSpaceReservationRepository { get; }
         public IMeetingAttendeesRepository MeetingAttendeesRepository { get; }
-        public IPaymentMethodRepository PaymentMethodRepository { get; }
         #endregion
 
+        #region Shared Reservations Repositories
+        public IPaymentMethodRepository PaymentMethodRepository { get; }
+        public IReservationTransactionRepository ReservationTransactionRepository { get; }
+        public IReservationTypesRepository ReservationTypesRepository { get; }
+        
+        #endregion
 
         #region Dynamic Lists
         IGenericRepository<WorkSpaceCategory> WorkSpaceCategoryRepo { get; }
