@@ -4,6 +4,7 @@ using MOCA.Presistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MOCA.Presistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220811150905_Alter Data, Time Columns and set DateAndTime col in Meeting Reservations")]
+    partial class AlterDataTimeColumnsandsetDateAndTimecolinMeetingReservations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3151,7 +3153,7 @@ namespace MOCA.Presistence.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("MeetingReservationId")
+                    b.Property<long>("MeetingSpaceReservationId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("MobileNumber")
@@ -3164,7 +3166,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MeetingReservationId");
+                    b.HasIndex("MeetingSpaceReservationId");
 
                     b.ToTable("MeetingAttendee");
                 });
@@ -3216,6 +3218,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<long?>("PaymentMethodId")
+                        .IsRequired()
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -3316,28 +3319,6 @@ namespace MOCA.Presistence.Migrations
                     b.Property<long>("ReservationTransactionId")
                         .HasColumnType("bigint")
                         .HasColumnOrder(2);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MeetingReservationId", "ReservationTransactionId");
 
@@ -4973,6 +4954,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<long?>("PaymentMethodId")
+                        .IsRequired()
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -5045,6 +5027,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<long?>("PaymentMethodId")
+                        .IsRequired()
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Price")
@@ -5108,6 +5091,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<long?>("PaymentMethodId")
+                        .IsRequired()
                         .HasColumnType("bigint");
 
                     b.Property<decimal?>("TailoredDiscount")
@@ -5420,6 +5404,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<long?>("PaymentMethodId")
+                        .IsRequired()
                         .HasColumnType("bigint");
 
                     b.Property<long>("WorkSpaceId")
@@ -5487,6 +5472,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<long?>("PaymentMethodId")
+                        .IsRequired()
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Price")
@@ -5545,6 +5531,7 @@ namespace MOCA.Presistence.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<long?>("PaymentMethodId")
+                        .IsRequired()
                         .HasColumnType("bigint");
 
                     b.Property<decimal?>("TailoredDiscount")
@@ -6469,13 +6456,13 @@ namespace MOCA.Presistence.Migrations
 
             modelBuilder.Entity("MOCA.Core.Entities.MeetingSpaceReservation.MeetingAttendee", b =>
                 {
-                    b.HasOne("MOCA.Core.Entities.MeetingSpaceReservation.MeetingReservation", "MeetingReservation")
+                    b.HasOne("MOCA.Core.Entities.MeetingSpaceReservation.MeetingReservation", "MeetingSpaceReservation")
                         .WithMany("MeetingAttendees")
-                        .HasForeignKey("MeetingReservationId")
+                        .HasForeignKey("MeetingSpaceReservationId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("MeetingReservation");
+                    b.Navigation("MeetingSpaceReservation");
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.MeetingSpaceReservation.MeetingReservation", b =>
@@ -6506,7 +6493,9 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasOne("MOCA.Core.Entities.Shared.Reservations.PaymentMethod", "PaymentMethod")
                         .WithMany("MeetingSpaceReservations")
-                        .HasForeignKey("PaymentMethodId");
+                        .HasForeignKey("PaymentMethodId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("BasicUser");
 
@@ -7050,7 +7039,9 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasOne("MOCA.Core.Entities.Shared.Reservations.PaymentMethod", "PaymentMethod")
                         .WithMany()
-                        .HasForeignKey("PaymentMethodId");
+                        .HasForeignKey("PaymentMethodId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("BasicUser");
 
@@ -7095,7 +7086,9 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasOne("MOCA.Core.Entities.Shared.Reservations.PaymentMethod", "PaymentMethod")
                         .WithMany()
-                        .HasForeignKey("PaymentMethodId");
+                        .HasForeignKey("PaymentMethodId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("BasicUser");
 
@@ -7134,7 +7127,9 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasOne("MOCA.Core.Entities.Shared.Reservations.PaymentMethod", "PaymentMethod")
                         .WithMany()
-                        .HasForeignKey("PaymentMethodId");
+                        .HasForeignKey("PaymentMethodId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("BasicUser");
 
@@ -7331,7 +7326,9 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasOne("MOCA.Core.Entities.Shared.Reservations.PaymentMethod", "PaymentMethod")
                         .WithMany("WorkSpaceBundleReservations")
-                        .HasForeignKey("PaymentMethodId");
+                        .HasForeignKey("PaymentMethodId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MOCA.Core.Entities.LocationManagment.WorkSpace", "WorkSpace")
                         .WithMany("WorkSpaceReservationBundles")
@@ -7372,7 +7369,9 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasOne("MOCA.Core.Entities.Shared.Reservations.PaymentMethod", "PaymentMethod")
                         .WithMany("WorkSpaceHourlyReservations")
-                        .HasForeignKey("PaymentMethodId");
+                        .HasForeignKey("PaymentMethodId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MOCA.Core.Entities.LocationManagment.WorkSpace", "WorkSpace")
                         .WithMany("WorkSpaceReservationHourlies")
@@ -7407,7 +7406,9 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasOne("MOCA.Core.Entities.Shared.Reservations.PaymentMethod", "PaymentMethod")
                         .WithMany("WorkSpaceTailoredReservations")
-                        .HasForeignKey("PaymentMethodId");
+                        .HasForeignKey("PaymentMethodId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MOCA.Core.Entities.LocationManagment.WorkSpace", "WorkSpace")
                         .WithMany("WorkSpaceReservationTailoreds")

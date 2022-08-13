@@ -53,6 +53,8 @@ using MOCA.Core.DTOs.LocationManagment.Building;
 using MOCA.Core.DTOs.LocationManagment.BuildingFloor;
 using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.DTOs.DynamicLists;
+using MOCA.Core.Entities.MeetingSpaceReservation;
+using MOCA.Core.DTOs.MeetingReservations.Request;
 
 namespace MOCA.Core.MappingProfiles
 {
@@ -315,6 +317,11 @@ namespace MOCA.Core.MappingProfiles
             // Email Templete
             CreateMap<EmailTemplate, GetEmailTempleteEventOpportunitylViewModelDto>().ReverseMap();
             #endregion
+
+            #region Meeting Reservations
+            CreateMap<MeetingAttendeeDto, MeetingAttendee>().ReverseMap();
+            #endregion
+
 
         }
     }

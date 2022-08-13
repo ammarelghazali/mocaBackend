@@ -31,6 +31,6 @@ namespace MOCA.Core.Entities.Shared.Reservations
         public long? PaymentMethodId { get; set; }
 
         [ForeignKey("PaymentMethodId")]
-        public PaymentMethod PaymentMethod { get; set; }
+        public PaymentMethod? PaymentMethod { get; set; }
     }
 }
