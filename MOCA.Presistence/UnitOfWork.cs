@@ -14,16 +14,20 @@ using MOCA.Presistence.Repositories.Base;
 using MOCA.Presistence.Repositories.Events;
 using MOCA.Presistence.Repositories.LocationManagment;
 using MOCA.Presistence.Repositories.MocaSettings;
-using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
-using MOCA.Presistence.Repositories.WorkSpaceReservations;
 using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
 using MOCA.Presistence.Repositories.MeetingSpaceReservations;
 using MOCA.Core.Interfaces.SSO.Repositories;
-using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
-using MOCA.Presistence.Repositories.MeetingSpaceReservations;
 using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Interfaces.DynamicLists.Repositories;
 using MOCA.Presistence.Repositories.DynamicLists;
+using MOCA.Core.Interfaces.WorkSpaceReservations.WorkSpaces.Repositories;
+using MOCA.Presistence.Repositories.WorkSpaceReservations.WorkSpaces;
+using MOCA.Core.Interfaces.WorkSpaceReservations.CoworkSpace.Repositories;
+using MOCA.Presistence.Repositories.WorkSpaceReservations.CoworkSpace;
+using MOCA.Presistence.Repositories.Shered.Reservations;
+using MOCA.Core.Interfaces.Shared.Reservations.Respositories;
+using MOCA.Presistence.Repositories.SSO;
+
 
 namespace MOCA.Presistence
 {
@@ -330,7 +334,7 @@ namespace MOCA.Presistence
 
         #region WorkSpaceReservations
         private IWorkSpaceReservationsRepositoryCRM _workSpaceReservationCRM;
-        public IWorkSpaceReservationsRepositoryCRM WorkSpaceReservationsRepositoryCRM 
+        public IWorkSpaceReservationsRepositoryCRM WorkSpaceReservationsRepositoryCRM
         {
             get
             {
@@ -342,7 +346,7 @@ namespace MOCA.Presistence
 
         public IWorkSpaceReservationBundleRepo WorkSpaceReservationBundleRepo
         {
-            get 
+            get
             {
                 return _workSpaceReservationBundleRepo ?? new WorkSpaceReservationBundleRepo(_context, _reservationsStatusService);
 
@@ -383,6 +387,65 @@ namespace MOCA.Presistence
             get
             {
                 return _workSpaceTailoredTopUpRepo ?? new WorkSpaceTailoredTopUpRepo(_context);
+            }
+        }
+        #endregion
+
+        #region CoworkingSpaceReservations
+        private ICoworkSpaceReservationsRepositoryCRM _coworkSpaceReservationCRM;
+        public ICoworkSpaceReservationsRepositoryCRM CoworkSpaceReservationsRepositoryCRM
+        {
+            get
+            {
+                return _coworkSpaceReservationCRM ?? new CoworkSpaceReservationsRepositoryCRM(_context, _dateTimeService);
+            }
+        }
+
+        private ICoworkSpaceReservationBundleRepo _coworkSpaceReservationBundleRepo;
+
+        public ICoworkSpaceReservationBundleRepo CoworkSpaceReservationBundleRepo
+        {
+            get
+            {
+                return _coworkSpaceReservationBundleRepo ?? new CoworkSpaceReservationBundleRepo(_context, _reservationsStatusService);
+
+            }
+        }
+
+        private ICoworkSpaceReservationHourlyRepo _coworkSpaceReservationHourlyRepo;
+        public ICoworkSpaceReservationHourlyRepo CoworkSpaceReservationHourlyRepo
+        {
+            get
+            {
+                return _coworkSpaceReservationHourlyRepo ?? new CoworkSpaceReservationHourlyRepo(_context, _reservationsStatusService);
+
+            }
+        }
+
+        private ICoworkSpaceReservationTailoredRepo _coworkSpaceReservationTailoredRepo;
+        public ICoworkSpaceReservationTailoredRepo CoworkSpaceReservationTailoredRepo
+        {
+            get
+            {
+                return _coworkSpaceReservationTailoredRepo ?? new CoworkSpaceReservationTailoredRepo(_context, _reservationsStatusService);
+            }
+        }
+
+        private ICoworkSpaceHourlyTopUpRepo _coworkSpaceHourlyTopUpRepo;
+        public ICoworkSpaceHourlyTopUpRepo CoworkSpaceHourlyTopUpRepo
+        {
+            get
+            {
+                return _coworkSpaceHourlyTopUpRepo ?? new CoworkSpaceHourlyTopUpRepo(_context);
+            }
+        }
+
+        private ICoworkSpaceTailoredTopUpRepo _coworkSpaceTailoredTopUpRepo;
+        public ICoworkSpaceTailoredTopUpRepo CoworkSpaceTailoredTopUpRepo
+        {
+            get
+            {
+                return _coworkSpaceTailoredTopUpRepo ?? new CoworkSpaceTailoredTopUpRepo(_context);
             }
         }
         #endregion
@@ -748,6 +811,45 @@ namespace MOCA.Presistence
                 return _buildingFloorRepoEF = _buildingFloorRepoEF ?? new BuildingFloorRepository(_context);
             }
         }
+
+
+
+        private IMeetingSpaceRepository _meetingSpaceRepository;
+        public IMeetingSpaceRepository MeetingSpaceRepository
+        {
+            get 
+            {
+                return _meetingSpaceRepository = _meetingSpaceRepository ?? new MeetingSpaceRepository(_context);
+            }
+        }
+
+        private IMeetingSpaceHourlyPricingRepository _meetingSpaceHourlyPricingRepository;
+        public IMeetingSpaceHourlyPricingRepository MeetingSpaceHourlyPricingRepository
+        {
+            get
+            {
+                return _meetingSpaceHourlyPricingRepository = _meetingSpaceHourlyPricingRepository ?? new MeetingSpaceHourlyPricingRepository(_context);
+            }
+        }
+
+
+        public IGenericRepository<Amenity> _AmenityRepo;
+        public IGenericRepository<Amenity> AmenityRepo
+        {
+            get
+            {
+                return _AmenityRepo = _AmenityRepo ?? new GenericRepository<Amenity>(_context);
+            }
+        }
+        public IAmenityRepository _AmenityRepoEF;
+        public IAmenityRepository AmenityRepoEF
+        {
+            get
+            {
+                return _AmenityRepoEF = _AmenityRepoEF ?? new AmenityRepository(_context);
+            }
+        }
+
         #endregion
 
 
@@ -762,13 +864,37 @@ namespace MOCA.Presistence
             }
         }
 
+        private IMeetingAttendeesRepository _meetingAttendeesRepository;
+        public IMeetingAttendeesRepository MeetingAttendeesRepository
+        {
+            get
+            {
+                return _meetingAttendeesRepository = _meetingAttendeesRepository ?? new MeetingAttendeesRepository(_context);
+            }
+        }
+
+        private IMeetingReservationTransactionRepository _meetingReservationTransactionRepository;
+        public IMeetingReservationTransactionRepository MeetingReservationTransactionRepository
+        {
+            get
+            {
+                return (_meetingReservationTransactionRepository ?? new MeetingReservationTransactionRepository(_context));
+            }
+        }
 
         #endregion
 
 
         #region SSO
 
-        public IBasicUserRepository BasicUserRepository { get; }
+        private IBasicUserRepository _basicUserRepository;
+        public IBasicUserRepository BasicUserRepository 
+        {
+            get
+            {
+                return _basicUserRepository = _basicUserRepository ?? new BasicUserRepository(_context);
+            }
+        }
 
         public IBasicUserStatusHistoryRepository BasicUserStatusHistoryRepository { get; }
 
@@ -822,6 +948,37 @@ namespace MOCA.Presistence
             }
         }
 
+        #endregion
+
+
+        #region Shared Reservations Repositories
+
+        private IPaymentMethodRepository _paymentMethodRepository;
+        public IPaymentMethodRepository PaymentMethodRepository
+        {
+            get
+            {
+                return _paymentMethodRepository = _paymentMethodRepository ?? new PaymentMethodRepository(_context);
+            }
+        }
+
+        private IReservationTransactionRepository _reservationTransactionRepository;
+        public IReservationTransactionRepository ReservationTransactionRepository
+        {
+            get
+            {
+                return _reservationTransactionRepository = _reservationTransactionRepository ?? new ReservationTransactionRepository(_context);
+            }
+        }
+
+        private IReservationTypesRepository _reservationTypesRepository;
+        public IReservationTypesRepository ReservationTypesRepository
+        {
+            get
+            {
+                return _reservationTypesRepository = _reservationTypesRepository ?? new ReservationTypesRepository(_context);
+            }
+        }
         #endregion
 
 

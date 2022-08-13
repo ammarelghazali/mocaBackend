@@ -6,8 +6,7 @@ namespace MOCA.Core.Entities.MeetingSpaceReservation
 {
     public class MeetingReservation : BaseReservationEntity
     {
-        public DateTime Date { set; get; }
-        public TimeSpan Time { set; get; }
+        public DateTime DateAndTime { get; set; }
         public int NumOfAttendees { set; get; }
         public long MeetingSpaceId { set; get; }
         [ForeignKey("MeetingSpaceId")]
@@ -17,10 +16,10 @@ namespace MOCA.Core.Entities.MeetingSpaceReservation
         [ForeignKey("MeetingSpaceHourlyPricingId")]
         public MeetingSpaceHourlyPricing MeetingSpaceHourlyPricing { get; set; }
 
-        public ICollection<MeetingAttendee> MeetingAttendees { set; get; }
-        public ICollection<MeetingReservationTopUp> MeetingReservationTopUps { get; set; }
-        public MeetingReservationTransaction MeetingReservationTransaction { get; set; }
-        public MeetingReservationCancellation MeetingReservationCancellation { get; set; }
+        public ICollection<MeetingAttendee>? MeetingAttendees { set; get; }
+        public ICollection<MeetingReservationTopUp>? MeetingReservationTopUps { get; set; }
+        public MeetingReservationTransaction? MeetingReservationTransaction { get; set; }
+        public MeetingReservationCancellation? MeetingReservationCancellation { get; set; }
 
     }
 }

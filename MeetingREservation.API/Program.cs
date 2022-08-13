@@ -8,7 +8,6 @@ using Microsoft.OpenApi.Models;
 using MOCA.Core;
 using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.Interfaces.Base;
-using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
 using MOCA.Core.Interfaces.MeetingSpaceReservations.Services;
 using MOCA.Core.Interfaces.Shared.Services;
 using MOCA.Core.Interfaces.Shared.Services.ThirdParty.Email;
@@ -16,9 +15,9 @@ using MOCA.Core.Settings;
 using MOCA.Presistence;
 using MOCA.Presistence.Contexts;
 using MOCA.Presistence.Repositories.Base;
-using MOCA.Presistence.Repositories.MeetingSpaceReservations;
 using MOCA.Services;
 using MOCA.Services.Implementation.MeetingSpaceReservations;
+using MOCA.Services.Implementation.MeetingSpaceReservations.Helpers;
 using MOCA.Services.Implementation.Shared;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -70,7 +69,6 @@ builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetServic
 
 // Repositories
 builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-builder.Services.AddScoped<IMeetingSpaceReservationRepository, MeetingSpaceReservationsRepository>();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 // Services
@@ -78,33 +76,16 @@ builder.Services.AddScoped<IReservationsStatusService, ReservationsStatusService
 builder.Services.AddScoped<IMeetingSpaceReservationsServices, MeetingSpaceREservationsServices>();
 
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
 // Shared Services
 builder.Services.AddTransient<IDateTimeService, DateTimeService>();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 builder.Services.AddTransient<IEmailService, EmailService>();
 builder.Services.AddScoped<IReservationsStatusService, ReservationsStatusService>();
 builder.Services.AddScoped<IMeetingSpaceReservationsServices, MeetingSpaceREservationsServices>();
-
-
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-// Shared Services
-builder.Services.AddTransient<IDateTimeService, DateTimeService>();
-builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
-builder.Services.AddTransient<IEmailService, EmailService>();
-builder.Services.AddScoped<IReservationsStatusService, ReservationsStatusService>();
-builder.Services.AddScoped<IMeetingSpaceReservationsServices, MeetingSpaceREservationsServices>();
-
+builder.Services.AddScoped<IGetEmailBodyForBookingMeetingSpace, GetEmailBodyForBookingMeetingSpace>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-// Shared Services
-builder.Services.AddTransient<IDateTimeService, DateTimeService>();
-builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
-builder.Services.AddTransient<IEmailService, EmailService>();
-builder.Services.AddScoped<IReservationsStatusService, ReservationsStatusService>();
 
 // Settings
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));

@@ -4,5 +4,6 @@
     {
         public string Image { set; get; }
         public string AlbumName { set; get; }
+
     }
 }

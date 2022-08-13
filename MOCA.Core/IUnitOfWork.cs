@@ -6,12 +6,13 @@ using MOCA.Core.Interfaces.Events.Repositories;
 using MOCA.Core.Interfaces.MocaSettings.Repositories;
 using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Interfaces.LocationManagment.Repositories;
-using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
 using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
 using MOCA.Core.Interfaces.SSO.Repositories;
-using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
 using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Interfaces.DynamicLists.Repositories;
+using MOCA.Core.Interfaces.WorkSpaceReservations.WorkSpaces.Repositories;
+using MOCA.Core.Interfaces.WorkSpaceReservations.CoworkSpace.Repositories;
+using MOCA.Core.Interfaces.Shared.Reservations.Respositories;
 
 namespace MOCA.Core
 {
@@ -93,7 +94,12 @@ namespace MOCA.Core
         IBuildingRepository BuildingRepoEF { get; }
         IGenericRepository<BuildingFloor> BuildingFloorRepo { get; }
         IBuildingFloorRepository BuildingFloorRepoEF { get; }
+        IGenericRepository<Amenity> AmenityRepo { get; }
 
+        IAmenityRepository AmenityRepoEF { get; }
+
+        public IMeetingSpaceRepository MeetingSpaceRepository { get; }
+        public IMeetingSpaceHourlyPricingRepository MeetingSpaceHourlyPricingRepository { get; }
         #endregion
 
         #region Events
@@ -126,7 +132,7 @@ namespace MOCA.Core
 
         IMemberShipTypesRepository MemberShipTypesRepository { get; }
 
-        IMemberShipMainCategoriesRepository  MemberShipMainCategoriesRepository { get; }
+        IMemberShipMainCategoriesRepository MemberShipMainCategoriesRepository { get; }
 
         IMemberShipCategoriesRepository MemberShipCategoriesRepository { get; }
 
@@ -145,10 +151,28 @@ namespace MOCA.Core
         public IWorkSpaceTailoredTopUpRepo WorkSpaceTailoredTopUpRepo { get; }
         #endregion
 
-        #region MeetingSpaceReservations
-        public IMeetingSpaceReservationRepository MeetingSpaceReservationRepository { get; }
+        #region CoworkingSpaceReservations
+        public ICoworkSpaceReservationsRepositoryCRM CoworkSpaceReservationsRepositoryCRM { get; }
+        public ICoworkSpaceReservationBundleRepo CoworkSpaceReservationBundleRepo { get; }
+        public ICoworkSpaceReservationHourlyRepo CoworkSpaceReservationHourlyRepo { get; }
+        public ICoworkSpaceReservationTailoredRepo CoworkSpaceReservationTailoredRepo { get; }
+        public ICoworkSpaceHourlyTopUpRepo CoworkSpaceHourlyTopUpRepo { get; }
+        public ICoworkSpaceTailoredTopUpRepo CoworkSpaceTailoredTopUpRepo { get; }
         #endregion
 
+        #region MeetingSpaceReservations
+        public IMeetingSpaceReservationRepository MeetingSpaceReservationRepository { get; }
+        public IMeetingAttendeesRepository MeetingAttendeesRepository { get; }
+        public IMeetingReservationTransactionRepository MeetingReservationTransactionRepository { get; }
+
+        #endregion
+
+        #region Shared Reservations Repositories
+        public IPaymentMethodRepository PaymentMethodRepository { get; }
+        public IReservationTransactionRepository ReservationTransactionRepository { get; }
+        public IReservationTypesRepository ReservationTypesRepository { get; }
+        
+        #endregion
 
         #region Dynamic Lists
         IGenericRepository<WorkSpaceCategory> WorkSpaceCategoryRepo { get; }
