@@ -6,11 +6,12 @@ using MOCA.Core.Interfaces.Events.Repositories;
 using MOCA.Core.Interfaces.MocaSettings.Repositories;
 using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Interfaces.LocationManagment.Repositories;
-using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
 using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
 using MOCA.Core.Interfaces.SSO.Repositories;
 using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Interfaces.DynamicLists.Repositories;
+using MOCA.Core.Interfaces.WorkSpaceReservations.WorkSpaces.Repositories;
+using MOCA.Core.Interfaces.WorkSpaceReservations.CoworkSpace.Repositories;
 using MOCA.Core.Interfaces.Shared.Reservations.Respositories;
 
 namespace MOCA.Core
@@ -145,6 +146,15 @@ namespace MOCA.Core
         public IWorkSpaceReservationTailoredRepo WorkSpaceReservationTailoredRepo { get; }
         public IWorkSpaceHourlyTopUpRepo WorkSpaceHourlyTopUpRepo { get; }
         public IWorkSpaceTailoredTopUpRepo WorkSpaceTailoredTopUpRepo { get; }
+        #endregion
+
+        #region CoworkingSpaceReservations
+        public ICoworkSpaceReservationsRepositoryCRM CoworkSpaceReservationsRepositoryCRM { get; }
+        public ICoworkSpaceReservationBundleRepo CoworkSpaceReservationBundleRepo { get; }
+        public ICoworkSpaceReservationHourlyRepo CoworkSpaceReservationHourlyRepo { get; }
+        public ICoworkSpaceReservationTailoredRepo CoworkSpaceReservationTailoredRepo { get; }
+        public ICoworkSpaceHourlyTopUpRepo CoworkSpaceHourlyTopUpRepo { get; }
+        public ICoworkSpaceTailoredTopUpRepo CoworkSpaceTailoredTopUpRepo { get; }
         #endregion
 
         #region MeetingSpaceReservations
