@@ -105,8 +105,8 @@ namespace MOCA.Presistence.Repositories.MeetingSpaceReservations
                 .Select(x => new MeetingReservationResponseDto
                 {
                     Id = x.Id,
-                    Date = x.Date,
-                    Time = x.Time,
+                    Date = x.DateAndTime.ToShortDateString(),
+                    Time = x.DateAndTime.ToShortTimeString(),
                     UserId = x.BasicUser.Id,
                     LocationId = x.LocationId,
                     SubmissionDate = x.CreatedAt,
@@ -149,6 +149,35 @@ namespace MOCA.Presistence.Repositories.MeetingSpaceReservations
             return allSubmissions;
         }
 
+        public async Task<int> GetMeetingsWithinPeriodOfTime(DateTime fromDate, DateTime toDate, long meetingSpaceId)
+        {
+            var meetingReservations =  _context.MeetingSpaceReservations.Where(x => x.IsDeleted != true
+                                                                                && x.MeetingSpaceId == meetingSpaceId
+                                                                                && x.DateAndTime >= fromDate 
+                                                                                && x.DateAndTime <= toDate
+                                                                               ).Count();
+            return meetingReservations;
+        }
 
+
+
+        public async Task<List<OccupiedTimesDto>> GetMeetingsInDay(DateTime Day, long meetingSpaceId)
+        {
+            var meetingReservations = await _context.MeetingSpaceReservations
+                .Where(x => x.IsDeleted != true
+                    && x.MeetingSpaceId == meetingSpaceId
+                    && x.DateAndTime.Day == Day.Day
+                    && x.DateAndTime.Month == Day.Month
+                    && x.DateAndTime.Year == Day.Year
+                    )
+                    .Include(x => x.MeetingSpaceHourlyPricing)
+                    .Select(x => new OccupiedTimesDto
+                    {
+                        fromDate = x.DateAndTime,
+                        toDate = x.DateAndTime.AddHours(x.MeetingSpaceHourlyPricing.Hours)
+                    }).ToListAsync();
+
+            return meetingReservations;
+        }
     }
 }

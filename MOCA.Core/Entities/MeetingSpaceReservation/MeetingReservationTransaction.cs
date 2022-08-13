@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using MOCA.Core.Entities.BaseEntities;
 using MOCA.Core.Entities.Shared.Reservations;
 
 namespace MOCA.Core.Entities.MeetingSpaceReservation
 {
-    public class MeetingReservationTransaction
+    public class MeetingReservationTransaction : BaseEntity
     {
         [Key, Column(Order = 1)]
         public long MeetingReservationId { get; set; }
