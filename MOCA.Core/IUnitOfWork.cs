@@ -9,9 +9,9 @@ using MOCA.Core.Interfaces.LocationManagment.Repositories;
 using MOCA.Core.Interfaces.WorkSpaceReservations.Repositories;
 using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
 using MOCA.Core.Interfaces.SSO.Repositories;
-using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
 using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Interfaces.DynamicLists.Repositories;
+using MOCA.Core.Interfaces.Shared.Reservations.Respositories;
 
 namespace MOCA.Core
 {
@@ -94,6 +94,8 @@ namespace MOCA.Core
         IGenericRepository<BuildingFloor> BuildingFloorRepo { get; }
         IBuildingFloorRepository BuildingFloorRepoEF { get; }
 
+        public IMeetingSpaceRepository MeetingSpaceRepository { get; }
+        public IMeetingSpaceHourlyPricingRepository MeetingSpaceHourlyPricingRepository { get; }
         #endregion
 
         #region Events
@@ -147,8 +149,17 @@ namespace MOCA.Core
 
         #region MeetingSpaceReservations
         public IMeetingSpaceReservationRepository MeetingSpaceReservationRepository { get; }
+        public IMeetingAttendeesRepository MeetingAttendeesRepository { get; }
+        public IMeetingReservationTransactionRepository MeetingReservationTransactionRepository { get; }
+
         #endregion
 
+        #region Shared Reservations Repositories
+        public IPaymentMethodRepository PaymentMethodRepository { get; }
+        public IReservationTransactionRepository ReservationTransactionRepository { get; }
+        public IReservationTypesRepository ReservationTypesRepository { get; }
+        
+        #endregion
 
         #region Dynamic Lists
         IGenericRepository<WorkSpaceCategory> WorkSpaceCategoryRepo { get; }
