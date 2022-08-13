@@ -951,6 +951,37 @@ namespace MOCA.Presistence
         #endregion
 
 
+        #region Shared Reservations Repositories
+
+        private IPaymentMethodRepository _paymentMethodRepository;
+        public IPaymentMethodRepository PaymentMethodRepository
+        {
+            get
+            {
+                return _paymentMethodRepository = _paymentMethodRepository ?? new PaymentMethodRepository(_context);
+            }
+        }
+
+        private IReservationTransactionRepository _reservationTransactionRepository;
+        public IReservationTransactionRepository ReservationTransactionRepository
+        {
+            get
+            {
+                return _reservationTransactionRepository = _reservationTransactionRepository ?? new ReservationTransactionRepository(_context);
+            }
+        }
+
+        private IReservationTypesRepository _reservationTypesRepository;
+        public IReservationTypesRepository ReservationTypesRepository
+        {
+            get
+            {
+                return _reservationTypesRepository = _reservationTypesRepository ?? new ReservationTypesRepository(_context);
+            }
+        }
+        #endregion
+
+
         public DateTime ConvertToLocalDate(DateTime dateInEasternTimeZone)
         {
             #region convert american time to utc time
