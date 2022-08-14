@@ -338,11 +338,14 @@ namespace MOCA.Services.Implementation.LocationManagment
             #endregion
 
             #region Delete Location File
-
-            _unitOfWork.LocationFileRepoEF.DeleteAllLocationFileByLocationID(LocationId);
-            if (await _unitOfWork.SaveAsync() < 1)
+            var files = await _unitOfWork.LocationFileRepoEF.GetAllLocationFileByLocationID(LocationId);
+            if (files.Count > 0)
             {
-                return new Response<bool>("Cannot Delete LocationFile right now");
+                _unitOfWork.LocationFileRepoEF.DeleteAllLocationFileByLocationID(LocationId);
+                if (await _unitOfWork.SaveAsync() < 1)
+                {
+                    return new Response<bool>("Cannot Delete LocationFile right now");
+                }
             }
             #endregion
 
