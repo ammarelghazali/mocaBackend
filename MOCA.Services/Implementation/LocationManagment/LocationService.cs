@@ -263,6 +263,7 @@ namespace MOCA.Services.Implementation.LocationManagment
                 #region Delete Old Location Bank Account Add New One
                 var locationBankAccount = _mapper.Map<LocationBankAccount>(request.LocationBankAccount);
                 locationBankAccount.Id = 0;
+                locationBankAccount.LocationId = request.Id;
                 locationBankAccount.CreatedBy = _authenticatedUserService.UserId;
                 locationBankAccount.CreatedAt = _dateTimeService.NowUtc;
                 _unitOfWork.LocationBankAccountRepoEF.DeleteByLocationID(request.Id);
