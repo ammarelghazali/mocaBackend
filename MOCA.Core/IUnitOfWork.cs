@@ -8,11 +8,11 @@ using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Interfaces.LocationManagment.Repositories;
 using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
 using MOCA.Core.Interfaces.SSO.Repositories;
-using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Interfaces.DynamicLists.Repositories;
 using MOCA.Core.Interfaces.WorkSpaceReservations.WorkSpaces.Repositories;
 using MOCA.Core.Interfaces.WorkSpaceReservations.CoworkSpace.Repositories;
 using MOCA.Core.Interfaces.Shared.Reservations.Respositories;
+using MOCA.Core.Entities.DynamicLists;
 
 namespace MOCA.Core
 {
@@ -94,12 +94,30 @@ namespace MOCA.Core
         IBuildingRepository BuildingRepoEF { get; }
         IGenericRepository<BuildingFloor> BuildingFloorRepo { get; }
         IBuildingFloorRepository BuildingFloorRepoEF { get; }
-        IGenericRepository<Amenity> AmenityRepo { get; }
-
-        IAmenityRepository AmenityRepoEF { get; }
+       
 
         public IMeetingSpaceRepository MeetingSpaceRepository { get; }
         public IMeetingSpaceHourlyPricingRepository MeetingSpaceHourlyPricingRepository { get; }
+
+
+
+
+        #endregion
+
+        #region Dynamic List
+        IGenericRepository<WorkSpaceCategory> WorkSpaceCategoryRepo { get; }
+        IWorkSpaceCategoryRepository WorkSpaceCategoryRepoEF { get; }
+
+        IGenericRepository<WorkSpaceType> WorkSpaceTypeRepo { get; }
+        IWorkSpaceTypeRepository WorkSpaceTypeRepoEF { get; }
+        IGenericRepository<VenueSetup> VenueSetupRepo { get; }
+        IVenueSetupRepository VenueSetupRepoEF { get; }
+
+        IGenericRepository<Amenity> AmenityRepo { get; }
+        IAmenityRepository AmenityRepoEF { get; }
+
+
+
         #endregion
 
         #region Events
@@ -174,14 +192,7 @@ namespace MOCA.Core
         
         #endregion
 
-        #region Dynamic Lists
-        IGenericRepository<WorkSpaceCategory> WorkSpaceCategoryRepo { get; }
-        IWorkSpaceCategoryRepository WorkSpaceCategoryRepoEF { get; }
-
-        IGenericRepository<WorkSpaceType> WorkSpaceTypeRepo { get; }
-        IWorkSpaceTypeRepository WorkSpaceTypeRepoEF { get; }
-
-        #endregion
+        
         void Save();
         Task<int> SaveAsync();
         DateTime? GetServerDate();

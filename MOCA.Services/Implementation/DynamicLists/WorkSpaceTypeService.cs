@@ -1,9 +1,7 @@
-﻿
-using AutoMapper;
+﻿using AutoMapper;
 using MOCA.Core;
-using MOCA.Core.DTOs;
 using MOCA.Core.DTOs.DynamicLists;
-using MOCA.Core.DTOs.Shared.Exceptions;
+using MOCA.Core.DTOs.Shared;
 using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Interfaces.DynamicLists.Services;
@@ -168,7 +166,7 @@ namespace MOCA.Services.Implementation.DynamicLists
             return new Response<WorkSpaceTypeModel>(res);
         }
 
-        public async Task<Response<List<WorkSpaceTypeModel>>> GetWorkSpaceTypesWithoutPagination()
+        public async Task<Response<List<WorkSpaceTypeResponseModel>>> GetWorkSpaceTypesWithoutPagination()
         {
 
             if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
@@ -176,13 +174,30 @@ namespace MOCA.Services.Implementation.DynamicLists
                 throw new UnauthorizedAccessException("User is not authorized");
             }
             var data = _unitOfWork.WorkSpaceTypeRepo.GetAll().ToList();
-            var Res = _mapper.Map<List<WorkSpaceTypeModel>>(data);
 
-            if (Res.Count == 0)
+            var result = new List<WorkSpaceTypeResponseModel>();
+            foreach (var item in data)
             {
-                return new Response<List<WorkSpaceTypeModel>>(null,"Cannot Get Work Space Types");
+                var category = _unitOfWork.WorkSpaceCategoryRepo.GetByID(item.WorkSpaceCategoryId);
+                result.Add(new WorkSpaceTypeResponseModel
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    WorkSpaceCategory = new WorkSpaceCategoryModel
+                    {
+                        Id = item.WorkSpaceCategoryId,
+                        Name = category.Name
+                    }
+                });
             }
-            return new Response<List<WorkSpaceTypeModel>>(Res);
+           
+            //var Res = _mapper.Map<List<WorkSpaceTypeResponseModel>>(data);
+
+            if (result.Count == 0)
+            {
+                return new Response<List<WorkSpaceTypeResponseModel>>(null,"Cannot Get Work Space Types");
+            }
+            return new Response<List<WorkSpaceTypeResponseModel>>(result);
         }
 
         public async Task<Response<bool>> UpdateWorkSpaceType(WorkSpaceTypeModel request)

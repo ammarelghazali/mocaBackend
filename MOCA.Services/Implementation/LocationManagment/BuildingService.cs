@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using Dapper;
 using MOCA.Core;
-using MOCA.Core.DTOs;
 using MOCA.Core.DTOs.LocationManagment.Building;
 using MOCA.Core.DTOs.LocationManagment.Building.FilterParameter;
-using MOCA.Core.DTOs.LocationManagment.BuildingFloor;
+using MOCA.Core.DTOs.Shared;
 using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Interfaces.LocationManagment.Services;

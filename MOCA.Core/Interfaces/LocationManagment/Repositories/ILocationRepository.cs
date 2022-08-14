@@ -8,6 +8,7 @@ namespace MOCA.Core.Interfaces.LocationManagment.Repositories
     public interface ILocationRepository : IGenericRepository<Location>
     {
         Task<bool> CheckLocationNameIsUinque(string LocationName);
+        Task<bool> CheckLocationNameIsUinque(string LocationName, long LocationId);
         Task<bool> DeleteLocation(long Id);
         Task<List<long>> GetAllDistinictDistrict();
         Task<List<DropdownViewModel>> GetAllDistinictLocation();

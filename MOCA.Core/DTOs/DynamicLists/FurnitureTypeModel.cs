@@ -1,17 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
+using System.ComponentModel.DataAnnotations;
 
 namespace MOCA.Core.DTOs.DynamicLists
 {
-    public class WorkSpaceTypeModel
+    public class FurnitureTypeModel
     {
         public long Id { get; set; }
 
         [Required]
         public string Name { get; set; }
-
-
-        public long WorkSpaceCategoryId { get; set; }
-
-
     }
 }

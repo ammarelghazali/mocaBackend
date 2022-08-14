@@ -1,17 +1,11 @@
 ﻿using AutoMapper;
 using MOCA.Core;
-using MOCA.Core.DTOs.DynamicLists;
 using MOCA.Core.DTOs.Shared.Exceptions;
 using MOCA.Core.DTOs.Shared.Responses;
-using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Interfaces.DynamicLists.Services;
 using MOCA.Core.Interfaces.Shared.Services;
-using System.ComponentModel.DataAnnotations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MOCA.Core.DTOs.DynamicLists;
+using MOCA.Core.Entities.DynamicLists;
 
 namespace MOCA.Services.Implementation.DynamicLists
 {
@@ -141,7 +135,6 @@ namespace MOCA.Services.Implementation.DynamicLists
 
         public async Task<Response<List<WorkSpaceCategory>>> AddListOfWorkSpaceCategory(List<WorkSpaceCategoryModel> request)
         {
-
             var workSpace = _mapper.Map<List<WorkSpaceCategory>>(request);
 
             foreach (var item in workSpace)
@@ -171,7 +164,7 @@ namespace MOCA.Services.Implementation.DynamicLists
                 }
             }
 
-             _unitOfWork.WorkSpaceCategoryRepo.InsertRang(workSpace);
+            _unitOfWork.WorkSpaceCategoryRepo.InsertRang(workSpace);
 
 
 
@@ -183,7 +176,9 @@ namespace MOCA.Services.Implementation.DynamicLists
 
             return new Response<List<WorkSpaceCategory>>(workSpace, "Work Space type Added Successfully");
 
+
         }
+        
 
         public async Task<Response<WorkSpaceCategoryModel>> GetWorkSpaceCategoryByID(long Id)
         {
