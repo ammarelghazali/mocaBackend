@@ -2,6 +2,7 @@
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 using MOCA.Core;
+using MOCA.Core.DTOs.Shared;
 using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.DTOs.WorkSpaceReservation;
 using MOCA.Core.DTOs.WorkSpaceReservation.CRM.Request;
@@ -86,12 +87,12 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations.CoworkSpace
             return new PagedResponse<IReadOnlyList<GetAllWorkSpaceReservationsResponse>>(null, request.pageNumber, request.pageSize);
         }
 
-        public async Task<PagedResponse<IReadOnlyList<GetAllWorkSpaceReservationsResponse>>> GetAllWorkSpaceSubmissionsSP(GetAllWorkSpaceReservationsDto request)
+        public async Task<PagedResponse<IReadOnlyList<GetAllWorkSpaceReservationsResponse>>> GetAllWorkSpaceSubmissionsSP(RequestParameter request)
         {
             DynamicParameters parameters = new DynamicParameters();
 
-            parameters.Add("@pageNumber", request.pageNumber);
-            parameters.Add("@pageSize", request.pageSize);
+            parameters.Add("@pageNumber", request.PageNumber);
+            parameters.Add("@pageSize", request.PageSize);
 
             var data = await _unitOfWork.CoworkSpaceReservationHourlyRepo.QueryAsync<GetAllWorkSpaceReservationsResponse>("[dbo].[SP_GetAllCoworkSpaceSubmissionsCRM]", parameters, System.Data.CommandType.StoredProcedure);
 
@@ -100,12 +101,12 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations.CoworkSpace
                 var totalCount = await _unitOfWork.CoworkSpaceReservationHourlyRepo.QueryAsync<int>("[dbo].[SP_GetCoworkSpaceSubmissionsTotalCount]", null, System.Data.CommandType.StoredProcedure);
 
 
-                return new PagedResponse<IReadOnlyList<GetAllWorkSpaceReservationsResponse>>(data, request.pageNumber, request.pageSize,
+                return new PagedResponse<IReadOnlyList<GetAllWorkSpaceReservationsResponse>>(data, request.PageNumber, request.PageSize,
                                                                                                   (int)Math.Ceiling((double)totalCount[0] /
-                                                                                                                       request.pageSize));
+                                                                                                                       request.PageSize));
             }
 
-            return new PagedResponse<IReadOnlyList<GetAllWorkSpaceReservationsResponse>>(null, request.pageNumber, request.pageSize);
+            return new PagedResponse<IReadOnlyList<GetAllWorkSpaceReservationsResponse>>(null, request.PageNumber, request.PageSize);
         }
 
         public async Task<PagedResponse<IReadOnlyList<GetFilteredWorkSpaceReservationResponse>>> GetFilteredSubmissions(GetFilteredWorkSpaceReservationDto request)
