@@ -83,7 +83,6 @@ namespace MOCA.Presistence.Contexts
         public DbSet<MeetingSpaceHourlyPricing> MeetingSpaceHourlyPricings { get; set; }
         public DbSet<WorkSpace> WorkSpaces { get; set; }
         public DbSet<MarketingImages> MarketingImages { get; set; }
-        public DbSet<VenueSetup> VenueSetups { get; set; }
         public DbSet<EventSpaceOccupancy> EventSpaceOccupancies { get; set; }
         public DbSet<Coworking> Coworkings { get; set; }
         public DbSet<CoWorkingSpaceHourlyPricing> CoWorkingSpaceHourlyPricings { get; set; }
@@ -105,6 +104,8 @@ namespace MOCA.Presistence.Contexts
         #region Dynamic Lists
         public DbSet<WorkSpaceCategory> WorkSpaceCategories { get; set; }
         public DbSet<WorkSpaceType> WorkSpaceTypes { get; set; }
+         
+        public DbSet<VenueSetup> VenueSetups { get; set; }
 
         #endregion
 
@@ -194,13 +195,13 @@ namespace MOCA.Presistence.Contexts
                 if (entry.State == EntityState.Added)
                 {
                     entry.Entity.CreatedAt = _dateTime.NowUtc;
-                    entry.Entity.CreatedBy = "12";//_authenticatedUser.UserId;
+                    entry.Entity.CreatedBy = _authenticatedUser.UserId;
                 }
 
                 if (entry.State == EntityState.Modified)
                 {
                     entry.Entity.LastModifiedAt = _dateTime.NowUtc;
-                    entry.Entity.LastModifiedBy = "12";// _authenticatedUser.UserId;
+                    entry.Entity.LastModifiedBy = _authenticatedUser.UserId;
                 }
             }
             return base.SaveChangesAsync(cancellationToken);

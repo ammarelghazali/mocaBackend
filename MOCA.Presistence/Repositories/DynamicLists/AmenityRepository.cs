@@ -1,4 +1,4 @@
-﻿using MOCA.Core.Entities.LocationManagment;
+﻿using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Interfaces.LocationManagment.Repositories;
 using MOCA.Presistence.Contexts;
 using MOCA.Presistence.Repositories.Base;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MOCA.Presistence.Repositories.LocationManagment
+namespace MOCA.Presistence.Repositories.DynamicLists
 {
     public class AmenityRepository : GenericRepository<Amenity>, IAmenityRepository
     {

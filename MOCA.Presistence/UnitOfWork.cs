@@ -17,7 +17,6 @@ using MOCA.Presistence.Repositories.MocaSettings;
 using MOCA.Core.Interfaces.MeetingSpaceReservations.Repositories;
 using MOCA.Presistence.Repositories.MeetingSpaceReservations;
 using MOCA.Core.Interfaces.SSO.Repositories;
-using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Interfaces.DynamicLists.Repositories;
 using MOCA.Presistence.Repositories.DynamicLists;
 using MOCA.Core.Interfaces.WorkSpaceReservations.WorkSpaces.Repositories;
@@ -27,7 +26,7 @@ using MOCA.Presistence.Repositories.WorkSpaceReservations.CoworkSpace;
 using MOCA.Presistence.Repositories.Shered.Reservations;
 using MOCA.Core.Interfaces.Shared.Reservations.Respositories;
 using MOCA.Presistence.Repositories.SSO;
-
+using MOCA.Core.Entities.DynamicLists;
 
 namespace MOCA.Presistence
 {
@@ -948,6 +947,26 @@ namespace MOCA.Presistence
             }
         }
 
+
+
+
+        public IGenericRepository<VenueSetup> _VenueSetupRepo;
+        public IGenericRepository<VenueSetup> VenueSetupRepo
+        {
+            get
+            {
+                return _VenueSetupRepo = _VenueSetupRepo ?? new GenericRepository<VenueSetup>(_context);
+            }
+        }
+        public IVenueSetupRepository _VenueSetupRepoEF;
+        public IVenueSetupRepository VenueSetupRepoEF
+        {
+            get
+            {
+                return _VenueSetupRepoEF = _VenueSetupRepoEF ?? new VenueSetupRepository(_context);
+            }
+        }
+
         #endregion
 
 
@@ -979,6 +998,8 @@ namespace MOCA.Presistence
                 return _reservationTypesRepository = _reservationTypesRepository ?? new ReservationTypesRepository(_context);
             }
         }
+
+        
         #endregion
 
 

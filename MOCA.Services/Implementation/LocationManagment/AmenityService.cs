@@ -1,16 +1,11 @@
 ﻿using AutoMapper;
 using MOCA.Core;
-using MOCA.Core.DTOs;
-using MOCA.Core.DTOs.LocationManagment.Amenity;
+using MOCA.Core.DTOs.DynamicLists;
+using MOCA.Core.DTOs.Shared;
 using MOCA.Core.DTOs.Shared.Responses;
-using MOCA.Core.Entities.LocationManagment;
+using MOCA.Core.Entities.DynamicLists;
 using MOCA.Core.Interfaces.LocationManagment.Services;
 using MOCA.Core.Interfaces.Shared.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MOCA.Services.Implementation.LocationManagment
 {
@@ -195,11 +190,10 @@ namespace MOCA.Services.Implementation.LocationManagment
             {
                 amenity.LastModifiedAt = DateTime.UtcNow;
             }
-
             var amenityEntity = await _unitOfWork.AmenityRepo.GetByIdAsync(request.Id);
 
 
-            if (amenityEntity == null) { return new Response<bool>(false, "This amenity is exits before "); }
+            if (amenityEntity == null) { return new Response<bool>(false,"Cannot Update Amenity right now"); }
 
             amenity.CreatedBy = amenityEntity.CreatedBy;
             amenity.CreatedAt = amenityEntity.CreatedAt;
@@ -207,12 +201,12 @@ namespace MOCA.Services.Implementation.LocationManagment
             _unitOfWork.AmenityRepo.Update(amenity);
             if (await _unitOfWork.SaveAsync() < 1)
             {
-                return new Response<bool>("Cannot Update amenity type right now");
+                return new Response<bool>(false,"Cannot Update Amenity right now");
             }
 
-            return new Response<bool>(true, "amenity type Updated Successfully.");
+            return new Response<bool>(true, " Amenityy Updated Successfully.");
         }
 
-
+    
     }
 }

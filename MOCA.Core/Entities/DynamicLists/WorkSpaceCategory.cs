@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace MOCA.Core.Entities.DynamicLists
-{
+{ 
     public class WorkSpaceCategory : BaseEntity
     {
         [Required]

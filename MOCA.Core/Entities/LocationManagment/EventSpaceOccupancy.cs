@@ -1,4 +1,5 @@
 ﻿using MOCA.Core.Entities.BaseEntities;
+using MOCA.Core.Entities.DynamicLists;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MOCA.Core.Entities.LocationManagment

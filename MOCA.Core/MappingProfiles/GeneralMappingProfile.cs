@@ -51,11 +51,10 @@ using MOCA.Core.DTOs.LocationManagment.Location;
 using MOCA.Core.DTOs.LocationManagment.FavouriteLocation;
 using MOCA.Core.DTOs.LocationManagment.Building;
 using MOCA.Core.DTOs.LocationManagment.BuildingFloor;
-using MOCA.Core.Entities.DynamicLists;
-using MOCA.Core.DTOs.DynamicLists;
 using MOCA.Core.Entities.MeetingSpaceReservation;
 using MOCA.Core.DTOs.MeetingReservations.Request;
-using MOCA.Core.DTOs.LocationManagment.Amenity;
+using MOCA.Core.Entities.DynamicLists;
+using MOCA.Core.DTOs.DynamicLists;
 
 namespace MOCA.Core.MappingProfiles
 {
@@ -258,6 +257,10 @@ namespace MOCA.Core.MappingProfiles
 
             CreateMap<WorkSpaceTypeModel, WorkSpaceType>();
             CreateMap<WorkSpaceType, WorkSpaceTypeModel>();
+
+            CreateMap<VenueSetupModel,VenueSetup>();
+            CreateMap<VenueSetup,VenueSetupModel>();
+
             #endregion
 
             #region Events

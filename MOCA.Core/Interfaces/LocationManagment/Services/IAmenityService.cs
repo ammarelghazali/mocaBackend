@@ -1,9 +1,9 @@
 ﻿
 
-using MOCA.Core.DTOs;
-using MOCA.Core.DTOs.LocationManagment.Amenity;
+using MOCA.Core.DTOs.DynamicLists;
+using MOCA.Core.DTOs.Shared;
 using MOCA.Core.DTOs.Shared.Responses;
-using MOCA.Core.Entities.LocationManagment;
+using MOCA.Core.Entities.DynamicLists;
 
 namespace MOCA.Core.Interfaces.LocationManagment.Services
 {

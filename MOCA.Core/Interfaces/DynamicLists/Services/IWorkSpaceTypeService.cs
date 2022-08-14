@@ -1,6 +1,6 @@
 ﻿
-using MOCA.Core.DTOs;
 using MOCA.Core.DTOs.DynamicLists;
+using MOCA.Core.DTOs.Shared;
 using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.Entities.DynamicLists;
 
@@ -14,7 +14,7 @@ namespace MOCA.Core.Interfaces.DynamicLists.Services
 
         Task<PagedResponse<List<WorkSpaceTypeModel>>> GetAllWorkSpaceTypePaginated(RequestParameter filter);
 
-        Task<Response<List<WorkSpaceTypeModel>>> GetWorkSpaceTypesWithoutPagination();
+        Task<Response<List<WorkSpaceTypeResponseModel>>> GetWorkSpaceTypesWithoutPagination();
         Task<Response<WorkSpaceTypeModel>> GetWorkSpaceTypeById(long Id);
         Task<Response<bool>> DeleteWorkSpaceType(long Id);
     }

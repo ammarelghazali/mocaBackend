@@ -1,9 +1,10 @@
 ﻿using MOCA.Core.Entities.BaseEntities;
+using MOCA.Core.Entities.LocationManagment;
 using System.ComponentModel.DataAnnotations;
 
-namespace MOCA.Core.Entities.LocationManagment
+namespace MOCA.Core.Entities.DynamicLists
 {
-    public class Amenity :  BaseEntity
+    public class Amenity : BaseEntity
     {
         [Required]
         public string Name { get; set; }
@@ -16,4 +17,3 @@ namespace MOCA.Core.Entities.LocationManagment
 
     }
 }
-    
