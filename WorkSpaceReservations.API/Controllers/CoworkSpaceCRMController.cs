@@ -74,5 +74,20 @@ namespace WorkSpaceReservations.API.Controllers
 
             return Ok(response);
         }
+
+        [HttpPost("GetAllFilteredSubmissions")]
+        public async Task<IActionResult> GetAllFilteredSubmissions([FromBody] GetFilteredWorkSpaceReservationDto request)
+        {
+            var response = await _reservationServiceCRM.GetFilteredSubmissions(request);
+            return Ok(response);
+        }
+
+        [HttpPost("GetAllFilteredSubmissionsWithoutPagination")]
+        public async Task<IActionResult> GetAllFilteredSubmissionsWithoutPagination([FromBody] GetAllWorkSpaceReservationNotPaginated request)
+        {
+            var response = await _reservationServiceCRM.GetFilteredSubmissionsWithoutPagination(request);
+            return Ok(response);
+        }
+
     }
 }

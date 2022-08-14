@@ -24,8 +24,8 @@
         public DateTime? OpportunityStartDate { get; set; }
 
         //public string Platform { get; set; }
-        //public long LocationId { get; set; }
-        //public string PaymentMethodName { get; set; }
+        public long LocationId { get; set; }
+        public string PaymentMethodName { get; set; }
         //public int? PaymentMethod { get; set; }
         //public string CountryCode { get; set; }
     }

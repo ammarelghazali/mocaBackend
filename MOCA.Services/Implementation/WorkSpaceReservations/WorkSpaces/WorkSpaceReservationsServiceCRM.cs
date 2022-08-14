@@ -86,27 +86,12 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations.WorkSpaces
 
         public async Task<PagedResponse<IReadOnlyList<GetFilteredWorkSpaceReservationResponse>>> GetFilteredSubmissions(GetFilteredWorkSpaceReservationDto request)
         {
-            var data = await _unitOfWork.WorkSpaceReservationsRepositoryCRM.GetFilteredSubmissions(request);
-
-            if (data.Count > 0)
-            {
-                return new PagedResponse<IReadOnlyList<GetFilteredWorkSpaceReservationResponse>>(data, request.pageNumber, request.pageSize,
-                                                                                                 data.Count);
-
-            }
-            return new PagedResponse<IReadOnlyList<GetFilteredWorkSpaceReservationResponse>>(null, request.pageNumber, request.pageSize);
+            throw new NotImplementedException();
         }
 
-        public async Task<Response<IReadOnlyList<GetFilteredWorkSpaceReservationNotPaginatedResponse>>> GetFilteredSubmissionsWithoutPagination(GetAllWorkSpaceReservationNotPaginated request)
+        public async Task<Response<IReadOnlyList<GetFilteredWorkSpaceReservationResponse>>> GetFilteredSubmissionsWithoutPagination(GetAllWorkSpaceReservationNotPaginated request)
         {
-            var data = await _unitOfWork.WorkSpaceReservationsRepositoryCRM.GetFilteredSubmissionsWithoutPagination(request);
-
-            if (data.Count > 0)
-            {
-                return new Response<IReadOnlyList<GetFilteredWorkSpaceReservationNotPaginatedResponse>>(data);
-            }
-
-            return new Response<IReadOnlyList<GetFilteredWorkSpaceReservationNotPaginatedResponse>>(null, "There's No Related Data");
+            throw new NotImplementedException();
         }
 
         public async Task<Response<WorkSpaceReservationLocationsDropDown>> GetWorkSpaceLocationsDropDowns()
