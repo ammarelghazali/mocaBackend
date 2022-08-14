@@ -27,8 +27,4 @@
     <ProjectReference Include="..\MOCA.Services\MOCA.Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>

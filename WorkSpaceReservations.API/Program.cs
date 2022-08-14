@@ -8,10 +8,12 @@ using MOCA.Core;
 using MOCA.Core.DTOs.Shared.Responses;
 using MOCA.Core.Entities.SSO.Identity;
 using MOCA.Core.Interfaces.Shared.Services;
+using MOCA.Core.Interfaces.WorkSpaceReservations.CoworkSpace.Services;
 using MOCA.Presistence;
 using MOCA.Presistence.Contexts;
 using MOCA.Services;
 using MOCA.Services.Implementation.Shared;
+using MOCA.Services.Implementation.WorkSpaceReservations.CoworkSpace;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Reflection;
@@ -137,11 +139,13 @@ builder.Services.AddAuthentication(options =>
 
 // Service Layer
 #region WorkSpaceReservationServices
-
 #endregion
 
 #region CoworkSpaceReservationServices
-
+builder.Services.AddScoped<ICoworkSpaceReservationServiceCRM, CoworkSpaceReservationServiceCRM>();
+builder.Services.AddScoped<ICoworkSpaceReservationServiceHourly, CoworkSpaceReservationServiceHourly>();
+builder.Services.AddScoped<ICoworkSpaceReservationServiceTailored, CoworkSpaceReservationServiceTailored>();
+builder.Services.AddScoped<ICoworkSpaceReservationServiceBundle, CoworkSpaceReservationServiceBundle>();
 #endregion
 
 var app = builder.Build();
