@@ -325,7 +325,6 @@ namespace MOCA.Presistence.Repositories.Base
         public virtual void Update(T entity)
         {
             dbSet.Update(entity);
-            _context.SaveChangesAsync();
         }
         public virtual void UpdateRange(List<T> entity)
         {

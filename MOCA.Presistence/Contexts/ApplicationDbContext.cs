@@ -194,13 +194,13 @@ namespace MOCA.Presistence.Contexts
                 if (entry.State == EntityState.Added)
                 {
                     entry.Entity.CreatedAt = _dateTime.NowUtc;
-                    entry.Entity.CreatedBy = "12";//_authenticatedUser.UserId;
+                    entry.Entity.CreatedBy = _authenticatedUser.UserId;
                 }
 
                 if (entry.State == EntityState.Modified)
                 {
                     entry.Entity.LastModifiedAt = _dateTime.NowUtc;
-                    entry.Entity.LastModifiedBy = "12";// _authenticatedUser.UserId;
+                    entry.Entity.LastModifiedBy = _authenticatedUser.UserId;
                 }
             }
             return base.SaveChangesAsync(cancellationToken);
