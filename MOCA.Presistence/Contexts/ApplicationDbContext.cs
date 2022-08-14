@@ -106,7 +106,6 @@ namespace MOCA.Presistence.Contexts
         public DbSet<WorkSpaceType> WorkSpaceTypes { get; set; }
          
         public DbSet<VenueSetup> VenueSetups { get; set; }
-        public DbSet<FurnitureType> FurnitureTypes { get; set; }
 
         #endregion
 

@@ -1,4 +1,5 @@
 ﻿using MOCA.Core.Entities.DynamicLists;
+using MOCA.Core.Entities.LocationManagment;
 using MOCA.Core.Interfaces.DynamicLists.Repositories;
 using MOCA.Presistence.Contexts;
 using MOCA.Presistence.Repositories.Base;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MOCA.Presistence.Repositories.DynamicLists
 {
-    public class FurnitureTypeRepository : GenericRepository<FurnitureType>, IFurnitureTypeRepository
+    public class FurnitureTypeRepository : GenericRepository<FurnishingType>, IFurnitureTypeRepository
     {
         private readonly ApplicationDbContext _context;
         public FurnitureTypeRepository(ApplicationDbContext context) : base(context)
