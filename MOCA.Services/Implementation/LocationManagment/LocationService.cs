@@ -266,6 +266,7 @@ namespace MOCA.Services.Implementation.LocationManagment
                 locationBankAccount.CreatedBy = _authenticatedUserService.UserId;
                 locationBankAccount.CreatedAt = _dateTimeService.NowUtc;
                 _unitOfWork.LocationBankAccountRepoEF.DeleteByLocationID(request.Id);
+                _unitOfWork.LocationBankAccountRepo.Insert(locationBankAccount);
                 #endregion
 
                 #region Delete Old Location Inclusion Add New One
