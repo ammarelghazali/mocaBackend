@@ -24,7 +24,6 @@ namespace MOCA.Presistence.Repositories.DynamicLists
             return true;
         }
 
-       
 
         public async Task<bool> IsUniqueNameAsync(string workSpaceName)
         {
