@@ -75,6 +75,11 @@ namespace WorkSpaceReservations.API.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Get All Filtered Submissions With Pagination
+        /// </summary>
+        /// <param name="request">an Object that has all the filter data</param>
+        /// <response code="200">Returns the Submissions Successfully</response>
         [HttpPost("GetAllFilteredSubmissions")]
         public async Task<IActionResult> GetAllFilteredSubmissions([FromBody] GetFilteredWorkSpaceReservationDto request)
         {
@@ -82,6 +87,11 @@ namespace WorkSpaceReservations.API.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Get All Filtered Submissions Without Pagination
+        /// </summary>
+        /// <param name="request">an Object that has all the filter data</param>
+        /// <response code="200">Returns all Submissions Successfully</response>
         [HttpPost("GetAllFilteredSubmissionsWithoutPagination")]
         public async Task<IActionResult> GetAllFilteredSubmissionsWithoutPagination([FromBody] GetAllWorkSpaceReservationNotPaginated request)
         {
