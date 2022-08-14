@@ -117,6 +117,7 @@ namespace MOCA.Core
         IAmenityRepository AmenityRepoEF { get; }
 
 
+
         #endregion
 
         #region Events

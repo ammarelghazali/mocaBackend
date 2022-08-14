@@ -261,6 +261,11 @@ namespace MOCA.Core.MappingProfiles
             CreateMap<VenueSetupModel,VenueSetup>();
             CreateMap<VenueSetup,VenueSetupModel>();
 
+
+            CreateMap<FurnitureTypeModel, FurnitureType>();
+            CreateMap<FurnitureType, FurnitureTypeModel>();
+
+
             #endregion
 
             #region Events

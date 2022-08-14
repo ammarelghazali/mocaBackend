@@ -137,19 +137,76 @@ namespace MOCA.Services.Implementation.DynamicLists
             return new PagedResponse<List<VenueSetupModel>>(Res, filter.PageNumber, filter.PageSize, pg_total);
         }
 
-        public Task<Response<VenueSetupModel>> GetVenueSetupById(long Id)
+        public async Task<Response<VenueSetupModel>> GetVenueSetupById(long Id)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
+
+            if (Id <= 0)
+            {
+                return new Response<VenueSetupModel>("ID must be greater than zero.");
+            }
+            var setup = await _unitOfWork.VenueSetupRepo.GetByIdAsync(Id);
+            if (setup == null)
+            {
+                return new Response<VenueSetupModel>("No Venue Setup Found With This ID.");
+            }
+            var res = _mapper.Map<VenueSetupModel>(setup);
+            return new Response<VenueSetupModel>(res);
         }
 
-        public Task<Response<List<VenueSetupModel>>> GetVenueSetupWithoutPagination()
+        public async Task<Response<List<VenueSetupModel>>> GetVenueSetupWithoutPagination()
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
+            var data = _unitOfWork.VenueSetupRepo.GetAll().ToList();
+            var Res = _mapper.Map<List<VenueSetupModel>>(data);
+
+            if (Res.Count == 0)
+            {
+                return new Response<List<VenueSetupModel>>(null);
+            }
+            return new Response<List<VenueSetupModel>>(Res);
+
         }
 
-        public Task<Response<bool>> UpdateVenueSetup(VenueSetupModel request)
+        public async Task<Response<bool>> UpdateVenueSetup(VenueSetupModel request)
         {
-            throw new NotImplementedException();
+            var setup = _mapper.Map<VenueSetup>(request);
+
+            if (string.IsNullOrWhiteSpace(setup.LastModifiedBy))
+            {
+                if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+                {
+                    throw new UnauthorizedAccessException("Last Modified By UserID is required");
+                }
+                else
+                { setup.LastModifiedBy = _authenticatedUserService.UserId; }
+            }
+            if (setup.LastModifiedAt == null)
+            {
+                setup.LastModifiedAt = DateTime.UtcNow;
+            }
+
+            var setupEntity = await _unitOfWork.VenueSetupRepo.GetByIdAsync(request.Id);
+
+
+            if (setupEntity == null) { return new Response<bool>(false, "This Venue Setup is exits before "); }
+
+            setup.CreatedBy = setupEntity.CreatedBy;
+            setup.CreatedAt = setupEntity.CreatedAt;
+
+            _unitOfWork.VenueSetupRepo.Update(setup);
+            if (await _unitOfWork.SaveAsync() < 1)
+            {
+                return new Response<bool>("Cannot Update Venue Setup right now");
+            }
+
+            return new Response<bool>(true, " Venue Setup Updated Successfully.");
         }
     }
 }

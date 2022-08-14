@@ -189,20 +189,20 @@ namespace LocationManagement.API.Controllers
 
         }
 
-        //[HttpGet("GetAllWorkSpaceTypesPagination")]
-        //public async Task<IActionResult> GetAllWorkSpaceTypesPagination([FromQuery] RequestParameter filter)
-        //{
-        //    var response = await _WorkSpaceTypeService.GetAllWorkSpaceTypePaginated(filter);
+        [HttpGet("GetAllWorkSpaceTypesPagination")]
+        public async Task<IActionResult> GetAllWorkSpaceTypesPagination([FromQuery] RequestParameter filter)
+        {
+            var response = await _WorkSpaceTypeService.GetAllWorkSpaceTypePaginated(filter);
 
-        //    if (response.Succeeded == false)
-        //    {
-        //        return BadRequest(response);
-        //    }
-        //    return Ok(response);
-        //}
+            if (response.Succeeded == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+            }
 
-        ///////////////////AMENITY///////////////////AMENITY///////////////////AMENITY///////////////////AMENITY//////////////////////////
-        [HttpPost("AddAmenity")]
+            ///////////////////AMENITY///////////////////AMENITY///////////////////AMENITY///////////////////AMENITY//////////////////////////
+            [HttpPost("AddAmenity")]
         public async Task<IActionResult> AddAmenity([FromBody] AmenityModel model)
         {
             var amenity = await _AmenityService.AddAmenity(model);
@@ -249,17 +249,17 @@ namespace LocationManagement.API.Controllers
             return Ok(data);
         }
 
-        //[HttpGet("GetAllAmenityPagination")]
-        //public async Task<IActionResult> GetAllAmenityPagination([FromQuery] RequestParameter filter)
-        //{
-        //    var response = await _AmenityService.GetAllAmenityPaginated(filter);
+        [HttpGet("GetAllAmenityPagination")]
+        public async Task<IActionResult> GetAllAmenityPagination([FromQuery] RequestParameter filter)
+        {
+            var response = await _AmenityService.GetAllAmenityPaginated(filter);
 
-        //    if (response.Succeeded == false)
-        //    {
-        //        return BadRequest(response);
-        //    }
-        //    return Ok(response);
-        //}
+            if (response.Succeeded == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
 
         [HttpGet("GetAmenityByID")]
         public async Task<IActionResult> GetAmenityByID([FromHeader] long Id)
@@ -343,17 +343,55 @@ namespace LocationManagement.API.Controllers
             return Ok(data);
         }
 
-        //[HttpGet("GetAllVenueSetupPagination")]
-        //public async Task<IActionResult> GetAllVenueSetupPagination([FromQuery] RequestParameter filter)
-        //{
-        //    var response = await _VenueSetupService.GetAllVenueSetupPaginated(filter);
+        [HttpGet("GetAllVenueSetupPagination")]
+        public async Task<IActionResult> GetAllVenueSetupPagination([FromQuery] RequestParameter filter)
+        {
+            var response = await _VenueSetupService.GetAllVenueSetupPaginated(filter);
 
-        //    if (response.Succeeded == false)
-        //    {
-        //        return BadRequest(response);
-        //    }
-        //    return Ok(response);
-        //}
+            if (response.Succeeded == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        [HttpGet("GetVenueSetupByID")]
+        public async Task<IActionResult> GetVenueSetupByID([FromHeader] long Id)
+        {
+            var response = await _VenueSetupService.GetVenueSetupById(Id);
+
+            if (response.Succeeded == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        [HttpGet("GetAllVenueSetupWithoutPagination")]
+        public async Task<IActionResult> GetAllVenueSetupWithoutPagination()
+        {
+            var data = await _VenueSetupService.GetVenueSetupWithoutPagination();
+            if (data.Succeeded == false)
+            {
+                return BadRequest(data);
+            }
+            return Ok(data);
+        }
+
+        [HttpPut("UpdateVenueSetup")]
+        public async Task<IActionResult> UpdateVenueSetup([FromBody] VenueSetupModel model)
+        {
+            var data = await _VenueSetupService.UpdateVenueSetup(model);
+            if (data.Succeeded == false)
+            {
+                return BadRequest(data);
+            }
+            return Ok(data);
+
+        }
+
+        ///////////////////FURNITURE TYPE///////////////////FURNITURE TYPE///////////////////FURNITURE TYPE/////////////FURNITURE TYPE///////////FURNITURE TYPE//////////////
+       
 
 
     }
