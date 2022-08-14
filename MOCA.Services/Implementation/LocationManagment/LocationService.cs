@@ -130,7 +130,7 @@ namespace MOCA.Services.Implementation.LocationManagment
                     return new Response<long>("You Must enter Working Hours for location.");
                 }
 
-                bool NameChecker = await _unitOfWork.LocationRepoEF.CheckLocationNameIsUinque(request.Name);
+                bool NameChecker = await _unitOfWork.LocationRepoEF.CheckLocationNameIsUinque(request.Name, request.Id);
                 if (NameChecker == false)
                 {
                     return new Response<long>("Location Name is not unique.");
@@ -155,95 +155,141 @@ namespace MOCA.Services.Implementation.LocationManagment
                 }
                 #endregion
 
-                _unitOfWork.LocationRepo.Update(location);
-                if (await _unitOfWork.SaveAsync() < 1)
-                {
-                    return new Response<long>("Cannot Updated Location right now");
-                }
-
                 #region Delete Old Service Fee Payments Due Date And Add New One
                 var serviceFeePaymentsDueDate = _mapper.Map<List<ServiceFeePaymentsDueDate>>(request.ServiceFeePaymentsDueDates);
+                for (int i = 0; i < serviceFeePaymentsDueDate.Count; i++)
+                {
+                    serviceFeePaymentsDueDate[i].Id = 0;
+                    serviceFeePaymentsDueDate[i].CreatedBy = _authenticatedUserService.UserId;
+                    serviceFeePaymentsDueDate[i].CreatedAt = _dateTimeService.NowUtc;
+                }
                 _unitOfWork.ServiceFeePaymentsDueDateRepoEF.DeleteAllServiceFeePaymentsDueDateByLocationID(request.Id);
-                _unitOfWork.ServiceFeePaymentsDueDateRepo.InsertRang(serviceFeePaymentsDueDate);
+                /*_unitOfWork.ServiceFeePaymentsDueDateRepo.InsertRang(serviceFeePaymentsDueDate);
                 if (await _unitOfWork.SaveAsync() < 1)
                 {
                     return new Response<long>("Cannot Update ServiceFeePaymentsDueDate right now");
-                }
+                }*/
+                location.ServiceFeePaymentsDueDates = new List<ServiceFeePaymentsDueDate>(serviceFeePaymentsDueDate);
                 #endregion
 
                 #region Delete Old Location Contact And Add New One
                 var locationContact = _mapper.Map<List<LocationContact>>(request.LocationContacts);
+                for (int i = 0; i < locationContact.Count; i++)
+                {
+                    locationContact[i].Id = 0;
+                    locationContact[i].CreatedBy = _authenticatedUserService.UserId;
+                    locationContact[i].CreatedAt = _dateTimeService.NowUtc;
+                }
                 _unitOfWork.LocationContactRepoEF.DeleteAllLocationContactByLocationID(request.Id);
-                _unitOfWork.LocationContactRepo.InsertRang(locationContact);
+                /*_unitOfWork.LocationContactRepo.InsertRang(locationContact);
                 if (await _unitOfWork.SaveAsync() < 1)
                 {
                     return new Response<long>("Cannot Update LocationContact right now");
-                }
+                }*/
+                location.LocationContacts = new List<LocationContact>(locationContact);
                 #endregion
 
                 #region Delete Old Location Image And Add New One
                 var locationImage = _mapper.Map<List<LocationImage>>(request.LocationImages);
+                for (int i = 0; i < locationImage.Count; i++)
+                {
+                    locationImage[i].Id = 0;
+                    locationImage[i].CreatedBy = _authenticatedUserService.UserId;
+                    locationImage[i].CreatedAt = _dateTimeService.NowUtc;
+                }
                 _unitOfWork.LocationImageRepoEF.DeleteAllLocationImageByLocationID(request.Id);
-                _unitOfWork.LocationImageRepo.InsertRang(locationImage);
+                /*_unitOfWork.LocationImageRepo.InsertRang(locationImage);
                 if (await _unitOfWork.SaveAsync() < 1)
                 {
                     return new Response<long>("Cannot Update LocationImage right now");
-                }
+                }*/
+                location.LocationImages = new List<LocationImage>(locationImage);
                 #endregion
 
                 #region Delete Old Location Currency Add New One
                 var locationCurrency = _mapper.Map<List<LocationCurrency>>(request.LocationCurrencies);
+                for (int i = 0; i < locationCurrency.Count; i++)
+                {
+                    locationCurrency[i].Id = 0;
+                    locationCurrency[i].CreatedBy = _authenticatedUserService.UserId;
+                    locationCurrency[i].CreatedAt = _dateTimeService.NowUtc;
+                }
                 _unitOfWork.LocationCurrencyRepoEF.DeleteByLocationID(request.Id);
-                _unitOfWork.LocationCurrencyRepo.InsertRang(locationCurrency);
+                /*_unitOfWork.LocationCurrencyRepo.InsertRang(locationCurrency);
                 if (await _unitOfWork.SaveAsync() < 1)
                 {
                     return new Response<long>("Cannot Update LocationCurrency right now");
-                }
+                }*/
+                location.LocationCurrencies = new List<LocationCurrency>(locationCurrency);
                 #endregion
 
                 #region Delete Old Location File Add New One
                 if (request.LocationFiles.Count != 0)
                 {
                     var locationFile = _mapper.Map<List<LocationFile>>(request.LocationFiles);
+                    for (int i = 0; i < locationFile.Count; i++)
+                    {
+                        locationFile[i].Id = 0;
+                        locationFile[i].CreatedBy = _authenticatedUserService.UserId;
+                        locationFile[i].CreatedAt = _dateTimeService.NowUtc;
+                    }
                     _unitOfWork.LocationFileRepoEF.DeleteAllLocationFileByLocationID(request.Id);
-                    _unitOfWork.LocationFileRepo.InsertRang(locationFile);
+                    /*_unitOfWork.LocationFileRepo.InsertRang(locationFile);
                     if (await _unitOfWork.SaveAsync() < 1)
                     {
                         return new Response<long>("Cannot Update LocationFile right now");
-                    }
+                    }*/
+                    location.LocationFiles = new List<LocationFile>(locationFile);
                 }
                 #endregion
 
                 #region Delete Old Location Working Hour Add New One
                 var locationWorkingHour = _mapper.Map<List<LocationWorkingHour>>(request.LocationWorkingHours);
+                for (int i = 0; i < locationWorkingHour.Count; i++)
+                {
+                    locationWorkingHour[i].Id = 0;
+                    locationWorkingHour[i].CreatedBy = _authenticatedUserService.UserId;
+                    locationWorkingHour[i].CreatedAt = _dateTimeService.NowUtc;
+                }
                 _unitOfWork.LocationWorkingHourRepoEF.DeleteAllLocationWorkingHourByLocationID(request.Id);
-                _unitOfWork.LocationWorkingHourRepo.InsertRang(locationWorkingHour);
+                /*_unitOfWork.LocationWorkingHourRepo.InsertRang(locationWorkingHour);
                 if (await _unitOfWork.SaveAsync() < 1)
                 {
                     return new Response<long>("Cannot Update LocationWorkingHour right now");
-                }
+                }*/
+                location.LocationWorkingHours = new List<LocationWorkingHour>(locationWorkingHour);
                 #endregion
 
                 #region Delete Old Location Bank Account Add New One
                 var locationBankAccount = _mapper.Map<LocationBankAccount>(request.LocationBankAccount);
+                locationBankAccount.Id = 0;
+                locationBankAccount.CreatedBy = _authenticatedUserService.UserId;
+                locationBankAccount.CreatedAt = _dateTimeService.NowUtc;
                 _unitOfWork.LocationBankAccountRepoEF.DeleteByLocationID(request.Id);
-                _unitOfWork.LocationBankAccountRepo.Insert(locationBankAccount);
-                if (await _unitOfWork.SaveAsync() < 1)
-                {
-                    return new Response<long>("Cannot Update LocationBankAccount right now");
-                }
                 #endregion
 
                 #region Delete Old Location Inclusion Add New One
                 var locationInclusion = _mapper.Map<List<LocationInclusion>>(request.LocationInclusions);
+                for (int i = 0; i < locationInclusion.Count; i++)
+                {
+                    locationInclusion[i].Id = 0;
+                    locationInclusion[i].CreatedBy = _authenticatedUserService.UserId;
+                    locationInclusion[i].CreatedAt = _dateTimeService.NowUtc;
+                }
                 _unitOfWork.LocationInclusionRepoEF.DeleteAllLocationInclusionByLocationID(request.Id);
-                _unitOfWork.LocationInclusionRepo.InsertRang(locationInclusion);
+                /*_unitOfWork.LocationInclusionRepo.InsertRang(locationInclusion);
                 if (await _unitOfWork.SaveAsync() < 1)
                 {
                     return new Response<long>("Cannot Update LocationInclusion right now");
-                }
+                }*/
+                location.LocationInclusions = new List<LocationInclusion>(locationInclusion);
                 #endregion
 
+                _unitOfWork.LocationRepo.Update(location);
+                if (await _unitOfWork.SaveAsync() < 1)
+                {
+                    return new Response<long>("Cannot Updated Location right now");
+                }
                 return new Response<long>(location.Id, "Location updated Successfully.");
             }
             catch (Exception ex)
@@ -292,6 +338,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             #endregion
 
             #region Delete Location File
+
             _unitOfWork.LocationFileRepoEF.DeleteAllLocationFileByLocationID(LocationId);
             if (await _unitOfWork.SaveAsync() < 1)
             {
