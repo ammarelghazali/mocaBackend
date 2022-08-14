@@ -59,7 +59,13 @@ namespace LocationManagement.API.Controllers
         [HttpPut("UpdateLocation")]
         public async Task<IActionResult> UpdateLocation([FromBody] LocationModel model)
         {
-            return Ok(await _locationService.UpdateLocation(model));
+            var data = await _locationService.UpdateLocation(model);
+
+            if (data.Succeeded == false)
+            {
+                return BadRequest(data);
+            }
+            return Ok(data);
         }
 
         /// <summary>

@@ -11,6 +11,7 @@ namespace MOCA.Core.DTOs.LocationManagment.Location
         public DropdownViewModel City { get; set; }
         public decimal GrossArea { get; set; }
         public decimal NetArea { get; set; }
+        public DateTime LaunchDate { get; set; }
         public DateTime ContractStartDate { get; set; }
         public int ContractLength { get; set; }
         public bool IsPublish { get; set; }

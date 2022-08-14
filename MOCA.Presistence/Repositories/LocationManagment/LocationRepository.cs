@@ -25,6 +25,16 @@ namespace MOCA.Presistence.Repositories.LocationManagment
             }
             return false;
         }
+        
+        public async Task<bool> CheckLocationNameIsUinque(string LocationName, long LocationId)
+        {
+            var locationName = _context.Locations.Where(x => x.Name == LocationName && x.Id != LocationId && x.IsDeleted != true).FirstOrDefault();
+            if (locationName == null)
+            {
+                return true;
+            }
+            return false;
+        }
 
         public async Task<bool> DeleteLocation(long Id)
         {
@@ -68,6 +78,7 @@ namespace MOCA.Presistence.Repositories.LocationManagment
             {
                 Id = x.Id,
                 Name = x.Name,
+                LaunchDate = x.LaunchDate,
                 ContractLength = x.ContractLength,
                 ContractStartDate = x.ContractStartDate,
                 GrossArea = x.GrossArea,
@@ -98,6 +109,7 @@ namespace MOCA.Presistence.Repositories.LocationManagment
             {
                 Id = x.Id,
                 Name = x.Name,
+                LaunchDate = x.LaunchDate,
                 ContractLength = x.ContractLength,
                 ContractStartDate = x.ContractStartDate,
                 GrossArea = x.GrossArea,
