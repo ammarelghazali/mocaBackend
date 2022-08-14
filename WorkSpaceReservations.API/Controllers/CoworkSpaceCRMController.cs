@@ -28,7 +28,7 @@ namespace WorkSpaceReservations.API.Controllers
         public async Task<IActionResult> GetAllCoworkSpaceSubmissions([FromQuery] RequestParameter request)
         {
             var response = await _reservationServiceCRM
-                              .GetAllWorkSpaceSubmissions(new GetAllWorkSpaceReservationsDto(request.PageNumber, request.PageSize));
+                              .GetAllWorkSpaceSubmissionsSP(new GetAllWorkSpaceReservationsDto(request.PageNumber, request.PageSize));
 
             if (!response.Succeeded)
             {

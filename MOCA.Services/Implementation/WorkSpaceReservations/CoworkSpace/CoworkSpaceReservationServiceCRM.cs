@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Dapper;
 using Microsoft.EntityFrameworkCore;
 using MOCA.Core;
 using MOCA.Core.DTOs.Shared.Responses;
@@ -82,6 +83,28 @@ namespace MOCA.Services.Implementation.WorkSpaceReservations.CoworkSpace
                                                                                              (int)Math.Ceiling((double)countReservations /
                                                                                                                        request.pageSize));
             }
+            return new PagedResponse<IReadOnlyList<GetAllWorkSpaceReservationsResponse>>(null, request.pageNumber, request.pageSize);
+        }
+
+        public async Task<PagedResponse<IReadOnlyList<GetAllWorkSpaceReservationsResponse>>> GetAllWorkSpaceSubmissionsSP(GetAllWorkSpaceReservationsDto request)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            parameters.Add("@pageNumber", request.pageNumber);
+            parameters.Add("@pageSize", request.pageSize);
+
+            var data = await _unitOfWork.CoworkSpaceReservationHourlyRepo.QueryAsync<GetAllWorkSpaceReservationsResponse>("[dbo].[SP_GetAllCoworkSpaceSubmissionsCRM]", parameters, System.Data.CommandType.StoredProcedure);
+
+            if (data.Count > 0)
+            {
+                var totalCount = await _unitOfWork.CoworkSpaceReservationHourlyRepo.QueryAsync<int>("[dbo].[SP_GetCoworkSpaceSubmissionsTotalCount]", null, System.Data.CommandType.StoredProcedure);
+
+
+                return new PagedResponse<IReadOnlyList<GetAllWorkSpaceReservationsResponse>>(data, request.pageNumber, request.pageSize,
+                                                                                                  (int)Math.Ceiling((double)totalCount[0] /
+                                                                                                                       request.pageSize));
+            }
+
             return new PagedResponse<IReadOnlyList<GetAllWorkSpaceReservationsResponse>>(null, request.pageNumber, request.pageSize);
         }
 
