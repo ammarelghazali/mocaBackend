@@ -78,6 +78,7 @@ namespace MOCA.Presistence.Repositories.LocationManagment
             {
                 Id = x.Id,
                 Name = x.Name,
+                LaunchDate = x.LaunchDate,
                 ContractLength = x.ContractLength,
                 ContractStartDate = x.ContractStartDate,
                 GrossArea = x.GrossArea,
@@ -108,6 +109,7 @@ namespace MOCA.Presistence.Repositories.LocationManagment
             {
                 Id = x.Id,
                 Name = x.Name,
+                LaunchDate = x.LaunchDate,
                 ContractLength = x.ContractLength,
                 ContractStartDate = x.ContractStartDate,
                 GrossArea = x.GrossArea,
