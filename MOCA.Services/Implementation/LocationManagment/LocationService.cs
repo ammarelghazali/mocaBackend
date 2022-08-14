@@ -277,11 +277,11 @@ namespace MOCA.Services.Implementation.LocationManagment
                     locationInclusion[i].CreatedAt = _dateTimeService.NowUtc;
                 }
                 _unitOfWork.LocationInclusionRepoEF.DeleteAllLocationInclusionByLocationID(request.Id);
-                _unitOfWork.LocationInclusionRepo.InsertRang(locationInclusion);
+                /*_unitOfWork.LocationInclusionRepo.InsertRang(locationInclusion);
                 if (await _unitOfWork.SaveAsync() < 1)
                 {
                     return new Response<long>("Cannot Update LocationInclusion right now");
-                }
+                }*/
                 location.LocationInclusions = new List<LocationInclusion>(locationInclusion);
                 #endregion
 
@@ -307,34 +307,18 @@ namespace MOCA.Services.Implementation.LocationManagment
 
             #region Delete Service Fee Payments Due Date
             _unitOfWork.ServiceFeePaymentsDueDateRepoEF.DeleteAllServiceFeePaymentsDueDateByLocationID(LocationId);
-            if (await _unitOfWork.SaveAsync() < 1)
-            {
-                return new Response<bool>("Cannot Delete ServiceFeePaymentsDueDate right now");
-            }
             #endregion
 
             #region Delete Location Contact
             _unitOfWork.LocationContactRepoEF.DeleteAllLocationContactByLocationID(LocationId);
-            if (await _unitOfWork.SaveAsync() < 1)
-            {
-                return new Response<bool>("Cannot Delete LocationContact right now");
-            }
             #endregion
 
             #region Delete Location Image
             _unitOfWork.LocationImageRepoEF.DeleteAllLocationImageByLocationID(LocationId);
-            if (await _unitOfWork.SaveAsync() < 1)
-            {
-                return new Response<bool>("Cannot Delete LocationImage right now");
-            }
             #endregion
 
             #region Delete Location Currency
             _unitOfWork.LocationCurrencyRepoEF.DeleteByLocationID(LocationId);
-            if (await _unitOfWork.SaveAsync() < 1)
-            {
-                return new Response<bool>("Cannot Delete LocationCurrency right now");
-            }
             #endregion
 
             #region Delete Location File
@@ -342,35 +326,19 @@ namespace MOCA.Services.Implementation.LocationManagment
             if (files.Count > 0)
             {
                 _unitOfWork.LocationFileRepoEF.DeleteAllLocationFileByLocationID(LocationId);
-                if (await _unitOfWork.SaveAsync() < 1)
-                {
-                    return new Response<bool>("Cannot Delete LocationFile right now");
-                }
             }
             #endregion
 
             #region Delete Location Working Hour
             _unitOfWork.LocationWorkingHourRepoEF.DeleteAllLocationWorkingHourByLocationID(LocationId);
-            if (await _unitOfWork.SaveAsync() < 1)
-            {
-                return new Response<bool>("Cannot Delete LocationWorkingHour right now");
-            }
             #endregion
 
             #region Delete Location Bank Account
             _unitOfWork.LocationBankAccountRepoEF.DeleteByLocationID(LocationId);
-            if (await _unitOfWork.SaveAsync() < 1)
-            {
-                return new Response<bool>("Cannot Delete LocationBankAccount right now");
-            }
             #endregion
 
             #region Delete Location Inclusion
             _unitOfWork.LocationInclusionRepoEF.DeleteAllLocationInclusionByLocationID(LocationId);
-            if (await _unitOfWork.SaveAsync() < 1)
-            {
-                return new Response<bool>("Cannot Delete LocationInclusion right now");
-            }
             #endregion
 
             var location = await _unitOfWork.LocationRepoEF.DeleteLocation(LocationId);
