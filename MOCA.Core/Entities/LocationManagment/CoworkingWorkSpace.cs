@@ -10,6 +10,8 @@ namespace MOCA.Core.Entities.LocationManagment
 
         [ForeignKey("CoworkingId")]
         public virtual Coworking Coworking { get; set; }
+        public CoworkingWorkspaceFurnishing CoworkingWorkspaceFurnishing { get; set; }
+        public CoworkingWorkSpaceMarketingImage CoworkingWorkSpaceMarketingImage { get; set; }
 
     }
 }

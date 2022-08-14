@@ -87,81 +87,6 @@ namespace MOCA.Services.Implementation.LocationManagment
                     return new Response<long>("Cannot Add Location right now");
                 }
 
-                #region Add Service Fee Payments Due Date
-                var serviceFeePaymentsDueDate = _mapper.Map<List<ServiceFeePaymentsDueDate>>(request.ServiceFeePaymentsDueDates);
-                serviceFeePaymentsDueDate.ForEach(c => { c.LocationId = location.Id; });
-                _unitOfWork.ServiceFeePaymentsDueDateRepo.InsertRang(serviceFeePaymentsDueDate);
-                if (await _unitOfWork.SaveAsync() < 1)
-                {
-                    return new Response<long>("Cannot Add ServiceFeePaymentsDueDate right now");
-                }
-                #endregion
-
-                #region Add Location Contact
-                var locationContact = _mapper.Map<List<LocationContact>>(request.LocationContacts);
-                locationContact.ForEach(c => { c.LocationId = location.Id; });
-                _unitOfWork.LocationContactRepo.InsertRang(locationContact);
-                if (await _unitOfWork.SaveAsync() < 1)
-                {
-                    return new Response<long>("Cannot Add LocationContact right now");
-                }
-                #endregion
-
-                #region Add Location Image
-                var locationImage = _mapper.Map<List<LocationImage>>(request.LocationImages);
-                locationImage.ForEach(c => { c.LocationId = location.Id; });
-                _unitOfWork.LocationImageRepo.InsertRang(locationImage);
-                if (await _unitOfWork.SaveAsync() < 1)
-                {
-                    return new Response<long>("Cannot Add LocationImage right now");
-                }
-                #endregion
-
-                #region Add Location Currency
-                if (request.LocationCurrencies.Count > 0)
-                {
-                    var locationCurrency = _mapper.Map<List<LocationCurrency>>(request.LocationCurrencies);
-                    foreach (var item in locationCurrency)
-                    {
-                        var checker = await _unitOfWork.LocationCurrencyRepoEF.CheckLocationCurrencyIsUinque(location.Id, item.CurrencyId);
-                        if (checker == false)
-                        {
-                            return new Response<long>("Location Currency Exsists Before.");
-                        }
-                    }
-                    locationCurrency.ForEach(c => { c.LocationId = location.Id; });
-                    _unitOfWork.LocationCurrencyRepo.InsertRang(locationCurrency);
-                    if (await _unitOfWork.SaveAsync() < 1)
-                    {
-                        return new Response<long>("Cannot Add LocationCurrency right now");
-                    }
-                }
-                
-                #endregion
-
-                #region Add Location File
-                if (request.LocationFiles.Count != 0)
-                {
-                    var locationFile = _mapper.Map<List<LocationFile>>(request.LocationFiles);
-                    locationFile.ForEach(c => { c.LocationId = location.Id; });
-                    _unitOfWork.LocationFileRepo.InsertRang(locationFile);
-                    if (await _unitOfWork.SaveAsync() < 1)
-                    {
-                        return new Response<long>("Cannot Add LocationFile right now");
-                    }
-                }
-                #endregion
-
-                #region Add Location Working Hour
-                var locationWorkingHour = _mapper.Map<List<LocationWorkingHour>>(request.LocationWorkingHours);
-                locationWorkingHour.ForEach(c => { c.LocationId = location.Id; });
-                _unitOfWork.LocationWorkingHourRepo.InsertRang(locationWorkingHour);
-                if (await _unitOfWork.SaveAsync() < 1)
-                {
-                    return new Response<long>("Cannot Add LocationWorkingHour right now");
-                }
-                #endregion
-
                 #region Add Location Bank Account
                 var locationBankAccount = _mapper.Map<LocationBankAccount>(request.LocationBankAccount);
                 locationBankAccount.LocationId = location.Id;
@@ -171,17 +96,6 @@ namespace MOCA.Services.Implementation.LocationManagment
                     return new Response<long>("Cannot Add LocationBankAccount right now");
                 }
                 #endregion
-
-                #region Add Location Inclusion
-                var locationInclusion = _mapper.Map<List<LocationInclusion>>(request.LocationInclusions);
-                locationInclusion.ForEach(c => { c.LocationId = location.Id; });
-                _unitOfWork.LocationInclusionRepo.InsertRang(locationInclusion);
-                if (await _unitOfWork.SaveAsync() < 1)
-                {
-                    return new Response<long>("Cannot Add LocationInclusion right now");
-                }
-                #endregion
-
                 return new Response<long>(location.Id, "Location Added Successfully.");
             }
             catch (Exception ex)

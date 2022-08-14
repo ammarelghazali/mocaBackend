@@ -108,8 +108,7 @@ builder.Services.AddScoped<IBuildingService, BuildingService>();
 builder.Services.AddScoped<IBuildingFloorService, BuildingFloorService>();
 builder.Services.AddScoped<IWorkSpaceCategoryService, WorkSpaceCategoryService>();
 builder.Services.AddScoped<IWorkSpaceTypeService, WorkSpaceTypeService>();
-
-builder.Services.AddScoped<IWorkSpaceCategoryService, WorkSpaceCategoryService>();
+builder.Services.AddScoped<IAmenityService, AmenityService>();
 
 #endregion
 

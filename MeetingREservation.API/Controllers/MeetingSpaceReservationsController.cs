@@ -16,13 +16,15 @@ namespace MeetingREservation.API.Controllers
         {
             _meetingSpaceReservationsServices = meetingSpaceReservationsServices;
         }
-      
+
+        #region CRM
+
         /// <summary>
         /// Gets all meeting reservations with pagination sent in DTO
         /// </summary>
         /// <param name="dto"></param>
         /// <response code="200"> returns all paged meeting reservations with details or null if not found data</response>
-        
+
         [HttpGet("GetAllSubmissionsWithPagination")]
         public async Task<IActionResult> GetAllSubmissionsWithPagination([FromQuery] GetAllMeetingsSubmissionsDto dto)
         {
@@ -81,6 +83,58 @@ namespace MeetingREservation.API.Controllers
             var response = await _meetingSpaceReservationsServices.GetAllMeetingReservationLocations();
             return Ok(response);
         }
+
+        #endregion
+
+        #region Mobile
+
+        [HttpPost("BookMeetingReservation")]
+        public async Task<IActionResult> BookMeetingReservation(BookMeetingReservationRequestDto dto)
+        {
+            var response = await _meetingSpaceReservationsServices.BookMeetingReservation(dto);
+            if(!response.Succeeded)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+
+        [HttpPost("AddAttendees")]
+        public async Task<IActionResult> AddAttendees(List<MeetingAttendeeDto> dto)
+        {
+            var response = await _meetingSpaceReservationsServices.AddAttendees(dto);
+            if (!response.Succeeded)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+
+        [HttpPut("UpdatePaymentMethod")]
+        public async Task<IActionResult> UpdatePaymentMethod(long meetingReservationId, long paymentMethodId)
+        {
+            var response = await _meetingSpaceReservationsServices.UpdatePaymentMethod(meetingReservationId, paymentMethodId);
+            if (!response.Succeeded)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        [HttpGet("GetAllOccupiedTimeInDay")]
+        public async Task<IActionResult> GetAllOccupiedTimeInDay(DateTime Day, long meetingSpaceId)
+        {
+            var response = await _meetingSpaceReservationsServices.GetAllOccupiedTimeInDay(Day, meetingSpaceId);
+            if (!response.Succeeded)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        #endregion
 
     }
 }

@@ -94,6 +94,8 @@ namespace MOCA.Presistence.Contexts
         public DbSet<WorkSpaceHourlyPricing> WorkSpaceHourlyPricings { get; set; }
         public DbSet<WorkSpaceBundleMemberType> WorkSpaceBundleMemberTypes { get; set; }
         public DbSet<CoworkingSpaceBundleMemberType> CoworkingSpaceBundleMemberTypes { get; set; }
+        public DbSet<CoworkingWorkspaceFurnishing> CoworkingWorkspaceFurnishings { get; set; }
+        public DbSet<CoworkingWorkSpaceMarketingImage> CoworkingWorkSpaceMarketingImages { get; set; }
         #endregion
 
         #region Shared
@@ -192,13 +194,13 @@ namespace MOCA.Presistence.Contexts
                 if (entry.State == EntityState.Added)
                 {
                     entry.Entity.CreatedAt = _dateTime.NowUtc;
-                    entry.Entity.CreatedBy = _authenticatedUser.UserId;
+                    entry.Entity.CreatedBy = "12";//_authenticatedUser.UserId;
                 }
 
                 if (entry.State == EntityState.Modified)
                 {
                     entry.Entity.LastModifiedAt = _dateTime.NowUtc;
-                    entry.Entity.LastModifiedBy = _authenticatedUser.UserId;
+                    entry.Entity.LastModifiedBy = "12";// _authenticatedUser.UserId;
                 }
             }
             return base.SaveChangesAsync(cancellationToken);
@@ -335,6 +337,12 @@ namespace MOCA.Presistence.Contexts
 
             builder.Entity<CoworkingSpaceBundleMemberType>()
               .HasKey(p => new { p.CoworkSpaceBundleId, p.MemberTypeId });
+
+            builder.Entity<CoworkingWorkspaceFurnishing>()
+                .HasKey(p => new { p.CoworkingWorkSpaceId, p.FurnishingId });
+
+            builder.Entity<CoworkingWorkSpaceMarketingImage>()
+                .HasKey(p => new { p.LocationId, p.MarketingImagesId });
             #endregion
         }
     }
