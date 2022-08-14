@@ -277,11 +277,11 @@ namespace MOCA.Services.Implementation.LocationManagment
                     locationInclusion[i].CreatedAt = _dateTimeService.NowUtc;
                 }
                 _unitOfWork.LocationInclusionRepoEF.DeleteAllLocationInclusionByLocationID(request.Id);
-                /*_unitOfWork.LocationInclusionRepo.InsertRang(locationInclusion);
+                _unitOfWork.LocationInclusionRepo.InsertRang(locationInclusion);
                 if (await _unitOfWork.SaveAsync() < 1)
                 {
                     return new Response<long>("Cannot Update LocationInclusion right now");
-                }*/
+                }
                 location.LocationInclusions = new List<LocationInclusion>(locationInclusion);
                 #endregion
 
