@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MOCA.Core.DTOs;
 using MOCA.Core.DTOs.DynamicLists;
 using MOCA.Core.DTOs.Shared;
 using MOCA.Core.Interfaces.DynamicLists.Services;
@@ -14,7 +13,7 @@ using MOCA.Core.Settings;
 
 namespace LocationManagement.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
     [Authorize]
