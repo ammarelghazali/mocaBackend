@@ -6856,7 +6856,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.Navigation("Admin");
 
-                    b.Navigatio,n("BasicUser");
+                    b.Navigation("BasicUser");
 
                     b.Navigation("ReservationType");
                 });
