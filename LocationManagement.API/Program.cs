@@ -93,7 +93,6 @@ builder.Services.AddScoped<IDistrictService, DistrictService>();
 builder.Services.AddScoped<ICurrencyService, CurrencyService>();
 builder.Services.AddScoped<ILocationTypeService, LocationTypeService>();
 builder.Services.AddScoped<IFeatureService, FeatureService>();
-builder.Services.AddScoped<IInclusionService, InclusionService>();
 builder.Services.AddScoped<IIndustryService, IndustryService>();
 builder.Services.AddScoped<ILocationBankAccountService, LocationBankAccountService>();
 builder.Services.AddScoped<ILocationContactService, LocationContactService>();

@@ -4,6 +4,7 @@ using MOCA.Presistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MOCA.Presistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220815155521_deleteInclusions")]
+    partial class deleteInclusions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1930,44 +1932,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FurnishingType", (string)null);
-                });
-
-            modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.Inclusion", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Icon")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Inclusion", (string)null);
+                    b.ToTable("FurnishingType");
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.Industry", b =>
@@ -4984,7 +4949,10 @@ namespace MOCA.Presistence.Migrations
                     b.Property<DateTime>("BundleStartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("CoworkingId")
+                    b.Property<long>("CoworkSpaceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("CoworkingId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
@@ -5019,6 +4987,8 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("BundleId");
 
+                    b.HasIndex("CoworkSpaceId");
+
                     b.HasIndex("CoworkingId");
 
                     b.HasIndex("LocationId");
@@ -5039,7 +5009,10 @@ namespace MOCA.Presistence.Migrations
                     b.Property<long>("BasicUserId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("CoworkingId")
+                    b.Property<long>("CoworkSpaceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("CoworkingId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
@@ -5087,6 +5060,8 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasIndex("BasicUserId");
 
+                    b.HasIndex("CoworkSpaceId");
+
                     b.HasIndex("CoworkingId");
 
                     b.HasIndex("HourId");
@@ -5109,7 +5084,10 @@ namespace MOCA.Presistence.Migrations
                     b.Property<long>("BasicUserId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("CoworkingId")
+                    b.Property<long>("CoworkSpaceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("CoworkingId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
@@ -5156,6 +5134,8 @@ namespace MOCA.Presistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BasicUserId");
+
+                    b.HasIndex("CoworkSpaceId");
 
                     b.HasIndex("CoworkingId");
 
@@ -5955,7 +5935,7 @@ namespace MOCA.Presistence.Migrations
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.CoworkingSpaceBundleMemberType", b =>
                 {
                     b.HasOne("MOCA.Core.Entities.LocationManagment.CoworkingSpaceBundlePricing", "CoworkingSpaceBundlePricing")
-                        .WithMany("CoworkingSpaceBundleMemberTypes")
+                        .WithMany()
                         .HasForeignKey("CoworkSpaceBundleId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -7096,11 +7076,15 @@ namespace MOCA.Presistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("MOCA.Core.Entities.LocationManagment.Coworking", "Coworking")
-                        .WithMany("CoworkingSpaceReservationBundles")
-                        .HasForeignKey("CoworkingId")
+                    b.HasOne("MOCA.Core.Entities.LocationManagment.CoworkingWorkSpace", "CoworkingWorkSpace")
+                        .WithMany()
+                        .HasForeignKey("CoworkSpaceId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("MOCA.Core.Entities.LocationManagment.Coworking", null)
+                        .WithMany("CoworkingSpaceReservationBundles")
+                        .HasForeignKey("CoworkingId");
 
                     b.HasOne("MOCA.Core.Entities.LocationManagment.Location", "Location")
                         .WithMany()
@@ -7114,9 +7098,9 @@ namespace MOCA.Presistence.Migrations
 
                     b.Navigation("BasicUser");
 
-                    b.Navigation("Coworking");
-
                     b.Navigation("CoworkingSpaceBundlePricing");
+
+                    b.Navigation("CoworkingWorkSpace");
 
                     b.Navigation("Location");
 
@@ -7131,11 +7115,15 @@ namespace MOCA.Presistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("MOCA.Core.Entities.LocationManagment.Coworking", "Coworking")
-                        .WithMany("CoworkingSpaceReservationHourlies")
-                        .HasForeignKey("CoworkingId")
+                    b.HasOne("MOCA.Core.Entities.LocationManagment.CoworkingWorkSpace", "CoworkingWorkSpace")
+                        .WithMany()
+                        .HasForeignKey("CoworkSpaceId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("MOCA.Core.Entities.LocationManagment.Coworking", null)
+                        .WithMany("CoworkingSpaceReservationHourlies")
+                        .HasForeignKey("CoworkingId");
 
                     b.HasOne("MOCA.Core.Entities.LocationManagment.CoWorkingSpaceHourlyPricing", "CoWorkingSpaceHourlyPricing")
                         .WithMany()
@@ -7157,7 +7145,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.Navigation("CoWorkingSpaceHourlyPricing");
 
-                    b.Navigation("Coworking");
+                    b.Navigation("CoworkingWorkSpace");
 
                     b.Navigation("Location");
 
@@ -7172,11 +7160,15 @@ namespace MOCA.Presistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("MOCA.Core.Entities.LocationManagment.Coworking", "Coworking")
-                        .WithMany("CoworkingSpaceReservationTailoreds")
-                        .HasForeignKey("CoworkingId")
+                    b.HasOne("MOCA.Core.Entities.LocationManagment.CoworkingWorkSpace", "CoworkingWorkSpace")
+                        .WithMany()
+                        .HasForeignKey("CoworkSpaceId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("MOCA.Core.Entities.LocationManagment.Coworking", null)
+                        .WithMany("CoworkingSpaceReservationTailoreds")
+                        .HasForeignKey("CoworkingId");
 
                     b.HasOne("MOCA.Core.Entities.LocationManagment.Location", "Location")
                         .WithMany()
@@ -7190,7 +7182,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.Navigation("BasicUser");
 
-                    b.Navigation("Coworking");
+                    b.Navigation("CoworkingWorkSpace");
 
                     b.Navigation("Location");
 
@@ -7624,11 +7616,6 @@ namespace MOCA.Presistence.Migrations
                     b.Navigation("CoworkingSpaceReservationTailoreds");
 
                     b.Navigation("CoworkingSpaceTailoredPricings");
-                });
-
-            modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.CoworkingSpaceBundlePricing", b =>
-                {
-                    b.Navigation("CoworkingSpaceBundleMemberTypes");
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.CoworkingWorkSpace", b =>

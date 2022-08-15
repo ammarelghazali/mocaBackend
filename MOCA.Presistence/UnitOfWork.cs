@@ -559,24 +559,6 @@ namespace MOCA.Presistence
             }
         }
 
-        IGenericRepository<Inclusion> _inclusionRepo;
-        public IGenericRepository<Inclusion> InclusionRepo
-        {
-            get
-            {
-                return _inclusionRepo = _inclusionRepo ?? new GenericRepository<Inclusion>(_context);
-            }
-        }
-
-        IInclusionRepository _inclusionRepoEF;
-        public IInclusionRepository InclusionRepoEF
-        {
-            get
-            {
-                return _inclusionRepoEF = _inclusionRepoEF ?? new InclusionRepository(_context);
-            }
-        }
-
         IGenericRepository<Industry> _industryRepo;
         public IGenericRepository<Industry> IndustryRepo
         {

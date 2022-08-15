@@ -11,5 +11,7 @@ namespace MOCA.Core.Entities.LocationManagment
 
         [ForeignKey("CoworkingId")]
         public Coworking Coworking { get; set; }
+
+        public ICollection<CoworkingSpaceBundleMemberType> CoworkingSpaceBundleMemberTypes { get; set; }
     }
 }

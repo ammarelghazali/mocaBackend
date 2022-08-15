@@ -58,7 +58,6 @@ namespace MOCA.Presistence.Contexts
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<District> Districts { get; set; }
         public DbSet<Feature> Features { get; set; }
-        public DbSet<Inclusion> Inclusions { get; set; }
         public DbSet<Industry> Industries { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<LocationBankAccount> LocationBankAccounts { get; set; }
