@@ -20,6 +20,12 @@ namespace MOCA.Presistence.Repositories.LocationManagment
             return await _context.Countries.Where(p => p.Id != id).AllAsync(p => p.CountryName.Trim().ToLower() != countryName.Trim().ToLower());
         }
 
+        public async Task<bool> IsUniqueNameAsync(string countryName)
+        {
+            if (string.IsNullOrEmpty(countryName)) return false;
+            return await _context.Countries.Where(p => p.IsDeleted == false).AllAsync(p => p.CountryName.Trim().ToLower() != countryName.Trim().ToLower());
+        }
+
         public async Task<bool> HasAnyCities(long CountryID)
         {
             if (CountryID <= 0) return false;

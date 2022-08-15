@@ -8,6 +8,7 @@ namespace MOCA.Core.Interfaces.LocationManagment.Repositories
         Task<Country> CountryIsExists(long countryID);
         Task<bool> HasAnyCities(long CountryID);
         Task<bool> IsUniqueNameAsync(string countryName, long? id = null);
+        Task<bool> IsUniqueNameAsync(string countryName);
         Task<bool> DeleteCountry(long Id);
     }
 }
