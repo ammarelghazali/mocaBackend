@@ -22,10 +22,12 @@ namespace LocationManagement.API.Controllers
         private readonly IAmenityService _AmenityService;
         private readonly IVenueSetupService _VenueSetupService;
         private readonly IUploadImageService _UploadImageService;
+        private readonly IFurnishingTypeService _FurnishingTypeService;
         private readonly FileSettings _fileSettings;
 
         public DynamicListsController(IMapper mapper, IWorkSpaceCategoryService WorkSpaceCategoryService,
-            IWorkSpaceTypeService WorkSpaceTypeService, IAmenityService amenityService, IUploadImageService uploadImageService, IVenueSetupService venueSetupService)
+            IWorkSpaceTypeService WorkSpaceTypeService, IAmenityService amenityService, IUploadImageService uploadImageService,
+            IVenueSetupService venueSetupService, IFurnishingTypeService furnishingTypeService)
         {
             _mapper = mapper;
             _WorkSpaceCategoryService = WorkSpaceCategoryService;
@@ -33,6 +35,7 @@ namespace LocationManagement.API.Controllers
             _AmenityService = amenityService;
             _UploadImageService = uploadImageService;
             _VenueSetupService = venueSetupService;
+            _FurnishingTypeService = furnishingTypeService;
         }
         ///////////////////WORK SPACE CATEGORY///////////////////WORK SPACE CATEGORY///////////////////WORK SPACE CATEGORY///////////////////
 
@@ -387,7 +390,88 @@ namespace LocationManagement.API.Controllers
         }
 
         ///////////////////FURNITURE TYPE///////////////////FURNITURE TYPE///////////////////FURNITURE TYPE/////////////FURNITURE TYPE///////////FURNITURE TYPE//////////////
-       
+        [HttpPost("AddListOfFurnishingType")]
+        public async Task<IActionResult> AddListOfFurnishingType([FromBody] List<FurnishingTypeModel> model)
+        {
+            var data = await _FurnishingTypeService.AddListOfFurnishingType(model);
+
+            if (data.Succeeded == false)
+            {
+                return BadRequest(data);
+            }
+            return Ok(data);
+        }
+
+        [HttpPost("AddFurnishingType")]
+        public async Task<IActionResult> AddFurnishingType([FromBody] FurnishingTypeModel model)
+        {
+            var setup = await _FurnishingTypeService.AddFurnishingType(model);
+
+            if (setup.Succeeded == false)
+            {
+                return BadRequest(setup);
+            }
+            return Ok(setup);
+        }
+
+        [HttpDelete("DeleteFurnishingType")]
+        public async Task<IActionResult> DeleteFurnishingType(long id)
+        {
+            var data = await _FurnishingTypeService.DeleteFurnishingType(id);
+
+            if (data.Succeeded == false)
+            {
+                return BadRequest(data);
+            }
+            return Ok(data);
+        }
+
+        [HttpGet("GetAllFurnishingTypePaginated")]
+        public async Task<IActionResult> GetAllFurnishingTypePaginated([FromQuery] RequestParameter filter)
+        {
+            var response = await _VenueSetupService.GetAllVenueSetupPaginated(filter);
+
+            if (response.Succeeded == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        [HttpGet("GetFurnishingTypeById")]
+        public async Task<IActionResult> GetFurnishingTypeById([FromHeader] long Id)
+        {
+            var response = await _VenueSetupService.GetVenueSetupById(Id);
+
+            if (response.Succeeded == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        [HttpGet("GetFurnishingTypeWithoutPagination")]
+        public async Task<IActionResult> GetFurnishingTypeWithoutPagination()
+        {
+            var data = await _VenueSetupService.GetVenueSetupWithoutPagination();
+            if (data.Succeeded == false)
+            {
+                return BadRequest(data);
+            }
+            return Ok(data);
+        }
+
+        [HttpPut("UpdateFurnishingType")]
+        public async Task<IActionResult> UpdateFurnishingType([FromBody] FurnishingTypeModel model)
+        {
+            var data = await _FurnishingTypeService.UpdateFurnishingType(model);
+            if (data.Succeeded == false)
+            {
+                return BadRequest(data);
+            }
+            return Ok(data);
+
+        }
 
 
     }

@@ -203,37 +203,36 @@ namespace MOCA.Services.Implementation.DynamicLists
 
         public async Task<Response<bool>> UpdateWorkSpaceType(WorkSpaceTypeModel request)
         {
-            var workSpace = _mapper.Map<WorkSpaceType>(request);
+            var workspace = _mapper.Map<WorkSpaceType>(request);
 
-            if (string.IsNullOrWhiteSpace(workSpace.LastModifiedBy))
+            if (string.IsNullOrWhiteSpace(workspace.LastModifiedBy))
             {
                 if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
                 {
                     throw new UnauthorizedAccessException("Last Modified By UserID is required");
                 }
                 else
-                { workSpace.LastModifiedBy = _authenticatedUserService.UserId; }
+                { workspace.LastModifiedBy = _authenticatedUserService.UserId; }
             }
-            if (workSpace.LastModifiedAt == null)
+            if (workspace.LastModifiedAt == null)
             {
-                workSpace.LastModifiedAt = DateTime.UtcNow;
+                workspace.LastModifiedAt = DateTime.UtcNow;
             }
+            var workspaceEntity = await _unitOfWork.WorkSpaceTypeRepo.GetByIdAsync(request.Id);
 
-            var workSpaceEntity = await _unitOfWork.WorkSpaceTypeRepo.GetByIdAsync(request.Id);
 
+            if (workspaceEntity == null) { return new Response<bool>(false, "Cannot Update WorkSpaceType right now"); }
 
-            if (workSpaceEntity == null) { return new Response<bool>(false, "This Workspace type is exits before "); }
+            workspace.CreatedBy = workspaceEntity.CreatedBy;
+            workspace.CreatedAt = workspaceEntity.CreatedAt;
 
-            workSpace.CreatedBy = workSpaceEntity.CreatedBy;
-            workSpace.CreatedAt = workSpaceEntity.CreatedAt;
-
-            _unitOfWork.WorkSpaceTypeRepo.Update(workSpace);
+            _unitOfWork.WorkSpaceTypeRepo.Update(workspace);
             if (await _unitOfWork.SaveAsync() < 1)
             {
-                return new Response<bool>("Cannot Update Work Space type right now");
+                return new Response<bool>(false, "Cannot Update WorkSpaceType right now");
             }
 
-            return new Response<bool>(true, " Work Space type Updated Successfully.");
+            return new Response<bool>(true, " WorkSpaceType Updated Successfully.");
         }
     }
 }
