@@ -4,10 +4,15 @@
     {
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
-        public long Id { get; set; }
-        public long CityId { get; set; }
-        public long DistrictId { get; set; }
-        public int ContractLength { get; set; }
+        public long? Id { get; set; }
+        public long? CityId { get; set; }
+        public long? DistrictId { get; set; }
+        public int? ContractLength { get; set; }
+        public long? LocationTypeId { get; set; }
+        public DateTime? FromContractStartDate { get; set; }
+        public DateTime? ToContractStartDate { get; set; }
+        public DateTime? FromLaunchDate { get; set; }
+        public DateTime? ToLaunchDate { get; set; }
         public RequestGetAllLocationParameter()
         {
             this.PageNumber = 1;

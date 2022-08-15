@@ -761,7 +761,12 @@ namespace MOCA.Services.Implementation.LocationManagment
             parms.Add("@Id", filter.Id);
             parms.Add("@CityId", filter.CityId);
             parms.Add("@DistrictId", filter.DistrictId);
+            parms.Add("@LocationTypeId", filter.LocationTypeId);
             parms.Add("@ContractLength", filter.ContractLength);
+            parms.Add("@FromContractStartDate", filter.FromContractStartDate);
+            parms.Add("@ToContractStartDate", filter.ToContractStartDate);
+            parms.Add("@FromLaunchDate", filter.FromLaunchDate);
+            parms.Add("@ToLaunchDate", filter.ToLaunchDate);
             parms.Add("@pageNumber", filter.PageNumber);
             parms.Add("@pageSize", filter.PageSize);
             var data = await _unitOfWork.LocationRepo.QueryAsync<LocationGetAllFilterModel>("[dbo].[SP_Location_GetAll_Filter_Pagination]", parms, System.Data.CommandType.StoredProcedure);
@@ -783,7 +788,13 @@ namespace MOCA.Services.Implementation.LocationManagment
             parms.Add("@Id", filter.Id);
             parms.Add("@CityId", filter.CityId);
             parms.Add("@DistrictId", filter.DistrictId);
+            parms.Add("@LocationTypeId", filter.LocationTypeId);
             parms.Add("@ContractLength", filter.ContractLength);
+            parms.Add("@FromContractStartDate", filter.FromContractStartDate);
+            parms.Add("@ToContractStartDate", filter.ToContractStartDate);
+            parms.Add("@FromLaunchDate", filter.FromLaunchDate);
+            parms.Add("@ToLaunchDate", filter.ToLaunchDate);
+            
             var data = await _unitOfWork.LocationRepo.QueryAsync<LocationGetAllFilterModel>("[dbo].[SP_Location_GetAll_Filter_WithoutPagination]", parms, System.Data.CommandType.StoredProcedure);
 
             if (data.Count == 0)
