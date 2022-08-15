@@ -192,9 +192,6 @@ namespace MOCA.Core.MappingProfiles
             CreateMap<FeatureModel, Feature>();
             CreateMap<Feature, FeatureModel>();
 
-            CreateMap<InclusionModel, Inclusion>();
-            CreateMap<Inclusion, InclusionModel>();
-
             CreateMap<IndustryModel, Industry>();
             CreateMap<Industry, IndustryModel>();
 

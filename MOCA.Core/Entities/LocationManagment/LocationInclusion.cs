@@ -1,4 +1,5 @@
 ﻿using MOCA.Core.Entities.BaseEntities;
+using MOCA.Core.Entities.DynamicLists;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MOCA.Core.Entities.LocationManagment
@@ -8,8 +9,8 @@ namespace MOCA.Core.Entities.LocationManagment
         public long LocationId { get; set; }
         [ForeignKey("LocationId")]
         public virtual Location Location { get; set; }
-        public long InclusionId { get; set; }
-        [ForeignKey("InclusionId")]
-        public virtual Inclusion Inclusion { get; set; }
+        public long AmenityId { get; set; }
+        [ForeignKey("AmenityId")]
+        public virtual Amenity Amenity { get; set; }
     }
 }
