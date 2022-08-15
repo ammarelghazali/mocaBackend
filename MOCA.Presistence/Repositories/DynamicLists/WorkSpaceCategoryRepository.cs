@@ -30,10 +30,13 @@ namespace MOCA.Presistence.Repositories.DynamicLists
             _context.WorkSpaceCategories.Remove(workSpaceCategory);
             return true;
         }
-        public async Task<bool> HasAnyWorkSpaceType(long WorkSpaceCategoryId)
+        public async Task<bool> DeleteWorkSpaceType(long workSpaceCategoryId)
         {
-            if (WorkSpaceCategoryId <= 0) return false;
-            return await _context.WorkSpaceTypes.AnyAsync(x => x.Id.Equals(WorkSpaceCategoryId) && x.IsDeleted == false);
+            if (workSpaceCategoryId <= 0) return false;
+            var check =  _context.WorkSpaceTypes.Where(x => x.WorkSpaceCategoryId.Equals(workSpaceCategoryId) && x.IsDeleted == false).ToList();
+            if (check == null) { return false; }    
+            _context.WorkSpaceTypes.RemoveRange(check);
+            return true;
         }
 
 
