@@ -46,6 +46,11 @@ namespace MOCA.Services.Implementation.LocationManagment
                 country.CreatedAt = _dateTimeService.NowUtc;
             }
 
+            var entityCountry = await _unitOfWork.CountryRepoEF.IsUniqueNameAsync(request.CountryName);
+            if (entityCountry == false)
+            {
+                return new Response<long>("Country Name is not Unique.");
+            }
             _unitOfWork.CountryRepo.Insert(country);
             if (await _unitOfWork.SaveAsync() < 1)
             {
@@ -77,6 +82,11 @@ namespace MOCA.Services.Implementation.LocationManagment
 
             if (countryEntity == null) { throw new NotFoundException(nameof(Country), request.Id); }
 
+            var entityCountry = await _unitOfWork.CountryRepoEF.IsUniqueNameAsync(request.CountryName, request.Id);
+            if (entityCountry == false)
+            {
+                return new Response<bool>("Country Name is not Unique.");
+            }
             country.CreatedBy = countryEntity.CreatedBy;
             country.CreatedAt = countryEntity.CreatedAt;
 

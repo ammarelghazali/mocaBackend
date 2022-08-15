@@ -795,7 +795,7 @@ namespace MOCA.Services.Implementation.LocationManagment
             return new Response<List<LocationGetAllModel>>(data);
         }
 
-        public async Task<PagedResponse<List<LocationGetAllFilterModel>>> GetAllPublishedAndUnpublishedLocationFilter(RequestGetAllLocationParameter filter)
+        public async Task<PagedResponse<List<LocationGetAllModel>>> GetAllPublishedAndUnpublishedLocationFilter(RequestGetAllLocationParameter filter)
         {
             if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
             {
@@ -816,15 +816,46 @@ namespace MOCA.Services.Implementation.LocationManagment
             parms.Add("@pageNumber", filter.PageNumber);
             parms.Add("@pageSize", filter.PageSize);
             var data = await _unitOfWork.LocationRepo.QueryAsync<LocationGetAllFilterModel>("[dbo].[SP_Location_GetAll_Filter_Pagination]", parms, System.Data.CommandType.StoredProcedure);
-            
-            if (data.Count == 0)
+
+            var resultData = new List<LocationGetAllModel>();
+            foreach (var item in data)
             {
-                return new PagedResponse<List<LocationGetAllFilterModel>>(null, filter.PageNumber, filter.PageSize, data[0].pgTotal);
+                resultData.Add(new LocationGetAllModel
+                {
+                    City = new DropdownViewModel
+                    {
+                        Id = item.CityId,
+                        Name = item.CityName
+                    },
+                    Name = item.LocationName,
+                    Id = item.Id,
+                    ContractLength = item.ContractLength,
+                    ContractStartDate = item.ContractStartDate,
+                    GrossArea = item.GrossArea,
+                    InstallAccessPoint = item.InstallAccessPoint,
+                    LaunchDate = item.LaunchDate,
+                    IsPublish = item.IsPublish,
+                    NetArea = item.NetArea,
+                    District = new DropdownViewModel
+                    {
+                        Id = item.DistrictId,
+                        Name = item.DistrictName
+                    },
+                    LocationType = new DropdownViewModel
+                    {
+                        Id = item.LocationTypeId,
+                        Name = item.LocationTypeName
+                    }
+                });
             }
-            return new PagedResponse<List<LocationGetAllFilterModel>>(data.ToList(), filter.PageNumber, filter.PageSize, data[0].pgTotal);
+            if (resultData.Count == 0)
+            {
+                return new PagedResponse<List<LocationGetAllModel>>(null, filter.PageNumber, filter.PageSize, data[0].pgTotal);
+            }
+            return new PagedResponse<List<LocationGetAllModel>>(resultData, filter.PageNumber, filter.PageSize, data[0].pgTotal);
         }
 
-        public async Task<Response<List<LocationGetAllFilterModel>>> GetAllPublishedAndUnpublishedLocationFilterWithoutPagination(RequestGetAllLocationWithoutPaginationParameter filter)
+        public async Task<Response<List<LocationGetAllModel>>> GetAllPublishedAndUnpublishedLocationFilterWithoutPagination(RequestGetAllLocationWithoutPaginationParameter filter)
         {
             if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
             {
@@ -844,12 +875,43 @@ namespace MOCA.Services.Implementation.LocationManagment
             parms.Add("@ToNetArea", filter.ToNetArea);
 
             var data = await _unitOfWork.LocationRepo.QueryAsync<LocationGetAllFilterModel>("[dbo].[SP_Location_GetAll_Filter_WithoutPagination]", parms, System.Data.CommandType.StoredProcedure);
-
-            if (data.Count == 0)
+            
+            var resultData = new List<LocationGetAllModel>();
+            foreach (var item in data)
             {
-                return new Response<List<LocationGetAllFilterModel>>(null, "Not Data Found");
+                resultData.Add(new LocationGetAllModel
+                {
+                    City = new DropdownViewModel
+                    {
+                        Id = item.CityId,
+                        Name = item.CityName
+                    },
+                    Name = item.LocationName,
+                    Id = item.Id,
+                    ContractLength = item.ContractLength,
+                    ContractStartDate = item.ContractStartDate,
+                    GrossArea = item.GrossArea,
+                    InstallAccessPoint = item.InstallAccessPoint,
+                    LaunchDate = item.LaunchDate,
+                    IsPublish = item.IsPublish,
+                    NetArea = item.NetArea,
+                    District = new DropdownViewModel
+                    {
+                        Id = item.DistrictId,
+                        Name = item.DistrictName
+                    },
+                    LocationType = new DropdownViewModel
+                    {
+                        Id = item.LocationTypeId,
+                        Name = item.LocationTypeName
+                    }
+                });
             }
-            return new Response<List<LocationGetAllFilterModel>>(data.ToList());
+            if (resultData.Count == 0)
+            {
+                return new Response<List<LocationGetAllModel>>(null, "Not Data Found");
+            }
+            return new Response<List<LocationGetAllModel>>(resultData);
         }
     }
 }

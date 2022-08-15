@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MOCA.Core.DTOs.DynamicLists
 {
-    public class FurnitureTypeModel
+    public class FurnishingTypeModel
     {
         public long Id { get; set; }
 

@@ -116,7 +116,8 @@ namespace MOCA.Core
         IGenericRepository<Amenity> AmenityRepo { get; }
         IAmenityRepository AmenityRepoEF { get; }
 
-
+        IGenericRepository<FurnishingType> FurnishingTypeRepo { get; }
+        IFurnishingTypeRepository FurnishingTypeRepoEF { get; }
 
         #endregion
 

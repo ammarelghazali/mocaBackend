@@ -71,7 +71,7 @@ namespace MOCA.Services.Implementation.DynamicLists
 
             if (Res.Count == 0)
             {
-                return new Response<List<WorkSpaceCategoryModel>>(null);
+                return new Response<List<WorkSpaceCategoryModel>>(null, "No Data Found.");
             }
             return new Response<List<WorkSpaceCategoryModel>>(Res);
         }

@@ -168,7 +168,7 @@ namespace MOCA.Services.Implementation.LocationManagment
 
             if (Res.Count == 0)
             {
-                return new Response<List<AmenityModel>>(null, "Cannot Get Amenities Types");
+                return new Response<List<AmenityModel>>(null, "No Data Found.");
             }
             return new Response<List<AmenityModel>>(Res);
         }

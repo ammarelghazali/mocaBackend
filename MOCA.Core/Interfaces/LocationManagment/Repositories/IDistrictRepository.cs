@@ -12,6 +12,8 @@ namespace MOCA.Core.Interfaces.LocationManagment.Repositories
     {
         Task<bool> HasAnyRelatedEntities(long DistrictId);
         Task<List<District>> GetDistrictsByCityId(long cityId);
+        Task<bool> IsUniqueNameAsync(string districtName, long? id = null);
+        Task<bool> IsUniqueNameAsync(string districtName);
         Task<bool> DeleteDistrict(long Id);
     }
 }
