@@ -118,6 +118,11 @@ namespace MOCA.Services.Implementation.DynamicLists
             {
                 throw new UnauthorizedAccessException("User is not authorized");
             }
+            var HasAnyWorkSpaceType = await _unitOfWork.WorkSpaceCategoryRepoEF.HasAnyWorkSpaceType(Id);
+            if (HasAnyWorkSpaceType)
+            {
+                return new Response<bool>("Work Space Category is Busy and Can't be deleted.");
+            }
             var workSpaceEntity = await _unitOfWork.WorkSpaceCategoryRepo.GetByIdAsync(Id);
 
             if (workSpaceEntity == null) { throw new NotFoundException(nameof(WorkSpaceCategory), Id); }

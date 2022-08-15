@@ -173,24 +173,30 @@ namespace MOCA.Services.Implementation.DynamicLists
             {
                 throw new UnauthorizedAccessException("User is not authorized");
             }
+            
             var data = _unitOfWork.WorkSpaceTypeRepo.GetAll().ToList();
+
 
             var result = new List<WorkSpaceTypeResponseModel>();
             foreach (var item in data)
             {
                 var category = _unitOfWork.WorkSpaceCategoryRepo.GetByID(item.WorkSpaceCategoryId);
-                result.Add(new WorkSpaceTypeResponseModel
+                if (category.IsDeleted==false)
                 {
-                    Id = item.Id,
-                    Name = item.Name,
-                    WorkSpaceCategory = new WorkSpaceCategoryModel
+                    result.Add(new WorkSpaceTypeResponseModel
                     {
-                        Id = item.WorkSpaceCategoryId,
-                        Name = category.Name
-                    }
-                });
+                        Id = item.Id,
+                        Name = item.Name,
+                        WorkSpaceCategory = new WorkSpaceCategoryModel
+                        {
+                            Id = item.WorkSpaceCategoryId,
+                            Name = category.Name
+                        }
+                    });
+               }
             }
            
+
             //var Res = _mapper.Map<List<WorkSpaceTypeResponseModel>>(data);
 
             if (result.Count == 0)
