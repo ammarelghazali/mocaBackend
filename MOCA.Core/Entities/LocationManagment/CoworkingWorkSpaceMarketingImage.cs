@@ -6,9 +6,9 @@ namespace MOCA.Core.Entities.LocationManagment
     public class CoworkingWorkSpaceMarketingImage
     {
         [Key, Column(Order = 1)]
-        public long LocationId { get; set; }
-        [ForeignKey("LocationId")]
-        public virtual Location Location { get; set; }
+        public long CoworkingWorkSpaceId { get; set; }
+        [ForeignKey("CoworkingWorkSpaceId")]
+        public virtual CoworkingWorkSpace CoworkingWorkSpace { get; set; }
 
         [Key, Column(Order = 2)]
         public long MarketingImagesId { get; set; }
