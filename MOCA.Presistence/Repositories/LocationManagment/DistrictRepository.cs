@@ -20,6 +20,18 @@ namespace MOCA.Presistence.Repositories.LocationManagment
             return await _context.Districts.Where(a => a.CityId == cityId && a.IsDeleted != true).AsNoTracking().ToListAsync();
         }
 
+        public async Task<bool> IsUniqueNameAsync(string districtName, long? id = null)
+        {
+            if (string.IsNullOrEmpty(districtName)) return false;
+            return await _context.Districts.Where(p => p.Id != id).AllAsync(p => p.DistrictName.Trim().ToLower() != districtName.Trim().ToLower());
+        }
+
+        public async Task<bool> IsUniqueNameAsync(string districtName)
+        {
+            if (string.IsNullOrEmpty(districtName)) return false;
+            return await _context.Districts.Where(p => p.IsDeleted == false).AllAsync(p => p.DistrictName.Trim().ToLower() != districtName.Trim().ToLower());
+        }
+
         public async Task<bool> HasAnyRelatedEntities(long DistrictId)
         {
             if (DistrictId <= 0) return false;
