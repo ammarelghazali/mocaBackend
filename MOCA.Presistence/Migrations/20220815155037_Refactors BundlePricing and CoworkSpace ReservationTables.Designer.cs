@@ -4,6 +4,7 @@ using MOCA.Presistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,13 +12,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MOCA.Presistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220815155037_Refactors BundlePricing and CoworkSpace ReservationTables")]
+    partial class RefactorsBundlePricingandCoworkSpaceReservationTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.7")
+                .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -1930,7 +1932,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FurnishingType", (string)null);
+                    b.ToTable("FurnishingType");
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.Inclusion", b =>
@@ -1967,7 +1969,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Inclusion", (string)null);
+                    b.ToTable("Inclusion");
                 });
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.Industry", b =>
@@ -2515,15 +2517,15 @@ namespace MOCA.Presistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<long>("AmenityId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("InclusionId")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -2539,7 +2541,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AmenityId");
+                    b.HasIndex("InclusionId");
 
                     b.HasIndex("LocationId");
 
@@ -6318,9 +6320,9 @@ namespace MOCA.Presistence.Migrations
 
             modelBuilder.Entity("MOCA.Core.Entities.LocationManagment.LocationInclusion", b =>
                 {
-                    b.HasOne("MOCA.Core.Entities.DynamicLists.Amenity", "Amenity")
+                    b.HasOne("MOCA.Core.Entities.LocationManagment.Inclusion", "Inclusion")
                         .WithMany()
-                        .HasForeignKey("AmenityId")
+                        .HasForeignKey("InclusionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -6330,7 +6332,7 @@ namespace MOCA.Presistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Amenity");
+                    b.Navigation("Inclusion");
 
                     b.Navigation("Location");
                 });
@@ -6856,7 +6858,7 @@ namespace MOCA.Presistence.Migrations
 
                     b.Navigation("Admin");
 
-                    b.Navigatio,n("BasicUser");
+                    b.Navigation("BasicUser");
 
                     b.Navigation("ReservationType");
                 });

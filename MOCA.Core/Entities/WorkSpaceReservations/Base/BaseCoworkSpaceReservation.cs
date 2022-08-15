@@ -8,9 +8,9 @@ namespace MOCA.Core.Entities.WorkSpaceReservations.Base
     public class BaseCoworkSpaceReservation : BaseReservationEntity
     {
         [Required]
-        public long CoworkSpaceId { get; set; }
+        public long CoworkingId { get; set; }
 
-        [ForeignKey("CoworkSpaceId")]
-        public CoworkingWorkSpace CoworkingWorkSpace { get; set; }
+        [ForeignKey("CoworkingId")]
+        public Coworking Coworking { get; set; }
     }
 }
