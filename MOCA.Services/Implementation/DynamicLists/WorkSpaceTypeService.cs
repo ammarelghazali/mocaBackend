@@ -181,8 +181,7 @@ namespace MOCA.Services.Implementation.DynamicLists
             foreach (var item in data)
             {
                 var category = _unitOfWork.WorkSpaceCategoryRepo.GetByID(item.WorkSpaceCategoryId);
-                if (category.IsDeleted==false)
-                {
+
                     result.Add(new WorkSpaceTypeResponseModel
                     {
                         Id = item.Id,
@@ -194,11 +193,7 @@ namespace MOCA.Services.Implementation.DynamicLists
                         }
                     });
                }
-            }
-           
-
-            //var Res = _mapper.Map<List<WorkSpaceTypeResponseModel>>(data);
-
+            
             if (result.Count == 0)
             {
                 return new Response<List<WorkSpaceTypeResponseModel>>(null,"Cannot Get Work Space Types");
