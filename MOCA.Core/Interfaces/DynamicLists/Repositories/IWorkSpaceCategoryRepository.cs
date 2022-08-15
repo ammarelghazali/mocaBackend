@@ -9,7 +9,7 @@ namespace MOCA.Core.Interfaces.DynamicLists.Repositories
     {
         Task<bool> DeleteWorkSpaceCategory(long Id);
         Task<bool> IsUniqueNameAsync(string workSpaceName);
-
+        Task<bool> HasAnyWorkSpaceType(long WorkSpaceCategoryId);
     }
 
 }
