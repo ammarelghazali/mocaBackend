@@ -343,7 +343,7 @@ namespace MOCA.Presistence.Contexts
                 .HasKey(p => new { p.CoworkingWorkSpaceId, p.FurnishingId });
 
             builder.Entity<CoworkingWorkSpaceMarketingImage>()
-                .HasKey(p => new { p.LocationId, p.MarketingImagesId });
+                .HasKey(p => new { p.CoworkingWorkSpaceId, p.MarketingImagesId });
             #endregion
         }
     }
