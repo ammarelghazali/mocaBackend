@@ -8,9 +8,6 @@ using MOCA.Core.Interfaces.LocationManagment.Services;
 using MOCA.Core.Interfaces.Shared.Services;
 using MOCA.Core.Settings;
 
-
-
-
 namespace LocationManagement.API.Controllers
 {
     [Route("api/v{version:apiVersion}/[controller]")]

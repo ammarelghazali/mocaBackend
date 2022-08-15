@@ -168,7 +168,7 @@ namespace MOCA.Services.Implementation.DynamicLists
 
             if (Res.Count == 0)
             {
-                return new Response<List<VenueSetupModel>>(null);
+                return new Response<List<VenueSetupModel>>(null, "No Data Found.");
             }
             return new Response<List<VenueSetupModel>>(Res);
 

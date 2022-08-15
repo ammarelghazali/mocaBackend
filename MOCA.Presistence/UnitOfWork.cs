@@ -967,6 +967,25 @@ namespace MOCA.Presistence
             }
         }
 
+
+
+        public IGenericRepository<FurnishingType> _FurnishingTypeRepo;
+        public IGenericRepository<FurnishingType> FurnishingTypeRepo
+        {
+            get
+            {
+                return _FurnishingTypeRepo = _FurnishingTypeRepo ?? new GenericRepository<FurnishingType>(_context);
+            }
+        }
+        public IFurnishingTypeRepository _FurnishingTypeRepoEF;
+        public IFurnishingTypeRepository FurnishingTypeRepoEF
+        {
+            get
+            {
+                return _FurnishingTypeRepoEF = _FurnishingTypeRepoEF ?? new FurnishingTypeRepository(_context);
+            }
+        }
+
         #endregion
 
 
