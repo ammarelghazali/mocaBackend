@@ -751,6 +751,50 @@ namespace MOCA.Services.Implementation.LocationManagment
             return new PagedResponse<List<LocationGetAllModel>>(data, filter.PageNumber, filter.PageSize, pg_total);
         }
 
+        public async Task<Response<List<LocationGetAllModel>>> GetAllPublishedAndUnpublishedLocationWithoutPagination()
+        {
+            if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
+            {
+                throw new UnauthorizedAccessException("User is not authorized");
+            }
+            var data = await _unitOfWork.LocationRepoEF.GetAllPublishedAndUnpublishedLocationWithoutPagination();
+            for (int i = 0; i < data.Count; i++)
+            {
+                #region District
+                var District = await _unitOfWork.DistrictRepo.GetByIdAsync(data[i].District.Id);
+                data[i].District = new DropdownViewModel
+                {
+                    Id = District.Id,
+                    Name = District.DistrictName
+                };
+                #endregion
+
+                #region City
+                var City = await _unitOfWork.CityRepo.GetByIdAsync(District.CityId);
+                data[i].City = new DropdownViewModel
+                {
+                    Id = City.Id,
+                    Name = City.CityName
+                };
+                #endregion
+
+                #region LocationType
+                var LocationType = await _unitOfWork.LocationTypeRepo.GetByIdAsync(data[i].LocationType.Id);
+                data[i].LocationType = new DropdownViewModel
+                {
+                    Id = LocationType.Id,
+                    Name = LocationType.Name
+                };
+                #endregion
+            }
+
+            if (data.Count == 0)
+            {
+                return new Response<List<LocationGetAllModel>>(null, "No Data Found.");
+            }
+            return new Response<List<LocationGetAllModel>>(data);
+        }
+
         public async Task<PagedResponse<List<LocationGetAllFilterModel>>> GetAllPublishedAndUnpublishedLocationFilter(RequestGetAllLocationParameter filter)
         {
             if (string.IsNullOrWhiteSpace(_authenticatedUserService.UserId))
@@ -761,7 +805,14 @@ namespace MOCA.Services.Implementation.LocationManagment
             parms.Add("@Id", filter.Id);
             parms.Add("@CityId", filter.CityId);
             parms.Add("@DistrictId", filter.DistrictId);
+            parms.Add("@LocationTypeId", filter.LocationTypeId);
             parms.Add("@ContractLength", filter.ContractLength);
+            parms.Add("@FromContractStartDate", filter.FromContractStartDate);
+            parms.Add("@ToContractStartDate", filter.ToContractStartDate);
+            parms.Add("@FromLaunchDate", filter.FromLaunchDate);
+            parms.Add("@ToLaunchDate", filter.ToLaunchDate);
+            parms.Add("@FromNetArea", filter.FromNetArea);
+            parms.Add("@ToNetArea", filter.ToNetArea);
             parms.Add("@pageNumber", filter.PageNumber);
             parms.Add("@pageSize", filter.PageSize);
             var data = await _unitOfWork.LocationRepo.QueryAsync<LocationGetAllFilterModel>("[dbo].[SP_Location_GetAll_Filter_Pagination]", parms, System.Data.CommandType.StoredProcedure);
@@ -783,7 +834,15 @@ namespace MOCA.Services.Implementation.LocationManagment
             parms.Add("@Id", filter.Id);
             parms.Add("@CityId", filter.CityId);
             parms.Add("@DistrictId", filter.DistrictId);
+            parms.Add("@LocationTypeId", filter.LocationTypeId);
             parms.Add("@ContractLength", filter.ContractLength);
+            parms.Add("@FromContractStartDate", filter.FromContractStartDate);
+            parms.Add("@ToContractStartDate", filter.ToContractStartDate);
+            parms.Add("@FromLaunchDate", filter.FromLaunchDate);
+            parms.Add("@ToLaunchDate", filter.ToLaunchDate);
+            parms.Add("@FromNetArea", filter.FromNetArea);
+            parms.Add("@ToNetArea", filter.ToNetArea);
+
             var data = await _unitOfWork.LocationRepo.QueryAsync<LocationGetAllFilterModel>("[dbo].[SP_Location_GetAll_Filter_WithoutPagination]", parms, System.Data.CommandType.StoredProcedure);
 
             if (data.Count == 0)

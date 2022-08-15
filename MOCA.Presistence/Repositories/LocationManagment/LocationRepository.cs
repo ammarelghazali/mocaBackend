@@ -137,5 +137,38 @@ namespace MOCA.Presistence.Repositories.LocationManagment
             }
             return new List<LocationGetAllModel>(location);
         }
+
+        public async Task<List<LocationGetAllModel>> GetAllPublishedAndUnpublishedLocationWithoutPagination()
+        {
+            var location = _context.Locations.Where(x => x.IsDeleted != true).Select(x => new LocationGetAllModel
+            {
+                Id = x.Id,
+                Name = x.Name,
+                LaunchDate = x.LaunchDate,
+                ContractLength = x.ContractLength,
+                ContractStartDate = x.ContractStartDate,
+                GrossArea = x.GrossArea,
+                NetArea = x.NetArea,
+                IsPublish = x.IsPublish,
+                InstallAccessPoint = x.InstallAccessPoint,
+                LocationType = new DropdownViewModel
+                {
+                    Id = x.LocationTypeId
+                },
+                District = new DropdownViewModel
+                {
+                    Id = x.DistrictId
+                },
+                City = new DropdownViewModel()
+            })
+                .AsNoTracking()
+                .ToList();
+
+            if (location == null)
+            {
+                return new List<LocationGetAllModel>(null);
+            }
+            return new List<LocationGetAllModel>(location);
+        }
     }
 }
