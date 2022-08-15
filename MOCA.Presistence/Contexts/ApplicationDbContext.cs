@@ -84,7 +84,7 @@ namespace MOCA.Presistence.Contexts
         public DbSet<WorkSpace> WorkSpaces { get; set; }
         public DbSet<MarketingImages> MarketingImages { get; set; }
         public DbSet<EventSpaceOccupancy> EventSpaceOccupancies { get; set; }
-        /*public DbSet<Coworking> Coworkings { get; set; }
+        public DbSet<Coworking> Coworkings { get; set; }
         public DbSet<CoWorkingSpaceHourlyPricing> CoWorkingSpaceHourlyPricings { get; set; }
         public DbSet<CoworkingSpaceTailoredPricing> CoworkingSpaceTailoredPricings { get; set; }
         public DbSet<CoworkingSpaceBundlePricing> CoworkingSpaceBundlePricings { get; set; }
@@ -94,7 +94,7 @@ namespace MOCA.Presistence.Contexts
         public DbSet<WorkSpaceBundleMemberType> WorkSpaceBundleMemberTypes { get; set; }
         public DbSet<CoworkingSpaceBundleMemberType> CoworkingSpaceBundleMemberTypes { get; set; }
         public DbSet<CoworkingWorkspaceFurnishing> CoworkingWorkspaceFurnishings { get; set; }
-        public DbSet<CoworkingWorkSpaceMarketingImage> CoworkingWorkSpaceMarketingImages { get; set; }*/
+        public DbSet<CoworkingWorkSpaceMarketingImage> CoworkingWorkSpaceMarketingImages { get; set; }
         #endregion
 
         #region Shared
