@@ -23,5 +23,11 @@ namespace MOCA.Core.Entities.LocationManagment
         public string? SerialNumber { get; set; }
 
         public string? Picture { get; set; }
+
+        [Required]
+        public long SpaceId { get; set; }
+        public long FeatureId { get; set; }
+        [ForeignKey("FeatureId")]
+        public virtual Feature Feature { get; set; }
     }
 }
