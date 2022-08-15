@@ -51,6 +51,11 @@ namespace MOCA.Services.Implementation.LocationManagment
                 throw new NotFoundException(nameof(City), request.CityId);
             }
 
+            var entityDistrict = await _unitOfWork.CountryRepoEF.IsUniqueNameAsync(request.DistrictName);
+            if (entityDistrict == false)
+            {
+                return new Response<long>("District Name is not Unique.");
+            }
             _unitOfWork.DistrictRepo.Insert(district);
             if (await _unitOfWork.SaveAsync() < 1)
             {
@@ -83,6 +88,12 @@ namespace MOCA.Services.Implementation.LocationManagment
 
             var districtEntity = await _unitOfWork.DistrictRepo.GetByIdAsync(request.Id);
             if (districtEntity == null) { throw new NotFoundException(nameof(District), request.Id); }
+
+            var entityDistrict = await _unitOfWork.CountryRepoEF.IsUniqueNameAsync(request.DistrictName, request.Id);
+            if (entityDistrict == false)
+            {
+                return new Response<bool>("District Name is not Unique.");
+            }
             district.CreatedBy = districtEntity.CreatedBy;
             district.CreatedAt = districtEntity.CreatedAt;
 
