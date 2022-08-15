@@ -11,5 +11,7 @@
         public DateTime? ToContractStartDate { get; set; }
         public DateTime? FromLaunchDate { get; set; }
         public DateTime? ToLaunchDate { get; set; }
+        public decimal? FromNetArea { get; set; }
+        public decimal? ToNetArea { get; set; }
     }
 }

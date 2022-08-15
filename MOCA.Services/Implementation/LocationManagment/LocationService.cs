@@ -811,6 +811,8 @@ namespace MOCA.Services.Implementation.LocationManagment
             parms.Add("@ToContractStartDate", filter.ToContractStartDate);
             parms.Add("@FromLaunchDate", filter.FromLaunchDate);
             parms.Add("@ToLaunchDate", filter.ToLaunchDate);
+            parms.Add("@FromNetArea", filter.FromNetArea);
+            parms.Add("@ToNetArea", filter.ToNetArea);
             parms.Add("@pageNumber", filter.PageNumber);
             parms.Add("@pageSize", filter.PageSize);
             var data = await _unitOfWork.LocationRepo.QueryAsync<LocationGetAllFilterModel>("[dbo].[SP_Location_GetAll_Filter_Pagination]", parms, System.Data.CommandType.StoredProcedure);
@@ -838,7 +840,9 @@ namespace MOCA.Services.Implementation.LocationManagment
             parms.Add("@ToContractStartDate", filter.ToContractStartDate);
             parms.Add("@FromLaunchDate", filter.FromLaunchDate);
             parms.Add("@ToLaunchDate", filter.ToLaunchDate);
-            
+            parms.Add("@FromNetArea", filter.FromNetArea);
+            parms.Add("@ToNetArea", filter.ToNetArea);
+
             var data = await _unitOfWork.LocationRepo.QueryAsync<LocationGetAllFilterModel>("[dbo].[SP_Location_GetAll_Filter_WithoutPagination]", parms, System.Data.CommandType.StoredProcedure);
 
             if (data.Count == 0)
